@@ -28,7 +28,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <div>커밋테스트</div>
+      <div>커밋테스트2</div>
     </>
   );
 }
