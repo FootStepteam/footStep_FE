@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const AfterLogin = () => {
   return (
     <>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center font-semibold">
         <Link
           to={'/'}
           className="mr-5"
@@ -12,10 +12,11 @@ const AfterLogin = () => {
         </Link>
         <Link
           to={'/'}
-          className='className="mr-5"'
+          className="mr-5"
         >
           로그아웃
         </Link>
+        <div className="w-16 h-16 bg-main-color rounded-[100%]">.</div>
       </div>
     </>
   );
