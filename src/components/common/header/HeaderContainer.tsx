@@ -1,7 +1,7 @@
 import LeftContainer from './headerLeft/LeftContainer';
 import RightContainer from './headerRight/RightContainer';
 
-const Header = () => {
+const HeaderContainer = () => {
   return (
     <>
       <header className="py-6 w-full">
@@ -14,4 +14,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderContainer;

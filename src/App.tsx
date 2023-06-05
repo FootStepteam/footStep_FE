@@ -1,9 +1,9 @@
-import Header from './components/common/Header/Header';
+import HeaderContainer from './components/common/header/HeaderContainer';
 
 function App() {
   return (
     <>
-      <Header />
+      <HeaderContainer />
     </>
   );
 }
