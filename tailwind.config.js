@@ -9,6 +9,7 @@ export default {
         'border-color': 'DCDCDC',
         'white-color': 'ffffff',
         'hover-color': 'rgba(0, 175, 255, 0.6)',
+        'skyblue-1': '#00AFFF',
       },
       height: {
         banner: 'calc(100vh - 5.5rem)',
