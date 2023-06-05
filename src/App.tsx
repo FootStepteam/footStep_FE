@@ -1,11 +1,15 @@
-import Footer from './components/common/footer/Footer';
-import HeaderContainer from './components/common/header/HeaderContainer';
+import { Route, Routes } from 'react-router';
+import MainPage from './pages/MainPage';
 
 function App() {
   return (
     <>
-      <HeaderContainer />
-      <Footer />
+      <Routes>
+        <Route
+          path="/"
+          element={<MainPage />}
+        />
+      </Routes>
     </>
   );
 }

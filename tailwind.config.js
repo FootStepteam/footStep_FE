@@ -10,6 +10,23 @@ export default {
         'white-color': 'ffffff',
         'hover-color': 'rgba(0, 175, 255, 0.6)',
       },
+      height: {
+        banner: 'calc(100vh - 5.5rem)',
+      },
+      keyframes: {
+        intro: {
+          from: { color: '#FFFFFF' },
+          to: { color: '000000' },
+        },
+        introBtn: {
+          from: { backgroundColor: '#FBF7F2', color: '#FBF7F2' },
+          to: { backgroundColor: 'main-color', color: '#FFFFFF' },
+        },
+      },
+      animation: {
+        intro: 'intro 1s ease-in-out',
+        introBtn: 'introBtn 1s ease-in-out',
+      },
     },
   },
   plugins: [],
