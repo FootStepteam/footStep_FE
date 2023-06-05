@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ReactComponent as NoProfile } from '../../../../assets/smile.svg';
 
 const AfterLogin = () => {
   return (
@@ -16,7 +17,12 @@ const AfterLogin = () => {
         >
           로그아웃
         </Link>
-        <div className="w-16 h-16 bg-main-color rounded-[100%]">.</div>
+        <div className="w-16 h-16 bg-gray-300 rounded-[100%]">
+          <NoProfile
+            width={64}
+            height={64}
+          />
+        </div>
       </div>
     </>
   );
