@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router';
 import MainPage from './pages/MainPage';
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
           path="/"
           element={<MainPage />}
         />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>
   );
