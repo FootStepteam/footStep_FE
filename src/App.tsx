@@ -1,6 +1,7 @@
-import { Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
-import LoginPage from "./pages/LoginPage";
+import LoginPage from './pages/LoginPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 function App() {
   return (
@@ -10,7 +11,14 @@ function App() {
           path="/"
           element={<MainPage />}
         />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+        <Route
+          path="/user/profile"
+          element={<UserProfilePage />}
+        />
       </Routes>
     </>
   );
