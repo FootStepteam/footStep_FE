@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{html,js,ts,tsx}"],
+  content: ['./src/**/*.{html,js,ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -11,8 +11,18 @@ export default {
         'hover-color': 'rgba(0, 175, 255, 0.6)',
         'skyblue-1': '#00AFFF',
       },
+      width: {
+        commonSection: '81.25rem',
+      },
       height: {
         banner: 'calc(100vh - 5.5rem)',
+        section: 'calc(100vh - 7rem - 9rem)',
+      },
+      margin: {
+        center: '0 auto',
+      },
+      minHeight: {
+        content: 'calc(100vh - 7rem - 9rem)',
       },
       keyframes: {
         intro: {

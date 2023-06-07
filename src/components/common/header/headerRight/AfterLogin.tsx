@@ -6,7 +6,7 @@ const AfterLogin = () => {
     <>
       <div className="flex justify-center items-center font-semibold">
         <Link
-          to={'/'}
+          to={'/user/profile'}
           className="mr-5"
         >
           마이페이지
