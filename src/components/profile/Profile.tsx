@@ -4,7 +4,7 @@ import ProfileUserInfo from './profileUserInfo/ProfileUserInfo';
 const Profile = () => {
   return (
     <>
-      <div className="flex flex-col justify-center items-center w-commonSection min-h-content border border-2 border-indigo-600 m-center">
+      <div className="flex w-commonSection min-h-content m-center">
         <ProfileUserInfo />
         <ParticipatingPlan />
       </div>
