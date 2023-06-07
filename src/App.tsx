@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
-import UserProfilePage from './pages/UserProfilePage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         />
         <Route
           path="/user/profile"
-          element={<UserProfilePage />}
+          element={<ProfilePage />}
         />
       </Routes>
     </>

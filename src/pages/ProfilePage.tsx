@@ -2,7 +2,7 @@ import Footer from '../components/common/footer/Footer';
 import HeaderContainer from '../components/common/header/HeaderContainer';
 import Profile from '../components/profile/Profile';
 
-const UserProfilePage = () => {
+const ProfilePage = () => {
   return (
     <>
       <HeaderContainer />
@@ -12,4 +12,4 @@ const UserProfilePage = () => {
   );
 };
 
-export default UserProfilePage;
+export default ProfilePage;
