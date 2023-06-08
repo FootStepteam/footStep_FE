@@ -1,13 +1,7 @@
 import ProfileEditForm from "./ProfileEditForm";
-import Tab from "../Tab";
 
 const ProfileEdit = () => {
-  return (
-    <>
-      <Tab />
-      <ProfileEditForm />
-    </>
-  );
+  return <ProfileEditForm />;
 };
 
 export default ProfileEdit;
