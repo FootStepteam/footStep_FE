@@ -1,6 +1,6 @@
 import Footer from "../components/common/footer/Footer";
 import HeaderContainer from "../components/common/header/HeaderContainer";
-import ProfileEdit from "../components/profileEdit/ProfileEdit";
+import ProfileEdit from "../components/profileEdit/edit/ProfileEdit";
 
 const ProfileEditPage = () => {
   return (

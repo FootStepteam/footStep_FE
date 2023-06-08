@@ -1,5 +1,5 @@
 import ProfileEditForm from "./ProfileEditForm";
-import Tab from "./Tab";
+import Tab from "../Tab";
 
 const ProfileEdit = () => {
   return (
