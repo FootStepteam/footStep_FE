@@ -1,4 +1,4 @@
-import { ReactComponent as GitHub } from '../../../assets/github-mark-white.svg';
+import { ReactComponent as GitHub } from "../../../assets/github-mark-white.svg";
 
 const FooterLink = () => {
   return (
@@ -8,6 +8,7 @@ const FooterLink = () => {
           href="https://zero-base.co.kr/"
           target="_blank"
           className="mx-[1rem] w-14 text-[1.3rem]"
+          rel="noreferrer"
         >
           ZERO-BASE
         </a>
@@ -15,6 +16,7 @@ const FooterLink = () => {
           href="https://github.com/FootStepteam"
           target="_blank"
           className="mx-[1rem]"
+          rel="noreferrer"
         >
           <GitHub />
         </a>

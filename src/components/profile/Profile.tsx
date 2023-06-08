@@ -1,5 +1,5 @@
-import ParticipatingPlan from './participatingPlan/ParticipatingPlan';
-import ProfileUserInfo from './profileUserInfo/ProfileUserInfo';
+import ParticipatingPlan from "./participatingPlan/ParticipatingPlan";
+import ProfileUserInfo from "./profileUserInfo/ProfileUserInfo";
 
 const Profile = () => {
   return (

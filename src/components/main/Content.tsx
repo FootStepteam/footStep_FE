@@ -1,32 +1,33 @@
-import travelImg from '../../assets/travel.jpg';
-import communityImg from '../../assets/crowd.jpg';
-import Banner from './Banner';
+import travelImg from "../../assets/travel.jpg";
+import communityImg from "../../assets/crowd.jpg";
+import Banner from "./Banner";
 
 const Content = () => {
   const banners = [
     {
-      type: 'travel',
+      type: "travel",
       imgSrc: travelImg,
-      path: '/',
-      animation: 'animate-intro',
+      path: "/",
+      animation: "animate-intro",
       text: {
-        bannerTitle: '친구들과 함께하는 여행 일정 플랫폼 발자국',
-        bannerDescription: '지금 여행 일정을 계획해보세요.',
+        bannerTitle: "친구들과 함께하는 여행 일정 플랫폼 발자국",
+        bannerDescription: "지금 여행 일정을 계획해보세요.",
       },
-      linkText: '시작하기',
-      fontColor: 'black',
+      linkText: "시작하기",
+      fontColor: "black",
     },
     {
-      type: 'community',
+      type: "community",
       imgSrc: communityImg,
-      path: '/',
-      animation: 'animate-intro',
+      path: "/",
+      animation: "animate-intro",
       text: {
-        bannerTitle: '어디로 떠나야할지 고민이 되시나요?',
-        bannerDescription: '지금 커뮤니티에서 공개된 일정을 통해 고민을 해결하세요 !',
+        bannerTitle: "어디로 떠나야할지 고민이 되시나요?",
+        bannerDescription:
+          "지금 커뮤니티에서 공개된 일정을 통해 고민을 해결하세요 !",
       },
-      linkText: '커뮤니티',
-      fontColor: 'white',
+      linkText: "커뮤니티",
+      fontColor: "white",
     },
   ];
 

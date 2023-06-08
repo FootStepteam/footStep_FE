@@ -1,5 +1,5 @@
-import SignInAndUp from './SignInAndUp';
-import AfterLogin from './AfterLogin';
+import SignInAndUp from "./SignInAndUp";
+import AfterLogin from "./AfterLogin";
 
 const RightContainer = () => {
   return (

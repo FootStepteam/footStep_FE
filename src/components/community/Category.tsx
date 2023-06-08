@@ -1,11 +1,9 @@
-import React from "react";
-
 interface CategoryProps {
   onSelect: (category: string) => void;
   selectedCategory: string;
 }
 
-const Category: React.FC<CategoryProps> = ({ onSelect, selectedCategory }) => {
+const Category = ({ onSelect, selectedCategory }: CategoryProps) => {
   const categoriesFirstRow: string[] = [
     "서울",
     "경기",

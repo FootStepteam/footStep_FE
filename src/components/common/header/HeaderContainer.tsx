@@ -1,5 +1,5 @@
-import LeftContainer from './headerLeft/LeftContainer';
-import RightContainer from './headerRight/RightContainer';
+import LeftContainer from "./headerLeft/LeftContainer";
+import RightContainer from "./headerRight/RightContainer";
 
 const HeaderContainer = () => {
   return (

@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { ReactComponent as Like } from "../../assets/like.svg";
 
@@ -19,7 +18,7 @@ interface ListsProps {
   selectedCategory: string;
 }
 
-const Lists: React.FC<ListsProps> = ({ searchQuery, selectedCategory }) => {
+const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
   // 예시 데이터
   const posts: Post[] = [
     {
