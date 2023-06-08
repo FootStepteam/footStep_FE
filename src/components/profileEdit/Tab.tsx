@@ -13,12 +13,12 @@ const Tab = () => {
     {
       menu: "passwordEdit",
       text: "비밀번호변경",
-      path: "/user/profile/edit",
+      path: "/user/profile/passwordEdit",
     },
     {
       menu: "userSecession",
       text: "회원탈퇴",
-      path: "/user/profile/edit",
+      path: "/user/profile/secession",
     },
   ];
 
