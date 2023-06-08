@@ -1,4 +1,4 @@
-import { ReactComponent as ProfileImage } from "../../assets/smile.svg";
+import { ReactComponent as ProfileImage } from "../../../assets/smile.svg";
 
 const ProfileEditForm = () => {
   const submitHandler = () => {
