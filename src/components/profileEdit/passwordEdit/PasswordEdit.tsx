@@ -1,6 +1,6 @@
 const PasswordEdit = () => {
   return (
-    <div className="h-section">
+    <div className="h-tabInSection">
       <form className="flex flex-col m-center pt-20 w-[15rem]">
         <input
           type="password"

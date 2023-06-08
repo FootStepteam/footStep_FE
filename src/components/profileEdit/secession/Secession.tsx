@@ -14,7 +14,7 @@ const Secession = () => {
   };
 
   return (
-    <div className="h-section">
+    <div className="h-tabInSection">
       <div className="flex flex-col">
         <div className="flex flex-col items-center m-center pt-32 w-[30rem] text-xl">
           <p>탈퇴 시 이용중인 서비스 사용이 불가능하며,</p>
