@@ -3,6 +3,7 @@ import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import ProfileEditPage from './pages/ProfileEditPage';
+import CommunityPage from './pages/CommunityPage';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
         <Route
           path="/user/profile/edit"
           element={<ProfileEditPage />}
+        />
+        <Route
+          path="/community"
+          element={<CommunityPage />}
         />
       </Routes>
     </>
