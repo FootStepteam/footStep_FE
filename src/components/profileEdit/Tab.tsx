@@ -31,10 +31,10 @@ const Tab = () => {
       {tabs.map((tab) => (
         <Link
           key={tab.menu}
-          className={`mx-2 px-2 py-4 text-md font-${
+          className={`mx-2 px-2 py-4 text-md ${
             selected === tab.menu &&
-            "border-b-2 border-skyblue-1 text-skyblue-1 text-lg font-bold"
-          }`}
+            "border-b-[0.2rem] border-skyblue-1 text-skyblue-1 text-lg font-bold"
+          } hover:text-skyblue-1`}
           onClick={() => onClickHandler(tab.menu)}
           to={tab.path}
         >
