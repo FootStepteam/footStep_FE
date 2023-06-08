@@ -1,5 +1,5 @@
 interface CategoryProps {
-  onSelect: (category: string) => void;
+  onSelect: () => void;
   selectedCategory: string;
 }
 
@@ -39,6 +39,7 @@ const Category = ({ onSelect, selectedCategory }: CategoryProps) => {
         {categoriesFirstRow.map((category) => (
           <button
             key={category}
+            type="button"
             onClick={() => handleCategoryClick(category)}
             className={`px-1 mr-1 mb-2 border rounded-lg ${
               selectedCategory === category ? "bg-main-color" : "bg-white-color"
@@ -52,6 +53,7 @@ const Category = ({ onSelect, selectedCategory }: CategoryProps) => {
         {categoriesSecondRow.map((category) => (
           <button
             key={category}
+            type="button"
             onClick={() => handleCategoryClick(category)}
             className={`px-1 mr-1 mb-2 border rounded-lg ${
               selectedCategory === category ? "bg-main-color" : "bg-white-color"

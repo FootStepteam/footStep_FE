@@ -32,23 +32,18 @@ const Content = () => {
   ];
 
   return (
-    <>
-      <div className="w-full">
-        {banners.map((banner, index) => (
-          <Banner
-            key={banner.type}
-            type={banner.type}
-            imgSrc={banner.imgSrc}
-            path={banner.path}
-            animation={banner.animation}
-            text={banner.text}
-            linkText={banner.linkText}
-            fontColor={banner.fontColor}
-            index={index}
-          />
-        ))}
-      </div>
-    </>
+    <div className="w-full">
+      {banners.map((banner) => (
+        <Banner
+          key={banner.type}
+          imgSrc={banner.imgSrc}
+          path={banner.path}
+          animation={banner.animation}
+          text={banner.text}
+          linkText={banner.linkText}
+        />
+      ))}
+    </div>
   );
 };
 

@@ -11,7 +11,7 @@ const menus = [
   },
   {
     menu: "커뮤니티",
-    path: "/",
+    path: "/community",
   },
   {
     menu: "FAQ",
@@ -27,23 +27,22 @@ const Menu = () => {
   };
 
   return (
-    <>
-      <div className="flex grow">
-        {menus.map((element) => (
-          <div
-            key={element.menu}
-            className={`flex grow justify-center items-center ${
-              selectedMenu === element.menu && "text-skyblue-1"
-            }`}
-            onClick={() => onClickMenuHandler(element.menu)}
-          >
-            <p className="text-[1.3rem] font-semibold cursor-pointer">
-              {element.menu}
-            </p>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="flex grow">
+      {menus.map((element) => (
+        <div
+          role="presentation"
+          key={element.menu}
+          className={`flex grow justify-center items-center ${
+            selectedMenu === element.menu && "text-skyblue-1"
+          }`}
+          onClick={() => onClickMenuHandler(element.menu)}
+        >
+          <p className="text-[1.3rem] font-semibold cursor-pointer">
+            {element.menu}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 };
 

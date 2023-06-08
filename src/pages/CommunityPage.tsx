@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SearchBar from "../components/community/SearchBar";
 import Category from "../components/community/Category";
 import Lists from "../components/community/Lists";

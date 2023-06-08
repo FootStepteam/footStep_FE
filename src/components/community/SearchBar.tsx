@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 interface SearchBarProps {
+  // onSearch: (query: string) => void;
   onSearch: (query: string) => void;
 }
 
@@ -27,6 +28,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
         className="w-2/3 pl-4 py-2 rounded-l-lg"
       />
       <button
+        type="button"
         className="px-2 bg-white-color border-l-2 rounded-r-lg"
         onClick={handleSearch}
         disabled={query.trim() === ""}

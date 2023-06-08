@@ -1,13 +1,13 @@
 import ProfileEditForm from "./ProfileEditForm";
 import Tab from "./Tab";
 
-function ProfileEdit() {
+const ProfileEdit = () => {
   return (
     <>
       <Tab />
       <ProfileEditForm />
     </>
   );
-}
+};
 
 export default ProfileEdit;

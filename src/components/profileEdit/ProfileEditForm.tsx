@@ -1,6 +1,6 @@
 import { ReactComponent as ProfileImage } from "../../assets/smile.svg";
 
-function ProfileEditForm() {
+const ProfileEditForm = () => {
   return (
     <section className="m-center w-commonSection h-section">
       <div className="mt-16">
@@ -21,7 +21,9 @@ function ProfileEditForm() {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label className="font-bold text-lg">이메일</label>
+              <label htmlFor="email" className="font-bold text-lg">
+                이메일
+              </label>
               <input
                 type="text"
                 id="email"
@@ -31,7 +33,9 @@ function ProfileEditForm() {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label className="block font-bold text-lg">내 소개</label>
+              <label htmlFor="introduce" className="block font-bold text-lg">
+                내 소개
+              </label>
               <textarea
                 id="introduce"
                 defaultValue="덩두"
@@ -43,6 +47,6 @@ function ProfileEditForm() {
       </div>
     </section>
   );
-}
+};
 
 export default ProfileEditForm;

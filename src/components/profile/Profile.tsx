@@ -3,12 +3,10 @@ import ProfileUserInfo from "./profileUserInfo/ProfileUserInfo";
 
 const Profile = () => {
   return (
-    <>
-      <div className="flex w-commonSection min-h-content m-center">
-        <ProfileUserInfo />
-        <ParticipatingPlan />
-      </div>
-    </>
+    <div className="flex w-commonSection min-h-content m-center">
+      <ProfileUserInfo />
+      <ParticipatingPlan />
+    </div>
   );
 };
 

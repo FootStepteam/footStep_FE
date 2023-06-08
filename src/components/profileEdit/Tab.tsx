@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Tab() {
+const Tab = () => {
   const [selected, setSelected] = useState("profileEdit");
 
   const tabs = [
@@ -43,6 +43,6 @@ function Tab() {
       ))}
     </div>
   );
-}
+};
 
 export default Tab;

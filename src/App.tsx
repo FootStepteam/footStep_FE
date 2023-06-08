@@ -5,16 +5,16 @@ import ProfilePage from "./pages/ProfilePage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import CommunityPage from "./pages/CommunityPage";
 
-function App() {
+const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/community" element={<CommunityPage />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/user/profile" element={<ProfilePage />} />
+      <Route path="/user/profile/edit" element={<ProfileEditPage />} />
+      <Route path="/community" element={<CommunityPage />} />
+    </Routes>
   );
-}
+};
 
 export default App;
