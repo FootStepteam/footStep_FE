@@ -1,5 +1,5 @@
 interface CategoryProps {
-  onSelect: (category: string) => void;
+  onSelect: () => void;
   selectedCategory: string;
 }
 

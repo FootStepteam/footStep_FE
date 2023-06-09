@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import SearchBar from "../components/community/SearchBar";
 import Category from "../components/community/Category";
 import Lists from "../components/community/Lists";
 import HeaderContainer from "../components/common/header/HeaderContainer";
 import Footer from "../components/common/footer/Footer";
 
-const CommunityPage = () => {
+const CommunityPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 

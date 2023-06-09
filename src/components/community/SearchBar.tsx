@@ -13,7 +13,9 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
   };
 
   const handleSearch = () => {
-    onSearch(query);
+    if (query.trim() !== "") {
+      onSearch(query);
+    }
   };
 
   return (
@@ -29,6 +31,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
         type="button"
         className="px-2 bg-white-color border-l-2 rounded-r-lg"
         onClick={handleSearch}
+        disabled={query.trim() === ""}
       >
         검색
       </button>
