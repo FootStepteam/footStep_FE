@@ -17,6 +17,7 @@ export default {
       height: {
         banner: "calc(100vh - 5.5rem)",
         section: "calc(100vh - 7rem - 9rem)",
+        tabInSection: "calc(100vh - 7rem - 9rem - 4.05rem)",
       },
       margin: {
         center: "0 auto",
