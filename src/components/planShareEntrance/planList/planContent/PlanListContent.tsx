@@ -2,7 +2,7 @@ import ExistsPlan from "./ExistsPlan";
 import NotExistsPlan from "./NotExistsPlan";
 
 const PlanListContent = () => {
-  const plans = [];
+  const plans = ["a"];
   const isExists = plans.length !== 0;
 
   return (
