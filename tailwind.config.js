@@ -12,7 +12,7 @@ export default {
         "skyblue-1": "#00AFFF",
       },
       width: {
-        commonSection: "81.25rem",
+        commonSection: "68.75rem",
       },
       height: {
         banner: "calc(100vh - 5.5rem)",
