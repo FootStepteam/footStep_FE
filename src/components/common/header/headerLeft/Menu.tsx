@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const menus = [
   {
@@ -7,7 +8,7 @@ const menus = [
   },
   {
     menu: "여행일정",
-    path: "/",
+    path: "/planShareEntrance",
   },
   {
     menu: "커뮤니티",
@@ -29,18 +30,16 @@ const Menu = () => {
   return (
     <div className="flex grow">
       {menus.map((element) => (
-        <div
-          role="presentation"
+        <Link
           key={element.menu}
-          className={`flex grow justify-center items-center ${
+          to={element.path}
+          className={`flex grow justify-center items-center text-[1.3rem] ${
             selectedMenu === element.menu && "text-skyblue-1"
-          }`}
+          } font-semibold cursor-pointer`}
           onClick={() => onClickMenuHandler(element.menu)}
         >
-          <p className="text-[1.3rem] font-semibold cursor-pointer">
-            {element.menu}
-          </p>
-        </div>
+          {element.menu}
+        </Link>
       ))}
     </div>
   );
