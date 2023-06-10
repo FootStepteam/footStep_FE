@@ -5,11 +5,11 @@ import { ReactComponent as MapChat } from "../../assets/mapChat.svg";
 
 const Start = () => {
   return (
-    <div className="relative w-full h-[50rem] bg-gradient-to-r from-[#00AFFF] from-10% via-[#00CDFF] via-30% to-main-color to-90%">
+    <section className="relative w-full h-[50rem] bg-gradient-to-r from-[#00AFFF] from-10% via-[#00CDFF] via-30% to-main-color to-90%">
       <div className="ml-[19rem] pt-[10rem] w-[27rem]">
-        <p className="text-white text-[3rem] font-bold">
+        <h1 className="text-white text-[3rem] font-bold">
           여행 일정 계획 플랫폼
-        </p>
+        </h1>
         <div className="flex items-center mb-20">
           <p className="text-[3rem] font-bold text-white">발자국</p>
           <FootStep className="ml-4 w-[4rem] h-[4rem]" />
@@ -23,7 +23,7 @@ const Start = () => {
       </div>
       <Map className="absolute top-[18rem] right-[25rem] w-[37rem] h-[21rem] rounded-lg shadow-xl" />
       <MapChat className="absolute top-[10rem] right-[18rem] w-[37rem] h-[21rem] rounded-lg shadow-xl" />
-    </div>
+    </section>
   );
 };
 
