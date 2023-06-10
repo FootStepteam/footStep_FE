@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
@@ -7,7 +6,7 @@ type FormData = {
   password: string;
 };
 
-const EmailLoginForm: React.FC = () => {
+const EmailLoginForm = () => {
   const {
     register,
     handleSubmit,

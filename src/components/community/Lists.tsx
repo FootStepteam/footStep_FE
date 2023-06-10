@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { ReactComponent as Like } from "../../assets/like.svg";
 
@@ -19,50 +20,52 @@ interface ListsProps {
   selectedCategory: string;
 }
 
-const Lists: React.FC<ListsProps> = ({ searchQuery, selectedCategory }) => {
+const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
+  const [sortBy, setSortBy] = useState<"latest" | "popular">("latest");
+
   // 예시 데이터
   const posts: Post[] = [
     {
       id: 1,
-      title: "Post 1",
+      title: "Postaa 1",
       category: "서울",
       userId: "user1",
       imgurl: "https://example.com/image1.jpg",
-      likes: 10,
+      likes: 12342134,
       createdAt: "2023-06-01",
       departureDate: "2023-06-10",
       arrivalDate: "2023-06-15",
     },
     {
       id: 2,
-      title: "Post 2",
+      title: "Postff 2",
       category: "부산",
       userId: "user2",
       imgurl: "https://example.com/image2.jpg",
-      likes: 5,
-      createdAt: "2023-06-02",
+      likes: 1231,
+      createdAt: "2023-06-04",
       departureDate: "2023-06-12",
       arrivalDate: "2023-06-17",
     },
     {
       id: 3,
-      title: "Post 3",
+      title: "Postbb 3",
       category: "서울",
       userId: "user2123",
       imgurl: "https://example.com/image2.jpg",
-      likes: 5,
+      likes: 51234,
       createdAt: "2023-06-02",
       departureDate: "2023-06-12",
       arrivalDate: "2023-06-17",
     },
     {
       id: 4,
-      title: "Post 4",
+      title: "Postaa 4",
       category: "경기",
       userId: "user122",
       imgurl: "https://example.com/image2.jpg",
-      likes: 5,
-      createdAt: "2023-06-02",
+      likes: 512313,
+      createdAt: "2023-06-03",
       departureDate: "2023-06-12",
       arrivalDate: "2023-06-17",
     },
@@ -78,18 +81,71 @@ const Lists: React.FC<ListsProps> = ({ searchQuery, selectedCategory }) => {
     return matchSearchQuery && matchCategory;
   });
 
+  // 최신순 또는 인기순으로 정렬된 게시글 목록
+  const sortedPosts: Post[] =
+    sortBy === "latest"
+      ? filteredPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)) // 최신순 정렬
+      : filteredPosts.sort((a, b) => b.likes - a.likes); // 인기순 정렬
+
+  // 검색어에 따라 필터링된 게시글 목록에서 title과 일치하는 게시글 필터링
+  const matchedPosts: Post[] = sortedPosts.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSortByLatest = () => {
+    setSortBy("latest");
+  };
+
+  const handleSortByPopular = () => {
+    setSortBy("popular");
+  };
+
   return (
-    <div className="flex justify-center mx-auto pt-[40px] w-2/3 min-h-screen">
-      {filteredPosts.length === 0 ? (
-        <p>검색 결과가 없습니다.</p>
+    <div className="flex flex-col mx-auto pt-[40px] w-2/3 min-h-screen">
+      <div className="flex justify-between mb-4">
+        <div className="flex">
+          <button
+            type="button"
+            className={`px-4 py-2 border-r-2 ${
+              sortBy === "latest" ? "text-main-color font-bold" : ""
+            }`}
+            onClick={handleSortByLatest}
+          >
+            최신순
+          </button>
+          <button
+            type="button"
+            className={`px-4 py-2 ${
+              sortBy === "popular" ? "text-main-color font-bold" : ""
+            }`}
+            onClick={handleSortByPopular}
+          >
+            인기순
+          </button>
+        </div>
+        <div className="flex">
+          <Link to="/community/write">
+            <button
+              type="button"
+              className="px-4 py-2 rounded-lg bg-main-color text-white"
+            >
+              새 게시글
+            </button>
+          </Link>
+        </div>
+      </div>
+      {matchedPosts.length === 0 ? (
+        <div className="flex justify-center items-center mt-[60px]">
+          <p className="text-xl font-medium">검색 결과가 없습니다</p>
+        </div>
       ) : (
         <ul className="w-full">
-          {filteredPosts.map((post) => (
+          {matchedPosts.map((post) => (
             <li key={post.id}>
               <a href={`/community/${post.id}`}>
                 <div className="flex justify-between w-full mb-4 px-8 py-2 border-2 border-main-color rounded-lg">
                   <div>
-                    <p className=" mb-2 text-xl font-bold">{post.title}</p>
+                    <p className="mb-2 text-xl font-bold">{post.title}</p>
                     <div className="flex">
                       <p>
                         일정 : {post.departureDate} ~ {post.arrivalDate}

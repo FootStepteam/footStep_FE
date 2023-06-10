@@ -1,11 +1,9 @@
-import React from "react";
-
 interface CategoryProps {
   onSelect: (category: string) => void;
   selectedCategory: string;
 }
 
-const Category: React.FC<CategoryProps> = ({ onSelect, selectedCategory }) => {
+const Category = ({ onSelect, selectedCategory }: CategoryProps) => {
   const categoriesFirstRow: string[] = [
     "서울",
     "경기",
@@ -41,6 +39,7 @@ const Category: React.FC<CategoryProps> = ({ onSelect, selectedCategory }) => {
         {categoriesFirstRow.map((category) => (
           <button
             key={category}
+            type="button"
             onClick={() => handleCategoryClick(category)}
             className={`px-1 mr-1 mb-2 border rounded-lg ${
               selectedCategory === category ? "bg-main-color" : "bg-white-color"
@@ -54,6 +53,7 @@ const Category: React.FC<CategoryProps> = ({ onSelect, selectedCategory }) => {
         {categoriesSecondRow.map((category) => (
           <button
             key={category}
+            type="button"
             onClick={() => handleCategoryClick(category)}
             className={`px-1 mr-1 mb-2 border rounded-lg ${
               selectedCategory === category ? "bg-main-color" : "bg-white-color"

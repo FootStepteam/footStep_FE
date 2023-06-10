@@ -1,45 +1,38 @@
-import { useState } from 'react';
+import { Link } from "react-router-dom";
 
 const menus = [
   {
-    menu: 'About',
-    path: '/',
+    menu: "About",
+    path: "/",
   },
   {
-    menu: '여행일정',
-    path: '/',
+    menu: "여행일정",
+    path: "/planShareEntrance",
   },
   {
-    menu: '커뮤니티',
-    path: '/',
+    menu: "커뮤니티",
+    path: "/community",
   },
   {
-    menu: 'FAQ',
-    path: '/',
+    menu: "FAQ",
+    path: "/",
   },
 ];
 
 const Menu = () => {
-  const [selectedMenu, setSelectedMenu] = useState('About');
-
-  const onClickMenuHandler = (menu: string) => {
-    setSelectedMenu(menu);
-  };
-
   return (
-    <>
-      <div className="flex grow">
-        {menus.map((element) => (
-          <div
-            key={element.menu}
-            className={`flex grow justify-center items-center ${selectedMenu === element.menu && 'text-skyblue-1'}`}
-            onClick={() => onClickMenuHandler(element.menu)}
-          >
-            <p className="text-[1.3rem] font-semibold cursor-pointer">{element.menu}</p>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="flex grow">
+      {menus.map((element) => (
+        <Link
+          key={element.menu}
+          to={element.path}
+          className="flex grow justify-center items-center text-[1.3rem]
+           font-semibold cursor-pointer"
+        >
+          {element.menu}
+        </Link>
+      ))}
+    </div>
   );
 };
 

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 interface SearchBarProps {
+  // onSearch: (query: string) => void;
   onSearch: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar = ({ onSearch }: SearchBarProps) => {
   const [query, setQuery] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,9 +13,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   const handleSearch = () => {
-    if (query.trim() !== "") {
-      onSearch(query);
-    }
+    onSearch(query);
   };
 
   return (
@@ -27,9 +26,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         className="w-2/3 pl-4 py-2 rounded-l-lg"
       />
       <button
+        type="button"
         className="px-2 bg-white-color border-l-2 rounded-r-lg"
         onClick={handleSearch}
-        disabled={query.trim() === ""}
       >
         검색
       </button>
