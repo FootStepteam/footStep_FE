@@ -1,6 +1,6 @@
+import Start from "./Start";
 import Problem from "./Problem";
 import Resolve from "./Resolve";
-import Start from "./Start";
 import Step from "./Step";
 
 const Content = () => {
