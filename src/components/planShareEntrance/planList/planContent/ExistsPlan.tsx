@@ -7,8 +7,9 @@ const ExistsPlan = () => {
 
   return (
     <div className="grid grid-cols-2 w-commonSection">
-      {plans.map(() => (
+      {plans.map((plan) => (
         <Link
+          key={plan}
           to="/"
           className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-[#DCDCDC] border rounded-xl transition-all duration-100 ease-out hover:scale-105"
         >
