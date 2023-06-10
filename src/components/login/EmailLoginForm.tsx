@@ -31,24 +31,26 @@ const EmailLoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(handleEmailLogin)}>
-      <div className="flex flex-col mx-auto w-full">
-        <p>이메일</p>
-        <input
-          className="w-full mt-4 border-b-2"
-          type="email"
-          {...register("email", { required: "Email is required" })}
-        />
-        {errors.email && <span>{errors.email.message}</span>}
-        <p>비밀번호</p>
-        <input
-          className="w-full mt-4 border-b-2"
-          type="password"
-          {...register("password", { required: "Password is required" })}
-        />
-        {errors.password && <span>{errors.password.message}</span>}
+      <div className="flex flex-col my-[40px] mx-auto w-1/4">
+        <div className="my-4">
+          <p>이메일</p>
+          <input
+            className="w-full mt-4 border-b-2"
+            type="email"
+            {...register("email", { required: "Email is required" })}
+          />
+        </div>
+        <div className="my-4">
+          <p>비밀번호</p>
+          <input
+            className="w-full mt-4 border-b-2"
+            type="password"
+            {...register("password", { required: "Password is required" })}
+          />
+        </div>
       </div>
       <button
-        className="flex w-40 mt-4 p-2 mx-auto bg-main-color rounded-lg"
+        className="flex justify-center items-center w-[183px] h-[45px] my-4 p-2 mx-auto bg-main-color rounded-md"
         type="submit"
       >
         로그인
