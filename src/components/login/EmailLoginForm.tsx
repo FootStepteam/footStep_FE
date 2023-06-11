@@ -7,11 +7,7 @@ type FormData = {
 };
 
 const EmailLoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>();
 
   const handleEmailLogin = async (data: FormData) => {
     try {

@@ -43,10 +43,8 @@ const KakaoLoginButton: React.FC = () => {
   };
 
   return (
-
-    <button className="mx-auto" onClick={handleKakaoLogin}>
+    <button type="button" className="mx-auto" onClick={handleKakaoLogin}>
       <img src="./kakao_login_medium_narrow.png" alt="" />
-
     </button>
   );
 };
