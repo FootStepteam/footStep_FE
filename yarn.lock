@@ -469,6 +469,13 @@
   "resolved" "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   "version" "15.7.5"
 
+"@types/react-calendar@^4.1.0":
+  "integrity" "sha512-CZL0+bOJ43+ZxnScd6n6SbA3RvoT/FurMIKevvTnRhLdncTRO7LyvBaFu3Bmwoad8ApVBJsMyAiPO79vGWRbbA=="
+  "resolved" "https://registry.npmjs.org/@types/react-calendar/-/react-calendar-4.1.0.tgz"
+  "version" "4.1.0"
+  dependencies:
+    "react-calendar" "*"
+
 "@types/react-dom@^18.0.11":
   "integrity" "sha512-G2mHoTMTL4yoydITgOGwWdWMVd8sNgyEP85xVmMKAPUBwQWm9wBPQUmvbeF4V3WBY1P7mmL4BkjQ0SqUpf1snw=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.2.4.tgz"
@@ -2385,7 +2392,7 @@
   "resolved" "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
-"react-calendar@^4.2.1":
+"react-calendar@*", "react-calendar@^4.2.1":
   "integrity" "sha512-T5oKXD+KLy/g6bmJJkZ7E9wj0iRMesWMZcrC7q2kI6ybOsu9NlPQx8uXJzG4A4C3Sh5Xi0deznyzWIVsUpF8tA=="
   "resolved" "https://registry.npmjs.org/react-calendar/-/react-calendar-4.2.1.tgz"
   "version" "4.2.1"
