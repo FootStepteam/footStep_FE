@@ -4,17 +4,21 @@
 .react-calendar {
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
-    border-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
 }
 
 .react-calendar__navigation{
     background-color: #FFFFFF;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
-    color: #00AFFF;
     font-weight: 700;
 }
 
 .react-calendar__month-view__days__day{
     padding: 15px 7px;
+}
+
+abbr {
+    text-decoration: none;
 }
