@@ -41,6 +41,7 @@ module.exports = {
     "prefer-arrow-callback": "off",
     "no-nested-ternary": 0,
     "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
