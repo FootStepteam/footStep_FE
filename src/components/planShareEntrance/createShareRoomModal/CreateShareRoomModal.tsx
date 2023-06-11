@@ -10,7 +10,7 @@ const CreateShareRoomModal = () => {
   const [openModal, setOpenModal] = useRecoilState(createModalOpenState);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const onClickModalBgHandler = (e) => {
+  const onClickModalBgHandler = (e: MouseEvent) => {
     console.log(e);
     const buttonDOM = document.querySelector("#createBtn");
 
