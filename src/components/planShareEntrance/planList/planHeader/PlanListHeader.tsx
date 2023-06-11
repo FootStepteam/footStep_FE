@@ -12,6 +12,7 @@ const PlanListHeader = () => {
     <div className="m-center pt-8 w-commonSection">
       <div className="flex flex-row-reverse">
         <button
+          id="createBtn"
           type="button"
           className="px-4 py-3 float-right bg-main-color rounded-xl font-bold text-white "
           onClick={onClickHandler}
