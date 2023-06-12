@@ -8,7 +8,7 @@ interface Post {
   title: string;
   category: string;
   userId: string;
-  imgurl: string;
+  imgUrl: string;
   likes: number;
   createdAt: string;
   departureDate: string;
@@ -30,7 +30,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
       title: "Postaa 1",
       category: "서울",
       userId: "user1",
-      imgurl: "https://example.com/image1.jpg",
+      imgUrl: "https://example.com/image1.jpg",
       likes: 12342134,
       createdAt: "2023-06-01",
       departureDate: "2023-06-10",
@@ -41,7 +41,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
       title: "Postff 2",
       category: "부산",
       userId: "user2",
-      imgurl: "https://example.com/image2.jpg",
+      imgUrl: "https://example.com/image2.jpg",
       likes: 1231,
       createdAt: "2023-06-04",
       departureDate: "2023-06-12",
@@ -52,7 +52,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
       title: "Postbb 3",
       category: "서울",
       userId: "user2123",
-      imgurl: "https://example.com/image2.jpg",
+      imgUrl: "https://example.com/image2.jpg",
       likes: 51234,
       createdAt: "2023-06-02",
       departureDate: "2023-06-12",
@@ -63,7 +63,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
       title: "Postaa 4",
       category: "경기",
       userId: "user122",
-      imgurl: "https://example.com/image2.jpg",
+      imgUrl: "https://example.com/image2.jpg",
       likes: 512313,
       createdAt: "2023-06-03",
       departureDate: "2023-06-12",
