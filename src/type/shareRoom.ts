@@ -8,3 +8,15 @@ export interface IShareRoom {
   travelEndDate: string;
   travelStartDate: string;
 }
+export interface ISubmitShareRoomData {
+  shareName: string;
+  travelEndDate: string;
+  travelStartDate: string;
+  imageUrl: string;
+}
+
+export interface ICreateShareRoomFormValue {
+  title: string;
+  startDate: string;
+  endDate: string;
+}

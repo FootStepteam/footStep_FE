@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import { createShareRoomFormValue } from "../../../store/createShareRoomFormValue";
 
 const Title = () => {
   const [title, setTitle] = useState<string>("");
+  const [formValue, setFormValue] = useRecoilState(createShareRoomFormValue);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+    setFormValue({
+      ...formValue,
+      title: e.target.value,
+    });
   };
 
   return (
