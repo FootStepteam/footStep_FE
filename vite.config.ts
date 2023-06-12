@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react(), svgr()],
   server: {
     proxy: {
-      "/api": {
+      "/footstep": {
         target: "http://43.200.76.174:8080/",
         changeOrigin: true,
         secure: false,
