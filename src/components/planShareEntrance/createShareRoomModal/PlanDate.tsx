@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import Calendar from "react-calendar";
+import { Value } from "react-calendar/dist/cjs/shared/types";
 import { ReactComponent as CalendarIcon } from "../../../assets/blackCalendar.svg";
 import { ReactComponent as BottomArrow } from "../../../assets/bottomArrow.svg";
-
-type Value = Date[];
 
 const PlanDate = () => {
   const [openCalendar, setOpenCalendar] = useState<boolean>(false);
@@ -73,7 +72,7 @@ const PlanDate = () => {
             calendarType="US"
             selectRange
             returnValue="range"
-            formatDay={(locale, date) => moment(date).format("D")}
+            formatDay={(_locale, date) => moment(date).format("D")}
           />
           <div className="flex justify-center items-center w-[350px] h-[4rem] border-x border-[#A5A5A5] rounded-b-md bg-white box-border">
             <button
