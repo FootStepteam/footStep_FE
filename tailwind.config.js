@@ -34,10 +34,20 @@ export default {
           from: { backgroundColor: "#FBF7F2", color: "#FBF7F2" },
           to: { backgroundColor: "main-color", color: "#FFFFFF" },
         },
+        modalShow: {
+          from: { opacity: 0, marginTop: 0 },
+          to: { opacity: 1, marginTop: "20rem" },
+        },
+        modalBgShow: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
       },
       animation: {
         intro: "intro 1s ease-in-out",
         introBtn: "introBtn 1s ease-in-out",
+        modalShow: "modalShow 0.2s ease-in-out",
+        modalBgShow: "modalBgShow 0.3s",
       },
     },
   },
