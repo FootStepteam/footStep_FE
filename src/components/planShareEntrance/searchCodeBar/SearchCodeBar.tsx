@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { getShareRoomAPI } from "../../../api/shareRoom";
+import { getShareRoomAPI } from "../../../api/shareRoomAPI";
 import { searchShareRoomData } from "../../../store/searchShareRoom";
 
 const SearchCodeBar = () => {

@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { createModalOpenState } from "../../../state/createModalOpen";
-import { createShareRoomAPI } from "../../../api/shareRoom";
+import { createShareRoomAPI } from "../../../api/shareRoomAPI";
 import { createShareRoomFormValue } from "../../../store/createShareRoomFormValue";
 
 const Button = () => {
