@@ -1,16 +1,18 @@
 import PlaceSearchCategory from "./PlaceSearchCategory";
 import PlaceSearchBar from "./PlaceSearchBar";
 import PlaceSearchLists from "./PlaceSearchLists";
+import PlaceSearchTitle from "./PlaceSearchTitle";
 
 const PlaceSearchArea = () => {
   return (
-    <div className="">
-      <div className="flex flex-col items-center h-[140px] bg-[#00AFFF]">
-        <PlaceSearchBar />
+    <>
+      <div className="flex flex-col w-[25rem] bg-[#00AFFF]">
+        <PlaceSearchTitle />
         <PlaceSearchCategory />
+        <PlaceSearchBar />
       </div>
       <PlaceSearchLists />
-    </div>
+    </>
   );
 };
 

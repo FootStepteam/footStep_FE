@@ -8,8 +8,6 @@ const PlaceSearchCategory = () => {
     "울산",
     "대전",
     "강원",
-  ];
-  const categoriesSecondRow: string[] = [
     "충남",
     "충북",
     "전남",
@@ -20,29 +18,16 @@ const PlaceSearchCategory = () => {
     "제주",
   ];
   return (
-    <div className="mt-2">
-      <div>
-        {categoriesFirstRow.map((category) => (
-          <button
-            key={category}
-            type="button"
-            className="px-1 mr-1 mb-2 border rounded-lg bg-white-color"
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-      <div>
-        {categoriesSecondRow.map((category) => (
-          <button
-            key={category}
-            type="button"
-            className="px-1 mr-1 mb-2 border rounded-lg bg-white-color"
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+    <div className="grid grid-cols-8 mt-6">
+      {categoriesFirstRow.map((category) => (
+        <p
+          key={category}
+          className="flex justify-center items-center py-2 bg-white-color border-[#DCDCDC] cursor-pointer"
+          role="presentation"
+        >
+          {category}
+        </p>
+      ))}
     </div>
   );
 };

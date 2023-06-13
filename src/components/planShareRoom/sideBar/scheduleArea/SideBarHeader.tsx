@@ -1,25 +1,15 @@
+import { ReactComponent as Exit } from "../../../../assets/exit.svg";
+import PlanDate from "../../../planShareEntrance/createShareRoomModal/PlanDate";
+
 const SideBarHeader = () => {
   return (
     <div className="h-[14rem] bg-main-color">
-      <button type="button" className="ml-2 mt-2">
-        뒤로가기
+      <button type="button" className="mt-4 mb-6 ml-2  ">
+        <Exit fill="#A5A5A5" width={25} height={25} />
       </button>
-      <div className="flex justify-center font-bold text-[32px] text-white-color">
-        title title title
-      </div>
-      <div className="flex justify-center mt-2">
-        <div className="flex justify-center p-2 w-1/3 bg-white-color text-[14px] border-r-2 rounded-l-lg">
-          23.01.01(일)
-        </div>
-        <div className="flex justify-center p-2 w-1/3 bg-white-color text-[14px] rounded-r-lg">
-          23.01.04(수)
-        </div>
-        <button
-          type="button"
-          className="px-2 ml-2 text-[12px] font-medium bg-white-color rounded-full"
-        >
-          변경
-        </button>
+      <div className="ml-12">
+        <p className=" text-white text-2xl font-bold">여행 한번 떠나보자고</p>
+        <PlanDate />
       </div>
     </div>
   );
