@@ -3,7 +3,7 @@ import PlanListHeader from "./planHeader/PlanListHeader";
 
 const Plan = () => {
   return (
-    <div className="w-commonSection h-section m-center">
+    <div className="w-commonSection h-section mx-auto my-20">
       <PlanListHeader />
       <PlanListContent />
     </div>
