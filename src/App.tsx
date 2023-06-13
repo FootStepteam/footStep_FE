@@ -5,6 +5,7 @@ import ProfileEditPage from "./pages/ProfileEditPage";
 import CommunityPage from "./pages/CommunityPage";
 import PlanShareEntrancePage from "./pages/PlanShareEntrancePage";
 import AboutPage from "./pages/AboutPage";
+import PlanShareRoomPage from "./pages/PlanShareRoomPage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Route path="/user/profile/:path" element={<ProfileEditPage />} />
       <Route path="/community" element={<CommunityPage />} />
       <Route path="/planShareEntrance" element={<PlanShareEntrancePage />} />
+      <Route path="/planShareRoom" element={<PlanShareRoomPage />} />
     </Routes>
   );
 };
