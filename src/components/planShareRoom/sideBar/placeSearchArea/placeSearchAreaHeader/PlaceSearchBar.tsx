@@ -1,4 +1,4 @@
-import { ReactComponent as SearchIcon } from "../../../../assets/search.svg";
+import { ReactComponent as SearchIcon } from "../../../../../assets/search.svg";
 
 const PlaceSearchBar = () => {
   return (
