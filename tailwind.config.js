@@ -36,7 +36,7 @@ export default {
         },
         modalShow: {
           from: { opacity: 0, marginTop: 0 },
-          to: { opacity: 1, marginTop: "20rem" },
+          to: { opacity: 1, marginTop: "15rem" },
         },
         modalBgShow: {
           from: { opacity: 0 },
