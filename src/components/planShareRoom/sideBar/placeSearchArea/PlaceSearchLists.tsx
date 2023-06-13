@@ -1,6 +1,6 @@
 const PlaceSearchLists = () => {
   return (
-    <div>
+    <div className="grow bg-white">
       <button type="button" className="justify-end">
         장소 추천
       </button>

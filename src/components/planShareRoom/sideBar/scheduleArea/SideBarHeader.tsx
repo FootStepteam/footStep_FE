@@ -1,6 +1,6 @@
 const SideBarHeader = () => {
   return (
-    <div className="h-[140px] bg-main-color">
+    <div className="h-[14rem] bg-main-color">
       <button type="button" className="ml-2 mt-2">
         뒤로가기
       </button>

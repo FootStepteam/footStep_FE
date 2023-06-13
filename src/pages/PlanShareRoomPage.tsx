@@ -1,11 +1,11 @@
 import Map from "../components/planShareRoom/map/Map";
-import SideBar from "../components/planShareRoom/SideBar";
+import SideBar from "../components/planShareRoom/sideBar/SideBar";
 
 const PlanShareRoomPage = () => {
   return (
-    <div>
-      <Map />
+    <div className="relative">
       <SideBar />
+      <Map />
     </div>
   );
 };

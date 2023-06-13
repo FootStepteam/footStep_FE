@@ -1,4 +1,4 @@
-import { ReactComponent as BottomArrow } from "../../../assets/bottomArrow.svg";
+import { ReactComponent as BottomArrow } from "../../../../assets/bottomArrow.svg";
 
 const DaySelect = () => {
   return (
