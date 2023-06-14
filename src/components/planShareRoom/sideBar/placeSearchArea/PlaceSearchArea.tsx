@@ -1,5 +1,5 @@
-import PlaceSearchAreaContent from "./placeSearchAreaContent/placeSearchAreaContent";
 import PlaceSearchAreaHeader from "./placeSearchAreaHeader/PlaceSearchAreaHeader";
+import PlaceSearchAreaContent from "./placeSearchAreaContent/PlaceSearchAreaContent";
 
 const PlaceSearchArea = () => {
   return (
