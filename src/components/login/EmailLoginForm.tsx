@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-type FormData = {
+type TFormData = {
   email: string;
   password: string;
 };
 
 const EmailLoginForm = () => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<TFormData>();
 
-  const handleEmailLogin = async (data: FormData) => {
+  const handleEmailLogin = async (data: TFormData) => {
     try {
       // 이메일 로그인 API 호출
       const response = await axios.post("/email/login", {
