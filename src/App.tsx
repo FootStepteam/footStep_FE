@@ -6,12 +6,14 @@ import CommunityPage from "./pages/CommunityPage";
 import PlanShareEntrancePage from "./pages/PlanShareEntrancePage";
 import AboutPage from "./pages/AboutPage";
 import PlanShareRoomPage from "./pages/PlanShareRoomPage";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<AboutPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/user/signup" element={<SignUp />} />
       <Route path="/user/profile" element={<ProfilePage />} />
       <Route path="/user/profile/:path" element={<ProfileEditPage />} />
       <Route path="/community" element={<CommunityPage />} />
