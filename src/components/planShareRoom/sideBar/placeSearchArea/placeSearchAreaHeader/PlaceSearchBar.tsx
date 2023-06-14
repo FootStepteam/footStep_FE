@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { ReactComponent as SearchIcon } from "../../../../../assets/search.svg";
-import { placeSearch, ps } from "../../../../../api/kakaoAPI";
+import { placeSearch } from "../../../../../api/kakaoAPI";
 import { placeSearchResult } from "../../../../../store/placeSearchResult";
 
 const PlaceSearchBar = () => {
@@ -14,7 +14,6 @@ const PlaceSearchBar = () => {
 
   const onSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
-
     placeSearch(keyword, setSearchPlaceResult);
   };
 
