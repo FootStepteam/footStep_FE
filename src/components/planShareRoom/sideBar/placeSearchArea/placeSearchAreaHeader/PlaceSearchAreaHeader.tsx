@@ -4,7 +4,7 @@ import PlaceSearchTitle from "./PlaceSearchTitle";
 
 const PlaceSearchAreaHeader = () => {
   return (
-    <div className="flex flex-col w-[25rem] h-[14rem] bg-[#00AFFF]">
+    <div className="flex flex-col w-planShareRoomSideBar h-planShareRoomHeader bg-[#00AFFF]">
       <PlaceSearchTitle />
       <PlaceSearchCategory />
       <PlaceSearchBar />
