@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { TLoginFormData } from "../../type/emailLogin";
+import { useLoginState } from "../../state/loginState";
 
 const EmailLoginForm = () => {
   const { register, handleSubmit } = useForm<TLoginFormData>();
+  const { login } = useLoginState(); // use our hook
 
   const handleEmailLogin = async (data: TLoginFormData) => {
     try {
@@ -15,8 +17,8 @@ const EmailLoginForm = () => {
       // 로그인 성공시 처리
       const accessToken = response.data.jwtAccessToken;
 
-      // 헤더에 JWT 토큰 저장
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      // loginState에서 호출(jwtAccessToken header에 저장)
+      login(accessToken);
 
       console.log(response.data);
     } catch (error) {
