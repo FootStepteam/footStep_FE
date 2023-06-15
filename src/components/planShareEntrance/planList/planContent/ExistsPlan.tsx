@@ -12,7 +12,7 @@ const ExistsPlan = () => {
         {plans.map((plan) => (
           <Link
             key={plan}
-            to="/"
+            to={`/planShareRoom`}
             className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-[#DCDCDC] border rounded-xl transition-all duration-100 ease-out hover:scale-105"
           >
             <div className="w-[12rem] h-[10rem]">

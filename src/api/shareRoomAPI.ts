@@ -25,3 +25,14 @@ export const createShareRoomAPI = async (
 
   return response;
 };
+
+export const getIncludeShareRoomAPI = async () => {
+  const body = {
+    page: 0,
+    size: 10
+  }
+
+  const response = await axios.get("/api/api/share-room", body);
+
+  return response.data
+}

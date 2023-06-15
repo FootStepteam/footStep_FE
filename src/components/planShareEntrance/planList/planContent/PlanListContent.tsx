@@ -1,13 +1,27 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import ExistsPlan from "./ExistsPlan";
 import NotExistsPlan from "./NotExistsPlan";
 import SearchResult from "./SearchResult";
 import { searchShareRoomData } from "../../../../store/searchShareRoom";
+import { getShareRoomList } from "../../../../store/getShareRoomList";
+import { useEffect } from "react";
+import { getIncludeShareRoomAPI } from "../../../../api/shareRoomAPI";
 
 const PlanListContent = () => {
-  const plans = ["a"];
-  const isExists = plans.length !== 0;
+  const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
   const searchResult = useRecoilValue(searchShareRoomData);
+  
+  const isExists = shareRooms.length !== 0;
+
+  const getShareRooms = async () => {
+    const result = await getIncludeShareRoomAPI();
+    setShareRooms(result);
+    
+  }
+
+  useEffect(() => {
+    getShareRooms();
+  }, [])
 
   return (
     <div className="mt-8 w-commonSection">
