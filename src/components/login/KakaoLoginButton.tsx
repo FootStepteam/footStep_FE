@@ -6,7 +6,7 @@ const KAKAO_AUTH_URL =
   "https://kauth.kakao.com/oauth/authorize?client_id=361fc4d12b75888a392207252d5db496&redirect_uri=http://43.200.76.174:8080/api/kakao/callback&response_type=code";
 
 const KakaoLoginButton = () => {
-  const navigate = useNavigate(); // React Router hook to programmatically navigate
+  const navigate = useNavigate();
 
   const handleKakaoLogin = async () => {
     window.location.href = KAKAO_AUTH_URL;
@@ -19,20 +19,16 @@ const KakaoLoginButton = () => {
     if (authCode) {
       const getAccessToken = async () => {
         try {
-          const response = await axios.get(
-            `http://43.200.76.174:8080/api/kakao/callback?code=${authCode}`
-          );
-
-          const accessToken = response.data.access_token;
-
-          axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
           const authResponse = await axios.post(
             "http://43.200.76.174:8080/api/auth/kakao",
             {
               authorizationCode: authCode,
             }
           );
+
+          const accessToken = authResponse.data.jwtAccessToken;
+
+          axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
           console.log(authResponse.data);
 
@@ -45,8 +41,6 @@ const KakaoLoginButton = () => {
 
       getAccessToken();
     }
-    const result = axios.get("/api/api/auth/kakao");
-    console.log(result);
   }, []);
 
   return (
