@@ -47,11 +47,14 @@ export default {
       },
       width: {
         commonSection: "68.75rem",
+        planShareRoomSideBar: "25rem",
       },
       height: {
         banner: "calc(100vh - 5.5rem)",
         section: "calc(100vh - 7rem - 9rem)",
         tabInSection: "calc(100vh - 7rem - 9rem - 4.05rem)",
+        planShareRoomHeader: "14rem",
+        planShareRoomContent: "calc(100vh - 14rem)",
       },
       margin: {
         center: "0 auto",

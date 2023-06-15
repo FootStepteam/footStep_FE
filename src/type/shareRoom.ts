@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface IShareRoom {
   endPoint: string;
   imageUrl: string;
@@ -19,4 +20,8 @@ export interface ICreateShareRoomFormValue {
   title: string;
   startDate: string;
   endDate: string;
+}
+
+export interface IPropsPlaceSearch {
+  placeSearch: (keyword: string) => void;
 }

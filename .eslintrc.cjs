@@ -30,7 +30,10 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint", "react-hooks", "prettier"],
   rules: {
+    allowForLoopAfterthoughts: true,
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "react/react-in-jsx-scope": 0,
     "react/prefer-stateless-function": 0,
     "react/jsx-filename-extension": 0,
