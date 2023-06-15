@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const KAKAO_AUTH_URL =
   "https://kauth.kakao.com/oauth/authorize?client_id=361fc4d12b75888a392207252d5db496&redirect_uri=http://43.200.76.174:8080/api/kakao/callback&response_type=code";
 
 const KakaoLoginButton = () => {
-  const navigate = useNavigate();
-
   const handleKakaoLogin = async () => {
     window.location.href = KAKAO_AUTH_URL;
   };
@@ -31,9 +28,6 @@ const KakaoLoginButton = () => {
           axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
           console.log(authResponse.data);
-
-          // Redirect to the main page
-          navigate("/");
         } catch (error) {
           console.error(error);
         }
