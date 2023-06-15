@@ -1,10 +1,11 @@
 import PlaceSearchAreaHeader from "./placeSearchAreaHeader/PlaceSearchAreaHeader";
 import PlaceSearchAreaContent from "./placeSearchAreaContent/PlaceSearchAreaContent";
+import { IPropsPlaceSearch } from "../../../../type/shareRoom";
 
-const PlaceSearchArea = () => {
+const PlaceSearchArea = ({ placeSearch }: IPropsPlaceSearch) => {
   return (
     <div>
-      <PlaceSearchAreaHeader />
+      <PlaceSearchAreaHeader placeSearch={placeSearch} />
       <PlaceSearchAreaContent />
     </div>
   );

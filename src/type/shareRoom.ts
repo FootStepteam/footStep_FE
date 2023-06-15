@@ -20,3 +20,8 @@ export interface ICreateShareRoomFormValue {
   startDate: string;
   endDate: string;
 }
+
+export interface IPropsPlaceSearch {
+  // eslint-disable-next-line no-unused-vars
+  placeSearch: (keyword: string) => void;
+}

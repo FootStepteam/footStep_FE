@@ -1,12 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import { ReactComponent as SearchIcon } from "../../../../../assets/search.svg";
-import { placeSearch } from "../../../../../api/kakaoAPI";
-import { placeSearchResult } from "../../../../../store/placeSearchResult";
+import { IPropsPlaceSearch } from "../../../../../type/shareRoom";
 
-const PlaceSearchBar = () => {
+const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
   const [keyword, setKeyword] = useState<string>("");
-  const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
@@ -14,7 +11,7 @@ const PlaceSearchBar = () => {
 
   const onSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
-    placeSearch(keyword, setSearchPlaceResult);
+    placeSearch(keyword);
   };
 
   return (
