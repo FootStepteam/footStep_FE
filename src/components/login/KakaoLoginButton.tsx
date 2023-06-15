@@ -1,52 +1,48 @@
-import React from "react";
+import { useEffect } from "react";
 import axios from "axios";
+import { useLoginState } from "../../state/loginState";
 
-interface KakaoTokenResponse {
-  access_token: string;
-  token_type: string;
-  refresh_token: string;
-  expires_in: number;
-  scope: string;
-  refresh_token_expires_in: number;
-}
+const KAKAO_AUTH_URL =
+  "https://kauth.kakao.com/oauth/authorize?client_id=361fc4d12b75888a392207252d5db496&redirect_uri=http://43.200.76.174:8080/api/kakao/callback&response_type=code";
 
-// 카카오 로그인 URL
-const KAKAO_URL = "https://kauth.kakao.com/oauth/token";
-
-// 카카오 로그인 함수
-const loginWithKakao = async (code: string) => {
-  try {
-    const response = await axios.post<KakaoTokenResponse>(KAKAO_URL, {
-      grant_type: "authorization_code",
-      client_id: "YOUR_KAKAO_APP_KEY",
-      redirect_uri: "YOUR_REDIRECT_URI",
-      code,
-    });
-
-    const kakaoToken = response.data.access_token;
-    return kakaoToken;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to login with Kakao");
-  }
-};
-
-const KakaoLoginButton: React.FC = () => {
+const KakaoLoginButton = () => {
+  const { login } = useLoginState();
   const handleKakaoLogin = async () => {
-    try {
-      // 카카오 로그인 처리
-      const kakaoToken = await loginWithKakao("AUTHORIZATION_CODE_FROM_KAKAO");
-      console.log(kakaoToken);
-    } catch (error) {
-      console.error(error);
-    }
+    window.location.href = KAKAO_AUTH_URL;
   };
 
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const authCode = url.searchParams.get("code");
+
+    if (authCode) {
+      const getAccessToken = async () => {
+        try {
+          const authResponse = await axios.post(
+            "http://43.200.76.174:8080/api/auth/kakao",
+            {
+              authorizationCode: authCode,
+            }
+          );
+
+          const accessToken = authResponse.data.jwtAccessToken;
+
+          // loginState에서 호출(jwtAccessToken header에 저장)
+          login(accessToken);
+
+          console.log(authResponse.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      getAccessToken();
+    }
+  }, []);
+
   return (
-
-    <button className="mx-auto" onClick={handleKakaoLogin}>
+    <button type="button" className="mx-auto" onClick={handleKakaoLogin}>
       <img src="./kakao_login_medium_narrow.png" alt="" />
-
     </button>
   );
 };
