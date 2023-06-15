@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface IShareRoom {
   endPoint: string;
   imageUrl: string;
@@ -22,6 +23,5 @@ export interface ICreateShareRoomFormValue {
 }
 
 export interface IPropsPlaceSearch {
-  // eslint-disable-next-line no-unused-vars
   placeSearch: (keyword: string) => void;
 }

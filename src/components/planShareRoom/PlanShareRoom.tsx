@@ -16,10 +16,10 @@ const PlanShareRoom = () => {
   const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
 
   useEffect(() => {
-    const mapContainer = document.getElementById("map"); // 지도를 표시할 div
+    const mapContainer = document.getElementById("map");
     const mapOption = {
-      center: new window.kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-      level: 3, // 지도의 확대 레벨
+      center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+      level: 3,
     };
     const map = new window.kakao.maps.Map(mapContainer, mapOption);
     const ps = new window.kakao.maps.services.Places();
@@ -45,14 +45,12 @@ const PlanShareRoom = () => {
     const paginationDOM = document.getElementById("pagination") as HTMLElement;
     const fragment = document.createDocumentFragment();
 
-    // 기존에 추가된 페이지 번호 삭제
     while (paginationDOM.hasChildNodes()) {
       if (paginationDOM.lastChild) {
         paginationDOM.removeChild(paginationDOM.lastChild);
       }
     }
 
-    // eslint-disable-next-line no-plusplus
     for (let i = 1; i <= pagination.last; i++) {
       const el = document.createElement("a");
       el.href = "#";
@@ -61,9 +59,7 @@ const PlanShareRoom = () => {
       if (i === pagination.current) {
         el.className = "on";
       } else {
-        // eslint-disable-next-line no-shadow, func-names
         el.onclick = (function (i) {
-          // eslint-disable-next-line func-names
           return function () {
             pagination.gotoPage(i);
           };
@@ -84,11 +80,11 @@ const PlanShareRoom = () => {
       setSearchPlaceResult(places);
 
       const bounds = new window.kakao.maps.LatLngBounds();
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < places.length; i++) {
-        displayMarker(places[i]);
-        bounds.extend(new window.kakao.maps.LatLng(places[i].y, places[i].x));
-      }
+
+      places.forEach((place) => {
+        displayMarker(place);
+        bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
+      });
 
       mapElement.map.setBounds(bounds);
       displayPagination(pagination);
