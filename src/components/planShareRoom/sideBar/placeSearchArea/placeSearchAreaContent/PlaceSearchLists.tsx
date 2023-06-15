@@ -7,11 +7,16 @@ const PlaceSearchLists = () => {
 
   const isExist = placeLists.length !== 0;
 
+  const onClickAddPlaceHandler = () => {
+    console.log('asd')
+  }
+
   return (
     <div id="menu_wrap" className="grow bg-white">
       <h3 className="mt-4 mb-6 ml-4 text-xl font-bold">검색결과</h3>
+      <div className="h-[40rem] overflow-y-scroll">
       {isExist ? (
-        <ul id="placesList" className="h-[40rem] overflow-y-scroll">
+        <ul id="placesList">
           {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
             <li
               key={place.id}
@@ -33,6 +38,7 @@ const PlaceSearchLists = () => {
                 <button
                   type="button"
                   className="w-8 h-8 border border-[#DCDCDC] rounded shadow"
+                  onClick={onClickAddPlaceHandler}
                 >
                   +
                 </button>
@@ -45,7 +51,8 @@ const PlaceSearchLists = () => {
           <p>검색결과가 존재하지 않습니다</p>
         </div>
       )}
-      <div id="pagination" />
+      <div id="pagination" className="flex justify-center items-center" />
+      </div>
     </div>
   );
 };

@@ -68,7 +68,7 @@ const PlanDate = () => {
   return (
     <div className="relative">
       <div
-        className="flex items-center mt-6 w-[19rem] h-[3.5rem] border border-[#DCDCDC] rounded-md"
+        className="flex items-center mt-6 w-[19rem] h-[3.5rem] bg-white border border-[#DCDCDC] rounded-md"
         onClick={onClickDateCalendar}
         role="presentation"
       >
@@ -92,7 +92,7 @@ const PlanDate = () => {
             returnValue="range"
             formatDay={(_locale, date) => moment(date).format("D")}
           />
-          <div className="flex justify-center items-center w-[350px] h-[4rem] border-x border-[#A5A5A5] rounded-b-md bg-white box-border">
+          <div className="flex justify-center items-center w-[350px] h-[4rem] border-x border-b border-[#A5A5A5] rounded-b-md bg-white box-border">
             <button
               type="button"
               className="w-[13rem] h-[2.8rem] bg-[#00AFFF] hover:bg-[] rounded-md text-[1.4rem] text-white"

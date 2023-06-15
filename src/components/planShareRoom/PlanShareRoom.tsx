@@ -31,11 +31,15 @@ const PlanShareRoom = () => {
     const marker = new window.kakao.maps.Marker({
       map: mapElement.map,
       position: new window.kakao.maps.LatLng(place.y, place.x),
-    });
+    })
+
 
     window.kakao.maps.event.addListener(marker, "click", () => {
       mapElement.infowindow.setContent(
-        `<div style="padding:5px;font-size:12px;">${place.place_name}</div>`
+        `<div style="display:flex; flex-direction:column;padding:5px;font-size:12px;">
+          <p>${place.place_name}</p>
+          <p style="font-size:9px">${place.address_name}</p>
+        </div>`
       );
       mapElement.infowindow.open(mapElement.map, marker);
     });
@@ -55,7 +59,7 @@ const PlanShareRoom = () => {
       const el = document.createElement("a");
       el.href = "#";
       el.innerHTML = String(i);
-
+      el.style.margin = "4px";
       if (i === pagination.current) {
         el.className = "on";
       } else {
