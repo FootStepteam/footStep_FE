@@ -36,7 +36,7 @@ const Secession = () => {
           <button
             onClick={onClickSecessionHandler}
             type="button"
-            className="mt-8 px-4 py-3 border-2 border-[#FF3232] rounded-md text-[#FF3232] text-2xl font-bold hover:bg-[#FF3232] hover:text-white"
+            className="mt-8 px-4 py-3 border-2 border-red-001 rounded-md text-red-001 text-2xl font-bold hover:bg-red-001 hover:text-white"
           >
             회원탈퇴
           </button>

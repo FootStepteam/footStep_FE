@@ -68,12 +68,12 @@ const PlanDate = () => {
   return (
     <div className="relative">
       <div
-        className="flex items-center mt-6 w-[19rem] h-[3.5rem] bg-white border border-[#DCDCDC] rounded-md"
+        className="flex items-center mt-6 w-[19rem] h-[3.5rem] bg-white border border-gray-003 rounded-md"
         onClick={onClickDateCalendar}
         role="presentation"
       >
         <CalendarIcon className="mx-4 w-[28px] h-[28px]" />
-        <div className="grow flex justify-center mx-4 text-[#A5A5A5]">
+        <div className="grow flex justify-center mx-4 text-gray-002">
           <p className="grow">
             {isSelected
               ? `${selectedDates.printStartDate} ~ ${selectedDates.printEndDate}`
@@ -92,10 +92,10 @@ const PlanDate = () => {
             returnValue="range"
             formatDay={(_locale, date) => moment(date).format("D")}
           />
-          <div className="flex justify-center items-center w-[350px] h-[4rem] border-x border-b border-[#A5A5A5] rounded-b-md bg-white box-border">
+          <div className="flex justify-center items-center w-[350px] h-[4rem] border-x border-b border-gray-002 rounded-b-md bg-white box-border">
             <button
               type="button"
-              className="w-[13rem] h-[2.8rem] bg-[#00AFFF] hover:bg-[] rounded-md text-[1.4rem] text-white"
+              className="w-[13rem] h-[2.8rem] bg-blue-002 rounded-md text-[1.4rem] text-white"
               onClick={onClickCompleteButtonHandler}
             >
               선택완료

@@ -22,7 +22,7 @@ const PlaceSearchCategory = () => {
       {categoriesFirstRow.map((category) => (
         <p
           key={category}
-          className="flex justify-center items-center py-2 bg-white-color border-[#DCDCDC] cursor-pointer"
+          className="flex justify-center items-center py-2 bg-white border border-gray-003 cursor-pointer"
           role="presentation"
         >
           {category}

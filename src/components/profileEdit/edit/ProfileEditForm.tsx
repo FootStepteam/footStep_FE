@@ -19,7 +19,7 @@ const ProfileEditForm = () => {
             </label>
             <button
               type="button"
-              className="absolute top-0 right-5 px-2 py-1 bg-[#FF3232] hover:bg-[#F84D4D]  rounded-md text-white text-[0.7rem]"
+              className="absolute top-0 right-5 px-2 py-1 bg-red-001 hover:bg-[#F84D4D]  rounded-md text-white text-[0.7rem]"
             >
               삭제
             </button>
@@ -33,7 +33,7 @@ const ProfileEditForm = () => {
                 type="text"
                 id="nickname"
                 defaultValue="덩두"
-                className="mt-2 px-4 py-2 border-[#DCDCDC] border rounded-md outline-none"
+                className="mt-2 px-4 py-2 border-gray-003 border rounded-md outline-none"
               />
             </div>
             <div className="flex flex-col mt-6">
@@ -45,7 +45,7 @@ const ProfileEditForm = () => {
                 id="email"
                 defaultValue="덩두"
                 disabled
-                className="mt-2 px-4 py-2 border-[#DCDCDC] border-[#A5A5A5] border rounded-md outline-none text-[#A5A5A5]"
+                className="mt-2 px-4 py-2 border-gray-003 border-gray-002 border rounded-md outline-none text-gray-002"
               />
             </div>
             <div className="flex flex-col mt-6">
@@ -55,14 +55,14 @@ const ProfileEditForm = () => {
               <textarea
                 id="introduce"
                 defaultValue="덩두"
-                className="mt-2 px-4 py-2  h-40 border-[#DCDCDC] border-[#A5A5A5] border rounded-md outline-none resize-none"
+                className="mt-2 px-4 py-2  h-40 border-gray-003 border-gray-002 border rounded-md outline-none resize-none"
               />
             </div>
           </div>
           <button
             type="button"
             onClick={submitHandler}
-            className="my-8 px-4 py-2 bg-skyblue-1 hover:bg-main-color rounded-lg text-lg text-white font-bold "
+            className="my-8 px-4 py-2 bg-blue-002 hover:bg-sky-005 rounded-lg text-lg text-white font-bold "
           >
             수정
           </button>

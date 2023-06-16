@@ -23,7 +23,7 @@ const Title = () => {
         maxLength={20}
         onChange={onChangeHandler}
       />
-      <p className="text-xl text-[#A5A5A5]">{title.length} / 20</p>
+      <p className="text-xl text-gray-002">{title.length} / 20</p>
     </div>
   );
 };

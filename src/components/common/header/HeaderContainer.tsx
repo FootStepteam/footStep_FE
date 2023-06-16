@@ -28,9 +28,9 @@ const HeaderContainer = () => {
       className={`sticky top-0 py-6 w-full ${
         path === "/"
           ? scrollY > 30
-            ? "bg-white border-b border-[#DCDCDC] text-black"
-            : "bg-gradient-to-r from-[#00AFFF] from-10% via-[#00CDFF] via-30% to-main-color to-90% text-white"
-          : "bg-white border-b border-[#DCDCDC]"
+            ? "bg-white border-b border-gray-003 text-black"
+            : "bg-gradient-to-r from-blue-002 from-10% via-sky-001 via-30% to-sky-005 to-90% text-white"
+          : "bg-white border-b border-gray-003"
       } transition-colors duration-150 ease-in-out z-50`}
     >
       <nav className="flex justify-between my-0 mx-auto w-[90rem] h-[4rem] ">

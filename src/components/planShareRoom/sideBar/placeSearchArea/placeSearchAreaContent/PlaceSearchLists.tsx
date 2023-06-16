@@ -11,7 +11,7 @@ const PlaceSearchLists = () => {
   const isExist = placeLists.length !== 0;
 
   const onClickAddPlaceHandler = (place:IKakaoPlaceSearchResult) => {
-    setPlanPlaces()
+    // setPlanPlaces()
   }
 
   return (
@@ -23,24 +23,24 @@ const PlaceSearchLists = () => {
           {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
             <li
               key={place.id}
-              className={`flex py-4 hover:bg-[#F9F9F9] border-b border-b-[#DCDCDC] cursor-pointer ${
-                index === 0 && "border-t border-t-[#DCDCDC]"
+              className={`flex py-4 hover:bg-gray-005 border-b border-b-gray-003 cursor-pointer ${
+                index === 0 && "border-t border-t-gray-003"
               }`}
             >
               <div className="ml-4 w-[19em]">
                 <div className="mb-1 flex items-center">
                   <p className="font-medium text-xl">{place.place_name}</p>
-                  <p className="text-[#A5A5A5] text-sm ml-2">
+                  <p className="text-gray-002 text-sm ml-2">
                     {place.category_group_name}
                   </p>
                 </div>
                 <p className="font-normal text-sm">{place.address_name}</p>
-                <p className="text-[] font-normal text-sm">{place.phone}</p>
+                <p className="font-normal text-sm">{place.phone}</p>
               </div>
               <div>
                 <button
                   type="button"
-                  className="w-8 h-8 border border-[#DCDCDC] rounded shadow"
+                  className="w-8 h-8 border border-gray-003 rounded shadow"
                   onClick={() => onClickAddPlaceHandler(place)}
                 >
                   +

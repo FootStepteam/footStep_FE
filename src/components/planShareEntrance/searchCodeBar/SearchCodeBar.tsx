@@ -19,7 +19,7 @@ const SearchCodeBar = () => {
   };
 
   return (
-    <div className="w-full h-52 bg-main-color">
+    <div className="w-full h-52 bg-sky-005">
       <div className="mx-auto pt-10 w-[55rem]">
         <p className="m-center w-[31rem] text-white text-lg font-bold">
           친구들과 자유롭게 계획하는 실시간 여행 일정 계획 플랫폼, 발자국

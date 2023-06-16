@@ -14,7 +14,7 @@ const SearchResult = () => {
       <div className="mt-8 mb-20 grid grid-cols-2 w-commonSection">
         <Link
           to="/"
-          className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-[#DCDCDC] border rounded-xl transition-all duration-100 ease-out hover:scale-105"
+          className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-gray-003 border rounded-xl transition-all duration-100 ease-out hover:scale-105"
         >
           <div className="w-[12rem] h-[10rem]">
             <img
@@ -32,12 +32,12 @@ const SearchResult = () => {
             <div className="mt-1 text-lg">
               {result.travelStartDate} ~ {result.travelEndDate}
             </div>
-            <div className="mt-6 text-[0.7rem] text-[#A5A5A5]">
+            <div className="mt-6 text-[0.7rem] text-gray-002">
               <p>여행 일정은 입장코드를 공유 받은 인원만</p>
               <p>입장 가능합니다.</p>
             </div>
           </div>
-          <div className="flex justify-center items-center w-12 rounded-r-xl bg-skyblue-1 transition-all duration-100 ease-out group-hover:w-14">
+          <div className="flex justify-center items-center w-12 rounded-r-xl bg-blue-002 transition-all duration-100 ease-out group-hover:w-14">
             <RightArrow width={20} height={20} />
           </div>
         </Link>
