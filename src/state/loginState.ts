@@ -13,6 +13,11 @@ export const useLoginState = () => {
   const login = (token: string) => {
     setJwtAccessToken(token);
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    console.log("Access Token saved: ", token);
+    console.log(
+      "Axios default header: ",
+      axios.defaults.headers.common.Authorization
+    );
   };
 
   const logout = () => {
