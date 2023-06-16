@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IPropsPlaceSearch } from "../../../../../type/shareRoom";
 import { useRecoilState } from "recoil";
-import { selectedArea } from "../../../../../state/shareRoom";
+import { selectedArea } from "../../../../../state/selectedArea";
 
 const categoriesFirstRow: string[] = [
   "서울",

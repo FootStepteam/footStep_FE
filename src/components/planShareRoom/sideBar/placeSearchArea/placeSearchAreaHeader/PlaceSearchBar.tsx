@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { ReactComponent as SearchIcon } from "../../../../../assets/search.svg";
-import { selectedArea } from "../../../../../state/shareRoom";
+import { selectedArea } from "../../../../../state/selectedArea";
 import { IPropsPlaceSearch } from "../../../../../type/shareRoom";
 
 const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
