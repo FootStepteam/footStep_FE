@@ -5,16 +5,16 @@ import { useLoginState } from "../../state/loginState";
 
 const EmailLoginForm = () => {
   const { register, handleSubmit } = useForm<TLoginFormData>();
-  const { login } = useLoginState(); // use our hook
+  const { login } = useLoginState();
 
   const handleEmailLogin = async (data: TLoginFormData) => {
     try {
-      const response = await axios.post("/api/members/sign-in", {
+      const response = await axios.post("/api/api/members/sign-in", {
         loginEmail: data.email,
         password: data.password,
       });
 
-      // 로그인 성공시 처리
+      // response로 받아온 jwtAccessToken 저장
       const accessToken = response.data.jwtAccessToken;
 
       // loginState에서 호출(jwtAccessToken header에 저장)

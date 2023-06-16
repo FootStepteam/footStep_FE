@@ -18,13 +18,10 @@ const KakaoLoginButton = () => {
     if (authCode) {
       const getAccessToken = async () => {
         try {
-          const authResponse = await axios.post(
-            "http://43.200.76.174:8080/api/auth/kakao",
-            {
-              authorizationCode: authCode,
-            }
-          );
-
+          const authResponse = await axios.post("/api/api/auth/kakao", {
+            authorizationCode: authCode,
+          });
+          // response로 받아온 jwtAccessToken 저장
           const accessToken = authResponse.data.jwtAccessToken;
 
           // loginState에서 호출(jwtAccessToken header에 저장)
@@ -32,6 +29,7 @@ const KakaoLoginButton = () => {
 
           console.log(authResponse.data);
         } catch (error) {
+          // 로그인 실패시 처리
           console.error(error);
         }
       };

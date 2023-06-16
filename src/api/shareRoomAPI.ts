@@ -5,7 +5,7 @@ import {
 } from "../type/shareRoom";
 
 export const getShareRoomAPI = async (shareCode: string) => {
-  const response = await axios.get(`/api/api/share-room/find?q=${shareCode}`);
+  const response = await axios.get(`/api/share-room/find?q=${shareCode}`);
 
   return response;
 };
