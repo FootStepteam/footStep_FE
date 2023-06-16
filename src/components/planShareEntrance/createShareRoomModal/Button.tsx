@@ -1,13 +1,19 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { createModalOpenState } from "../../../state/createModalOpen";
-import { createShareRoomAPI } from "../../../api/shareRoomAPI";
-import { createShareRoomFormValue } from "../../../store/createShareRoomFormValue";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { createModalOpenState } from '../../../state/createModalOpen';
+import { createShareRoomAPI } from '../../../api/shareRoomAPI';
+import { createShareRoomFormValue } from '../../../store/createShareRoomFormValue';
+import { jwtAccessTokenState } from '../../../state/loginState';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const Button = () => {
-  const [openCreateModal, setOpenCreateModal] =
+  const [openCreateModal, setOpenCreateModal] = 
     useRecoilState(createModalOpenState);
 
   const formValue = useRecoilValue(createShareRoomFormValue);
+  const token = useRecoilValue(jwtAccessTokenState);
+
+  const MySwal = withReactContent(Swal);
 
   const validationCheck = () => {
     if (
@@ -22,10 +28,18 @@ const Button = () => {
 
   const onClickCreateHandler = () => {
     if (!validationCheck()) {
-      alert("!!");
       return;
     }
-    createShareRoomAPI(formValue);
+    
+    createShareRoomAPI(formValue, token);
+    
+    MySwal.fire({
+      icon: "success",
+      text: "등록이 완료되었습니다.",
+    })
+    
+    setOpenCreateModal(false);
+    
   };
 
   const clickCancleHandler = () => {

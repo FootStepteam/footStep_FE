@@ -48,8 +48,8 @@ const PlanDate = () => {
   };
 
   const onClickCompleteButtonHandler = () => {
-    const submitStartDate = moment(selectedDates.startDate).format("YYYYMMDD");
-    const submitEndDate = moment(selectedDates.endDate).format("YYYYMMDD");
+    const submitStartDate = moment(selectedDates.startDate).format("YYYY-MM-DD");
+    const submitEndDate = moment(selectedDates.endDate).format("YYYY-MM-DD");
     const printStartDate = moment(selectedDates.startDate).format("MM.DD");
     const printEndDate = moment(selectedDates.endDate).format("MM.DD");
 
