@@ -1,14 +1,17 @@
 import { useRecoilValue } from "recoil";
 import { IKakaoPlaceSearchResult } from "../../../../../type/kakaoPlaceSearchResult";
 import { placeSearchResult } from "../../../../../store/placeSearchResult";
+import { useState } from "react";
 
 const PlaceSearchLists = () => {
+  const [planPlaces, setPlanPlaces] = useState([]);
   const placeLists = useRecoilValue(placeSearchResult);
+  
 
   const isExist = placeLists.length !== 0;
 
-  const onClickAddPlaceHandler = () => {
-    console.log('asd')
+  const onClickAddPlaceHandler = (place:IKakaoPlaceSearchResult) => {
+    setPlanPlaces()
   }
 
   return (
@@ -38,7 +41,7 @@ const PlaceSearchLists = () => {
                 <button
                   type="button"
                   className="w-8 h-8 border border-[#DCDCDC] rounded shadow"
-                  onClick={onClickAddPlaceHandler}
+                  onClick={() => onClickAddPlaceHandler(place)}
                 >
                   +
                 </button>

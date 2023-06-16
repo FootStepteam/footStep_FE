@@ -4,6 +4,9 @@ import { placeSearchResult } from "../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoPlaceSearchResult";
 import Map from "./map/Map";
 import SideBar from "./sideBar/SideBar";
+import { shareRoomInfo } from "../../store/shareRoomInfo";
+import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
+import { useParams } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -13,7 +16,17 @@ declare global {
 
 const PlanShareRoom = () => {
   const [mapElement, setMapElement] = useState<any>({});
+  const setPlanShareRoomInfo = useSetRecoilState(shareRoomInfo);
   const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
+  const { shareRoomID } = useParams<string>();
+
+  const getShareRoomInfo = async() => {
+    if(shareRoomID){
+      const result = await getShareRoomInfoAPI(shareRoomID);
+      console.log(result)
+      setPlanShareRoomInfo(result);
+    }
+  }
 
   useEffect(() => {
     const mapContainer = document.getElementById("map");
@@ -25,6 +38,7 @@ const PlanShareRoom = () => {
     const ps = new window.kakao.maps.services.Places();
     const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 9005 });
     setMapElement({ map, ps, infowindow });
+    getShareRoomInfo()
   }, []);
 
   const displayMarker = (place: IKakaoPlaceSearchResult) => {
@@ -82,7 +96,7 @@ const PlanShareRoom = () => {
   ) => {
     if (status === window.kakao.maps.services.Status.OK) {
       setSearchPlaceResult(places);
-
+      console.log(places)
       const bounds = new window.kakao.maps.LatLngBounds();
 
       places.forEach((place) => {

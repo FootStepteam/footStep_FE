@@ -16,7 +16,7 @@ const App = () => {
       <Route path="/user/profile/:path" element={<ProfileEditPage />} />
       <Route path="/community" element={<CommunityPage />} />
       <Route path="/planShareEntrance" element={<PlanShareEntrancePage />} />
-      <Route path="/planShareRoom" element={<PlanShareRoomPage />} />
+      <Route path="/planShareRoom/:shareRoomID" element={<PlanShareRoomPage />} />
     </Routes>
   );
 };

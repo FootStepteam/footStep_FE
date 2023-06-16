@@ -3,7 +3,7 @@ import testImage from "../../../../assets/temporary/nature-6517866_1920.jpg";
 import { ReactComponent as RightArrow } from "../../../../assets/rightArrow.svg";
 
 const ExistsPlan = () => {
-  const plans = ["test1", "test2"];
+  const plans = ["1", "2", "3", "4"];
 
   return (
     <>
@@ -12,7 +12,7 @@ const ExistsPlan = () => {
         {plans.map((plan) => (
           <Link
             key={plan}
-            to="/"
+            to={`/planShareRoom/${plan}`}
             className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-[#DCDCDC] border rounded-xl transition-all duration-100 ease-out hover:scale-105"
           >
             <div className="w-[12rem] h-[10rem]">
