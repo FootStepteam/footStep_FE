@@ -1,45 +1,47 @@
-import axios from "axios";
-import {
-  ICreateShareRoomFormValue,
-  ISubmitShareRoomData,
-} from "../type/shareRoom";
+import axios from 'axios';
+import { ICreateShareRoomFormValue, ISubmitShareRoomData } from '../type/shareRoom';
 
 export const getShareRoomAPI = async (shareCode: string) => {
-  const response = await axios.get(`/api/share-room/find?q=${shareCode}`);
-
-  return response;
+  try {
+    const response = await axios.get(`/api/api/share-room/find?q=${shareCode}`);
+    return response;
+  } catch (error) {
+    alert(error);
+  }
 };
 
-export const createShareRoomAPI = async (
-  formValue: ICreateShareRoomFormValue
-) => {
+export const createShareRoomAPI = async (formValue: ICreateShareRoomFormValue) => {
   const data: ISubmitShareRoomData = {
     shareName: formValue.title,
     travelStartDate: formValue.startDate,
     travelEndDate: formValue.endDate,
-    imageUrl: "",
+    imageUrl: '',
   };
   console.log(data);
-  const response = await axios.post("/api/api/share-room", data);
+  const response = await axios.post('/api/api/share-room', data);
   console.log(response);
 
   return response;
 };
 
-export const getIncludeShareRoomAPI = async () => {
-  const body = {
-    page: 0,
-    size: 10
-  }
+interface IBody {
+  page: number;
+  size: number;
+}
 
-  const response = await axios.get("/api/api/share-room", body);
+export const getIncludeShareRoomAPI = async (token: string) => {
+  const response = await axios.get('/api/api/share-room?page=0&size=20', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return response.data;
-}
+};
 
 export const getShareRoomInfoAPI = async (shareRoomID: string) => {
   const id = Number(shareRoomID);
-  const response = await axios.get(`/api/api/share-room/${id}`)
+  const response = await axios.get(`/api/api/share-room/${id}`);
 
   return response.data;
-}
+};

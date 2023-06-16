@@ -1,28 +1,29 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import ExistsPlan from "./ExistsPlan";
-import NotExistsPlan from "./NotExistsPlan";
-import SearchResult from "./SearchResult";
-import { searchShareRoomData } from "../../../../store/searchShareRoom";
-import { getShareRoomList } from "../../../../store/getShareRoomList";
-import { useEffect } from "react";
-import { getIncludeShareRoomAPI } from "../../../../api/shareRoomAPI";
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { getIncludeShareRoomAPI } from '../../../../api/shareRoomAPI';
+import { jwtAccessTokenState } from '../../../../state/loginState';
+import { searchShareRoomData } from '../../../../store/searchShareRoom';
+import ExistsPlan from './ExistsPlan';
+import NotExistsPlan from './NotExistsPlan';
+import SearchResult from './SearchResult';
+import { getShareRoomList } from '../../../../store/getShareRoomList';
 
 const PlanListContent = () => {
-  // const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
+  const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
   const searchResult = useRecoilValue(searchShareRoomData);
-  const test = ["1", "2", "3", "4"];
+  const token = useRecoilValue(jwtAccessTokenState);
 
   // const isExists = shareRooms.length !== 0;
-  const isExists = test.length !== 0;
+  const isExists = shareRooms.length !== 0;
 
   const getShareRooms = async () => {
-    const result = await getIncludeShareRoomAPI();
-    // setShareRooms(result);
-  }
+    const result = await getIncludeShareRoomAPI(token);
+    setShareRooms(result);
+  };
 
   useEffect(() => {
     getShareRooms();
-  }, [])
+  }, []);
 
   return (
     <div className="mt-8 w-commonSection">
