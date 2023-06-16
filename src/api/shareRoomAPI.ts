@@ -34,5 +34,12 @@ export const getIncludeShareRoomAPI = async () => {
 
   const response = await axios.get("/api/api/share-room", body);
 
-  return response.data
+  return response.data;
+}
+
+export const getShareRoomInfoAPI = async (shareRoomID: string) => {
+  const id = Number(shareRoomID);
+  const response = await axios.get(`/api/api/share-room/${id}`)
+
+  return response.data;
 }

@@ -8,15 +8,16 @@ import { useEffect } from "react";
 import { getIncludeShareRoomAPI } from "../../../../api/shareRoomAPI";
 
 const PlanListContent = () => {
-  const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
+  // const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
   const searchResult = useRecoilValue(searchShareRoomData);
-  
-  const isExists = shareRooms.length !== 0;
+  const test = ["1", "2", "3", "4"];
+
+  // const isExists = shareRooms.length !== 0;
+  const isExists = test.length !== 0;
 
   const getShareRooms = async () => {
     const result = await getIncludeShareRoomAPI();
-    setShareRooms(result);
-    
+    // setShareRooms(result);
   }
 
   useEffect(() => {
