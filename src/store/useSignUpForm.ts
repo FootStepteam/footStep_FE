@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
-import { signUpFormState } from "../state/signUpForm";
+import { signUpFormState } from "../state/signUpFormState";
 
 export const useSignUpForm = () => {
   const [formData, setFormData] = useRecoilState(signUpFormState);
