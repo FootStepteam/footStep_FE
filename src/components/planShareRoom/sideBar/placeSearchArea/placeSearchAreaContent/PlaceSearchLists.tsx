@@ -16,7 +16,7 @@ const PlaceSearchLists = () => {
       className="grow bg-white"
     >
       <h3 className="mt-4 mb-6 ml-4 text-xl font-bold">검색결과</h3>
-      <div className="h-[40rem] overflow-y-scroll">
+      <div className="h-[40rem] overflow-y-auto">
         {isExist ? (
           <ul id="placesList">
             {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
@@ -45,8 +45,8 @@ const PlaceSearchLists = () => {
             ))}
           </ul>
         ) : (
-          <div>
-            <p>검색결과가 존재하지 않습니다</p>
+          <div className='flex justify-center mt-8 text-gray-002 text-sm'>
+            <p>검색결과가 존재하지 않습니다.</p>
           </div>
         )}
         <div
