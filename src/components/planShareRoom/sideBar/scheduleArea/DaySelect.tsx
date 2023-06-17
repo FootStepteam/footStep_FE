@@ -100,7 +100,7 @@ const DaySelect = () => {
         <p className="flex items-end  ml-3 pt-1 text-gray-001">{selectedDate.month}월 {selectedDate.date}일 ({selectedDate.day})</p>
         <button
           type="button"
-          className="ml-2 pt-[0.5rem]"
+          className={`${planDates.length === 0 ? "hidden" : "ml-2 pt-[0.5rem]"}`}
           onClick={onClickDaysHandler}
         >
           <BottomArrow className="border-2 rounded-full" width={20} height={20}/>
