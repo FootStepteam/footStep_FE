@@ -1,37 +1,31 @@
 import { useEffect } from "react";
 import { useLoginState } from "../../state/loginState";
-import axios from "axios";
+import { getKakaoAccessToken } from "../../api/kakaoLoginAPI";
 
 const KakaoCallBack = () => {
   const { login } = useLoginState();
+
   useEffect(() => {
     const url = new URL(window.location.href);
     const authCode = url.searchParams.get("code");
 
     if (authCode) {
-      console.log(authCode);
-      const getAccessToken = async () => {
+      const fetchAccessToken = async () => {
         try {
-          const authResponse = await axios.post(
-            "http://43.200.76.174:8080/api/auth/kakao",
-            {
-              authorizationCode: authCode,
-            }
-          );
-          console.log(authResponse);
+          const authResponseData = await getKakaoAccessToken(authCode);
 
-          const accessToken = authResponse.data.jwtAccessToken;
+          const accessToken = authResponseData.jwtAccessToken;
 
           // loginState에서 호출(jwtAccessToken header에 저장)
           login(accessToken);
 
-          // console.log(authResponse.data);
+          // console.log(authResponseData);
         } catch (error) {
           // console.error(error);
         }
       };
 
-      getAccessToken();
+      fetchAccessToken();
     }
   }, []);
   return <div>Redirecting...</div>;

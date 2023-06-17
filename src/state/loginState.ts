@@ -1,5 +1,6 @@
 import { atom, useRecoilState } from "recoil";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const jwtAccessTokenState = atom<string | null>({
   key: "jwtAccessTokenState",
@@ -13,6 +14,9 @@ export const useLoginState = () => {
   const login = (token: string) => {
     setJwtAccessToken(token);
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+    Cookies.set("accessToken", token, { expires: 12 / 24 });
+
     console.log("Access Token saved: ", token);
     console.log(
       "Axios default header: ",
