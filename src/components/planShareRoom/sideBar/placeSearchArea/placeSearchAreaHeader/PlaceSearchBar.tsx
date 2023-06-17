@@ -17,9 +17,12 @@ const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
 
   const onSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
-
+    
     if(selected === "noSelected"){
-      MySwal.fire("지역을 선택해주세요");
+      MySwal.fire({
+        icon: "error",
+        text: "지역 선택 후 장소 검색을 해주세요",
+      });
       return;
     }
 
