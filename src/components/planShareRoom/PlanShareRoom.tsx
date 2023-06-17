@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { placeSearchResult } from "../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoPlaceSearchResult";
 import Map from "./map/Map";
@@ -7,6 +7,7 @@ import SideBar from "./sideBar/SideBar";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
 import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
 import { useParams } from "react-router-dom";
+import { jwtAccessTokenState } from "../../state/loginState";
 
 declare global {
   interface Window {
@@ -18,13 +19,17 @@ const PlanShareRoom = () => {
   const [mapElement, setMapElement] = useState<any>({});
   const setPlanShareRoomInfo = useSetRecoilState(shareRoomInfo);
   const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
+  const token = useRecoilValue(jwtAccessTokenState)
   const { shareRoomID } = useParams<string>();
+
+
 
   const getShareRoomInfo = async() => {
     if(shareRoomID){
-      const result = await getShareRoomInfoAPI(shareRoomID);
+      const result = await getShareRoomInfoAPI(shareRoomID, token);
       console.log(result)
       setPlanShareRoomInfo(result);
+      
     }
   }
 
@@ -38,7 +43,7 @@ const PlanShareRoom = () => {
     const ps = new window.kakao.maps.services.Places();
     const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 9005 });
     setMapElement({ map, ps, infowindow });
-    getShareRoomInfo()
+    getShareRoomInfo();
   }, []);
 
   const displayMarker = (place: IKakaoPlaceSearchResult) => {

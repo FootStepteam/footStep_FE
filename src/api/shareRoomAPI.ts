@@ -10,16 +10,19 @@ export const getShareRoomAPI = async (shareCode: string) => {
   }
 };
 
-export const createShareRoomAPI = async (formValue: ICreateShareRoomFormValue) => {
+export const createShareRoomAPI = async (formValue: ICreateShareRoomFormValue, token: string) => {
   const data: ISubmitShareRoomData = {
     shareName: formValue.title,
     travelStartDate: formValue.startDate,
     travelEndDate: formValue.endDate,
     imageUrl: '',
   };
-  console.log(data);
-  const response = await axios.post('/api/api/share-room', data);
-  console.log(response);
+
+  const response = await axios.post('/api/api/share-room', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
 
   return response;
 };
