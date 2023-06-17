@@ -9,7 +9,7 @@ const KakaoCallBack = () => {
     const authCode = url.searchParams.get("code");
 
     if (authCode) {
-      console.log(authCode);
+      // console.log(authCode); authCode 들어오는지 확인
       const getAccessToken = async () => {
         try {
           const authResponse = await axios.post(
@@ -18,7 +18,6 @@ const KakaoCallBack = () => {
               authorizationCode: authCode,
             }
           );
-          console.log(authResponse);
 
           const accessToken = authResponse.data.jwtAccessToken;
 
