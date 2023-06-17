@@ -12,7 +12,6 @@ interface IPlanDates {
 
 const DaySelect = () => {
   const [daysOpenState, setDaysOpenState] = useState<boolean>(false);
-  const [selectedDay, setSelectedDay] = useState<number>(1);
   const [planDates, setPlanDates] = useState<IPlanDates[]>([]);
   const [selectedDate, setSelectedDate] = useState<IPlanDates>({
     month: 1,
@@ -28,7 +27,6 @@ const DaySelect = () => {
   };
 
   const onClickselectDay = (day:number) => {
-    setSelectedDay(day);
     setSelectedDate(planDates[day-1]);
   }
 
@@ -97,7 +95,7 @@ const DaySelect = () => {
   return (
     <div>
       <div className="flex items-center mt-12 ml-12">
-        <p className="ml-2 text-[24px] font-bold">{selectedDay}일차</p>
+        <p className="ml-2 text-[24px] font-bold">{selectedDate.planDay}일차</p>
         <p className="flex items-end  ml-3 pt-1 text-gray-001">{selectedDate.month}월 {selectedDate.date}일 ({selectedDate.day})</p>
         <button
           type="button"
