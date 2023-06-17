@@ -13,7 +13,7 @@ const SearchResult = () => {
       <h1 className="text-xl font-bold">검색결과</h1>
       <div className="mt-8 mb-20 grid grid-cols-2 w-commonSection">
         <Link
-          to="/"
+          to={`/planShareRoom/${result.shareId}`}
           className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-gray-003 border rounded-xl transition-all duration-100 ease-out hover:scale-105"
         >
           <div className="w-[12rem] h-[10rem]">
@@ -37,8 +37,8 @@ const SearchResult = () => {
               <p>입장 가능합니다.</p>
             </div>
           </div>
-          <div className="flex justify-center items-center w-12 rounded-r-xl bg-blue-002 transition-all duration-100 ease-out group-hover:w-14">
-            <RightArrow width={20} height={20} />
+          <div className="flex justify-center items-center w-12 rounded-r-xl bg-sky-001 transition-all duration-100 ease-out group-hover:w-14">
+            <RightArrow width={20} height={20} fill="#FFFFFF"/>
           </div>
         </Link>
       </div>
