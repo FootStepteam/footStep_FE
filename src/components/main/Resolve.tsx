@@ -1,6 +1,6 @@
 const Resolve = () => {
   return (
-    <section className="flex flex-col justify-center items-center w-full h-[20rem] bg-[#00CDFF]">
+    <section className="flex flex-col justify-center items-center w-full h-[20rem] bg-sky-001">
       <p className="py-4 text-5xl font-bold text-white tracking-widest">
         이제 이런 문제들은 그만 !
       </p>

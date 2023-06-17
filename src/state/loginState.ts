@@ -1,10 +1,11 @@
 import { atom, useRecoilState } from "recoil";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { getTokenInCookies } from "../auth/auth";
 
-export const jwtAccessTokenState = atom<string | null>({
+export const jwtAccessTokenState = atom<string>({
   key: "jwtAccessTokenState",
-  default: null,
+  default: getTokenInCookies(),
 });
 
 export const useLoginState = () => {
@@ -27,7 +28,7 @@ export const useLoginState = () => {
   };
 
   const logout = () => {
-    setJwtAccessToken(null);
+    setJwtAccessToken("anonymous");
     delete axios.defaults.headers.common.Authorization;
 
     // Logout 시 쿠키에서 accessToken 삭제

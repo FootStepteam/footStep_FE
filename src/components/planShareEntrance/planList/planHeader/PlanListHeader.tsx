@@ -14,7 +14,7 @@ const PlanListHeader = () => {
         <button
           id="createBtn"
           type="button"
-          className="px-4 py-3 float-right bg-main-color rounded-xl font-bold text-white "
+          className="px-4 py-3 float-right bg-sky-005 rounded-xl font-bold text-white "
           onClick={onClickHandler}
         >
           방 생성하기

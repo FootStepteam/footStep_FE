@@ -5,9 +5,9 @@ import PlaceSearchTitle from "./PlaceSearchTitle";
 
 const PlaceSearchAreaHeader = ({ placeSearch }: IPropsPlaceSearch) => {
   return (
-    <div className="flex flex-col w-planShareRoomSideBar h-planShareRoomHeader bg-[#00AFFF]">
+    <div className="flex flex-col w-planShareRoomSideBar h-planShareRoomHeader bg-blue-002">
       <PlaceSearchTitle />
-      <PlaceSearchCategory />
+      <PlaceSearchCategory placeSearch={placeSearch} />
       <PlaceSearchBar placeSearch={placeSearch} />
     </div>
   );

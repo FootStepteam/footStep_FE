@@ -1,9 +1,15 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useRecoilValue } from "recoil";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { ReactComponent as SearchIcon } from "../../../../../assets/search.svg";
+import { selectedArea } from "../../../../../state/selectedArea";
 import { IPropsPlaceSearch } from "../../../../../type/shareRoom";
 
 const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
   const [keyword, setKeyword] = useState<string>("");
+  const selected = useRecoilValue(selectedArea);
+  const MySwal = withReactContent(Swal);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
@@ -11,6 +17,12 @@ const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
 
   const onSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
+
+    if(selected === "noSelected"){
+      MySwal.fire("지역을 선택해주세요");
+      return;
+    }
+
     placeSearch(keyword);
   };
 

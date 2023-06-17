@@ -5,17 +5,17 @@ const PasswordEdit = () => {
         <input
           type="password"
           placeholder="현재 비밀번호를 입력하세요."
-          className="px-4 py-3 border border-[#A5A5A5] rounded-md outline-none text-sm"
+          className="px-4 py-3 border border-gray-002 rounded-md outline-none text-sm"
         />
         <input
           type="password"
           placeholder="새로운 비밀번호"
-          className="mt-3 px-4 py-3 border border-[#A5A5A5] rounded-md outline-none text-sm"
+          className="mt-3 px-4 py-3 border border-gray-002 rounded-md outline-none text-sm"
         />
         <input
           type="password"
           placeholder="비밀번호 재확인"
-          className="mt-3 px-4 py-3 border border-[#A5A5A5] rounded-md outline-none text-sm"
+          className="mt-3 px-4 py-3 border border-gray-002 rounded-md outline-none text-sm"
         />
         <button
           type="button"
