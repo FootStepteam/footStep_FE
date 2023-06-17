@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { IPropsPlaceSearch } from "../../../../../type/shareRoom";
 import { useRecoilState } from "recoil";
 import { selectedArea } from "../../../../../state/selectedArea";
@@ -21,6 +20,7 @@ const categoriesFirstRow: string[] = [
   "경북",
   "제주",
 ];
+
 const PlaceSearchCategory = ({ placeSearch }: IPropsPlaceSearch) => {
   const [selected, setSelected] = useRecoilState(selectedArea);
 

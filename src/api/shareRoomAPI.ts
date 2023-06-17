@@ -24,11 +24,6 @@ export const createShareRoomAPI = async (formValue: ICreateShareRoomFormValue) =
   return response;
 };
 
-interface IBody {
-  page: number;
-  size: number;
-}
-
 export const getIncludeShareRoomAPI = async (token: string) => {
   const response = await axios.get('/api/api/share-room?page=0&size=20', {
     headers: {

@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { IShareRoom } from "../type/shareRoom";
 
-export const initialValue: IShareRoom = {
+const initialValue: IShareRoom = {
   endPoint: "",
   imageUrl: "",
   shareCode: "",

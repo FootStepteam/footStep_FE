@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { ISidebarState } from "../type/sideBar";
 
-const initialState:ISidebarState = {
+const initialState: ISidebarState = {
     schedule : true,
     placeSearch: false
 }
