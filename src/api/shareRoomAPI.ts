@@ -39,9 +39,13 @@ export const getIncludeShareRoomAPI = async (token: string) => {
   return response.data;
 };
 
-export const getShareRoomInfoAPI = async (shareRoomID: string) => {
+export const getShareRoomInfoAPI = async (shareRoomID: string, token: string) => {
   const id = Number(shareRoomID);
-  const response = await axios.get(`/api/api/share-room/${id}`);
+  const response = await axios.get(`/api/api/share-room/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
 
   return response.data;
 };
