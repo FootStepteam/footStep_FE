@@ -19,7 +19,7 @@ const DaySelect = () => {
     day: "일",
     planDay: 1
   });
-
+  
   const getShareRoomInfo = useRecoilValue(shareRoomInfo);
 
   const onClickDaysHandler = () => {
@@ -31,6 +31,7 @@ const DaySelect = () => {
   }
 
   const dayCalc = () => {
+    
     const start = getShareRoomInfo.travelStartDate;
     const end = getShareRoomInfo.travelEndDate;
 
@@ -90,7 +91,7 @@ const DaySelect = () => {
 
   useEffect(() => {
     dayCalc();
-  }, []);
+  }, [getShareRoomInfo]);
 
   return (
     <div>
@@ -110,6 +111,7 @@ const DaySelect = () => {
           <p className={`px-4 py-2 cursor-pointer ${selectedDate.planDay === date.planDay && "text-blue-003 font-medium border-b-2 border-b-blue-003"}`} onClick={() => onClickselectDay(date.planDay)}>{date.planDay}일차</p>
         ))}
       </div>
+      <input type="text" value={getShareRoomInfo.travelStartDate} />
     </div>
   );
 };
