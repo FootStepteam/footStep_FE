@@ -34,10 +34,11 @@ const ExistsPlan = () => {
                 <p>입장 가능합니다.</p>
               </div>
             </div>
-            <div className="flex justify-center items-center w-12 rounded-r-xl bg-skyblue-1 transition-all duration-100 ease-out group-hover:w-14">
+            <div className="flex justify-center items-center w-12 rounded-r-xl bg-sky-001 transition-all duration-100 ease-out group-hover:w-14">
               <RightArrow
                 width={20}
                 height={20}
+                fill='#FFFFFF'
               />
             </div>
           </Link>
