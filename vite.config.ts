@@ -4,6 +4,7 @@ import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
   plugins: [react(), svgr()],
+  base: "/footstep_FE/",
   server: {
     proxy: {
       "/api": {
