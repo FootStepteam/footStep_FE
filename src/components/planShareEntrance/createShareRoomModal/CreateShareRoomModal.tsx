@@ -11,7 +11,6 @@ const CreateShareRoomModal = () => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const onClickModalBgHandler = (e: MouseEvent) => {
-    console.log(e);
     const buttonDOM = document.querySelector("#createBtn");
 
     if (e.target !== buttonDOM && e.target === modalRef.current) {

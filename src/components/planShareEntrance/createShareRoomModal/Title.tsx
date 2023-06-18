@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import { createShareRoomFormValue } from "../../../store/createShareRoomFormValue";
 
 const Title = () => {
   const [title, setTitle] = useState<string>("");
+  const [formValue, setFormValue] = useRecoilState(createShareRoomFormValue);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+    setFormValue({
+      ...formValue,
+      title: e.target.value,
+    });
   };
 
   return (
@@ -16,7 +23,7 @@ const Title = () => {
         maxLength={20}
         onChange={onChangeHandler}
       />
-      <p className="text-xl text-[#A5A5A5]">{title.length} / 20</p>
+      <p className="text-xl text-gray-002">{title.length} / 20</p>
     </div>
   );
 };

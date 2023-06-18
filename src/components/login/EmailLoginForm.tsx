@@ -1,28 +1,25 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { TLoginFormData } from "../../type/emailLogin";
+import { useLoginState } from "../../state/loginState";
+import { signInWithEmail } from "../../api/emailLoginAPI";
+import { useNavigate } from "react-router-dom";
 
 const EmailLoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<TLoginFormData>();
+  const { login } = useLoginState();
+  const navigate = useNavigate();
 
-  const handleEmailLogin = async (data: FormData) => {
+  const handleEmailLogin = async (data: TLoginFormData) => {
     try {
-      // 이메일 로그인 API 호출
-      const response = await axios.post("/email/login", {
-        email: data.email,
-        password: data.password,
-      });
+      const responseData = await signInWithEmail(data);
 
-      // 로그인 성공시 처리
-      console.log(response.data);
+      // response로 받아온 jwtAccessToken 저장
+      const accessToken = responseData.jwtAccessToken;
+
+      // loginState에서 호출(jwtAccessToken header에 저장)
+      login(accessToken);
+      navigate("/");
+      console.log(responseData);
     } catch (error) {
       // 로그인 실패시 처리
       console.error(error);
@@ -37,7 +34,7 @@ const EmailLoginForm = () => {
           <input
             className="w-full mt-4 border-b-2"
             type="email"
-            {...register("email", { required: "Email is required" })}
+            {...register("email", { required: "이메일을 입력해주세요" })}
           />
         </div>
         <div className="my-4">
@@ -45,7 +42,7 @@ const EmailLoginForm = () => {
           <input
             className="w-full mt-4 border-b-2"
             type="password"
-            {...register("password", { required: "Password is required" })}
+            {...register("password", { required: "비밀번호를 입력해주세요" })}
           />
         </div>
       </div>

@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { jwtAccessTokenState } from "../../../../state/loginState";
+import { useRecoilValue } from "recoil";
 
 const menus = [
   {
@@ -20,17 +22,28 @@ const menus = [
 ];
 
 const Menu = () => {
+  const auth = useRecoilValue(jwtAccessTokenState);
+  const navigate = useNavigate();
+
+  const onClickHandler = (path: string) => {
+    if (auth === "anonymous" && path === "/planShareEntrance") {
+      navigate("/login");
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <div className="flex grow">
       {menus.map((element) => (
-        <Link
+        <div
           key={element.menu}
-          to={element.path}
+          onClick={() => onClickHandler(element.path)}
           className="flex grow justify-center items-center text-[1.3rem]
            font-semibold cursor-pointer"
         >
           {element.menu}
-        </Link>
+        </div>
       ))}
     </div>
   );

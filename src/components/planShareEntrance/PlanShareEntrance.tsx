@@ -1,8 +1,8 @@
 import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { createModalOpenState } from "../../state/createModalOpen";
-import CodeField from "./codeField/CodeField";
 import PlanList from "./planList/PlanList";
+import SearchCodeBar from "./searchCodeBar/SearchCodeBar";
 
 const PlanShareEntrance = () => {
   const openModal = useRecoilValue(createModalOpenState);
@@ -25,7 +25,7 @@ const PlanShareEntrance = () => {
 
   return (
     <div className="w-full">
-      <CodeField />
+      <SearchCodeBar />
       <PlanList />
     </div>
   );
