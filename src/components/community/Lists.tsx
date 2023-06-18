@@ -124,7 +124,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
           </button>
         </div>
         <div className="flex">
-          <Link to="/community/write">
+          <Link to="/community/newpost">
             <button
               type="button"
               className="px-4 py-2 rounded-lg bg-main-color text-white"
