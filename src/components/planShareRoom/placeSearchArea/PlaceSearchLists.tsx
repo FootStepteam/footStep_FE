@@ -8,6 +8,7 @@ const PlaceSearchLists = () => {
 
   const onClickAddPlaceHandler = (place: IKakaoPlaceSearchResult) => {
     // setPlanPlaces({...planPlaces, place});
+    console.log("asd")
   };
 
   return (
