@@ -1,5 +1,5 @@
-import PlanListContent from "./planContent/PlanListContent";
-import PlanListHeader from "./planHeader/PlanListHeader";
+import PlanListContent from "./PlanListContent";
+import PlanListHeader from "./PlanListHeader";
 
 const Plan = () => {
   return (

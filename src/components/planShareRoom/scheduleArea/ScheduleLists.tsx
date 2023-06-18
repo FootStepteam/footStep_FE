@@ -1,7 +1,7 @@
-import { useRecoilState } from 'recoil';
-import { sidebarState } from '../../../../state/sidebarState';
+import { useRecoilState } from "recoil";
+import { sidebarState } from "../../../state/sidebarState";
 
-const PlaceLists = () => {
+const ScheduleLists = () => {
   const [sidebarOpenState, setSidebarOpenState] = useRecoilState(sidebarState);
 
   const onClickHandler = () => {
@@ -25,4 +25,4 @@ const PlaceLists = () => {
   );
 };
 
-export default PlaceLists;
+export default ScheduleLists;

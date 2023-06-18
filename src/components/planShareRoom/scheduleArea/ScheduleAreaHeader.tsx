@@ -1,9 +1,9 @@
 import { useRecoilValue } from "recoil";
-import { ReactComponent as Exit } from "../../../../assets/exit.svg";
-import { shareRoomInfo } from "../../../../store/shareRoomInfo";
-import PlanDate from "../../../planShareEntrance/createShareRoomModal/PlanDate";
+import { ReactComponent as Exit } from "../../../assets/exit.svg";
+import { shareRoomInfo } from "../../../store/shareRoomInfo";
+import PlanDate from "../../planShareEntrance/createShareRoomModal/PlanDate";
 
-const SideBarHeader = () => {
+const ScheduleAreaHeader = () => {
   const getShareRoomInfo = useRecoilValue(shareRoomInfo);
 
   return (
@@ -21,4 +21,4 @@ const SideBarHeader = () => {
   );
 };
 
-export default SideBarHeader;
+export default ScheduleAreaHeader;

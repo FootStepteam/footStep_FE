@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRecoilValue } from "recoil";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { ReactComponent as SearchIcon } from "../../../../../assets/search.svg";
-import { selectedArea } from "../../../../../state/selectedArea";
-import { IPropsPlaceSearch } from "../../../../../type/shareRoom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { ReactComponent as SearchIcon } from "../../../assets/search.svg";
+import { selectedArea } from "../../../state/selectedArea";
+import { IPropsPlaceSearch } from "../../../type/shareRoom";
 
 const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
   const [keyword, setKeyword] = useState<string>("");
@@ -17,8 +17,8 @@ const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
 
   const onSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
-    
-    if(selected === "noSelected"){
+
+    if (selected === "noSelected") {
       MySwal.fire({
         icon: "error",
         text: "지역 선택 후 장소 검색을 해주세요",

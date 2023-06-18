@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import testImage from "../../../../assets/temporary/nature-6517866_1920.jpg";
-import { ReactComponent as RightArrow } from "../../../../assets/rightArrow.svg";
-import { searchShareRoomData } from "../../../../store/searchShareRoom";
-import { IShareRoom } from "../../../../type/shareRoom";
+import testImage from "../../../assets/temporary/nature-6517866_1920.jpg";
+import { ReactComponent as RightArrow } from "../../../assets/rightArrow.svg";
+import { searchShareRoomData } from "../../../store/searchShareRoom";
+import { IShareRoom } from "../../../type/shareRoom";
 
 const SearchResult = () => {
   const result: IShareRoom = useRecoilValue(searchShareRoomData);
@@ -38,7 +38,7 @@ const SearchResult = () => {
             </div>
           </div>
           <div className="flex justify-center items-center w-12 rounded-r-xl bg-sky-001 transition-all duration-100 ease-out group-hover:w-14">
-            <RightArrow width={20} height={20} fill="#FFFFFF"/>
+            <RightArrow width={20} height={20} fill="#FFFFFF" />
           </div>
         </Link>
       </div>

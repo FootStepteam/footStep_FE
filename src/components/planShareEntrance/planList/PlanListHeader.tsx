@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { createModalOpenState } from "../../../../state/createModalOpen";
+import { createModalOpenState } from "../../../state/createModalOpen";
 
 const PlanListHeader = () => {
   const [open, setOpen] = useRecoilState(createModalOpenState);
