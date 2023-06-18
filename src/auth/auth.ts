@@ -6,8 +6,8 @@ export const getTokenInCookies = () => {
     const COOKIE_KEY = "accessToken";
 
     const token = cookies.get(COOKIE_KEY);
-    
-    if(token !== "anonymous"){
+
+    if(token !== undefined) {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
 

@@ -1,4 +1,4 @@
-import { ReactComponent as Related } from "../../../../../assets/markerRelated.svg";
+import { ReactComponent as Related } from "../../../assets/markerRelated.svg";
 
 const PlaceSearchTitle = () => {
   return (

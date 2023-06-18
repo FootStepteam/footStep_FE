@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { placeSearchResult } from "../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoPlaceSearchResult";
-import Map from "./map/Map";
-import SideBar from "./sideBar/SideBar";
+import SideBar from "./SideBar";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
 import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
 import { useParams } from "react-router-dom";
@@ -19,19 +18,16 @@ const PlanShareRoom = () => {
   const [mapElement, setMapElement] = useState<any>({});
   const setPlanShareRoomInfo = useSetRecoilState(shareRoomInfo);
   const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
-  const token = useRecoilValue(jwtAccessTokenState)
+  const token = useRecoilValue(jwtAccessTokenState);
   const { shareRoomID } = useParams<string>();
 
-
-
-  const getShareRoomInfo = async() => {
-    if(shareRoomID){
+  const getShareRoomInfo = async () => {
+    if (shareRoomID) {
       const result = await getShareRoomInfoAPI(shareRoomID, token);
-      console.log(result)
+      console.log(result);
       setPlanShareRoomInfo(result);
-      
     }
-  }
+  };
 
   useEffect(() => {
     const mapContainer = document.getElementById("map");
@@ -50,8 +46,7 @@ const PlanShareRoom = () => {
     const marker = new window.kakao.maps.Marker({
       map: mapElement.map,
       position: new window.kakao.maps.LatLng(place.y, place.x),
-    })
-
+    });
 
     window.kakao.maps.event.addListener(marker, "click", () => {
       mapElement.infowindow.setContent(
@@ -101,7 +96,7 @@ const PlanShareRoom = () => {
   ) => {
     if (status === window.kakao.maps.services.Status.OK) {
       setSearchPlaceResult(places);
-      console.log(places)
+      console.log(places);
       const bounds = new window.kakao.maps.LatLngBounds();
 
       places.forEach((place) => {
@@ -122,7 +117,7 @@ const PlanShareRoom = () => {
   return (
     <>
       <SideBar placeSearch={placeSearch} />
-      <Map />
+      <div id="map" className="relative w-[100vw] h-[100vh] z-[1000]" />
     </>
   );
 };
