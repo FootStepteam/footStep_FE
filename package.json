@@ -1,4 +1,5 @@
 {
+  "homepage": "https://github.com/FootStepteam/footstep_FE/",
   "name": "footstep-fe",
   "private": true,
   "version": "0.0.0",
@@ -9,7 +10,9 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "env": {
@@ -20,6 +23,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
     "axios": "^1.4.0",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",

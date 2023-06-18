@@ -10,7 +10,7 @@ import Spinner from "./components/common/spinner/Spinner";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
       <RecoilRoot>
         <Suspense fallback={<Spinner />}>
           <App />
