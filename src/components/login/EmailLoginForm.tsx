@@ -1,13 +1,11 @@
 import { useForm } from "react-hook-form";
 import { TLoginFormData } from "../../type/emailLogin";
-import { useLoginState } from "../../state/loginState";
 import { signInWithEmail } from "../../api/emailLoginAPI";
-import { useNavigate } from "react-router-dom";
+import { useLoginState } from "../../hooks/useLoginState";
 
 const EmailLoginForm = () => {
   const { register, handleSubmit } = useForm<TLoginFormData>();
   const { login } = useLoginState();
-  const navigate = useNavigate();
 
   const handleEmailLogin = async (data: TLoginFormData) => {
     try {
@@ -18,7 +16,6 @@ const EmailLoginForm = () => {
 
       // loginState에서 호출(jwtAccessToken header에 저장)
       login(accessToken);
-      navigate("/");
       console.log(responseData);
     } catch (error) {
       // 로그인 실패시 처리

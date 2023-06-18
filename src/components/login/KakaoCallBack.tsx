@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLoginState } from "../../state/loginState";
+import { useLoginState } from "../../hooks/useLoginState";
 import { getKakaoAccessToken } from "../../api/kakaoLoginAPI";
 
 const KakaoCallBack = () => {
@@ -13,15 +13,16 @@ const KakaoCallBack = () => {
       const fetchAccessToken = async () => {
         try {
           const authResponseData = await getKakaoAccessToken(authCode);
-
-          const accessToken = authResponseData.jwtAccessToken;
-
-          // loginState에서 호출(jwtAccessToken header에 저장)
-          login(accessToken);
-
-          // console.log(authResponseData);
+          const accessToken = authResponseData?.jwtAccessToken; // 적절한 accessToken 속성에 접근
+          console.log(accessToken); // accessToken 출력 확인
+          if (accessToken) {
+            login(accessToken); // login 함수 호출
+          } else {
+            // accessToken이 없을 경우 처리
+            console.error("Access Token not found");
+          }
         } catch (error) {
-          // console.error(error);
+          console.error(error);
         }
       };
 
