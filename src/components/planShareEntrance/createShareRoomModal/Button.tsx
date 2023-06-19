@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { createModalOpenState } from '../../../state/createModalOpen';
 import { createShareRoomAPI } from '../../../api/shareRoomAPI';
-import { createShareRoomFormValue, initialValue } from '../../../store/createShareRoomFormValue';
+import { createShareRoomForm, initialValue } from '../../../store/createShareRoomForm';
 import { jwtAccessTokenState } from '../../../state/loginState';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -10,7 +10,7 @@ const Button = () => {
   const [openCreateModal, setOpenCreateModal] = 
     useRecoilState(createModalOpenState);
 
-  const [shareRoomForm, setShareRoomForm] = useRecoilState(createShareRoomFormValue);
+  const [shareRoomForm, setShareRoomForm] = useRecoilState(createShareRoomForm);
   const token = useRecoilValue(jwtAccessTokenState);
 
   const MySwal = withReactContent(Swal);
