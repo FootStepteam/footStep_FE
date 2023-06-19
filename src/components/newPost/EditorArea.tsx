@@ -4,14 +4,14 @@ import { useEditor } from "../../hooks/useEditor";
 
 const EditorArea = () => {
   const {
-    title,
+    // title,
     setTitle,
     content,
     setContent,
-    isPublic,
+    // isPublic,
     setIsPublic,
     selectedPlan,
-    setSelectedPlan,
+    // setSelectedPlan,
     plans,
     handleSelectPlan,
     submitPost,
@@ -57,7 +57,7 @@ const EditorArea = () => {
         <CKEditor
           editor={ClassicEditor}
           data={content}
-          onChange={(event, editor) => {
+          onChange={(_event, editor) => {
             const data = editor.getData();
             setContent(data);
           }}
