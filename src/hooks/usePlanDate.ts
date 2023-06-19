@@ -37,7 +37,7 @@ const initialSelectedDate: ISelectedDate = {
   submitEndDate: "",
 }
 
-const usePlanDate = (type: string) => {
+const usePlanDate = (type: string, editStatus: boolean) => {
   const token = useRecoilValue(jwtAccessTokenState);
   const { shareRoomID } = useParams<string>();
   const [night, setNight] = useState<number>(0);
@@ -93,7 +93,9 @@ const usePlanDate = (type: string) => {
   }
 
   const onClickDateCalendar = () => {
-    setOpenCalendar(!openCalendar);
+    if(editStatus){
+      setOpenCalendar(!openCalendar);
+    }
   };
 
   useEffect(() => {       

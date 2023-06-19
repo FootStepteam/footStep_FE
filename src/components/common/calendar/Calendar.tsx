@@ -6,17 +6,17 @@ import usePlanDate from "../../../hooks/usePlanDate";
 
 interface IProps {
   type: string;
+  editStatus: boolean
 }
 
-const Calendar = ({ type }: IProps) => {
-  const [night, selectedDate, openCalendar, onChangeHandler, onClickCompleteButtonHandler, onClickDateCalendar] = usePlanDate(type);
-
+const Calendar = ({ type, editStatus }: IProps) => {
+  const [night, selectedDate, openCalendar, onChangeHandler, onClickCompleteButtonHandler, onClickDateCalendar] = usePlanDate(type, editStatus);
   const isSelected = selectedDate.printStartDate !== "";
 
   return (
-    <div className="relative">
+    <div className={`relative`}>
       <div
-        className="flex items-center mt-6 w-[19rem] h-[3.5rem] bg-white border border-gray-003 rounded-md"
+        className={`flex items-center mt-6 w-[19rem] h-[3.5rem] ${editStatus ? "bg-white" : "bg-gray-004"} border border-gray-003 rounded-md`}
         onClick={onClickDateCalendar}
         role="presentation"
       >
