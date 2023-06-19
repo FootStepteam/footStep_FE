@@ -107,7 +107,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
           <button
             type="button"
             className={`px-4 py-2 border-r-2 ${
-              sortBy === "latest" ? "text-main-color font-bold" : ""
+              sortBy === "latest" ? "text-blue-003 font-bold" : ""
             }`}
             onClick={handleSortByLatest}
           >
@@ -116,7 +116,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
           <button
             type="button"
             className={`px-4 py-2 ${
-              sortBy === "popular" ? "text-main-color font-bold" : ""
+              sortBy === "popular" ? "text-blue-003 font-bold" : ""
             }`}
             onClick={handleSortByPopular}
           >
@@ -127,7 +127,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
           <Link to="/community/newpost">
             <button
               type="button"
-              className="px-4 py-2 rounded-lg bg-main-color text-white"
+              className="px-4 py-2 rounded-lg bg-blue-003 text-white-001"
             >
               새 게시글
             </button>
@@ -143,7 +143,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
           {matchedPosts.map((post) => (
             <li key={post.id}>
               <a href={`/community/${post.id}`}>
-                <div className="flex justify-between w-full mb-4 px-8 py-2 border-2 border-main-color rounded-lg">
+                <div className="flex justify-between w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg">
                   <div>
                     <p className="mb-2 text-xl font-bold">{post.title}</p>
                     <div className="flex">
@@ -159,7 +159,7 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
                       <p className="flex items-center">
                         <Like width={20} height={20} /> {post.likes}
                       </p>
-                      <p className="font-thin text-sm text-placeholder-color">
+                      <p className="font-thin text-sm text-gray-002">
                         작성일: {post.createdAt}
                       </p>
                     </div>
