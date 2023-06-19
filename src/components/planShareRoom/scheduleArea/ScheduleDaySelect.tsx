@@ -122,6 +122,7 @@ const ScheduleDaySelect = () => {
       >
         {planDates.map((date) => (
           <p
+            key={date.planDay}
             className={`px-4 py-2 cursor-pointer ${
               selectedDate.planDay === date.planDay &&
               "text-blue-003 font-medium border-b-2 border-b-blue-003"
