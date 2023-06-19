@@ -1,10 +1,12 @@
 import { useRecoilValue } from "recoil";
 import { ReactComponent as Exit } from "../../../assets/exit.svg";
 import { shareRoomInfo } from "../../../store/shareRoomInfo";
-import PlanDate from "../../planShareEntrance/createShareRoomModal/PlanDate";
+import Calendar from "../../common/calendar/Calendar";
 
 const ScheduleAreaHeader = () => {
   const getShareRoomInfo = useRecoilValue(shareRoomInfo);
+
+  const type = "get";
 
   return (
     <div className="w-planShareRoomSideBar h-planShareRoomHeader bg-sky-005">
@@ -15,7 +17,7 @@ const ScheduleAreaHeader = () => {
         <p className=" text-white text-2xl font-bold">
           {getShareRoomInfo.shareName}
         </p>
-        <PlanDate />
+        <Calendar type={type}/>
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
 import { useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
+import { createModalOpenState } from "../../../state/createModalOpen";
+import Calendar from "../../common/calendar/Calendar";
+import Button from "./Button";
 import Close from "./Close";
 import Title from "./Title";
-import PlanDate from "./PlanDate";
-import Button from "./Button";
-import { createModalOpenState } from "../../../state/createModalOpen";
 
 const CreateShareRoomModal = () => {
   const [openModal, setOpenModal] = useRecoilState(createModalOpenState);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const type = "create";
 
   const onClickModalBgHandler = (e: MouseEvent) => {
     const buttonDOM = document.querySelector("#createBtn");
@@ -36,7 +38,7 @@ const CreateShareRoomModal = () => {
       <div className="flex flex-col items-center m-center mt-[15rem] w-[24rem] h-[20rem] bg-white rounded-md shadow-md animate-modalShow">
         <Close />
         <Title />
-        <PlanDate />
+        <Calendar type={type} />
         <Button />
       </div>
     </div>
