@@ -22,6 +22,9 @@ const EmailLoginForm = () => {
       if (savedLocation) {
         navigate(savedLocation);
       }
+      if (!savedLocation) {
+        navigate("/");
+      }
       console.log(responseData);
     } catch (error) {
       // 로그인 실패시 처리
