@@ -1,10 +1,11 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { Value } from "react-calendar/dist/cjs/shared/types";
 import { useParams } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { getShareRoomInfoAPI } from "../api/shareRoomAPI";
 import { jwtAccessTokenState } from "../state/loginState";
-import moment from "moment";
-import { Value } from "react-calendar/dist/cjs/shared/types";
+import { createShareRoomForm } from "../store/createShareRoomForm";
 import { IShareRoom } from "../type/shareRoom";
 
 interface ISelectedDate {
@@ -43,6 +44,7 @@ const usePlanDate = (type: string) => {
   const [planDate, setPlanDate] = useState<IShareRoom>(initialValue);
   const [selectedDate, setSelectedDate] = useState<ISelectedDate>(initialSelectedDate);
   const [openCalendar, setOpenCalendar] = useState<boolean>(false);
+  const [shareRoomForm, setShareRoomForm] = useRecoilState(createShareRoomForm);
 
   const getShareRoomInfo = async () => {
     if (shareRoomID) {
@@ -86,6 +88,7 @@ const usePlanDate = (type: string) => {
 
     calculateNights("change");
     setSelectedDate({ ...selectedDate, printStartDate, printEndDate, submitStartDate, submitEndDate});
+    setShareRoomForm({...shareRoomForm, startDate : submitStartDate, endDate : submitEndDate});
     setOpenCalendar(false);
   }
 
