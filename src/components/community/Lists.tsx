@@ -5,13 +5,14 @@ import { ReactComponent as Like } from "../../assets/like.svg";
 import { getCommunityAPI } from "../../api/communityAPI";
 
 const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
-  const [sortBy, setSortBy] = useState<"latest" | "popular">("latest");
+  const [sortBy, setSortBy] = useState<"recent" | "like">("recent");
   const [posts, setPosts] = useState<ICommunityPost[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
         const data = await getCommunityAPI({ page: 0, size: 10, sort: sortBy });
+        console.log(data);
         setPosts(data.communities);
       } catch (error) {
         console.error(error);
@@ -29,12 +30,12 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
     return matchSearchQuery && matchCategory;
   });
 
-  const handleSortByLatest = () => {
-    setSortBy("latest");
+  const handleSortByrecent = () => {
+    setSortBy("recent");
   };
 
   const handleSortByPopular = () => {
-    setSortBy("popular");
+    setSortBy("like");
   };
 
   return (
@@ -44,16 +45,16 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
           <button
             type="button"
             className={`px-4 py-2 border-r-2 ${
-              sortBy === "latest" ? "text-blue-003 font-bold" : ""
+              sortBy === "recent" ? "text-blue-003 font-bold" : ""
             }`}
-            onClick={handleSortByLatest}
+            onClick={handleSortByrecent}
           >
             최신순
           </button>
           <button
             type="button"
             className={`px-4 py-2 ${
-              sortBy === "popular" ? "text-blue-003 font-bold" : ""
+              sortBy === "like" ? "text-blue-003 font-bold" : ""
             }`}
             onClick={handleSortByPopular}
           >
