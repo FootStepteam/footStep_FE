@@ -15,8 +15,7 @@ export const postCommunityAPI = async (
   isPublic: boolean,
   content: string
 ) => {
-  const response = await axios.post("/api/api/community", {
-    memberId,
+  const response = await axios.post(`/api/api/community?memberId=${memberId}`, {
     shareId,
     communityName: title,
     communityPublicState: isPublic,

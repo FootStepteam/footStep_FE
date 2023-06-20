@@ -4,7 +4,7 @@ interface ICommunityPost {
   communityId: number;
   communityName: string;
   content: string;
-  createdDatetime: string;
+  createdDate: string;
   likeCount: number;
   memberNickname: string;
   travelEndDate: string;

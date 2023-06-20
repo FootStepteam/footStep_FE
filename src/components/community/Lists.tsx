@@ -87,7 +87,7 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
                       {post.communityName}
                     </p>
                     <div className="flex">
-                      <p>작성일: {post.createdDatetime}</p>
+                      <p>작성일: {post.createdDate}</p>
                     </div>
                   </div>
                   <div className="flex items-center">
@@ -100,7 +100,7 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
                         <Like width={20} height={20} /> {post.likeCount}
                       </p>
                       <p className="font-thin text-sm text-gray-002">
-                        작성일: {post.createdDatetime}
+                        작성일: {post.createdDate}
                       </p>
                     </div>
                   </div>
