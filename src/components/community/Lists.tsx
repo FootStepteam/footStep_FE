@@ -78,15 +78,15 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
       ) : (
         <ul className="w-full">
           {filteredPosts.map((post) => (
-            <li key={post.communityName}>
-              <a href={`/community/${post.communityName}`}>
+            <li key={post.communityId}>
+              <Link to={`/community/${post.communityId}`}>
                 <div className="flex justify-between w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg">
                   <div>
                     <p className="mb-2 text-xl font-bold">
                       {post.communityName}
                     </p>
                     <div className="flex">
-                      <p>작성일: {post.createdDate}</p>
+                      <p>작성일: {post.createdDatetime}</p>
                     </div>
                   </div>
                   <div className="flex items-center">
@@ -99,12 +99,12 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
                         <Like width={20} height={20} /> {post.likeCount}
                       </p>
                       <p className="font-thin text-sm text-gray-002">
-                        작성일: {post.createdDate}
+                        작성일: {post.createdDatetime}
                       </p>
                     </div>
                   </div>
                 </div>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
