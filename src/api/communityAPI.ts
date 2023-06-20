@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ICommunityData, IGetCommunityParams } from "../type/communityPage";
 
 export const getCommunityAPI = async (
   params?: IGetCommunityParams

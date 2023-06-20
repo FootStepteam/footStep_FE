@@ -1,27 +1,21 @@
-interface ICommunityPost {
-  commentCount: number;
-  comments: { commentId: number; content: string; memberNickname: string }[];
-  communityId: number;
+export interface ICommunityPost {
   communityName: string;
-  content: string;
   createdDate: string;
   likeCount: number;
   memberNickname: string;
-  travelEndDate: string;
-  travelStartDate: string;
 }
 
-interface ICommunityData {
+export interface ICommunityData {
   communities: ICommunityPost[];
   lastPage: boolean;
 }
 
-interface IListsProps {
+export interface IListsProps {
   searchQuery: string;
   selectedCategory: string;
 }
 
-interface IGetCommunityParams {
+export interface IGetCommunityParams {
   page?: number;
   size?: number;
   sort?: string;
