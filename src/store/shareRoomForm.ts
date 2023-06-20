@@ -7,7 +7,7 @@ export const initialValue: ICreateShareRoomFormValue = {
   endDate: "",
 };
 
-export const createShareRoomForm = atom<ICreateShareRoomFormValue>({
+export const scheduleShareRoomForm = atom<ICreateShareRoomFormValue>({
   key: "createShareRoomFormValue",
   default: initialValue,
 });

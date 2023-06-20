@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getShareRoomInfoAPI } from "../api/shareRoomAPI";
 import { jwtAccessTokenState } from "../state/loginState";
-import { createShareRoomForm } from "../store/createShareRoomForm";
+import { scheduleShareRoomForm } from "../store/shareRoomForm";
 import { IShareRoom } from "../type/shareRoom";
 
 interface ISelectedDate {
@@ -44,7 +44,7 @@ const usePlanDate = (type: string, editStatus: boolean) => {
   const [planDate, setPlanDate] = useState<IShareRoom>(initialValue);
   const [selectedDate, setSelectedDate] = useState<ISelectedDate>(initialSelectedDate);
   const [openCalendar, setOpenCalendar] = useState<boolean>(false);
-  const [shareRoomForm, setShareRoomForm] = useRecoilState(createShareRoomForm);
+  const [shareRoomForm, setShareRoomForm] = useRecoilState(scheduleShareRoomForm);
 
   const getShareRoomInfo = async () => {
     if (shareRoomID) {

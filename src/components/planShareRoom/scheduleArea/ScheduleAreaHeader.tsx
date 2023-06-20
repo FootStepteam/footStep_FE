@@ -7,14 +7,14 @@ import { editShareRoomInfoAPI } from "../../../api/shareRoomAPI";
 import { useParams } from "react-router-dom";
 import { jwtAccessTokenState } from "../../../state/loginState";
 import useTitle from "../../../hooks/useTitle";
-import { createShareRoomForm } from "../../../store/createShareRoomForm";
+import { scheduleShareRoomForm } from "../../../store/shareRoomForm";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const ScheduleAreaHeader = () => {
   const token = useRecoilValue(jwtAccessTokenState);
   const getShareRoomInfo = useRecoilValue(shareRoomInfo);
-  const shareRoomForm = useRecoilValue(createShareRoomForm);
+  const shareRoomForm = useRecoilValue(scheduleShareRoomForm);
   const { shareRoomID } = useParams<string>();
   const [editStatus, setEditStatus] = useState<boolean>(false);
   const [title, onChangeTitleHandler, setTitleHandler] = useTitle();

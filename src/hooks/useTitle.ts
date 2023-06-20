@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
-import { createShareRoomForm } from "../store/createShareRoomForm";
+import { scheduleShareRoomForm } from "../store/shareRoomForm";
 
 const useTitle = () => {
     const [title, setTitle] = useState("");
-    const [shareRoomForm, setShareRoomForm] = useRecoilState(createShareRoomForm);
+    const [shareRoomForm, setShareRoomForm] = useRecoilState(scheduleShareRoomForm);
 
     const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
