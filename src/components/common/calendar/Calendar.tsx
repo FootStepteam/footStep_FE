@@ -16,7 +16,7 @@ const Calendar = ({ type, editStatus = true}: IProps) => {
   return (
     <div className={`relative`}>
       <div
-        className={`flex items-center mt-6 w-[19rem] h-[3.5rem] ${editStatus ? "bg-white" : "bg-gray-004"} border border-gray-003 rounded-md`}
+        className={`flex items-center mt-6 w-[19rem] h-[3.5rem] ${editStatus ? "bg-white" : "bg-gray-006"} border border-gray-006 rounded-sm shadow-sm`}
         onClick={onClickDateCalendar}
         role="presentation"
       >

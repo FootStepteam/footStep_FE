@@ -16,7 +16,7 @@ const ScheduleArea = () => {
   };
 
   return (
-    <div className="relative w-[25rem] shadow-xl bg-white z-[1003]">
+    <div className="relative w-planShareRoomSideBar shadow-xl bg-gray-007 z-[1003]">
       <ScheduleAreaHeader />
       <ScheduleDaySelect />
       <ScheduleLists />

@@ -59,35 +59,38 @@ const ScheduleAreaHeader = () => {
   }, [getShareRoomInfo])
 
   return (
-    <div className="w-planShareRoomSideBar h-planShareRoomHeader bg-blue-003">
+    <div className="w-planShareRoomSideBar h-planShareRoomHeader bg-gray-007">
       <div className="flex justify-between items-center">
         <button type="button" className="mt-4 mb-6 ml-2  ">
           <Exit fill="#A5A5A5" width={25} height={25} />
         </button>
         {editStatus ? (
-          <div className="flex mr-4 text-white text-sm">
+          <div className="flex mr-4 text-sm">
             <p 
-              className="mx-1 cursor-pointer"
+              className="mx-1 text-green-001 cursor-pointer"
               onClick={() => onClickHandler("complete")}>
               수정
             </p>
-            <p className="mx-1 cursor-pointer" onClick={() => onClickHandler("cancel")}>취소</p>
+            <p className="mx-1 text-red-001 cursor-pointer" onClick={() => onClickHandler("cancel")}>취소</p>
           </div>
            ): (
-          <p className="mr-4 text-white text-sm cursor-pointer" onClick={() => onClickHandler("edit")}>
+          <p className="mr-4 text-blue-001 text-sm cursor-pointer" onClick={() => onClickHandler("edit")}>
             편집
           </p>
           )
         }
       </div>
-      <div className="ml-12">
-        <input 
-          type="text"
-          defaultValue={title}
-          className="w-[16rem] bg-blue-003 text-white text-2xl font-bold"
-          onChange={onChangeTitleHandler}
-          disabled={editStatus ? false : true} 
-          />
+      <div className="flex flex-col items-center">
+        <div className="flex items-center w-[17rem]">
+          <input 
+            type="text"
+            defaultValue={title}
+            className="w-[12rem] bg-gray-007 text-black text-2xl font-bold"
+            onChange={onChangeTitleHandler}
+            disabled={editStatus ? false : true} 
+            />
+            {editStatus && <p className="grow ml-4 text-xl text-gray-002">{title.length} / 20</p>}
+        </div>
         <Calendar type={type} editStatus={editStatus}/>
       </div>
     </div>

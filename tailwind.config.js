@@ -14,6 +14,7 @@ export default {
         "gray-004": "#EBEBEB",
         "gray-005": "#F9F9F9",
         "gray-006": "#F5F5F5",
+        "gray-007": "#fafafa",
         "blue-001": "#0094FF",
         "blue-002": "#00AFFF",
         "blue-003": "#5FCDFF",
@@ -49,7 +50,7 @@ export default {
       },
       width: {
         commonSection: "68.75rem",
-        planShareRoomSideBar: "25rem",
+        planShareRoomSideBar: "21rem",
       },
       height: {
         banner: "calc(100vh - 5.5rem)",
@@ -88,7 +89,15 @@ export default {
         placeSearchAreaClose: {
           from: { left : 0 },
           to: { left: "-25rem" },
-        }
+        },
+        daysDropDown: {
+          from: { opacity: 0 },
+          to: { opacity: 1 }
+        },
+        daysUp: {
+          from: { opacity: 1 },
+          to: { opacity: 0 }
+        },
       },
       animation: {
         intro: "intro 1s ease-in-out",
@@ -97,6 +106,8 @@ export default {
         modalBgShow: "modalBgShow 0.3s",
         placeSearchAreaShow: "placeSearchAreaShow 0.3s",
         placeSearchAreaClose: "placeSearchAreaClose 0.3s",
+        daysDropDown: "daysDropDown 0.4s",
+        daysUp: "daysUp 0.4s",
       },
     },
   },

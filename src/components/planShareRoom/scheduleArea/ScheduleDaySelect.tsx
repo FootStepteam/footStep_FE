@@ -38,9 +38,7 @@ const ScheduleDaySelect = () => {
     const newEndDate = new Date(end);
 
     const startMonth = newStartDate.getMonth() + 1;
-    // const endMonth = newEndDate.getMonth() + 1;
     const startDate = newStartDate.getDate();
-    // const endDate = newEndDate.getDate();
     const startDay = newStartDate.getDay();
 
     let diff = Math.abs(newStartDate.getTime() - newEndDate.getTime());
@@ -107,30 +105,30 @@ const ScheduleDaySelect = () => {
           onClick={onClickDaysHandler}
         >
           <BottomArrow
-            className="border-2 rounded-full"
+            className={`border-2 rounded-full origin-center ${daysOpenState ? "rotate-180" : "rotate-360"}`}
             width={20}
             height={20}
           />
         </button>
       </div>
       <div
-        className={`${
+        className={`flex flex-col justify-center items-center py-4 bg-white ${
           daysOpenState
-            ? "flex justify-center mt-4 border-y border-y-gray-003"
-            : "hidden"
+            ? "visible min-h-20 mt-4 shadow-[rgba(0, 0, 0, 0.1) 0px 4px 12px]"
+            : "invisible h-0 text-white"
         }`}
       >
         {planDates.map((date) => (
-          <p
+          <div
             key={date.planDay}
-            className={`px-4 py-2 cursor-pointer ${
-              selectedDate.planDay === date.planDay &&
-              "text-blue-003 font-medium border-b-2 border-b-blue-003"
-            }`}
+            className={"px-4 py-2 w-[12rem] cursor-pointer"}
             onClick={() => onClickselectDay(date.planDay)}
           >
-            {date.planDay}일차
-          </p>
+            <p className="text-sm">
+                <span className="mr-4 font-bold">{date.planDay}일차 </span><span className={`${selectedDate.planDay === date.planDay ?
+              "text-blue-003 font-medium" : "text-black-003"}`}>{date.month}월 {date.date}일 ({date.day})</span>
+            </p>
+          </div>
         ))}
       </div>
     </div>
