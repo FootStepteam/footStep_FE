@@ -47,3 +47,22 @@ export const getShareRoomInfoAPI = async (shareRoomID: string, token: string) =>
 
   return response.data;
 };
+
+export const editShareRoomInfoAPI = async (shareRoomID: string, token: string, formValue:ICreateShareRoomFormValue) => {
+  const id = Number(shareRoomID);
+
+  const data: ISubmitShareRoomData = {
+    shareName: formValue.title,
+    travelStartDate: formValue.startDate,
+    travelEndDate: formValue.endDate,
+    imageUrl: '',
+  };
+
+  const response = await axios.put(`/api/api/share-room/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+
+  return response.status;
+}

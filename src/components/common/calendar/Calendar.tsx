@@ -9,7 +9,7 @@ interface IProps {
   editStatus: boolean
 }
 
-const Calendar = ({ type, editStatus }: IProps) => {
+const Calendar = ({ type, editStatus = true}: IProps) => {
   const [night, selectedDate, openCalendar, onChangeHandler, onClickCompleteButtonHandler, onClickDateCalendar] = usePlanDate(type, editStatus);
   const isSelected = selectedDate.printStartDate !== "";
 
