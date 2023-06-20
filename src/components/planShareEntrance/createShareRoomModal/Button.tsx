@@ -1,45 +1,40 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { createModalOpenState } from '../../../state/createModalOpen';
 import { createShareRoomAPI } from '../../../api/shareRoomAPI';
-import { createShareRoomFormValue } from '../../../store/createShareRoomFormValue';
+import { scheduleShareRoomForm, initialValue } from '../../../store/shareRoomForm';
 import { jwtAccessTokenState } from '../../../state/loginState';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { formValidationCheck } from '../../../utils/formValidationCheck';
 
 const Button = () => {
   const [openCreateModal, setOpenCreateModal] = 
     useRecoilState(createModalOpenState);
 
-  const formValue = useRecoilValue(createShareRoomFormValue);
+  const [shareRoomForm, setShareRoomForm] = useRecoilState(scheduleShareRoomForm);
   const token = useRecoilValue(jwtAccessTokenState);
 
   const MySwal = withReactContent(Swal);
 
-  const validationCheck = () => {
-    if (
-      formValue.title === "" ||
-      formValue.startDate === "" ||
-      formValue.endDate === ""
-    ) {
-      return false;
-    }
-    return true;
-  };
+  const onClickCreateHandler = async () => {
+    if(!formValidationCheck(shareRoomForm)) return;
+    
+    const result = await createShareRoomAPI(shareRoomForm, token);
 
-  const onClickCreateHandler = () => {
-    if (!validationCheck()) {
-      return;
+    if(result.status === 200){
+      MySwal.fire({
+        icon: "success",
+        text: "등록이 완료되었습니다.",
+      })
+    }else{
+      MySwal.fire({
+        icon: "error",
+        text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요",
+      });
     }
     
-    createShareRoomAPI(formValue, token);
-    
-    MySwal.fire({
-      icon: "success",
-      text: "등록이 완료되었습니다.",
-    })
-    
+    setShareRoomForm(initialValue);
     setOpenCreateModal(false);
-    
   };
 
   const clickCancleHandler = () => {

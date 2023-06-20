@@ -16,9 +16,9 @@ declare global {
 
 const PlanShareRoom = () => {
   const [mapElement, setMapElement] = useState<any>({});
+  const token = useRecoilValue(jwtAccessTokenState);
   const setPlanShareRoomInfo = useSetRecoilState(shareRoomInfo);
   const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
-  const token = useRecoilValue(jwtAccessTokenState);
   const { shareRoomID } = useParams<string>();
 
   const getShareRoomInfo = async () => {

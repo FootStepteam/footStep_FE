@@ -1,13 +1,13 @@
 import { atom } from "recoil";
 import { ICreateShareRoomFormValue } from "../type/shareRoom";
 
-const initialValue: ICreateShareRoomFormValue = {
+export const initialValue: ICreateShareRoomFormValue = {
   title: "",
   startDate: "",
   endDate: "",
 };
 
-export const createShareRoomFormValue = atom<ICreateShareRoomFormValue>({
+export const scheduleShareRoomForm = atom<ICreateShareRoomFormValue>({
   key: "createShareRoomFormValue",
   default: initialValue,
 });
