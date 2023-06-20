@@ -8,8 +8,8 @@ const RightContainer = () => {
   const auth = useRecoilValue(jwtAccessTokenState);
 
   useEffect(() => {
-    console.log(auth)
-  })
+    // console.log(auth)
+  });
 
   return (
     <section className="flex justify-end items-center mr-32 w-[30rem] h-[4rem]">
