@@ -19,10 +19,10 @@ const PlaceSearchArea = ({ placeSearch }: IPropsPlaceSearch) => {
       <div
         className={`${
           sidebarOpenState.placeSearch ? "block" : "hidden"
-        } flex justify-center items-center absolute top-[50%] right-[-6%] w-6 h-16 bg-white rounded-r-xl cursor-pointer`}
+        } flex items-center absolute top-[50%] right-[-7%] w-6 h-16 bg-white rounded-r-xl cursor-pointer`}
         onClick={onClickHandler}
       >
-        <LeftArrow width="20" height="20" fill="black" />
+        <LeftArrow className={"fill-[#DCDCDC]"} width="20" height="20" />
       </div>
     </div>
   );

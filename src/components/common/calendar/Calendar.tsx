@@ -21,7 +21,7 @@ const Calendar = ({ type, editStatus = true}: IProps) => {
         role="presentation"
       >
         <CalendarIcon className="mx-4 w-[28px] h-[28px]" />
-        <div className="grow flex justify-center mx-4 text-gray-002">
+        <div className="grow flex justify-center mx-4 text-gray-002 font-NanumGothic font-extrabold">
           <p className="grow">
             {isSelected
               ? `${selectedDate.printStartDate} ~ ${selectedDate.printEndDate}`

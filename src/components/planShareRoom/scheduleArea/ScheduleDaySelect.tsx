@@ -93,8 +93,8 @@ const ScheduleDaySelect = () => {
   return (
     <div>
       <div className="flex items-center mt-12 ml-12">
-        <p className="ml-2 text-[24px] font-bold">{selectedDate.planDay}일차</p>
-        <p className="flex items-end  ml-3 pt-1 text-gray-001">
+        <p className="ml-2 font-Jua font-normal text-3xl">{selectedDate.planDay}일차</p>
+        <p className="flex items-end  ml-3 pt-1 font-Jua text-gray-001">
           {selectedDate.month}월 {selectedDate.date}일 ({selectedDate.day})
         </p>
         <button

@@ -48,6 +48,13 @@ export default {
         "platinum-002": "#9BE3BB",
         "platinum-003": "#C6F1D9",
       },
+      fontFamily: {
+        BlackHanSans: ["Black Han Sans"],
+        Jua: ["Jua"],
+        DoHyeon: ["Do Hyeon"],
+        NanumGothic: ["Nanum Gothic"],
+        Dongle: ["Dongle"],
+      },
       width: {
         commonSection: "68.75rem",
         planShareRoomSideBar: "21rem",
