@@ -1,24 +1,10 @@
-import { useRecoilState, useRecoilValue } from "recoil";
 import { ReactComponent as RightArrow } from "../../../assets/rightArrow.svg";
 import testImage from "../../../assets/temporary/nature-6517866_1920.jpg";
-import { getShareRoomList } from "../../../store/getShareRoomList";
 import { Link } from "react-router-dom";
-import { jwtAccessTokenState } from "../../../state/loginState";
-import { getIncludeShareRoomAPI } from "../../../api/shareRoomAPI";
-import { useEffect } from "react";
+import { useSharedRoom } from "../../../hooks/useMyShareRoom";
 
 const ExistsParticipatingPlan = () => {
-  const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
-  const plans = useRecoilValue(getShareRoomList);
-  const token = useRecoilValue(jwtAccessTokenState);
-
-  const getShareRooms = async () => {
-    const result = await getIncludeShareRoomAPI(token);
-    setShareRooms(result);
-  };
-  useEffect(() => {
-    getShareRooms();
-  }, []);
+  const { plans } = useSharedRoom();
 
   return (
     <div className="w-[50rem] h-[22rem]">
