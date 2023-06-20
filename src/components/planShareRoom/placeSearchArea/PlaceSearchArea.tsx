@@ -13,7 +13,7 @@ const PlaceSearchArea = ({ placeSearch }: IPropsPlaceSearch) => {
   };
 
   return (
-    <div className="relative shadow-lg">
+    <div className={`relative shadow-lg bg-white z-[1001] ${sidebarOpenState.placeSearch ? "animate-placeSearchAreaShow" : "left-[-25rem] animate-placeSearchAreaClose"}`}>
       <PlaceSearchAreaHeader placeSearch={placeSearch} />
       <PlaceSearchAreaContent />
       <div

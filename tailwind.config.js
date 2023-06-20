@@ -81,12 +81,22 @@ export default {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
+        placeSearchAreaShow: {
+          from: { left : "-15rem" },
+          to: { left : 0 },
+        },
+        placeSearchAreaClose: {
+          from: { left : 0 },
+          to: { left: "-25rem" },
+        }
       },
       animation: {
         intro: "intro 1s ease-in-out",
         introBtn: "introBtn 1s ease-in-out",
         modalShow: "modalShow 0.2s ease-in-out",
         modalBgShow: "modalBgShow 0.3s",
+        placeSearchAreaShow: "placeSearchAreaShow 0.3s",
+        placeSearchAreaClose: "placeSearchAreaClose 0.3s",
       },
     },
   },
