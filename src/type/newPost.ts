@@ -1,15 +1,15 @@
-export interface Plan {
+export interface IPlan {
   shareName: string;
   shareId: number;
 }
 
-export interface PlanSchedule {
-  destinationRedisInfo: DestinationInfo[];
+export interface IPlanSchedule {
+  destinationRedisInfo: IDestinationInfo[];
   planDate: string;
   shareId: number;
 }
 
-export interface DestinationInfo {
+export interface IDestinationInfo {
   destinationAddress: string;
   destinationCategoryCode: string;
   destinationName: string;
