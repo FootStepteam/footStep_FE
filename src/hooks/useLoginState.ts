@@ -7,14 +7,14 @@ export const useLoginState = () => {
   const [jwtAccessToken, setJwtAccessToken] =
     useRecoilState(jwtAccessTokenState);
 
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+  const [, setCookie, removeCookie] = useCookies(["accessToken"]);
+  const [, setRefreshTokenCookie, removeRefreshTokenCookie] = useCookies(["refresh-token"]);
 
-  const login = (token: string) => {
+  const login = (token: string, refreshToken: string) => {
     setJwtAccessToken(token);
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    console.log("token: ", token);
     setCookie("accessToken", token, { maxAge: 60 * 60 * 12 }); // 임시로 12시간 설정
-    console.log("token: ", token);
+    setRefreshTokenCookie("refresh-token", refreshToken, { maxAge: 60 * 60 * 24 * 7});
   };
 
   const logout = () => {
@@ -23,6 +23,7 @@ export const useLoginState = () => {
 
     // Logout 시 쿠키에서 accessToken 삭제
     removeCookie("accessToken");
+    removeRefreshTokenCookie("refresh-token");
   };
 
   return { jwtAccessToken, login, logout };
