@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { getShareRoomList } from "../store/getShareRoomList";
-import { jwtAccessTokenState } from "../state/loginState";
-import { getIncludeShareRoomAPI } from "../api/shareRoomAPI";
+import { useState } from "react";
 import {
   getMemberIdAPI,
   getPlanScheduleAPI,
   postCommunityAPI,
 } from "../api/newPostAPI";
 import { Plan } from "../type/newPost";
+import { useSharedRoom } from "./useMyShareRoom";
 
 export const useEditor = () => {
   const [title, setTitle] = useState("");
@@ -16,18 +13,7 @@ export const useEditor = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
-  const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
-  const plans = useRecoilValue(getShareRoomList);
-  const token = useRecoilValue(jwtAccessTokenState);
-
-  const getShareRooms = async () => {
-    const result = await getIncludeShareRoomAPI(token);
-    setShareRooms(result);
-  };
-
-  useEffect(() => {
-    getShareRooms();
-  }, []);
+  const { shareRooms, plans, token } = useSharedRoom();
 
   const handleSelectPlan = async (plan: Plan) => {
     setSelectedPlan(plan);
