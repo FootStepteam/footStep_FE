@@ -1,15 +1,15 @@
 import Footer from "../components/common/footer/Footer";
 import HeaderContainer from "../components/common/header/HeaderContainer";
-import Content from "../components/main/Content";
+import PasswordEdit from "../components/profileEdit/passwordEdit/PasswordEdit";
 
-const MainPage = () => {
+const PasswordEditPage = () => {
   return (
     <>
       <HeaderContainer />
-      <Content />
+      <PasswordEdit />
       <Footer />
     </>
   );
 };
 
-export default MainPage;
+export default PasswordEditPage;

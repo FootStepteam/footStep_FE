@@ -1,13 +1,42 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import LeftContainer from "./headerLeft/LeftContainer";
 import RightContainer from "./headerRight/RightContainer";
 
 const HeaderContainer = () => {
+  const [scrollY, setScrollY] = useState(0);
+  const [path, setPath] = useState("/");
+  const location = useLocation();
+
+  const scrollHandler = () => {
+    setScrollY(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [location]);
+
   return (
-    <header className="py-6 w-full">
-      <div className="flex justify-between my-0 mx-auto w-[90rem] h-[4rem]">
+    <header
+      className={`sticky top-0 py-6 w-full ${
+        path === "/"
+          ? scrollY > 30
+            ? "bg-white border-b border-gray-003 text-black"
+            : "bg-gradient-to-r from-blue-002 from-10% via-sky-001 via-30% to-sky-005 to-90% text-white"
+          : "bg-white border-b border-gray-003"
+      } transition-colors duration-150 ease-in-out z-50`}
+    >
+      <nav className="flex justify-between my-0 mx-auto w-[90rem] h-[4rem] ">
         <LeftContainer />
         <RightContainer />
-      </div>
+      </nav>
     </header>
   );
 };

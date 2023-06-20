@@ -2,7 +2,7 @@ import FooterLink from "./FooterLink";
 
 const Footer = () => {
   return (
-    <footer className="flex justify-center items-center w-full h-36 bg-main-color">
+    <footer className="flex justify-center items-center w-full h-60 bg-black-002">
       <section className="flex flex-col justify-center items-center w-[40rem] h-32">
         <FooterLink />
         <p className="font-bold text-white">

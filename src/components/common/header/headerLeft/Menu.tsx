@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { jwtAccessTokenState } from "../../../../state/loginState";
+import { useRecoilValue } from "recoil";
 
 const menus = [
   {
@@ -7,7 +9,7 @@ const menus = [
   },
   {
     menu: "여행일정",
-    path: "/",
+    path: "/planShareEntrance",
   },
   {
     menu: "커뮤니티",
@@ -20,26 +22,27 @@ const menus = [
 ];
 
 const Menu = () => {
-  const [selectedMenu, setSelectedMenu] = useState("About");
+  const auth = useRecoilValue(jwtAccessTokenState);
+  const navigate = useNavigate();
 
-  const onClickMenuHandler = (menu: string) => {
-    setSelectedMenu(menu);
+  const onClickHandler = (path: string) => {
+    if (auth === "anonymous" && path === "/planShareEntrance") {
+      navigate("/login");
+    } else {
+      navigate(path);
+    }
   };
 
   return (
     <div className="flex grow">
       {menus.map((element) => (
         <div
-          role="presentation"
           key={element.menu}
-          className={`flex grow justify-center items-center ${
-            selectedMenu === element.menu && "text-skyblue-1"
-          }`}
-          onClick={() => onClickMenuHandler(element.menu)}
+          onClick={() => onClickHandler(element.path)}
+          className="flex grow justify-center items-center text-[1.3rem]
+           font-semibold cursor-pointer"
         >
-          <p className="text-[1.3rem] font-semibold cursor-pointer">
-            {element.menu}
-          </p>
+          {element.menu}
         </div>
       ))}
     </div>

@@ -32,7 +32,7 @@ const ProfileUserInfo = () => {
         <div className="flex justify-center mt-4 ">
           <Link
             to="/user/profile/edit"
-            className="px-3 py-2 border border-maincolor rounded-md text-xs text-gray-400"
+            className="px-3 py-2 border border-sky-005 rounded-md text-xs text-gray-400"
             role="button"
           >
             편집

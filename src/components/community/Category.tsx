@@ -42,7 +42,7 @@ const Category = ({ onSelect, selectedCategory }: CategoryProps) => {
             type="button"
             onClick={() => handleCategoryClick(category)}
             className={`px-1 mr-1 mb-2 border rounded-lg ${
-              selectedCategory === category ? "bg-main-color" : "bg-white-color"
+              selectedCategory === category ? "bg-blue-004" : "bg-white-001"
             }`}
           >
             {category}
@@ -56,7 +56,7 @@ const Category = ({ onSelect, selectedCategory }: CategoryProps) => {
             type="button"
             onClick={() => handleCategoryClick(category)}
             className={`px-1 mr-1 mb-2 border rounded-lg ${
-              selectedCategory === category ? "bg-main-color" : "bg-white-color"
+              selectedCategory === category ? "bg-blue-004" : "bg-white-001"
             }`}
           >
             {category}

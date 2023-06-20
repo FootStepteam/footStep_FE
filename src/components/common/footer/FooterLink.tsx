@@ -6,7 +6,7 @@ const FooterLink = () => {
       <a
         href="https://zero-base.co.kr/"
         target="_blank"
-        className="mx-[1rem] w-14 text-[1.3rem]"
+        className="mx-[1rem] w-16 text-[1.3rem]"
         rel="noreferrer"
       >
         ZERO-BASE
@@ -14,7 +14,7 @@ const FooterLink = () => {
       <a
         href="https://github.com/FootStepteam"
         target="_blank"
-        className="mx-[1rem]"
+        className="flex items-center mx-[1rem]"
         rel="noreferrer"
       >
         <GitHub />

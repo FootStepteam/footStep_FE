@@ -13,12 +13,12 @@ const Tab = () => {
     {
       menu: "passwordEdit",
       text: "비밀번호변경",
-      path: "/user/profile/edit",
+      path: "/user/profile/passwordEdit",
     },
     {
       menu: "userSecession",
       text: "회원탈퇴",
-      path: "/user/profile/edit",
+      path: "/user/profile/secession",
     },
   ];
 
@@ -27,14 +27,14 @@ const Tab = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full border-y border-[#DCDCDC]">
+    <div className="flex justify-center items-center w-full border-y border-gray-003">
       {tabs.map((tab) => (
         <Link
           key={tab.menu}
-          className={`mx-2 px-2 py-4 text-md font-${
+          className={`mx-2 px-2 py-4 text-md ${
             selected === tab.menu &&
-            "border-b-2 border-skyblue-1 text-skyblue-1 text-lg font-bold"
-          }`}
+            "border-b-[0.2rem] border-blue-002 text-skyblue-1 text-lg font-bold"
+          } hover:text-blue-002`}
           onClick={() => onClickHandler(tab.menu)}
           to={tab.path}
         >

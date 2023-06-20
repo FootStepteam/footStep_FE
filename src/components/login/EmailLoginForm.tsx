@@ -1,28 +1,31 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { TLoginFormData } from "../../type/emailLogin";
+import { signInWithEmail } from "../../api/emailLoginAPI";
+import { useLoginState } from "../../hooks/useLoginState";
+import { useNavigate } from "react-router-dom";
 
 const EmailLoginForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
-
-  const handleEmailLogin = async (data: FormData) => {
+  const { register, handleSubmit } = useForm<TLoginFormData>();
+  const { login } = useLoginState();
+  const savedLocation = sessionStorage.getItem("lastLocation");
+  const navigate = useNavigate();
+  const handleEmailLogin = async (data: TLoginFormData) => {
     try {
-      // 이메일 로그인 API 호출
-      const response = await axios.post("/email/login", {
-        email: data.email,
-        password: data.password,
-      });
+      const responseData = await signInWithEmail(data);
 
-      // 로그인 성공시 처리
-      console.log(response.data);
+      // response로 받아온 jwtAccessToken 저장
+      const accessToken = responseData.jwtAccessToken;
+
+      // loginState에서 호출(jwtAccessToken header에 저장)
+      login(accessToken);
+      // 로그인 전 페이지로 이동
+      if (savedLocation) {
+        navigate(savedLocation);
+      }
+      if (!savedLocation) {
+        navigate("/");
+      }
+      console.log(responseData);
     } catch (error) {
       // 로그인 실패시 처리
       console.error(error);
@@ -31,24 +34,26 @@ const EmailLoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(handleEmailLogin)}>
-      <div className="flex flex-col mx-auto w-full">
-        <p>이메일</p>
-        <input
-          className="w-full mt-4 border-b-2"
-          type="email"
-          {...register("email", { required: "Email is required" })}
-        />
-        {errors.email && <span>{errors.email.message}</span>}
-        <p>비밀번호</p>
-        <input
-          className="w-full mt-4 border-b-2"
-          type="password"
-          {...register("password", { required: "Password is required" })}
-        />
-        {errors.password && <span>{errors.password.message}</span>}
+      <div className="flex flex-col my-[40px] mx-auto w-1/4">
+        <div className="my-4">
+          <p>이메일</p>
+          <input
+            className="w-full mt-4 border-b-2"
+            type="email"
+            {...register("email", { required: "이메일을 입력해주세요" })}
+          />
+        </div>
+        <div className="my-4">
+          <p>비밀번호</p>
+          <input
+            className="w-full mt-4 border-b-2"
+            type="password"
+            {...register("password", { required: "비밀번호를 입력해주세요" })}
+          />
+        </div>
       </div>
       <button
-        className="flex w-40 mt-4 p-2 mx-auto bg-main-color rounded-lg"
+        className="flex justify-center items-center w-[183px] h-[45px] my-4 p-2 mx-auto bg-main-color rounded-md"
         type="submit"
       >
         로그인
