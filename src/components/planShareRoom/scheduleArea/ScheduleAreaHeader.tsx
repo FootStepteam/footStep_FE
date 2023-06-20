@@ -85,7 +85,7 @@ const ScheduleAreaHeader = () => {
           <input 
             type="text"
             defaultValue={title}
-            className="w-[12rem] bg-gray-007 text-black font-NanumGothic text-2xl font-[800]"
+            className="w-[12rem] bg-gray-007 outline-none text-black font-NanumGothic text-2xl font-[800]"
             onChange={onChangeTitleHandler}
             disabled={editStatus ? false : true} 
             />

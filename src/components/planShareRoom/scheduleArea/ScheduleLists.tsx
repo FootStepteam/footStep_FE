@@ -16,7 +16,7 @@ const ScheduleLists = () => {
       </div>
       <button
         type="button"
-        className="flex my-8 mx-auto px-20 py-3 rounded-sm bg-orange-002 font-DoHyeon text-xl text-white font-normal"
+        className="flex my-8 mx-auto px-20 py-3 rounded-sm bg-sky-001 font-DoHyeon text-xl text-white font-normal"
         onClick={onClickHandler}
       >
         장소추가

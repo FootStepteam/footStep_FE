@@ -13,26 +13,26 @@ const PlaceSearchLists = () => {
   };
 
   return (
-    <div id="menu_wrap" className="grow bg-white">
-      <h3 className="flex mt-4 mb-6 ml-4 font-NanumGothic font-extrabold text-xl">
+    <div id="menu_wrap" className="grow bg-gray-007">
+      <h3 className="flex mt-4 mb-6 ml-4 font-DoHyeon font-normal text-2xl">
         <span className="mr-2">
           <Address width={25} height={25}/>
         </span>
         검색결과
       </h3>
-      <div className="h-[40rem] overflow-y-auto">
+      <div className="h-[calc(100vh-15rem-8rem)] overflow-y-auto">
         {isExist ? (
           <ul id="placesList">
             {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
               <li
                 key={place.id}
-                className={`flex py-4 h-[7rem] hover:bg-gray-005 border-b border-b-gray-003 cursor-pointer ${
-                  index === 0 && "border-t border-t-gray-003"
+                className={`flex my-3 py-4 h-[7rem] bg-white border-b border-b-gray-004 shadow-sm cursor-pointer ${
+                  index === 0 && "border-t border-t-gray-004"
                 }`}
               >
-                <div className="ml-4 w-[15em]">
-                  <div className="mb-1 flex items-center">
-                    <p className="w-[13rem] font-medium text-lg truncate ">
+                <div className="ml-4 w-[17em]">
+                  <div className="mb-1">
+                    <p className="w-[17rem] font-medium text-lg truncate ">
                       <span className="mr-2 text-platinum-001">
                         {index + 1}
                       </span>

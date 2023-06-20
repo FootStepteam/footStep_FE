@@ -13,13 +13,13 @@ const PlaceSearchArea = ({ placeSearch }: IPropsPlaceSearch) => {
   };
 
   return (
-    <div className={`relative shadow-lg bg-white z-[1001] ${sidebarOpenState.placeSearch ? "animate-placeSearchAreaShow" : "left-[-25rem] animate-placeSearchAreaClose"}`}>
+    <div className={`relative w-[23rem] max-h-100vh shadow-lg bg-gray-007 z-[1001] transition-[left] duration-300 ease-in-out ${sidebarOpenState.placeSearch ? "left-0" : "left-[-25rem]"}`}>
       <PlaceSearchAreaHeader placeSearch={placeSearch} />
       <PlaceSearchAreaContent />
       <div
         className={`${
           sidebarOpenState.placeSearch ? "block" : "hidden"
-        } flex items-center absolute top-[50%] right-[-7%] w-6 h-16 bg-white rounded-r-xl cursor-pointer`}
+        } flex items-center absolute top-[50%] right-[-6%] w-6 h-16 bg-white rounded-r-xl cursor-pointer`}
         onClick={onClickHandler}
       >
         <LeftArrow className={"fill-[#DCDCDC]"} width="20" height="20" />

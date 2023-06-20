@@ -73,9 +73,10 @@ const PlanShareRoom = () => {
       const el = document.createElement("a");
       el.href = "#";
       el.innerHTML = String(i);
-      el.style.margin = "4px";
+      el.style.margin = "2px 8px";
       if (i === pagination.current) {
         el.className = "on";
+        el.style.color = "#00AFFF";
       } else {
         el.onclick = (function (i) {
           return function () {
