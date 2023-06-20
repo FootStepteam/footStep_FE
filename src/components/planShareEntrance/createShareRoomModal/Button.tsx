@@ -5,6 +5,7 @@ import { scheduleShareRoomForm, initialValue } from '../../../store/shareRoomFor
 import { jwtAccessTokenState } from '../../../state/loginState';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { formValidationCheck } from '../../../utils/formValidationCheck';
 
 const Button = () => {
   const [openCreateModal, setOpenCreateModal] = 
@@ -15,37 +16,22 @@ const Button = () => {
 
   const MySwal = withReactContent(Swal);
 
-  const validationCheck = () => {
-    let errorMsg = "";
+  const onClickCreateHandler = async () => {
+    if(!formValidationCheck(shareRoomForm)) return;
+    
+    const result = await createShareRoomAPI(shareRoomForm, token);
 
-    if(shareRoomForm.title === "") {
-      errorMsg = "일정 제목을 입력해주세요.";
-    }else if(shareRoomForm.startDate === "" || shareRoomForm.endDate === ""){
-      errorMsg = "일자를 선택해주세요.";
-    }
-
-    if(errorMsg !== ""){
+    if(result.status === 200){
+      MySwal.fire({
+        icon: "success",
+        text: "등록이 완료되었습니다.",
+      })
+    }else{
       MySwal.fire({
         icon: "error",
-        text: errorMsg,
+        text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요",
       });
-      return false;
     }
-
-    return true;
-  };
-
-  const onClickCreateHandler = () => {
-    if (!validationCheck()) {
-      return;
-    }
-    
-    createShareRoomAPI(shareRoomForm, token);
-    
-    MySwal.fire({
-      icon: "success",
-      text: "등록이 완료되었습니다.",
-    })
     
     setShareRoomForm(initialValue);
     setOpenCreateModal(false);

@@ -10,6 +10,7 @@ import useTitle from "../../../hooks/useTitle";
 import { scheduleShareRoomForm } from "../../../store/shareRoomForm";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { formValidationCheck } from "../../../utils/formValidationCheck";
 
 const ScheduleAreaHeader = () => {
   const token = useRecoilValue(jwtAccessTokenState);
@@ -32,15 +33,22 @@ const ScheduleAreaHeader = () => {
         setEditStatus(true);
         break;
       case "complete" :
+        if(!formValidationCheck(shareRoomForm)) return;
+
         if(shareRoomID) {
           const result = await editShareRoomInfoAPI(shareRoomID, token, shareRoomForm);
-
+  
           if(result === 200){
             MySwal.fire({
               icon: "success",
               text: "수정이 성공적으로 되었습니다",
             });
             setEditStatus(false);
+          }else{
+            MySwal.fire({
+              icon: "success",
+              text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+            });
           }
         }
     }

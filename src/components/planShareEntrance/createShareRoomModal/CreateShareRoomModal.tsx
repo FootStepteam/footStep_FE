@@ -38,7 +38,7 @@ const CreateShareRoomModal = () => {
       <div className="flex flex-col items-center m-center mt-[15rem] w-[24rem] h-[20rem] bg-white rounded-md shadow-md animate-modalShow">
         <Close />
         <Title />
-        <Calendar type={type} />
+        <Calendar type={type} editStatus={true}/>
         <Button />
       </div>
     </div>
