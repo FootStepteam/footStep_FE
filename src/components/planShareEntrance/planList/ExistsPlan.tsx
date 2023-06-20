@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import testImage from "../../../assets/temporary/nature-6517866_1920.jpg";
 import { ReactComponent as RightArrow } from "../../../assets/rightArrow.svg";
-import { getShareRoomList } from "../../../store/getShareRoomList";
-import { useRecoilValue } from "recoil";
+import { useSharedRoom } from "../../../hooks/useMyShareRoom";
 
 const ExistsPlan = () => {
-  const plans = useRecoilValue(getShareRoomList);
+  const { plans } = useSharedRoom();
 
   return (
     <>
