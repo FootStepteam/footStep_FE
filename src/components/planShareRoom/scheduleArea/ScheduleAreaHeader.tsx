@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -21,6 +21,7 @@ const ScheduleAreaHeader = () => {
     shareRoomInfo,
   } = useShareRoomForm();
   const [editStatus, setEditStatus] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const MySwal = withReactContent(Swal);
 
@@ -56,6 +57,21 @@ const ScheduleAreaHeader = () => {
     }
   };
 
+  const onClickExitHanlder = () => {
+    MySwal.fire({
+      title: "정말로 나가시겠습니까?",
+      text: "저장하지 않았을 경우 다시 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "나가기",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      result.isConfirmed && navigate("/planShareEntrance");
+    });
+  };
+
   useEffect(() => {
     if (shareRoomID) {
       getData(shareRoomID);
@@ -70,9 +86,8 @@ const ScheduleAreaHeader = () => {
           className="mt-4 mb-6 ml-2  "
         >
           <Exit
-            fill="#A5A5A5"
-            width={25}
-            height={25}
+            className="w-[25px] h-[25px] fill-black-003 hover:fill-red-001"
+            onClick={onClickExitHanlder}
           />
         </button>
         {editStatus ? (

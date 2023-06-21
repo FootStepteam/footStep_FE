@@ -2,31 +2,35 @@ import { useRecoilState } from "recoil";
 import { ReactComponent as LeftArrow } from "../../../assets/leftArrow.svg";
 import ScheduleDaySelect from "./ScheduleDaySelect";
 import ScheduleAreaHeader from "./ScheduleAreaHeader";
-import { sidebarState } from "../../../state/sidebarState";
+import { sideBarState } from "../../../state/sidebarState";
 import ScheduleLists from "./ScheduleLists";
 
 const ScheduleArea = () => {
-  const [sidebarOpenState, setSidebarOpenState] = useRecoilState(sidebarState);
+  const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
 
   const onClickHandler = () => {
     setSidebarOpenState({
-      ...sidebarOpenState,
-      schedule: !sidebarOpenState.schedule,
+      ...sideBarOpenState,
+      schedule: !sideBarOpenState.schedule,
     });
   };
 
   return (
-    <div className="relative w-planShareRoomSideBar shadow-xl bg-gray-007 z-[1003]">
+    <div
+      className={`relative ${
+        sideBarOpenState.schedule ? "left-0" : "left-[-25rem]"
+      } w-planShareRoomSideBar shadow-xl bg-gray-007 z-[1003] transition-[left] duration-300 ease-in-out`}
+    >
       <ScheduleAreaHeader />
       <ScheduleDaySelect />
       <ScheduleLists />
       <div
         className={`${
-          sidebarOpenState.placeSearch && "hidden"
+          sideBarOpenState.placeSearch && "hidden"
         } flex items-center absolute top-[50%] right-[-7%] w-6 h-16 bg-white rounded-r-xl cursor-pointer`}
         onClick={onClickHandler}
       >
-        <LeftArrow className="w-[20px] h-[20px] fill-[#DCDCDC]"/>
+        <LeftArrow className="w-[20px] h-[20px] fill-[#DCDCDC]" />
       </div>
     </div>
   );
