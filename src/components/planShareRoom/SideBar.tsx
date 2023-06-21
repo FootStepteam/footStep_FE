@@ -10,7 +10,8 @@ const SideBar = ({ placeSearch }: IPropsPlaceSearch) => {
 
   return (
     <div className="flex absolute min-h-screen">
-      {sideBarOpenState.schedule ? <ScheduleArea /> : <SideBarToggle />}
+      {!sideBarOpenState.schedule && <SideBarToggle />}
+      <ScheduleArea />
       <PlaceSearchArea placeSearch={placeSearch} />
     </div>
   );

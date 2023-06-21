@@ -16,7 +16,11 @@ const ScheduleArea = () => {
   };
 
   return (
-    <div className="relative w-planShareRoomSideBar shadow-xl bg-gray-007 z-[1003]">
+    <div
+      className={`relative ${
+        sideBarOpenState.schedule ? "left-0" : "left-[-25rem]"
+      } w-planShareRoomSideBar shadow-xl bg-gray-007 z-[1003] transition-[left] duration-300 ease-in-out`}
+    >
       <ScheduleAreaHeader />
       <ScheduleDaySelect />
       <ScheduleLists />
