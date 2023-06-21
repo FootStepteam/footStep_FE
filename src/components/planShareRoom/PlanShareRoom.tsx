@@ -16,9 +16,9 @@ declare global {
 
 const PlanShareRoom = () => {
   const [mapElement, setMapElement] = useState<any>({});
+  const token = useRecoilValue(jwtAccessTokenState);
   const setPlanShareRoomInfo = useSetRecoilState(shareRoomInfo);
   const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
-  const token = useRecoilValue(jwtAccessTokenState);
   const { shareRoomID } = useParams<string>();
 
   const getShareRoomInfo = async () => {
@@ -73,9 +73,10 @@ const PlanShareRoom = () => {
       const el = document.createElement("a");
       el.href = "#";
       el.innerHTML = String(i);
-      el.style.margin = "4px";
+      el.style.margin = "2px 8px";
       if (i === pagination.current) {
         el.className = "on";
+        el.style.color = "#00AFFF";
       } else {
         el.onclick = (function (i) {
           return function () {

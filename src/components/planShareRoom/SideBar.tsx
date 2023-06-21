@@ -1,18 +1,18 @@
 import { useRecoilValue } from "recoil";
-import { sidebarState } from "../../state/sidebarState";
+import { sideBarState } from "../../state/sidebarState";
 import { IPropsPlaceSearch } from "../../type/shareRoom";
 import PlaceSearchArea from "./placeSearchArea/PlaceSearchArea";
 import ScheduleArea from "./scheduleArea/ScheduleArea";
+import SideBarToggle from "./SideBarToggle";
 
 const SideBar = ({ placeSearch }: IPropsPlaceSearch) => {
-  const sidebarOpenState = useRecoilValue(sidebarState);
+  const sideBarOpenState = useRecoilValue(sideBarState);
 
   return (
-    <div className="flex absolute min-h-screen bg-white z-[1001]">
-      {sidebarOpenState.schedule && <ScheduleArea />}
-      {sidebarOpenState.placeSearch && (
-        <PlaceSearchArea placeSearch={placeSearch} />
-      )}
+    <div className="flex absolute min-h-screen">
+      {!sideBarOpenState.schedule && <SideBarToggle />}
+      <ScheduleArea />
+      <PlaceSearchArea placeSearch={placeSearch} />
     </div>
   );
 };

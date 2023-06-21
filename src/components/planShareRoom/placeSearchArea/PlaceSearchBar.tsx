@@ -32,15 +32,15 @@ const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex justify-center items-center mt-4 mx-auto w-[20rem] h-[3rem] bg-white rounded-sm shadow-lg"
+      className="flex justify-center items-center mt-6 mx-auto w-[20rem] h-[4rem] bg-white border border-gray-004 rounded-sm shadow-sm"
     >
       <input
         type="text"
         placeholder="장소, 주소 검색"
-        className="grow pl-4 py-2 outline-none placeholder:text-sm"
+        className="grow pl-4 py-3 outline-none text-sm placeholder:text-sm"
         onChange={onChangeHandler}
       />
-      <SearchIcon className="mx-4 w-[18px] h-[18px]" fill="#A5A5A5" />
+      <SearchIcon className="mx-4 w-[18px] h-[18px]" fill="#00CDFF" />
     </form>
   );
 };

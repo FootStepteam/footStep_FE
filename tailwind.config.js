@@ -14,6 +14,7 @@ export default {
         "gray-004": "#EBEBEB",
         "gray-005": "#F9F9F9",
         "gray-006": "#F5F5F5",
+        "gray-007": "#fafafa",
         "blue-001": "#0094FF",
         "blue-002": "#00AFFF",
         "blue-003": "#5FCDFF",
@@ -47,9 +48,16 @@ export default {
         "platinum-002": "#9BE3BB",
         "platinum-003": "#C6F1D9",
       },
+      fontFamily: {
+        BlackHanSans: ["Black Han Sans"],
+        Jua: ["Jua"],
+        DoHyeon: ["Do Hyeon"],
+        NanumGothic: ["Nanum Gothic"],
+        Dongle: ["Dongle"],
+      },
       width: {
         commonSection: "68.75rem",
-        planShareRoomSideBar: "25rem",
+        planShareRoomSideBar: "21rem",
       },
       height: {
         banner: "calc(100vh - 5.5rem)",
@@ -81,12 +89,22 @@ export default {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
+        daysDropDown: {
+          from: { opacity: 0 },
+          to: { opacity: 1 }
+        },
+        daysUp: {
+          from: { opacity: 1 },
+          to: { opacity: 0 }
+        },
       },
       animation: {
         intro: "intro 1s ease-in-out",
         introBtn: "introBtn 1s ease-in-out",
         modalShow: "modalShow 0.2s ease-in-out",
         modalBgShow: "modalBgShow 0.3s",
+        daysDropDown: "daysDropDown 0.4s",
+        daysUp: "daysUp 0.4s",
       },
     },
   },
