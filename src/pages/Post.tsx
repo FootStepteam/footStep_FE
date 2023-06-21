@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ICommunityPost, IComment } from "../type/communityPage";
+import { ICommunityPost } from "../type/communityPage";
 import { getPostAPI } from "../api/postAPI";
+import Comment from "../components/community/postPage/Comment";
+import CreateComment from "../components/community/postPage/CreateComment";
 
 const Post = () => {
   const [post, setPost] = useState<ICommunityPost | null>(null);
   const { communityId } = useParams<{ communityId: string }>();
+
+  const onCommentsChange = async () => {
+    if (!communityId) return; // communityId가 없을 때 함수를 종료
+    const data = await getPostAPI(communityId);
+    setPost(data);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,15 +39,17 @@ const Post = () => {
       <h2 className="text-xl font-bold">{post.communityName}</h2>
       <p>{post.memberNickname}</p>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />{" "}
-      {/* Render post content as HTML */}
       <p>Like Count: {post.likeCount}</p>
       <p>Comment Count: {post.commentCount}</p>
-      {post.comments.map((comment: IComment) => (
-        <div key={comment.commentId} className="mt-2 p-2 border">
-          <p>{comment.memberNickname}</p>
-          <p>{comment.content}</p>
-        </div>
+      {post.comments.map((comment) => (
+        <Comment
+          post={post}
+          key={comment.commentId}
+          comment={comment}
+          onCommentsChange={onCommentsChange}
+        />
       ))}
+      <CreateComment post={post} onCommentsChange={onCommentsChange} />
     </div>
   );
 };
