@@ -1,9 +1,9 @@
 import axios from "axios";
-import { PlanSchedule } from "../type/newPost";
+import { IPlanSchedule } from "../type/newPost";
 
 export const getPlanScheduleAPI = async (
   shareId: number
-): Promise<PlanSchedule> => {
+): Promise<IPlanSchedule> => {
   const response = await axios.get(`/api/room/${shareId}/schedule`);
   return response.data[0];
 };
