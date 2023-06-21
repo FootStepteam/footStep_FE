@@ -10,7 +10,7 @@ export const useSharedRoom = () => {
   const token = useRecoilValue(jwtAccessTokenState);
 
   const getShareRooms = async () => {
-    const result = await getIncludeShareRoomAPI(token);
+    const result = await getIncludeShareRoomAPI();
     setShareRooms(result);
   };
 

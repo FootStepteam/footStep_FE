@@ -13,7 +13,7 @@ export const useEditor = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<IPlan | null>(null);
 
-  const { shareRooms, plans, token } = useSharedRoom();
+  const { shareRooms, plans } = useSharedRoom();
 
   const handleSelectPlan = async (plan: IPlan) => {
     setSelectedPlan(plan);
@@ -29,7 +29,7 @@ export const useEditor = () => {
 
   const submitPost = async () => {
     try {
-      const memberId = await getMemberIdAPI(token);
+      const memberId = await getMemberIdAPI();
       if (selectedPlan) {
         const shareId = selectedPlan.shareId;
         await postCommunityAPI(memberId, shareId, title, isPublic, content);

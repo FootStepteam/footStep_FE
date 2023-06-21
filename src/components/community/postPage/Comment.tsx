@@ -1,6 +1,5 @@
+// Comment.tsx
 import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { jwtAccessTokenState } from "../../../state/loginState";
 import { deleteComment, updateComment } from "../../../api/communityAPI";
 import { IComment, ICommunityPost } from "../../../type/communityPage";
 import { getMemberByAccessToken } from "../../../api/memberAPI";
@@ -14,29 +13,27 @@ interface CommentProps {
 const Comment = ({ comment, onCommentsChange }: CommentProps) => {
   const [isEditMode, setEditMode] = useState(!comment);
   const [content, setContent] = useState(comment?.content || "");
-  const [memberId, setMemberId] = useState<number | null>(null);
-  const token = useRecoilValue(jwtAccessTokenState);
+  const [memberNickname, setMemberNickname] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchMemberId = async () => {
+    const fetchMemberNickname = async () => {
       try {
-        const memberData = await getMemberByAccessToken(token);
-        setMemberId(memberData.memberId);
+        const memberData = await getMemberByAccessToken();
+        setMemberNickname(memberData.nickname);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchMemberId();
-  }, [token]);
+    fetchMemberNickname();
+  }, []);
 
   const handleUpdate = async () => {
-    if (comment?.commentId && memberId === comment.memberId) {
+    if (comment?.commentId && memberNickname === comment.memberNickname) {
       try {
         await updateComment(comment.commentId, { content });
         onCommentsChange();
         setEditMode(false);
-        console.log(comment.memberId);
       } catch (error) {
         console.error(error);
       }
@@ -44,7 +41,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
   };
 
   const handleDelete = async () => {
-    if (comment?.commentId && memberId === comment.memberId) {
+    if (comment?.commentId && memberNickname === comment.memberNickname) {
       try {
         await deleteComment(comment.commentId);
         onCommentsChange();
@@ -66,7 +63,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
         <p className="text-sm">{content}</p>
       )}
       <p className="text-xs text-gray-001">{comment?.memberNickname}</p>
-      {memberId === comment?.memberId && (
+      {memberNickname === comment?.memberNickname && (
         <>
           {isEditMode ? (
             <button

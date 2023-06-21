@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { jwtAccessTokenState } from "../../../state/loginState";
 import { createComment } from "../../../api/communityAPI";
 import { ICommunityPost } from "../../../type/communityPage";
 import { getMemberByAccessToken } from "../../../api/memberAPI";
@@ -13,12 +11,11 @@ interface CreateCommentProps {
 const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
   const [content, setContent] = useState("");
   const [memberId, setMemberId] = useState<number | null>(null);
-  const token = useRecoilValue(jwtAccessTokenState);
 
   useEffect(() => {
     const fetchMemberId = async () => {
       try {
-        const memberData = await getMemberByAccessToken(token);
+        const memberData = await getMemberByAccessToken();
         setMemberId(memberData.memberId);
       } catch (error) {
         console.error(error);
@@ -26,7 +23,7 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
     };
 
     fetchMemberId();
-  }, [token]);
+  }, []);
 
   const handleCreate = async () => {
     if (memberId && post) {
