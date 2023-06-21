@@ -1,35 +1,14 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { getShareRoomInfoAPI } from "../api/shareRoomAPI";
-import { ISelectedDate } from "../type/shareRoomForm";
+import { INITIAL_FORM, INITIAL_SHARE_ROOM_INFO } from "../constants/initial";
 import { IShareRoom } from "../type/shareRoom";
-
-interface IForm {
-  title: string;
-  startDate: string;
-  endDate: string;
-}
-
-const initialForm = {
-  title: "",
-  startDate: "",
-  endDate: "",
-};
-
-const initialShareRoomInfo = {
-  endPoint: "",
-  imageUrl: "",
-  shareCode: "",
-  shareId: 1,
-  shareName: "",
-  startPoint: "",
-  travelEndDate: "",
-  travelStartDate: "",
-};
+import { IForm, ISelectedDate } from "../type/shareRoomForm";
 
 const useShareRoomForm = () => {
-  const [form, setForm] = useState<IForm>(initialForm);
-  const [shareRoomInfo, setShareRoomInfo] =
-    useState<IShareRoom>(initialShareRoomInfo);
+  const [form, setForm] = useState<IForm>(INITIAL_FORM);
+  const [shareRoomInfo, setShareRoomInfo] = useState<IShareRoom>(
+    INITIAL_SHARE_ROOM_INFO
+  );
 
   const getData = async (shareRoomID: string) => {
     const response = await getShareRoomInfoAPI(shareRoomID);
