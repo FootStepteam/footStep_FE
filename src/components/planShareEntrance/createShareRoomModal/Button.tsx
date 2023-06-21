@@ -1,36 +1,38 @@
-import { useRecoilState } from 'recoil';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { createShareRoomAPI } from '../../../api/shareRoomAPI';
-import { createModalOpenState } from '../../../state/createModalOpen';
-import { initialValue, scheduleShareRoomForm } from '../../../store/shareRoomForm';
-import { formValidationCheck } from '../../../utils/formValidationCheck';
+import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { createShareRoomAPI } from "../../../api/shareRoomAPI";
+import { createModalOpenState } from "../../../state/createModalOpen";
+import { formValidationCheck } from "../../../utils/formValidationCheck";
+import { IForm } from "../../../type/shareRoomForm";
 
-const Button = () => {
-  const [openCreateModal, setOpenCreateModal] = 
+interface IProps {
+  form: IForm;
+}
+
+const Button = ({ form }: IProps) => {
+  const [openCreateModal, setOpenCreateModal] =
     useRecoilState(createModalOpenState);
-  const [shareRoomForm, setShareRoomForm] = useRecoilState(scheduleShareRoomForm);
 
   const MySwal = withReactContent(Swal);
 
   const onClickCreateHandler = async () => {
-    if(!formValidationCheck(shareRoomForm)) return;
-    
-    const result = await createShareRoomAPI(shareRoomForm);
+    if (!formValidationCheck(form)) return;
 
-    if(result?.status === 200){
+    const result = await createShareRoomAPI(form);
+
+    if (result?.status === 200) {
       MySwal.fire({
         icon: "success",
         text: "등록이 완료되었습니다.",
-      })
-    }else{
+      });
+    } else {
       MySwal.fire({
         icon: "error",
         text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요",
       });
     }
-    
-    setShareRoomForm(initialValue);
+
     setOpenCreateModal(false);
   };
 

@@ -1,7 +1,7 @@
 import { IPropsPlaceSearch } from "../../../type/shareRoom";
 import { useRecoilState } from "recoil";
 import { selectedArea } from "../../../state/selectedArea";
-import { ADMINISTRATIVE_DISTRICT } from "../../../data/area";
+import { ADMINISTRATIVE_DISTRICT } from "../../../constants/area";
 
 const PlaceSearchCategory = ({ placeSearch }: IPropsPlaceSearch) => {
   const [selected, setSelected] = useRecoilState(selectedArea);

@@ -3,25 +3,48 @@ import RCalendar from "react-calendar";
 import { ReactComponent as CalendarIcon } from "../../../assets/blackCalendar.svg";
 import { ReactComponent as BottomArrow } from "../../../assets/bottomArrow.svg";
 import usePlanDate from "../../../hooks/usePlanDate";
+import { useEffect } from "react";
+import { ISelectedDate } from "../../../type/shareRoomForm";
+import { IShareRoom } from "../../../type/shareRoom";
 
 interface IProps {
   type: string;
-  editStatus: boolean
+  editStatus: boolean;
+  onChangeDateHandler: (selectedDate: ISelectedDate) => void;
+  shareRoomInfo: IShareRoom;
 }
 
-const Calendar = ({ type, editStatus = true}: IProps) => {
-  const [night, selectedDate, openCalendar, onChangeHandler, onClickCompleteButtonHandler, onClickDateCalendar] = usePlanDate(type, editStatus);
+const Calendar = ({
+  type,
+  editStatus = true,
+  onChangeDateHandler,
+  shareRoomInfo,
+}: IProps) => {
+  const [
+    night,
+    selectedDate,
+    openCalendar,
+    onChangeHandler,
+    onClickCompleteButtonHandler,
+    onClickDateCalendar,
+  ] = usePlanDate(type, editStatus, shareRoomInfo);
   const isSelected = selectedDate.printStartDate !== "";
+
+  useEffect(() => {
+    onChangeDateHandler(selectedDate);
+  }, [selectedDate]);
 
   return (
     <div className={`relative`}>
       <div
-        className={`flex items-center mt-6 w-[19rem] h-[3.5rem] ${editStatus ? "bg-white" : "bg-gray-006"} border border-gray-006 rounded-sm shadow-sm`}
+        className={`flex items-center mt-6 w-[19rem] h-[3.5rem] ${
+          editStatus ? "bg-white" : "bg-gray-006"
+        } border border-gray-006 rounded-sm shadow-sm`}
         onClick={onClickDateCalendar}
         role="presentation"
       >
         <CalendarIcon className="mx-4 w-[28px] h-[28px]" />
-        <div className="grow flex justify-center mx-4 font-normal text-gray-002 text-lg">
+        <div className="grow flex justify-center mx-4 font-normal text-gray-002 text-md">
           <p className="grow">
             {isSelected
               ? `${selectedDate.printStartDate} ~ ${selectedDate.printEndDate}`
