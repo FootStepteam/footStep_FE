@@ -4,18 +4,18 @@ import {
   getPlanScheduleAPI,
   postCommunityAPI,
 } from "../api/newPostAPI";
-import { Plan } from "../type/newPost";
 import { useSharedRoom } from "./useMyShareRoom";
+import { IPlan } from "../type/newPost";
 
 export const useEditor = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<IPlan | null>(null);
 
   const { shareRooms, plans, token } = useSharedRoom();
 
-  const handleSelectPlan = async (plan: Plan) => {
+  const handleSelectPlan = async (plan: IPlan) => {
     setSelectedPlan(plan);
     try {
       const scheduleData = await getPlanScheduleAPI(plan.shareId);
