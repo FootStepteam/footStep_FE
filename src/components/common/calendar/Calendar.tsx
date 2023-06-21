@@ -44,7 +44,7 @@ const Calendar = ({
         role="presentation"
       >
         <CalendarIcon className="mx-4 w-[28px] h-[28px]" />
-        <div className="grow flex justify-center mx-4 font-normal text-gray-002 text-lg">
+        <div className="grow flex justify-center mx-4 font-normal text-gray-002 text-md">
           <p className="grow">
             {isSelected
               ? `${selectedDate.printStartDate} ~ ${selectedDate.printEndDate}`
