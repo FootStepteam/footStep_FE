@@ -11,13 +11,12 @@ import { getShareRoomList } from "../../../store/getShareRoomList";
 const PlanListContent = () => {
   const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
   const searchResult = useRecoilValue(searchShareRoomData);
-  const token = useRecoilValue(jwtAccessTokenState);
 
   // const isExists = shareRooms.length !== 0;
   const isExists = shareRooms.length !== 0;
 
   const getShareRooms = async () => {
-    const result = await getIncludeShareRoomAPI(token);
+    const result = await getIncludeShareRoomAPI();
     setShareRooms(result);
   };
 
