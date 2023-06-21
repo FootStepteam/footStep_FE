@@ -1,103 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { ReactComponent as Like } from "../../assets/like.svg";
+import { getCommunityAPI } from "../../api/communityAPI";
+import { ICommunityPost, IListsProps } from "../../type/communityPage";
 
-interface Post {
-  id: number;
-  title: string;
-  category: string;
-  userId: string;
-  imgurl: string;
-  likes: number;
-  createdAt: string;
-  departureDate: string;
-  arrivalDate: string;
-}
+const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
+  const [sortBy, setSortBy] = useState<"recent" | "like">("recent");
+  const [posts, setPosts] = useState<ICommunityPost[]>([]);
 
-interface ListsProps {
-  searchQuery: string;
-  selectedCategory: string;
-}
-
-const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
-  const [sortBy, setSortBy] = useState<"latest" | "popular">("latest");
-
-  // 예시 데이터
-  const posts: Post[] = [
-    {
-      id: 1,
-      title: "Postaa 1",
-      category: "서울",
-      userId: "user1",
-      imgurl: "https://example.com/image1.jpg",
-      likes: 12342134,
-      createdAt: "2023-06-01",
-      departureDate: "2023-06-10",
-      arrivalDate: "2023-06-15",
-    },
-    {
-      id: 2,
-      title: "Postff 2",
-      category: "부산",
-      userId: "user2",
-      imgurl: "https://example.com/image2.jpg",
-      likes: 1231,
-      createdAt: "2023-06-04",
-      departureDate: "2023-06-12",
-      arrivalDate: "2023-06-17",
-    },
-    {
-      id: 3,
-      title: "Postbb 3",
-      category: "서울",
-      userId: "user2123",
-      imgurl: "https://example.com/image2.jpg",
-      likes: 51234,
-      createdAt: "2023-06-02",
-      departureDate: "2023-06-12",
-      arrivalDate: "2023-06-17",
-    },
-    {
-      id: 4,
-      title: "Postaa 4",
-      category: "경기",
-      userId: "user122",
-      imgurl: "https://example.com/image2.jpg",
-      likes: 512313,
-      createdAt: "2023-06-03",
-      departureDate: "2023-06-12",
-      arrivalDate: "2023-06-17",
-    },
-  ];
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getCommunityAPI({ page: 0, size: 10, sort: sortBy });
+        console.log(data);
+        setPosts(data.communities);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [sortBy]);
 
   // 검색어와 카테고리에 따라 필터링된 게시글 목록
-  const filteredPosts: Post[] = posts.filter((post) => {
-    const matchSearchQuery: boolean = post.title
+  const filteredPosts: ICommunityPost[] = posts.filter((post) => {
+    const matchSearchQuery: boolean = post.communityName
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchCategory: boolean =
-      selectedCategory === "" || post.category === selectedCategory;
+      selectedCategory === "" || post.memberNickname === selectedCategory;
     return matchSearchQuery && matchCategory;
   });
 
-  // 최신순 또는 인기순으로 정렬된 게시글 목록
-  const sortedPosts: Post[] =
-    sortBy === "latest"
-      ? filteredPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)) // 최신순 정렬
-      : filteredPosts.sort((a, b) => b.likes - a.likes); // 인기순 정렬
-
-  // 검색어에 따라 필터링된 게시글 목록에서 title과 일치하는 게시글 필터링
-  const matchedPosts: Post[] = sortedPosts.filter((post) =>
-    post.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const handleSortByLatest = () => {
-    setSortBy("latest");
+  const handleSortByrecent = () => {
+    setSortBy("recent");
   };
 
   const handleSortByPopular = () => {
-    setSortBy("popular");
+    setSortBy("like");
   };
 
   return (
@@ -107,16 +46,16 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
           <button
             type="button"
             className={`px-4 py-2 border-r-2 ${
-              sortBy === "latest" ? "text-main-color font-bold" : ""
+              sortBy === "recent" ? "text-blue-003 font-bold" : ""
             }`}
-            onClick={handleSortByLatest}
+            onClick={handleSortByrecent}
           >
             최신순
           </button>
           <button
             type="button"
             className={`px-4 py-2 ${
-              sortBy === "popular" ? "text-main-color font-bold" : ""
+              sortBy === "like" ? "text-blue-003 font-bold" : ""
             }`}
             onClick={handleSortByPopular}
           >
@@ -124,48 +63,50 @@ const Lists = ({ searchQuery, selectedCategory }: ListsProps) => {
           </button>
         </div>
         <div className="flex">
-          <Link to="/community/write">
+          <Link to="/community/newpost">
             <button
               type="button"
-              className="px-4 py-2 rounded-lg bg-main-color text-white"
+              className="px-4 py-2 rounded-lg bg-blue-003 text-white-001"
             >
               새 게시글
             </button>
           </Link>
         </div>
       </div>
-      {matchedPosts.length === 0 ? (
+      {filteredPosts.length === 0 ? (
         <div className="flex justify-center items-center mt-[60px]">
           <p className="text-xl font-medium">검색 결과가 없습니다</p>
         </div>
       ) : (
         <ul className="w-full">
-          {matchedPosts.map((post) => (
-            <li key={post.id}>
-              <a href={`/community/${post.id}`}>
-                <div className="flex justify-between w-full mb-4 px-8 py-2 border-2 border-main-color rounded-lg">
+          {filteredPosts.map((post) => (
+            <li key={post.communityId}>
+              <Link to={`/community/${post.communityId}`}>
+                <div className="flex justify-between w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg">
                   <div>
-                    <p className="mb-2 text-xl font-bold">{post.title}</p>
+                    <p className="mb-2 text-xl font-bold">
+                      {post.communityName}
+                    </p>
                     <div className="flex">
-                      <p>
-                        일정 : {post.departureDate} ~ {post.arrivalDate}
-                      </p>
+                      <p>작성일: {post.createdDate}</p>
                     </div>
                   </div>
                   <div className="flex items-center">
                     <NoProfile width={16} height={16} />
-                    <p className="ml-1 mr-4 font-medium">{post.userId}</p>
+                    <p className="ml-1 mr-4 font-medium">
+                      {post.memberNickname}
+                    </p>
                     <div>
                       <p className="flex items-center">
-                        <Like width={20} height={20} /> {post.likes}
+                        <Like width={20} height={20} /> {post.likeCount}
                       </p>
-                      <p className="font-thin text-sm text-placeholder-color">
-                        작성일: {post.createdAt}
+                      <p className="font-thin text-sm text-gray-002">
+                        작성일: {post.createdDate}
                       </p>
                     </div>
                   </div>
                 </div>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
