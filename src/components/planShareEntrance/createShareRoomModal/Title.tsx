@@ -1,8 +1,12 @@
-import useTitle from "../../../hooks/useTitle";
+import { ChangeEvent } from "react";
+import { IForm } from "../../../type/shareRoomForm";
 
-const Title = () => {
-  const [title, onChangeTitleHandler] = useTitle();
-  
+interface IProps {
+  form: IForm;
+  onChangeTitleHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Title = ({ form, onChangeTitleHandler }: IProps) => {
   return (
     <div className="flex justify-center items-center">
       <input
@@ -12,7 +16,7 @@ const Title = () => {
         maxLength={20}
         onChange={onChangeTitleHandler}
       />
-      <p className="text-xl text-gray-002">{title.length} / 20</p>
+      <p className="text-xl text-gray-002">{form.title.length} / 20</p>
     </div>
   );
 };

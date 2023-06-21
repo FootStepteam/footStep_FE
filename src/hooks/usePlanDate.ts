@@ -3,15 +3,7 @@ import { useEffect, useState } from "react";
 import { Value } from "react-calendar/dist/cjs/shared/types";
 import { IShareRoom } from "../type/shareRoom";
 import { ISelectedDate } from "../type/shareRoomForm";
-
-const initialSelectedDate: ISelectedDate = {
-  startDate: new Date(),
-  endDate: new Date(),
-  printStartDate: "",
-  printEndDate: "",
-  submitStartDate: "",
-  submitEndDate: "",
-};
+import { INITIAL_SELECTED_DATES } from "../constants/initial";
 
 const usePlanDate = (
   type: string,
@@ -19,15 +11,16 @@ const usePlanDate = (
   shareRoomInfo: IShareRoom
 ) => {
   const [night, setNight] = useState<number>(0);
-  const [selectedDate, setSelectedDate] =
-    useState<ISelectedDate>(initialSelectedDate);
+  const [selectedDate, setSelectedDate] = useState<ISelectedDate>(
+    INITIAL_SELECTED_DATES
+  );
   const [openCalendar, setOpenCalendar] = useState<boolean>(false);
 
-  const calculateNights = (calcType: string) => {
+  const calculateNights = () => {
     let startDate;
     let endDate;
 
-    if (calcType === "init") {
+    if (type === "get") {
       startDate = new Date(shareRoomInfo.travelStartDate);
       endDate = new Date(shareRoomInfo.travelEndDate);
       const printStartDate = moment(shareRoomInfo.travelStartDate).format(
@@ -48,7 +41,6 @@ const usePlanDate = (
   const onChangeHandler = (value: Value) => {
     const startDate = value[0];
     const endDate = value[1];
-
     setSelectedDate({ ...selectedDate, startDate, endDate });
   };
 
@@ -58,7 +50,7 @@ const usePlanDate = (
     const printStartDate = moment(selectedDate.startDate).format("MM.DD");
     const printEndDate = moment(selectedDate.endDate).format("MM.DD");
 
-    calculateNights("change");
+    calculateNights();
     setSelectedDate({
       ...selectedDate,
       printStartDate,
@@ -76,9 +68,11 @@ const usePlanDate = (
   };
 
   useEffect(() => {
-    if (type === "get") {
-      calculateNights("init");
-    }
+    console.log(selectedDate);
+  }, [selectedDate]);
+
+  useEffect(() => {
+    calculateNights();
   }, [shareRoomInfo]);
 
   useEffect(() => {

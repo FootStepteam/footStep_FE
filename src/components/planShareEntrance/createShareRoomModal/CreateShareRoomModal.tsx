@@ -5,10 +5,14 @@ import Calendar from "../../common/calendar/Calendar";
 import Button from "./Button";
 import Close from "./Close";
 import Title from "./Title";
+import useShareRoomForm from "../../../hooks/useShareRoomForm";
+import { INITIAL_SHARE_ROOM_INFO } from "../../../constants/initial";
 
 const CreateShareRoomModal = () => {
   const [openModal, setOpenModal] = useRecoilState(createModalOpenState);
   const modalRef = useRef<HTMLDivElement>(null);
+  const { form, onChangeTitleHandler, onChangeDateHandler } =
+    useShareRoomForm();
 
   const type = "create";
 
@@ -37,9 +41,17 @@ const CreateShareRoomModal = () => {
     >
       <div className="flex flex-col items-center m-center mt-[15rem] w-[24rem] h-[20rem] bg-white rounded-md shadow-md animate-modalShow">
         <Close />
-        <Title />
-        <Calendar type={type} editStatus={true}/>
-        <Button />
+        <Title
+          form={form}
+          onChangeTitleHandler={onChangeTitleHandler}
+        />
+        <Calendar
+          type={type}
+          editStatus={true}
+          onChangeDateHandler={onChangeDateHandler}
+          shareRoomInfo={INITIAL_SHARE_ROOM_INFO}
+        />
+        <Button form={form} />
       </div>
     </div>
   );
