@@ -110,6 +110,11 @@ const usePlanDate = (type: string, editStatus: boolean) => {
     }
   }, [planDate])
 
+  useEffect(() => {
+    if(!editStatus){
+      setOpenCalendar(false);
+    }
+  }, [editStatus])
   return [night, selectedDate, openCalendar, onChangeHandler, onClickCompleteButtonHandler, onClickDateCalendar] as const;
 }
 

@@ -12,14 +12,14 @@ const PlaceSearchCategory = ({ placeSearch }: IPropsPlaceSearch) => {
   };
 
   return (
-    <div className="grid grid-cols-8 mt-6">
+    <div className="grid grid-cols-8 mt-3">
       {ADMINISTRATIVE_DISTRICT.map((district) => (
         <p
           key={district}
-          className={`flex justify-center items-center py-2 cursor-pointer ${
+          className={`flex justify-center items-center py-3 font-NanumGothic font-normal text-[0.8rem] cursor-pointer ${
             selected === district
               ? "text-white bg-platinum-001"
-              : "bg-white text-black border border-gray-003"
+              : "bg-white text-black border-[0.5px] border-gray-004 hover:bg-platinum-002 hover:text-white"
           }`}
           onClick={() => onClickHandler(district)}
           role="presentation"
