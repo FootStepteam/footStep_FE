@@ -2,16 +2,16 @@ import { useRecoilState } from "recoil";
 import { ReactComponent as LeftArrow } from "../../../assets/leftArrow.svg";
 import ScheduleDaySelect from "./ScheduleDaySelect";
 import ScheduleAreaHeader from "./ScheduleAreaHeader";
-import { sidebarState } from "../../../state/sidebarState";
+import { sideBarState } from "../../../state/sidebarState";
 import ScheduleLists from "./ScheduleLists";
 
 const ScheduleArea = () => {
-  const [sidebarOpenState, setSidebarOpenState] = useRecoilState(sidebarState);
+  const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
 
   const onClickHandler = () => {
     setSidebarOpenState({
-      ...sidebarOpenState,
-      schedule: !sidebarOpenState.schedule,
+      ...sideBarOpenState,
+      schedule: !sideBarOpenState.schedule,
     });
   };
 
@@ -22,11 +22,11 @@ const ScheduleArea = () => {
       <ScheduleLists />
       <div
         className={`${
-          sidebarOpenState.placeSearch && "hidden"
+          sideBarOpenState.placeSearch && "hidden"
         } flex items-center absolute top-[50%] right-[-7%] w-6 h-16 bg-white rounded-r-xl cursor-pointer`}
         onClick={onClickHandler}
       >
-        <LeftArrow className="w-[20px] h-[20px] fill-[#DCDCDC]"/>
+        <LeftArrow className="w-[20px] h-[20px] fill-[#DCDCDC]" />
       </div>
     </div>
   );

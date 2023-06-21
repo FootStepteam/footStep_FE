@@ -1,12 +1,12 @@
 import { atom } from "recoil";
-import { ISidebarState } from "../type/sideBarOpenState";
+import { ISideBarState } from "../type/sideBarOpenState";
 
-const initialState: ISidebarState = {
-    schedule : true,
-    placeSearch: false
-}
+const initialState: ISideBarState = {
+  schedule: true,
+  placeSearch: false,
+};
 
-export const sidebarState = atom<ISidebarState>({
-    key: "sidebarState",
-    default: initialState
-})
+export const sideBarState = atom<ISideBarState>({
+  key: "sidebarState",
+  default: initialState,
+});

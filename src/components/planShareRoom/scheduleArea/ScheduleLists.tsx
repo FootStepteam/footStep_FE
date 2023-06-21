@@ -1,11 +1,11 @@
 import { useRecoilState } from "recoil";
-import { sidebarState } from "../../../state/sidebarState";
+import { sideBarState } from "../../../state/sidebarState";
 
 const ScheduleLists = () => {
-  const [sidebarOpenState, setSidebarOpenState] = useRecoilState(sidebarState);
+  const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
 
   const onClickHandler = () => {
-    setSidebarOpenState({ ...sidebarOpenState, placeSearch: true });
+    setSidebarOpenState({ ...sideBarOpenState, placeSearch: true });
   };
 
   return (
