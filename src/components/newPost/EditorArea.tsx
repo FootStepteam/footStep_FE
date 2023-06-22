@@ -41,7 +41,7 @@ const EditorArea = () => {
       Swal.fire({
         icon: "warning",
         title: "일정 선택 필요",
-        text: "일정을 선택해야 글을 작성하실 수 있습니다",
+        text: "일정을 선택해야 글을 작성하실 수 있습니다.",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "확인",
       });

@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { editShareRoomInfoAPI } from "../../../api/shareRoomAPI";
 import { ReactComponent as Exit } from "../../../assets/exit.svg";
 import useShareRoomForm from "../../../hooks/useShareRoomForm";
-import { jwtAccessTokenState } from "../../../state/loginState";
 import { formValidationCheck } from "../../../utils/formValidationCheck";
 import Calendar from "../../common/calendar/Calendar";
+import { getCookie } from "../../../utils/cookie";
 
 const ScheduleAreaHeader = () => {
-  const token = useRecoilValue(jwtAccessTokenState);
+  const token = getCookie("accessToken");
   const { shareRoomID } = useParams<string>();
   const {
     form,
@@ -81,10 +80,7 @@ const ScheduleAreaHeader = () => {
   return (
     <div className="w-planShareRoomSideBar h-planShareRoomHeader bg-gray-007">
       <div className="flex justify-between items-center">
-        <button
-          type="button"
-          className="mt-4 mb-6 ml-2  "
-        >
+        <button type="button" className="mt-4 mb-6 ml-2  ">
           <Exit
             className="w-[25px] h-[25px] fill-black-003 hover:fill-red-001"
             onClick={onClickExitHanlder}

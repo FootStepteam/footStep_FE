@@ -2,20 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as FootStep } from "../../assets/footstep.svg";
 import { ReactComponent as Map } from "../../assets/map.svg";
 import { ReactComponent as MapChat } from "../../assets/mapChat.svg";
-import { jwtAccessTokenState } from "../../state/loginState";
-import { useRecoilValue } from "recoil";
+import { getCookie } from "../../utils/cookie";
 
 const Start = () => {
   const navigate = useNavigate();
-  const auth = useRecoilValue(jwtAccessTokenState);
+  const auth = getCookie("accessToken");
 
   const onClickHanlder = () => {
-    if(auth === "anonymous"){
+    if (auth === "anonymous") {
       navigate("/login");
-    }else{
+    } else {
       navigate("/planShareEntrance");
     }
-  }
+  };
 
   return (
     <section className="relative w-full h-[53rem] bg-gradient-to-r from-blue-002 from-10% via-sky-001 via-30% to-sky-005 to-90%">

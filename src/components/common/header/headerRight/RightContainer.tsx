@@ -1,15 +1,14 @@
-import { useRecoilValue } from "recoil";
-import { jwtAccessTokenState } from "../../../../state/loginState";
+import { useCookies } from "react-cookie";
 import AfterLogin from "./AfterLogin";
 import SignInAndUp from "./SignInAndUp";
 
 const RightContainer = () => {
-  const auth = useRecoilValue(jwtAccessTokenState);
+  const [cookies] = useCookies(["accessToken"]);
 
   return (
     <section className="flex justify-end items-center mr-32 w-[30rem] h-[4rem]">
       <div className="flex items-center">
-        {auth === "anonymous" ? <SignInAndUp /> : <AfterLogin />}
+        {!cookies.accessToken ? <SignInAndUp /> : <AfterLogin />}
       </div>
     </section>
   );

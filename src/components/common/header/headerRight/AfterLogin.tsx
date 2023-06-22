@@ -1,4 +1,3 @@
-// AfterLogin.tsx
 import { Link } from "react-router-dom";
 import { MouseEvent, FunctionComponent } from "react";
 import { ReactComponent as NoProfile } from "../../../../assets/smile.svg";
