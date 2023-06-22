@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getIncludeShareRoomAPI } from "../../../api/shareRoomAPI";
-import { jwtAccessTokenState } from "../../../state/loginState";
 import { searchShareRoomData } from "../../../store/searchShareRoom";
 import ExistsPlan from "./ExistsPlan";
 import NotExistsPlan from "./NotExistsPlan";

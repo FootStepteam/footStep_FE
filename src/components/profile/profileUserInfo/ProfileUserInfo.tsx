@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
 import { ReactComponent as NoProfile } from "../../../assets/smile.svg";
-import { jwtAccessTokenState } from "../../../state/loginState";
 import { getUserInfo } from "../../../api/profileAPI";
+import { getCookie } from "../../../utils/cookie";
 
 const ProfileUserInfo = () => {
   const [userInfo, setUserInfo] = useState<IMember | null>(null);
-  const accessToken = useRecoilValue(jwtAccessTokenState);
+  const accessToken = getCookie("accessToken");
 
   useEffect(() => {
     const fetchUserInfo = async () => {
