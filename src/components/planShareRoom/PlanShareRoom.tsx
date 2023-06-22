@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import {
+  CustomOverlayMap,
   Map,
   MapMarker,
-  ZoomControl,
   MapTypeControl,
-  CustomOverlayMap,
+  ZoomControl,
 } from "react-kakao-maps-sdk";
 import { useSetRecoilState } from "recoil";
+import { ReactComponent as Close } from "../../assets/close.svg";
 import { placeSearchResult } from "../../store/placeSearchResult";
 import SideBar from "./SideBar";
-import { ReactComponent as Close } from "../../assets/close.svg";
-import { IKakaoPlaceSearchResult } from "../../type/kakaoPlaceSearchResult";
+import { IKakaoPlaceSearchResult } from "../../type/kakaoMap";
 
 interface IState {
   center: {
@@ -34,11 +34,34 @@ interface IMarker {
   content: string;
 }
 
+interface IOpenOverlay {
+  data: IKakaoPlaceSearchResult;
+  open: boolean;
+  index: number;
+}
+
 const PlanShareRoom = () => {
   const setPlaceSearchResult = useSetRecoilState(placeSearchResult);
   const [map, setMap] = useState<any>();
-  const [markers, setMarkers] = useState<any[]>([]);
-  const [openOverlay, setOpenOverlay] = useState<any>(null);
+  const [markers, setMarkers] = useState<IMarker[]>([]);
+  const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
+    data: {
+      address_name: "",
+      category_group_code: "",
+      category_group_name: "",
+      category_name: "",
+      distance: "",
+      id: "initial",
+      phone: "",
+      place_name: "",
+      place_url: "",
+      road_address_name: "",
+      x: "",
+      y: "",
+    },
+    open: false,
+    index: -1,
+  });
   const [info, setInfo] = useState<IInfo[]>([
     {
       data: {
@@ -63,8 +86,13 @@ const PlanShareRoom = () => {
     isPanto: false,
   });
 
+  useEffect(() => {
+    console.log(openOverlay);
+  }, [openOverlay]);
+
   const overlayOpen = (index: number, type: string) => {
     const deepCopyInfo = info.map((element: any, i: number) => {
+      console.log(element);
       if (i === index) {
         if (type === "open") {
           return { ...element, open: true };
