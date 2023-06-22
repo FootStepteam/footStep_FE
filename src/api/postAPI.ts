@@ -30,3 +30,47 @@ export const getPostAPI = async (
     throw error;
   }
 };
+
+export const likePostAPI = async (communityId: string): Promise<void> => {
+  const KEY = "accessToken";
+  const token = getCookie(KEY);
+
+  const config = token
+    ? { headers: { Authorization: `Bearer ${token}` } }
+    : undefined;
+
+  try {
+    await axios.post(`/api/api/community/${communityId}/like`, config);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const responseErrorCode = error.response?.data.code;
+      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        await refreshTokenAPI();
+        return likePostAPI(communityId);
+      }
+    }
+    throw error;
+  }
+};
+
+export const unlikePostAPI = async (communityId: string): Promise<void> => {
+  const KEY = "accessToken";
+  const token = getCookie(KEY);
+
+  const config = token
+    ? { headers: { Authorization: `Bearer ${token}` } }
+    : undefined;
+
+  try {
+    await axios.post(`/api/api/community/${communityId}/un-like`, config);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const responseErrorCode = error.response?.data.code;
+      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        await refreshTokenAPI();
+        return unlikePostAPI(communityId);
+      }
+    }
+    throw error;
+  }
+};

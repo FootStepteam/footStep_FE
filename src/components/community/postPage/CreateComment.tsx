@@ -47,10 +47,11 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         className="border rounded px-2 py-1 w-full"
+        placeholder="댓글을 입력해주세요"
       />
       <button
         onClick={handleCreate}
-        className="bg-green-002 text-white-001 px-2 py-1 rounded"
+        className="bg-green-002 text-white-001 px-2 py-1 rounded mt-2"
       >
         Post
       </button>

@@ -42,3 +42,8 @@ export interface IComment {
 export interface ICommentUpdateForm {
   content: string;
 }
+
+export interface ILikeProps {
+  communityId: string;
+  initialLikeCount: number;
+}

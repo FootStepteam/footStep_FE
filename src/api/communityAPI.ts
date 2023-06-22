@@ -12,7 +12,7 @@ export const getCommunityAPI = async (
   params?: IGetCommunityParams
 ): Promise<ICommunityData> => {
   const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie(KEY);
 
   const config = {
     params,
@@ -26,8 +26,13 @@ export const getCommunityAPI = async (
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
       if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        refreshTokenAPI();
-        return getCommunityAPI(params);
+        await refreshTokenAPI();
+        token = getCookie(KEY);
+        config.headers = token
+          ? { Authorization: `Bearer ${token}` }
+          : undefined;
+        const response = await axios.get("/api/api/community", config);
+        return response.data;
       }
     }
   }

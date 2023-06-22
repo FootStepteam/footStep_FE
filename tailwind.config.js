@@ -24,7 +24,7 @@ export default {
         "sky-002": "#72E3FF",
         "sky-003": "#B4F0FF",
         "sky-004": "#D9F8FF",
-        "sky-005" : "rgba(0, 175, 255, 0.4)",
+        "sky-005": "rgba(0, 175, 255, 0.4)",
         "red-001": "#FF3232",
         "red-002": "#F84D4D",
         "red-003": "#F67D7D",
@@ -91,11 +91,11 @@ export default {
         },
         daysDropDown: {
           from: { opacity: 0 },
-          to: { opacity: 1 }
+          to: { opacity: 1 },
         },
         daysUp: {
           from: { opacity: 1 },
-          to: { opacity: 0 }
+          to: { opacity: 0 },
         },
       },
       animation: {
@@ -108,5 +108,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animated")],
 };
