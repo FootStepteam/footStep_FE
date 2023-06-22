@@ -86,13 +86,8 @@ const PlanShareRoom = () => {
     isPanto: false,
   });
 
-  useEffect(() => {
-    console.log(openOverlay);
-  }, [openOverlay]);
-
   const overlayOpen = (index: number, type: string) => {
     const deepCopyInfo = info.map((element: any, i: number) => {
-      console.log(element);
       if (i === index) {
         if (type === "open") {
           return { ...element, open: true };
@@ -155,7 +150,6 @@ const PlanShareRoom = () => {
   };
 
   const panTo = (placeX: number, placeY: number, index: number) => {
-    console.log(placeX, placeY);
     setState({
       center: {
         lat: placeX,
