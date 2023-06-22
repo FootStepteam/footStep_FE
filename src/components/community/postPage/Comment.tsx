@@ -52,7 +52,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
   };
 
   return (
-    <div className="my-2">
+    <div className="my-2 p-2 border border-gray-002 rounded">
       {isEditMode ? (
         <input
           value={content}
@@ -64,7 +64,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
       )}
       <p className="text-xs text-gray-001">{comment?.memberNickname}</p>
       {memberNickname === comment?.memberNickname && (
-        <>
+        <div className="flex space-x-2 mt-2">
           {isEditMode ? (
             <button
               onClick={handleUpdate}
@@ -86,7 +86,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
           >
             Delete
           </button>
-        </>
+        </div>
       )}
     </div>
   );

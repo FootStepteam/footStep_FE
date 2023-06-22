@@ -32,16 +32,25 @@ const Post = () => {
   }, [communityId]);
 
   if (!post || !communityId) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full h-screen flex justify-center items-center bg-gray-005">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold">{post.communityName}</h2>
-      <p>{post.memberNickname}</p>
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />{" "}
+    <div className="bg-gray-007 p-8">
+      <h2 className="text-2xl font-bold text-blue-003 mb-4">
+        {post.communityName}
+      </h2>
+      <p className="text-gray-001 mb-4">{post.memberNickname}</p>
+      <div
+        className="bg-white p-4 rounded-md mb-4"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />{" "}
       <Like communityId={communityId} initialLikeCount={post.likeCount} />
-      <p>Comment Count: {post.commentCount}</p>
+      <p className="text-gray-002 mb-4">댓글 {post.commentCount} 개</p>
       {post.comments.map((comment) => (
         <Comment
           post={post}
