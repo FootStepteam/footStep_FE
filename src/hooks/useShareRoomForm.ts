@@ -1,14 +1,16 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { getShareRoomInfoAPI } from "../api/shareRoomAPI";
 import { INITIAL_FORM, INITIAL_SHARE_ROOM_INFO } from "../constants/initial";
 import { IShareRoom } from "../type/shareRoom";
 import { IForm, ISelectedDate } from "../type/shareRoomForm";
+import { useSetRecoilState } from "recoil";
+import { shareRoomInfo } from "../store/shareRoomInfo";
 
 const useShareRoomForm = () => {
   const [form, setForm] = useState<IForm>(INITIAL_FORM);
-  const [shareRoomInfo, setShareRoomInfo] = useState<IShareRoom>(
-    INITIAL_SHARE_ROOM_INFO
-  );
+  const [scheduleShareRoomInfo, setScheduleShareRoomInfo] =
+    useState<IShareRoom>(INITIAL_SHARE_ROOM_INFO);
+  const setShareRoomInfo = useSetRecoilState(shareRoomInfo);
 
   const getData = async (shareRoomID: string) => {
     const response = await getShareRoomInfoAPI(shareRoomID);
@@ -18,6 +20,7 @@ const useShareRoomForm = () => {
       startDate: response.travelStartDate,
       endDate: response.travelEndDate,
     });
+    setScheduleShareRoomInfo(response);
     setShareRoomInfo(response);
   };
 
@@ -36,16 +39,12 @@ const useShareRoomForm = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
-
   return {
     form,
     getData,
     onChangeTitleHandler,
     onChangeDateHandler,
-    shareRoomInfo,
+    scheduleShareRoomInfo,
   } as const;
 };
 

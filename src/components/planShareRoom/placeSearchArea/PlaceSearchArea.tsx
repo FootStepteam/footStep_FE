@@ -1,11 +1,11 @@
-import PlaceSearchAreaHeader from "./PlaceSearchAreaHeader";
-import PlaceSearchAreaContent from "./PlaceSearchAreaContent";
-import { IPropsPlaceSearch } from "../../../type/shareRoom";
-import { sideBarState } from "../../../state/sidebarState";
 import { useRecoilState } from "recoil";
 import { ReactComponent as LeftArrow } from "../../../assets/leftArrow.svg";
+import { sideBarState } from "../../../state/sidebarState";
+import { IPropsSideBar } from "../../../type/shareRoom";
+import PlaceSearchAreaContent from "./PlaceSearchAreaContent";
+import PlaceSearchAreaHeader from "./PlaceSearchAreaHeader";
 
-const PlaceSearchArea = ({ placeSearch }: IPropsPlaceSearch) => {
+const PlaceSearchArea = ({ placeSearch, panTo }: IPropsSideBar) => {
   const [sideBarOpenState, setSideBarOpenState] = useRecoilState(sideBarState);
 
   const onClickHandler = () => {
@@ -19,7 +19,7 @@ const PlaceSearchArea = ({ placeSearch }: IPropsPlaceSearch) => {
       }`}
     >
       <PlaceSearchAreaHeader placeSearch={placeSearch} />
-      <PlaceSearchAreaContent />
+      <PlaceSearchAreaContent panTo={panTo} />
       <div
         className={`${
           sideBarOpenState.placeSearch ? "block" : "hidden"
