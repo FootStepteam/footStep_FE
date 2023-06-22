@@ -79,6 +79,7 @@ const ScheduleDaySelect = () => {
         planDay: i,
       };
       if (i === 1) {
+        console.log(dateInfo);
         setSelectedDate(dateInfo);
       }
       dateArr.push(dateInfo);
@@ -93,7 +94,9 @@ const ScheduleDaySelect = () => {
   return (
     <div>
       <div className="flex items-center mt-12 ml-12">
-        <p className="ml-2 font-Jua font-normal text-3xl">{selectedDate.planDay}일차</p>
+        <p className="ml-2 font-Jua font-normal text-3xl">
+          {selectedDate.planDay}일차
+        </p>
         <p className="flex items-end  ml-3 pt-1 font-Jua text-gray-001">
           {selectedDate.month}월 {selectedDate.date}일 ({selectedDate.day})
         </p>
@@ -105,7 +108,9 @@ const ScheduleDaySelect = () => {
           onClick={onClickDaysHandler}
         >
           <BottomArrow
-            className={`border-2 rounded-full origin-center ${daysOpenState ? "rotate-180" : "rotate-360"}`}
+            className={`border-2 rounded-full origin-center ${
+              daysOpenState ? "rotate-180" : "rotate-360"
+            }`}
             width={20}
             height={20}
           />
@@ -125,8 +130,16 @@ const ScheduleDaySelect = () => {
             onClick={() => onClickselectDay(date.planDay)}
           >
             <p className="text-sm">
-                <span className="mr-4 font-bold">{date.planDay}일차 </span><span className={`${selectedDate.planDay === date.planDay ?
-              "text-blue-003 font-medium" : "text-black-003"}`}>{date.month}월 {date.date}일 ({date.day})</span>
+              <span className="mr-4 font-bold">{date.planDay}일차 </span>
+              <span
+                className={`${
+                  selectedDate.planDay === date.planDay
+                    ? "text-blue-003 font-medium"
+                    : "text-black-003"
+                }`}
+              >
+                {date.month}월 {date.date}일 ({date.day})
+              </span>
             </p>
           </div>
         ))}
