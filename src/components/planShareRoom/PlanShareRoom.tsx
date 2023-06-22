@@ -1,123 +1,231 @@
-import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useState } from "react";
+import {
+  CustomOverlayMap,
+  Map,
+  MapMarker,
+  MapTypeControl,
+  ZoomControl,
+} from "react-kakao-maps-sdk";
+import { useSetRecoilState } from "recoil";
+import { ReactComponent as Close } from "../../assets/close.svg";
 import { placeSearchResult } from "../../store/placeSearchResult";
-import { IKakaoPlaceSearchResult } from "../../type/kakaoPlaceSearchResult";
+import { IKakaoPlaceSearchResult } from "../../type/kakaoMap";
 import SideBar from "./SideBar";
-import { shareRoomInfo } from "../../store/shareRoomInfo";
-import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
-import { useParams } from "react-router-dom";
-import { jwtAccessTokenState } from "../../state/loginState";
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
+interface IState {
+  center: {
+    lat: number;
+    lng: number;
+  };
+
+  isPanto: boolean;
+}
+
+interface IInfo {
+  data: IKakaoPlaceSearchResult;
+  open: boolean;
+}
+
+interface IMarker {
+  position: {
+    lat: number;
+    lng: number;
+  };
+  content: string;
+}
+
+interface IOpenOverlay {
+  data: IKakaoPlaceSearchResult;
+  open: boolean;
+  index: number;
 }
 
 const PlanShareRoom = () => {
-  const [mapElement, setMapElement] = useState<any>({});
-  const setPlanShareRoomInfo = useSetRecoilState(shareRoomInfo);
-  const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
-  const token = useRecoilValue(jwtAccessTokenState);
-  const { shareRoomID } = useParams<string>();
+  const setPlaceSearchResult = useSetRecoilState(placeSearchResult);
+  const [map, setMap] = useState<any>();
+  const [markers, setMarkers] = useState<IMarker[]>([]);
+  const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
+    data: {
+      address_name: "",
+      category_group_code: "",
+      category_group_name: "",
+      category_name: "",
+      distance: "",
+      id: "initial",
+      phone: "",
+      place_name: "",
+      place_url: "",
+      road_address_name: "",
+      x: "",
+      y: "",
+    },
+    open: false,
+    index: -1,
+  });
+  const [info, setInfo] = useState<IInfo[]>([
+    {
+      data: {
+        address_name: "",
+        category_group_code: "",
+        category_group_name: "",
+        category_name: "",
+        distance: "",
+        id: "initial",
+        phone: "",
+        place_name: "",
+        place_url: "",
+        road_address_name: "",
+        x: "",
+        y: "",
+      },
+      open: false,
+    },
+  ]);
+  const [state, setState] = useState<IState>({
+    center: { lat: 33.452613, lng: 126.570888 },
+    isPanto: false,
+  });
 
-  const getShareRoomInfo = async () => {
-    if (shareRoomID) {
-      const result = await getShareRoomInfoAPI(shareRoomID, token);
-      console.log(result);
-      setPlanShareRoomInfo(result);
-    }
-  };
-
-  useEffect(() => {
-    const mapContainer = document.getElementById("map");
-    const mapOption = {
-      center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3,
-    };
-    const map = new window.kakao.maps.Map(mapContainer, mapOption);
-    const ps = new window.kakao.maps.services.Places();
-    const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 9005 });
-    setMapElement({ map, ps, infowindow });
-    getShareRoomInfo();
-  }, []);
-
-  const displayMarker = (place: IKakaoPlaceSearchResult) => {
-    const marker = new window.kakao.maps.Marker({
-      map: mapElement.map,
-      position: new window.kakao.maps.LatLng(place.y, place.x),
-    });
-
-    window.kakao.maps.event.addListener(marker, "click", () => {
-      mapElement.infowindow.setContent(
-        `<div style="display:flex; flex-direction:column;padding:5px;font-size:12px;">
-          <p>${place.place_name}</p>
-          <p style="font-size:9px">${place.address_name}</p>
-        </div>`
-      );
-      mapElement.infowindow.open(mapElement.map, marker);
-    });
-  };
-
-  const displayPagination = (pagination: any) => {
-    const paginationDOM = document.getElementById("pagination") as HTMLElement;
-    const fragment = document.createDocumentFragment();
-
-    while (paginationDOM.hasChildNodes()) {
-      if (paginationDOM.lastChild) {
-        paginationDOM.removeChild(paginationDOM.lastChild);
-      }
-    }
-
-    for (let i = 1; i <= pagination.last; i++) {
-      const el = document.createElement("a");
-      el.href = "#";
-      el.innerHTML = String(i);
-      el.style.margin = "4px";
-      if (i === pagination.current) {
-        el.className = "on";
-      } else {
-        el.onclick = (function (i) {
-          return function () {
-            pagination.gotoPage(i);
-          };
-        })(i);
+  const overlayOpen = (index: number, type: string) => {
+    const deepCopyInfo = info.map((element: any, i: number) => {
+      if (i === index) {
+        if (type === "open") {
+          return { ...element, open: true };
+        } else {
+          return { ...element, open: false };
+        }
       }
 
-      fragment.appendChild(el);
+      if (openOverlay !== null) {
+        if (openOverlay.index === i) {
+          return { ...element, open: false };
+        }
+      }
+      return element;
+    });
+    setInfo(deepCopyInfo);
+
+    if (type === "open") {
+      setOpenOverlay({ ...info[index], index });
     }
-    paginationDOM.appendChild(fragment);
   };
 
-  const placeSearchCB = (
-    places: IKakaoPlaceSearchResult[],
-    status: string,
-    pagination: any
-  ) => {
-    if (status === window.kakao.maps.services.Status.OK) {
-      setSearchPlaceResult(places);
-      console.log(places);
-      const bounds = new window.kakao.maps.LatLngBounds();
-
-      places.forEach((place) => {
-        displayMarker(place);
-        bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
-      });
-
-      mapElement.map.setBounds(bounds);
-      displayPagination(pagination);
-    }
+  const onClickMarkerHandler = (index: number, type: string) => {
+    overlayOpen(index, type);
   };
 
   const placeSearch = (keyword: string) => {
-    if (keyword === null) return;
-    mapElement.ps.keywordSearch(keyword, placeSearchCB);
+    const ps = new kakao.maps.services.Places();
+
+    ps.keywordSearch(keyword, (data, status, _pagination) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const infos: IInfo[] = [];
+
+        for (let i = 0; i < data.length; i++) {
+          const obj: IInfo = { data: data[i], open: false };
+          infos.push(obj);
+        }
+        setInfo(infos);
+        setPlaceSearchResult(data);
+        const bounds = new kakao.maps.LatLngBounds();
+        let markers: IMarker[] = [];
+
+        for (var i = 0; i < data.length; i++) {
+          // @ts-ignore
+          markers.push({
+            position: {
+              lat: Number(data[i].y),
+              lng: Number(data[i].x),
+            },
+            content: data[i].place_name,
+          });
+          // @ts-ignore
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+        setMarkers(markers);
+
+        map.setBounds(bounds);
+      }
+    });
+  };
+
+  const panTo = (placeX: number, placeY: number, index: number) => {
+    setState({
+      center: {
+        lat: placeX,
+        lng: placeY,
+      },
+      isPanto: true,
+    });
+    overlayOpen(index, "open");
   };
 
   return (
     <>
-      <SideBar placeSearch={placeSearch} />
-      <div id="map" className="relative w-[100vw] h-[100vh] z-[1000]" />
+      <SideBar
+        placeSearch={placeSearch}
+        panTo={panTo}
+      />
+      <Map
+        center={state.center}
+        style={{
+          width: "100vw",
+          height: "100vh",
+        }}
+        level={3}
+        onCreate={setMap}
+      >
+        {markers.map((marker, index) => (
+          <MapMarker
+            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+            position={marker.position}
+            onClick={() => onClickMarkerHandler(index, "open")}
+          >
+            {info[index].open && (
+              <CustomOverlayMap position={marker.position}>
+                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white rounded-sm shadow-lg z-[1005]">
+                  <div className="mt-6 ml-4 w-[16rem]">
+                    <p className="mb-2 text-lg font-bold">
+                      {info[index].data.place_name}
+                    </p>
+                    <p className="text-sm font-normal">
+                      {info[index].data.address_name}
+                    </p>
+                    <p className="text-sm font-light">
+                      {info[index].data.phone}
+                    </p>
+                    <div className="flex mt-2">
+                      <a
+                        href={`https://place.map.kakao.com/${info[index].data.id}`}
+                        target="_blank"
+                        className="text-sm text-blue-001 hover:text-blue-003"
+                        rel="noreferrer"
+                      >
+                        상세보기
+                      </a>
+                      <button
+                        type="button"
+                        className="ml-2 text-sm text-gray-001 hover:text-gray-003"
+                      >
+                        장소추가
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    className="grow pt-4 pl-4 text-black"
+                    onClick={() => onClickMarkerHandler(index, "close")}
+                    title="닫기"
+                  >
+                    <Close className="w-[20px] h-[20px]" />
+                  </div>
+                </div>
+              </CustomOverlayMap>
+            )}
+          </MapMarker>
+        ))}
+        <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
+        <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
+      </Map>
     </>
   );
 };

@@ -15,9 +15,10 @@ const EmailLoginForm = () => {
 
       // response로 받아온 jwtAccessToken 저장
       const accessToken = responseData.jwtAccessToken;
-
+      const refreshToken = responseData.refreshToken;
+      
       // loginState에서 호출(jwtAccessToken header에 저장)
-      login(accessToken);
+      login(accessToken, refreshToken);
       // 로그인 전 페이지로 이동
       if (savedLocation) {
         navigate(savedLocation);

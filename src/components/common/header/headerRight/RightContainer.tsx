@@ -1,15 +1,10 @@
-import SignInAndUp from "./SignInAndUp";
-import AfterLogin from "./AfterLogin";
-import { jwtAccessTokenState } from "../../../../state/loginState";
 import { useRecoilValue } from "recoil";
-import { useEffect } from "react";
+import { jwtAccessTokenState } from "../../../../state/loginState";
+import AfterLogin from "./AfterLogin";
+import SignInAndUp from "./SignInAndUp";
 
 const RightContainer = () => {
   const auth = useRecoilValue(jwtAccessTokenState);
-
-  useEffect(() => {
-    // console.log(auth)
-  });
 
   return (
     <section className="flex justify-end items-center mr-32 w-[30rem] h-[4rem]">
