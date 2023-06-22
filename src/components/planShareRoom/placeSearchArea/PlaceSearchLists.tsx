@@ -2,8 +2,9 @@ import { useRecoilValue } from "recoil";
 import { IKakaoPlaceSearchResult } from "../../../type/kakaoPlaceSearchResult";
 import { placeSearchResult } from "../../../store/placeSearchResult";
 import { ReactComponent as Address } from "../../../assets/address.svg";
+import { IPropsPanTo } from "../../../type/shareRoom";
 
-const PlaceSearchLists = () => {
+const PlaceSearchLists = ({ panTo }: IPropsPanTo) => {
   const placeLists = useRecoilValue(placeSearchResult);
   const isExist = placeLists.length !== 0;
 
@@ -32,9 +33,10 @@ const PlaceSearchLists = () => {
             {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
               <li
                 key={place.id}
-                className={`flex my-3 py-4 h-[8rem] bg-white border-b border-b-gray-004 shadow-sm cursor-pointer ${
+                className={`flex my-3 py-4 h-[8rem] bg-white hover:bg-gray-006 border-b border-b-gray-004 shadow-sm cursor-pointer ${
                   index === 0 && "border-t border-t-gray-004"
                 }`}
+                onClick={() => panTo(Number(place.y), Number(place.x), index)}
               >
                 <div className="ml-4 w-[17em]">
                   <div className="mb-1">
