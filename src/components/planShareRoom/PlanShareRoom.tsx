@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   CustomOverlayMap,
   Map,
@@ -9,8 +9,8 @@ import {
 import { useSetRecoilState } from "recoil";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { placeSearchResult } from "../../store/placeSearchResult";
-import SideBar from "./SideBar";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoMap";
+import SideBar from "./SideBar";
 
 interface IState {
   center: {
@@ -183,8 +183,8 @@ const PlanShareRoom = () => {
           >
             {info[index].open && (
               <CustomOverlayMap position={marker.position}>
-                <div className="flex relative top-[-7.4rem] w-[17rem] h-[9rem] bg-white shadow-lg z-[1005]">
-                  <div className="mt-4 ml-4 w-[16rem]">
+                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white rounded-sm shadow-lg z-[1005]">
+                  <div className="mt-6 ml-4 w-[16rem]">
                     <p className="mb-2 text-lg font-bold">
                       {info[index].data.place_name}
                     </p>
@@ -194,26 +194,31 @@ const PlanShareRoom = () => {
                     <p className="text-sm font-light">
                       {info[index].data.phone}
                     </p>
-                    <div className="mt-2">
+                    <div className="flex mt-2">
                       <a
                         href={`https://place.map.kakao.com/${info[index].data.id}`}
                         target="_blank"
-                        className="text-sm text-blue-001"
+                        className="text-sm text-blue-001 hover:text-blue-003"
                         rel="noreferrer"
                       >
                         상세보기
                       </a>
+                      <button
+                        type="button"
+                        className="ml-2 text-sm text-gray-001 hover:text-gray-003"
+                      >
+                        장소추가
+                      </button>
                     </div>
                   </div>
                   <div
-                    className="text-black"
+                    className="grow pt-4 pl-4 text-black"
                     onClick={() => onClickMarkerHandler(index, "close")}
                     title="닫기"
                   >
-                    <Close className="mt-3 mr-2 w-[20px] h-[20px]" />
+                    <Close className="w-[20px] h-[20px]" />
                   </div>
                 </div>
-                <div></div>
               </CustomOverlayMap>
             )}
           </MapMarker>
