@@ -24,3 +24,12 @@ export interface ICreateShareRoomFormValue {
 export interface IPropsPlaceSearch {
   placeSearch: (keyword: string) => void;
 }
+
+export interface IPropsPanTo {
+  panTo: (placeX: number, placeY: number, index: number) => void;
+}
+
+export interface IPropsSideBar {
+  placeSearch: (keyword: string) => void;
+  panTo: (placeX: number, placeY: number, index: number) => void;
+}

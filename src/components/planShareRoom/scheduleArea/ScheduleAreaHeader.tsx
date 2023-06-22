@@ -18,7 +18,7 @@ const ScheduleAreaHeader = () => {
     getData,
     onChangeTitleHandler,
     onChangeDateHandler,
-    shareRoomInfo,
+    scheduleShareRoomInfo,
   } = useShareRoomForm();
   const [editStatus, setEditStatus] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -133,7 +133,7 @@ const ScheduleAreaHeader = () => {
           type={type}
           editStatus={editStatus}
           onChangeDateHandler={onChangeDateHandler}
-          shareRoomInfo={shareRoomInfo}
+          shareRoomInfo={scheduleShareRoomInfo}
         />
       </div>
     </div>
