@@ -4,6 +4,8 @@ import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { ReactComponent as Like } from "../../assets/like.svg";
 import { getCommunityAPI } from "../../api/communityAPI";
 import { ICommunityPost, IListsProps } from "../../type/communityPage";
+import { getCookie } from "../../utils/cookie";
+import Swal from "sweetalert2";
 
 const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
   const [sortBy, setSortBy] = useState<"recent" | "like">("recent");
@@ -39,6 +41,20 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
     setSortBy("like");
   };
 
+  const handleNewPostClick = (event: React.MouseEvent) => {
+    const token = getCookie("accessToken");
+    if (!token) {
+      event.preventDefault();
+      Swal.fire({
+        icon: "error",
+        title: "로그인 필요",
+        text: "게시글 작성은 로그인 후 이용 가능합니다.",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col mx-auto pt-[40px] w-2/3 min-h-screen">
       <div className="flex justify-between mb-4">
@@ -63,7 +79,7 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
           </button>
         </div>
         <div className="flex">
-          <Link to="/community/newpost">
+          <Link to="/community/newpost" onClick={handleNewPostClick}>
             <button
               type="button"
               className="px-4 py-2 rounded-lg bg-blue-003 text-white-001"
