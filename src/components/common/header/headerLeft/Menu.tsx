@@ -1,6 +1,9 @@
+// Menu.tsx
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtAccessTokenState } from "../../../../state/loginState";
-import { useRecoilValue } from "recoil";
+import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
+import { useRequireAuth } from "../../../../hooks/useRequireAuth";
 
 const menus = [
   {
@@ -22,11 +25,27 @@ const menus = [
 ];
 
 const Menu = () => {
-  const auth = useRecoilValue(jwtAccessTokenState);
+  const restrictedPages = [
+    "/planShareEntrance",
+    "/user/profile",
+    "/user/profile/edit",
+  ];
+  useRequireAuth(restrictedPages);
+
+  const [cookies] = useCookies(["accessToken"]);
+  const [auth, setAuth] = useState(cookies.accessToken);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setAuth(cookies.accessToken);
+  });
   const onClickHandler = (path: string) => {
-    if (auth === "anonymous" && path === "/planShareEntrance") {
+    if (!auth && path === "/planShareEntrance") {
+      Swal.fire({
+        icon: "info",
+        title: "로그인 후 이용 가능합니다.",
+        showConfirmButton: true,
+      });
       navigate("/login");
     } else {
       navigate(path);
@@ -39,8 +58,7 @@ const Menu = () => {
         <div
           key={element.menu}
           onClick={() => onClickHandler(element.path)}
-          className="flex grow justify-center items-center text-[1.3rem]
-           font-semibold cursor-pointer"
+          className="flex grow justify-center items-center text-[1.3rem] font-semibold cursor-pointer"
         >
           {element.menu}
         </div>
