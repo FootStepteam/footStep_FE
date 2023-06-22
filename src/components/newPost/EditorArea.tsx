@@ -1,6 +1,10 @@
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useEditor } from "../../hooks/useEditor";
+import { useEffect } from "react";
+import { getCookie } from "../../utils/cookie";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const EditorArea = () => {
   const {
@@ -16,6 +20,21 @@ const EditorArea = () => {
     handleSelectPlan,
     submitPost,
   } = useEditor();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getCookie("accessToken");
+    if (!token) {
+      Swal.fire({
+        icon: "error",
+        title: "접근 불가",
+        text: "게시글 작성은 로그인 후 이용 가능합니다.",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      });
+      navigate("/community");
+    }
+  }, []);
 
   return (
     <div className="min-h-screen p-10">
