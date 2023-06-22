@@ -4,6 +4,7 @@ import { ICommunityPost } from "../type/communityPage";
 import { getPostAPI } from "../api/postAPI";
 import Comment from "../components/community/postPage/Comment";
 import CreateComment from "../components/community/postPage/CreateComment";
+import Like from "../components/community/postPage/Like";
 
 const Post = () => {
   const [post, setPost] = useState<ICommunityPost | null>(null);
@@ -30,7 +31,7 @@ const Post = () => {
     fetchData();
   }, [communityId]);
 
-  if (!post) {
+  if (!post || !communityId) {
     return <div>Loading...</div>;
   }
 
@@ -39,7 +40,7 @@ const Post = () => {
       <h2 className="text-xl font-bold">{post.communityName}</h2>
       <p>{post.memberNickname}</p>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />{" "}
-      <p>Like Count: {post.likeCount}</p>
+      <Like communityId={communityId} initialLikeCount={post.likeCount} />
       <p>Comment Count: {post.commentCount}</p>
       {post.comments.map((comment) => (
         <Comment
