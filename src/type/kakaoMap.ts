@@ -52,3 +52,25 @@ export interface IKakaoPlaceSearchResult {
   x: string;
   y: string;
 }
+
+export interface IState {
+  center: {
+    lat: number;
+    lng: number;
+  };
+
+  isPanto: boolean;
+}
+
+export interface IInfo {
+  data: IKakaoPlaceSearchResult;
+  open: boolean;
+}
+
+export interface IMarker {
+  position: {
+    lat: number;
+    lng: number;
+  };
+  content: string;
+}
