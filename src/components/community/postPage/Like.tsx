@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { likePostAPI, unlikePostAPI } from "../../../api/postAPI";
 import { ILikeProps } from "../../../type/communityPage";
+import { ReactComponent as Heart } from "../../../assets/heartNoFill.svg";
+import { ReactComponent as HeartFill } from "../../../assets/heartFill.svg";
 
 const Like = ({ communityId, initialLikeCount }: ILikeProps) => {
   const [likeCount, setLikeCount] = useState(initialLikeCount);
@@ -19,8 +21,14 @@ const Like = ({ communityId, initialLikeCount }: ILikeProps) => {
 
   return (
     <div>
-      <button onClick={handleLike}>{isLiked ? "Unlike" : "Like"}</button>
-      <p>Like Count: {likeCount}</p>
+      <button className={isLiked ? "animate-jump" : ""} onClick={handleLike}>
+        {isLiked ? (
+          <HeartFill width={20} height={20} />
+        ) : (
+          <Heart width={20} height={20} />
+        )}
+      </button>
+      <p>좋아요 {likeCount}</p>
     </div>
   );
 };
