@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
 import { placeSearchResult } from "../../store/placeSearchResult";
+import { shareRoomInfo } from "../../store/shareRoomInfo";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoPlaceSearchResult";
 import SideBar from "./SideBar";
-import { shareRoomInfo } from "../../store/shareRoomInfo";
-import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
-import { useParams } from "react-router-dom";
-import { jwtAccessTokenState } from "../../state/loginState";
 
 declare global {
   interface Window {
@@ -16,18 +15,19 @@ declare global {
 
 const PlanShareRoom = () => {
   const [mapElement, setMapElement] = useState<any>({});
-  const token = useRecoilValue(jwtAccessTokenState);
   const setPlanShareRoomInfo = useSetRecoilState(shareRoomInfo);
   const setSearchPlaceResult = useSetRecoilState(placeSearchResult);
   const { shareRoomID } = useParams<string>();
 
   const getShareRoomInfo = async () => {
     if (shareRoomID) {
-      const result = await getShareRoomInfoAPI(shareRoomID, token);
-      console.log(result);
+      const result = await getShareRoomInfoAPI(shareRoomID);
+
       setPlanShareRoomInfo(result);
     }
   };
+
+  let clickedOverlay: any = null;
 
   useEffect(() => {
     const mapContainer = document.getElementById("map");
@@ -48,14 +48,35 @@ const PlanShareRoom = () => {
       position: new window.kakao.maps.LatLng(place.y, place.x),
     });
 
+    const content = `
+      <div style="display:flex; width: 18rem; height: 7.5rem; background-color: white;">
+        <div style="padding-top:0.8rem; padding-left:1rem; width: 17rem;">
+          <p style="font-size:1.2rem; font-weight:700;">${place.place_name}</p>
+          <p style="font-size:0.8rem; font-weight:400;">${place.address_name}</p>
+          <p style="font-size:0.7rem; font-weight:300;">${place.phone}</p>
+          <a style="font-size:0.8rem; color:#5AD18F;" href="https://place.map.kakao.com/${place.id}">상세보기</a>
+        </div>
+        <div style="padding-top:0.5rem; padding-right:1rem; font-size:1.2rem; font-weight:700; cursor:pointer;" title="닫기">X</div>
+      </div>
+    `;
+
+    const options = {
+      map: mapElement.map,
+      position: marker.getPosition(),
+      content: content,
+    };
+
+    const customOverlay = new window.kakao.maps.CustomOverlay(options);
+    setMapElement({ ...mapElement, customOverlay });
+    customOverlay.setMap(null);
+
     window.kakao.maps.event.addListener(marker, "click", () => {
-      mapElement.infowindow.setContent(
-        `<div style="display:flex; flex-direction:column;padding:5px;font-size:12px;">
-          <p>${place.place_name}</p>
-          <p style="font-size:9px">${place.address_name}</p>
-        </div>`
-      );
-      mapElement.infowindow.open(mapElement.map, marker);
+      if (clickedOverlay !== null) {
+        clickedOverlay.setMap(null);
+      }
+
+      customOverlay.setMap(mapElement.map);
+      clickedOverlay = customOverlay;
     });
   };
 
@@ -97,7 +118,7 @@ const PlanShareRoom = () => {
   ) => {
     if (status === window.kakao.maps.services.Status.OK) {
       setSearchPlaceResult(places);
-      console.log(places);
+
       const bounds = new window.kakao.maps.LatLngBounds();
 
       places.forEach((place) => {
@@ -118,7 +139,10 @@ const PlanShareRoom = () => {
   return (
     <>
       <SideBar placeSearch={placeSearch} />
-      <div id="map" className="relative w-[100vw] h-[100vh] z-[1000]" />
+      <div
+        id="map"
+        className="relative w-[100vw] h-[100vh] z-[1000]"
+      />
     </>
   );
 };
