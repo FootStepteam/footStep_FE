@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { addDestinationAPI } from "../api/destinationAPI";
+import { addDestinationAPI, deleteDestinationAPI } from "../api/destinationAPI";
 import { getScheduleAPI } from "../api/scheduleAPI";
 import { selectedDay } from "../store/selectedDay";
 import { IKakaoPlaceSearchResult } from "../type/kakaoMap";
@@ -26,7 +26,21 @@ const useManageSchedule = () => {
 
       const response = await addDestinationAPI(shareRoomID, bodyData);
 
+      if (response.status === 200) {
+        getSchedule();
+      }
+    }
+  };
+
+  const deleteDestination = async (destinationId: string) => {
+    if (shareRoomID) {
+      const response = await deleteDestinationAPI(
+        Number(shareRoomID),
+        destinationId
+      );
+
       if (response?.status === 200) {
+        getSchedule();
       }
     }
   };
@@ -45,7 +59,7 @@ const useManageSchedule = () => {
     getSchedule();
   }, []);
 
-  return { addDestination };
+  return { addDestination, deleteDestination };
 };
 
 export default useManageSchedule;
