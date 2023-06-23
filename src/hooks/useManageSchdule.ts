@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { addDestinationAPI } from "../api/destinationAPI";
 import { getScheduleAPI } from "../api/scheduleAPI";
 import { selectedDay } from "../store/selectedDay";
 import { IKakaoPlaceSearchResult } from "../type/kakaoMap";
+import { schedule } from "../store/schedule";
 
 const useManageSchedule = () => {
   const { shareRoomID } = useParams();
   const selectedDate = useRecoilValue(selectedDay);
-  // const;
+  const setSchedule = useSetRecoilState(schedule);
 
   const addDestination = async (place: IKakaoPlaceSearchResult) => {
     if (shareRoomID) {
@@ -33,6 +34,10 @@ const useManageSchedule = () => {
   const getSchedule = async () => {
     if (shareRoomID) {
       const response = await getScheduleAPI(shareRoomID);
+
+      if (response?.status === 200) {
+        setSchedule(response.data);
+      }
     }
   };
 
