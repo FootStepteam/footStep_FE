@@ -7,6 +7,7 @@ import { getKakaoToken } from "../../api/kakaoLoginAPI";
 const KakaoCallback: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useLoginState();
+  const savedLocation = sessionStorage.getItem("lastLocation");
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -14,10 +15,13 @@ const KakaoCallback: React.FC = () => {
 
     if (code) {
       getKakaoToken(code).then(({ jwtAccessToken, refreshToken }) => {
-        console.log(jwtAccessToken, refreshToken);
-
         login(jwtAccessToken, refreshToken);
-        navigate("/");
+        if (savedLocation) {
+          navigate(savedLocation);
+        }
+        if (!savedLocation) {
+          navigate("/");
+        }
       });
     }
   }, [login, navigate]);
