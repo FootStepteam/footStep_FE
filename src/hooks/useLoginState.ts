@@ -9,8 +9,16 @@ export const useLoginState = () => {
 
   const login = (token: string, refreshToken: string) => {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    setCookie("accessToken", token, { maxAge: 60 * 60 * 1 });
+    setCookie("accessToken", token, {
+      path: "/",
+      secure: import.meta.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 60 * 60 * 1,
+    });
     setRefreshTokenCookie("refresh-token", refreshToken, {
+      path: "/",
+      secure: import.meta.env.NODE_ENV === "production",
+      sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7,
     });
   };
@@ -19,8 +27,16 @@ export const useLoginState = () => {
     delete axios.defaults.headers.common.Authorization;
 
     // Logout 시 쿠키에서 accessToken 삭제
-    removeCookie("accessToken");
-    removeRefreshTokenCookie("refresh-token");
+    removeCookie("accessToken", {
+      path: "/",
+      secure: import.meta.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    removeRefreshTokenCookie("refresh-token", {
+      path: "/",
+      secure: import.meta.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
   };
 
   return { login, logout };

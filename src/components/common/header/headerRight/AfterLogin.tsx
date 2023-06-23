@@ -19,7 +19,7 @@ const AfterLogin: FunctionComponent = () => {
       <Link to="/" className="mr-5" onClick={handleLogout}>
         로그아웃
       </Link>
-      <div className="w-16 h-16 bg-gray-300 rounded-[100%]">
+      <div className="w-16 h-16 bg-gray-001 rounded-[100%]">
         <NoProfile width={64} height={64} />
       </div>
     </div>
