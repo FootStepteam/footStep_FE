@@ -1,3 +1,5 @@
+import { IKakaoPlaceSearchResult } from "./kakaoMap";
+
 export interface IShareRoom {
   endPoint: string;
   imageUrl: string;
@@ -25,8 +27,9 @@ export interface IPropsPlaceSearch {
   placeSearch: (keyword: string) => void;
 }
 
-export interface IPropsPanTo {
+export interface IPlaceContentDown {
   panTo: (placeX: number, placeY: number, index: number) => void;
+  addDestination: (place: IKakaoPlaceSearchResult) => void;
 }
 
 export interface IPropsSideBar {
