@@ -1,7 +1,10 @@
-import { IPropsPanTo } from "../../../type/shareRoom";
+import { IPlaceContentDown } from "../../../type/shareRoom";
 import PlaceSearchLists from "./PlaceSearchLists";
 
-const PlaceSearchAreaContent = ({ panTo }: IPropsPanTo) => {
+const PlaceSearchAreaContent = ({
+  panTo,
+  addDestination,
+}: IPlaceContentDown) => {
   return (
     <div className="flex flex-col w-[23rem] h-[calc(100vh-15rem)]">
       <div className="flex justify-end items-center mt-6 mr-4">
@@ -17,7 +20,10 @@ const PlaceSearchAreaContent = ({ panTo }: IPropsPanTo) => {
           장소추천받기
         </label>
       </div>
-      <PlaceSearchLists panTo={panTo} />
+      <PlaceSearchLists
+        panTo={panTo}
+        addDestination={addDestination}
+      />
     </div>
   );
 };

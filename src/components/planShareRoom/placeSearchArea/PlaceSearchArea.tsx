@@ -4,9 +4,11 @@ import { sideBarState } from "../../../state/sidebarState";
 import { IPropsSideBar } from "../../../type/shareRoom";
 import PlaceSearchAreaContent from "./PlaceSearchAreaContent";
 import PlaceSearchAreaHeader from "./PlaceSearchAreaHeader";
+import useManageSchedule from "../../../hooks/useManageSchdule";
 
 const PlaceSearchArea = ({ placeSearch, panTo }: IPropsSideBar) => {
   const [sideBarOpenState, setSideBarOpenState] = useRecoilState(sideBarState);
+  const { addDestination } = useManageSchedule();
 
   const onClickHandler = () => {
     setSideBarOpenState({ ...sideBarOpenState, placeSearch: false });
@@ -19,7 +21,10 @@ const PlaceSearchArea = ({ placeSearch, panTo }: IPropsSideBar) => {
       }`}
     >
       <PlaceSearchAreaHeader placeSearch={placeSearch} />
-      <PlaceSearchAreaContent panTo={panTo} />
+      <PlaceSearchAreaContent
+        panTo={panTo}
+        addDestination={addDestination}
+      />
       <div
         className={`${
           sideBarOpenState.placeSearch ? "block" : "hidden"
