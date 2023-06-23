@@ -1,17 +1,21 @@
-import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { ReactComponent as Address } from "../../../assets/address.svg";
 import { placeSearchResult } from "../../../store/placeSearchResult";
-import { IPlaceContentDown } from "../../../type/shareRoom";
 import { IKakaoPlaceSearchResult } from "../../../type/kakaoMap";
+import { IPlaceContentDown } from "../../../type/shareRoom";
 
 const PlaceSearchLists = ({ panTo, addDestination }: IPlaceContentDown) => {
-  const placeLists = useRecoilValue(placeSearchResult);
+  const [placeLists, setPlaceLists] = useRecoilState(placeSearchResult);
   const isExist = placeLists.length !== 0;
 
   const onClickAddPlaceHandler = (place: IKakaoPlaceSearchResult) => {
     addDestination(place);
-    console.log("asd");
   };
+
+  useEffect(() => {
+    setPlaceLists([]);
+  }, []);
 
   return (
     <div

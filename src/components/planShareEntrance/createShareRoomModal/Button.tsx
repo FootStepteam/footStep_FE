@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { createShareRoomAPI } from "../../../api/shareRoomAPI";
 import { createModalOpenState } from "../../../state/createModalOpen";
-import { formValidationCheck } from "../../../utils/formValidationCheck";
+import { getShareRoomList } from "../../../store/getShareRoomList";
 import { IForm } from "../../../type/shareRoomForm";
+import { formValidationCheck } from "../../../utils/formValidationCheck";
 
 interface IProps {
   form: IForm;
@@ -13,18 +15,32 @@ interface IProps {
 const Button = ({ form }: IProps) => {
   const [openCreateModal, setOpenCreateModal] =
     useRecoilState(createModalOpenState);
-
+  const navigate = useNavigate();
+  const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
   const MySwal = withReactContent(Swal);
 
   const onClickCreateHandler = async () => {
     if (!formValidationCheck(form)) return;
 
-    const result = await createShareRoomAPI(form);
+    const response = await createShareRoomAPI(form);
 
-    if (result?.status === 200) {
+    if (response?.status === 200) {
+      const shareRoomId = response.data.shareId;
+      const planList = response.data;
+
       MySwal.fire({
+        title: "등록이 완료되었습니다.",
+        text: "일정 공유방에 입장 하시겠습니까?",
         icon: "success",
-        text: "등록이 완료되었습니다.",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        result.isConfirmed
+          ? navigate(`/planShareRoom/${shareRoomId}`)
+          : setShareRooms([...shareRooms, planList]);
       });
     } else {
       MySwal.fire({
