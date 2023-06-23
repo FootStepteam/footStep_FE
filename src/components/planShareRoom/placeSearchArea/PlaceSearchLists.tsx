@@ -1,15 +1,15 @@
 import { useRecoilValue } from "recoil";
-import { IKakaoPlaceSearchResult } from "../../../type/kakaoPlaceSearchResult";
-import { placeSearchResult } from "../../../store/placeSearchResult";
 import { ReactComponent as Address } from "../../../assets/address.svg";
-import { IPropsPanTo } from "../../../type/shareRoom";
+import { placeSearchResult } from "../../../store/placeSearchResult";
+import { IPlaceContentDown } from "../../../type/shareRoom";
+import { IKakaoPlaceSearchResult } from "../../../type/kakaoMap";
 
-const PlaceSearchLists = ({ panTo }: IPropsPanTo) => {
+const PlaceSearchLists = ({ panTo, addDestination }: IPlaceContentDown) => {
   const placeLists = useRecoilValue(placeSearchResult);
   const isExist = placeLists.length !== 0;
 
   const onClickAddPlaceHandler = (place: IKakaoPlaceSearchResult) => {
-    // setPlanPlaces({...planPlaces, place});
+    addDestination(place);
     console.log("asd");
   };
 

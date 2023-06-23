@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { IKakaoPlaceSearchResult } from "../type/kakaoPlaceSearchResult";
+import { IKakaoPlaceSearchResult } from "../type/kakaoMap";
 
 const initial: IKakaoPlaceSearchResult[] = [];
 
