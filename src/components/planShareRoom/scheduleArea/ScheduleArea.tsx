@@ -4,9 +4,13 @@ import ScheduleDaySelect from "./ScheduleDaySelect";
 import ScheduleAreaHeader from "./ScheduleAreaHeader";
 import { sideBarState } from "../../../state/sidebarState";
 import ScheduleLists from "./ScheduleLists";
+import { useEffect } from "react";
+import { getScheduleAPI } from "../../../api/scheduleAPI";
+import { useParams } from "react-router-dom";
 
 const ScheduleArea = () => {
   const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
+  const { shareRoomID } = useParams();
 
   const onClickHandler = () => {
     setSidebarOpenState({
@@ -14,6 +18,13 @@ const ScheduleArea = () => {
       schedule: !sideBarOpenState.schedule,
     });
   };
+
+  useEffect(() => {
+    if (shareRoomID) {
+      const response = getScheduleAPI(shareRoomID);
+      console.log(response);
+    }
+  }, []);
 
   return (
     <div
