@@ -9,7 +9,7 @@ export const usePost = () => {
 
   const onCommentsChange = async () => {
     if (!communityId) return; // communityId가 없을 때 함수를 종료
-    const data = await getPostAPI(communityId);
+    const data = await getPostAPI(Number(communityId));
     setPost(data);
   };
 
@@ -18,7 +18,7 @@ export const usePost = () => {
       if (!communityId) return; // communityId가 없을 때 처리
 
       try {
-        const data = await getPostAPI(communityId);
+        const data = await getPostAPI(Number(communityId));
         setPost(data);
       } catch (error) {
         console.error(error);

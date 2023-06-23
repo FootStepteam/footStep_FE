@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp";
 import KakaoCallBack from "./components/login/KakaoCallBack";
 import NewPost from "./pages/NewPost";
 import Post from "./pages/Post";
+import EditPost from "./components/community/postPage/EditPost";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/community" element={<CommunityPage />} />
       <Route path="/community/newpost" element={<NewPost />} />
       <Route path="/community/:communityId" element={<Post />} />
+      <Route path="/community/:communityId/edit" element={<EditPost />} />
       <Route path="/planShareEntrance" element={<PlanShareEntrancePage />} />
       <Route
         path="/planShareRoom/:shareRoomID"

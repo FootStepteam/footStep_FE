@@ -2,9 +2,26 @@ import { usePost } from "../hooks/usePost";
 import Comment from "../components/community/postPage/Comment";
 import CreateComment from "../components/community/postPage/CreateComment";
 import Like from "../components/community/postPage/Like";
+import { useEffect, useState } from "react";
+import { getMemberByAccessToken } from "../api/memberAPI";
+import PostEditDelete from "../components/community/postPage/PostEditDelete";
 
 const Post = () => {
   const { post, onCommentsChange } = usePost();
+  const [memberNickname, setMemberNickname] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMemberNickname = async () => {
+      try {
+        const memberData = await getMemberByAccessToken();
+        setMemberNickname(memberData.nickname);
+      } catch (error) {
+        // console.error(error);
+      }
+    };
+
+    fetchMemberNickname();
+  }, []);
 
   if (!post) {
     return (
@@ -35,6 +52,9 @@ const Post = () => {
         />
       ))}
       <CreateComment post={post} onCommentsChange={onCommentsChange} />
+      {post.memberNickname === memberNickname && (
+        <PostEditDelete postId={post.communityId} />
+      )}
     </div>
   );
 };

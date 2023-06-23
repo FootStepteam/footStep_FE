@@ -71,7 +71,7 @@ export const getMemberIdAPI = async (): Promise<number> => {
   const token = getCookie(KEY);
 
   try {
-    const response = await axios.get(`/api/api/members/`, {
+    const response = await axios.get(`/api/api/members/${token}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

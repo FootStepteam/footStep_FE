@@ -2,9 +2,10 @@ import axios from "axios";
 import { ICommunityPost } from "../type/communityPage";
 import { getCookie } from "../utils/cookie";
 import { refreshTokenAPI } from "./shareRoomAPI";
+import { getMemberIdAPI } from "./newPostAPI";
 
 export const getPostAPI = async (
-  communityId: string
+  communityId: number
 ): Promise<ICommunityPost> => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
@@ -35,12 +36,18 @@ export const likePostAPI = async (communityId: number): Promise<void> => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
 
-  const config = token
-    ? { headers: { Authorization: `Bearer ${token}` } }
-    : undefined;
+  const memberId = await getMemberIdAPI();
 
   try {
-    await axios.post(`/api/api/community/${communityId}/like`, config);
+    await axios.post(
+      `/api/api/community/${communityId}/like?memberId=${memberId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
@@ -57,18 +64,82 @@ export const unlikePostAPI = async (communityId: number): Promise<void> => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
 
-  const config = token
-    ? { headers: { Authorization: `Bearer ${token}` } }
-    : undefined;
+  const memberId = await getMemberIdAPI();
 
   try {
-    await axios.post(`/api/api/community/${communityId}/un-like`, config);
+    await axios.post(
+      `/api/api/community/${communityId}/un-like?memberId=${memberId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
       if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
         await refreshTokenAPI();
         return unlikePostAPI(communityId);
+      }
+    }
+    throw error;
+  }
+};
+
+export const updatePostAPI = async (
+  communityId: number,
+  updatedContent: string
+): Promise<void> => {
+  const KEY = "accessToken";
+  const token = getCookie(KEY);
+
+  const memberId = await getMemberIdAPI();
+
+  try {
+    await axios.put(
+      `/api/api/community/${communityId}?memberId=${memberId}`,
+      { content: updatedContent },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const responseErrorCode = error.response?.data.code;
+      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        await refreshTokenAPI();
+        return updatePostAPI(communityId, updatedContent);
+      }
+    }
+    throw error;
+  }
+};
+
+export const deletePostAPI = async (communityId: number): Promise<void> => {
+  const KEY = "accessToken";
+  const token = getCookie(KEY);
+
+  const memberId = await getMemberIdAPI();
+
+  try {
+    await axios.delete(
+      `/api/api/community/${communityId}?memberId=${memberId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const responseErrorCode = error.response?.data.code;
+      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        await refreshTokenAPI();
+        return deletePostAPI(communityId);
       }
     }
     throw error;
