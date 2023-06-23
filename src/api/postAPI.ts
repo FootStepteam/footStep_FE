@@ -31,7 +31,7 @@ export const getPostAPI = async (
   }
 };
 
-export const likePostAPI = async (communityId: string): Promise<void> => {
+export const likePostAPI = async (communityId: number): Promise<void> => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
 
@@ -53,7 +53,7 @@ export const likePostAPI = async (communityId: string): Promise<void> => {
   }
 };
 
-export const unlikePostAPI = async (communityId: string): Promise<void> => {
+export const unlikePostAPI = async (communityId: number): Promise<void> => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
 

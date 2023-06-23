@@ -21,7 +21,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
         const memberData = await getMemberByAccessToken();
         setMemberNickname(memberData.nickname);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 

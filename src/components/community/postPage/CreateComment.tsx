@@ -18,7 +18,7 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
         const memberData = await getMemberByAccessToken();
         setMemberId(memberData.memberId);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 
