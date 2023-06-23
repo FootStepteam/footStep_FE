@@ -1,4 +1,3 @@
-// Comment.tsx
 import { useState, useEffect } from "react";
 import { deleteComment, updateComment } from "../../../api/communityAPI";
 import { IComment, ICommunityPost } from "../../../type/communityPage";
@@ -21,7 +20,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
         const memberData = await getMemberByAccessToken();
         setMemberNickname(memberData.nickname);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 
