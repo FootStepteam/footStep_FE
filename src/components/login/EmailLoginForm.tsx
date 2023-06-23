@@ -1,8 +1,11 @@
+//EmailLoginForm.tsx
 import { useForm } from "react-hook-form";
 import { TLoginFormData } from "../../type/emailLogin";
 import { signInWithEmail } from "../../api/emailLoginAPI";
 import { useLoginState } from "../../hooks/useLoginState";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"; // 이 줄을 추가하세요
+import { AxiosError } from "axios";
 
 const EmailLoginForm = () => {
   const { register, handleSubmit } = useForm<TLoginFormData>();
@@ -28,7 +31,17 @@ const EmailLoginForm = () => {
       }
     } catch (error) {
       // 로그인 실패시 처리
-      console.error(error);
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.status === 400) {
+        Swal.fire({
+          title: "로그인 실패!",
+          text: "아이디와 비밀번호를 다시 확인해주세요",
+          icon: "error",
+          confirmButtonText: "확인",
+        });
+      } else {
+        console.error(error);
+      }
     }
   };
 
