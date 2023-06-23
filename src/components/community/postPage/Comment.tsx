@@ -1,4 +1,3 @@
-// Comment.tsx
 import { useState, useEffect } from "react";
 import { deleteComment, updateComment } from "../../../api/communityAPI";
 import { IComment, ICommunityPost } from "../../../type/communityPage";

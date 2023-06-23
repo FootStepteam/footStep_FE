@@ -1,10 +1,10 @@
-import { usePost } from "../hooks/usePost";
-import Comment from "../components/community/postPage/Comment";
-import CreateComment from "../components/community/postPage/CreateComment";
-import Like from "../components/community/postPage/Like";
+import { usePost } from "../../../hooks/usePost";
+import Comment from "./Comment";
+import CreateComment from "./CreateComment";
+import Like from "./Like";
 import { useEffect, useState } from "react";
-import { getMemberByAccessToken } from "../api/memberAPI";
-import PostEditDelete from "../components/community/postPage/PostEditDelete";
+import { getMemberByAccessToken } from "../../../api/memberAPI";
+import PostEditDelete from "./PostEditDelete";
 
 const Post = () => {
   const { post, onCommentsChange } = usePost();
@@ -32,7 +32,7 @@ const Post = () => {
   }
 
   return (
-    <div className="bg-gray-007 p-8">
+    <div className="min-h-screen p-8 bg-gray-007">
       <h2 className="text-2xl font-bold text-blue-003 mb-4">
         {post.communityName}
       </h2>
