@@ -2,16 +2,23 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { sideBarState } from "../../../state/sidebarState";
 import { schedule } from "../../../store/schedule";
 import { selectedDay } from "../../../store/selectedDay";
+import { ReactComponent as Close } from "../../../assets/close.svg";
+import useManageSchedule from "../../../hooks/useManageSchdule";
 
 const ExistsSchedule = () => {
   const [scheduleList, setScheduleList] = useRecoilState(schedule);
   const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
   const selectedDate = useRecoilValue(selectedDay);
+  const { deleteDestination } = useManageSchedule();
 
   const onClickaddPlaceHandler = () => {
     if (!sideBarOpenState.placeSearch) {
       setSidebarOpenState({ ...sideBarOpenState, placeSearch: true });
     }
+  };
+
+  const onClickDeletePlaceHandler = (destinationId: string) => {
+    deleteDestination(destinationId);
   };
 
   return (
@@ -27,15 +34,28 @@ const ExistsSchedule = () => {
       </div>
       <div className="flex flex-col items-center">
         {scheduleList[selectedDate.planDay - 1].destinationDtoList.map(
-          (item) => (
+          (destination) => (
             <div
-              key={item.destinationId}
-              className="mt-4 px-3 py-4 w-[17rem] bg-white border border-gray-003 rounded-md shadow-md"
+              key={destination.destinationId}
+              className="relative mt-4 px-3 py-4 w-[17rem] bg-white border border-gray-003 rounded-md shadow-md"
             >
-              <p className="text-[1.2rem] font-[500]">{item.destinationName}</p>
-              <p className="mt-1 text-[0.8rem] font-light">
-                {item.destinationAddress}
+              <p className="text-[1.2rem] font-[500]">
+                {destination.destinationName}
               </p>
+              <p className="mt-1 text-[0.8rem] font-light">
+                {destination.destinationAddress}
+              </p>
+              <div>
+                <button
+                  type="button"
+                  className="absolute top-3 right-3 w-[10px] h-[10px]"
+                  onClick={() =>
+                    onClickDeletePlaceHandler(destination.destinationId)
+                  }
+                >
+                  <Close className="w-[10px] h-[10px] fill-red-001" />
+                </button>
+              </div>
             </div>
           )
         )}
