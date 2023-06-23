@@ -1,14 +1,26 @@
+//AfterLogin.tsx
 import { Link } from "react-router-dom";
 import { MouseEvent, FunctionComponent } from "react";
 import { ReactComponent as NoProfile } from "../../../../assets/smile.svg";
 import { useLoginState } from "../../../../hooks/useLoginState";
+import Swal from "sweetalert2";
 
 const AfterLogin: FunctionComponent = () => {
   const { logout } = useLoginState();
 
   const handleLogout = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    logout();
+
+    Swal.fire({
+      title: "로그아웃 하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+      }
+    });
   };
 
   return (
@@ -19,7 +31,7 @@ const AfterLogin: FunctionComponent = () => {
       <Link to="/" className="mr-5" onClick={handleLogout}>
         로그아웃
       </Link>
-      <div className="w-16 h-16 bg-gray-300 rounded-[100%]">
+      <div className="w-16 h-16 bg-gray-001 rounded-[100%]">
         <NoProfile width={64} height={64} />
       </div>
     </div>

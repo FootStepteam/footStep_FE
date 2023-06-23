@@ -1,53 +1,31 @@
 import { useEffect } from "react";
-import { getKakaoAccessToken } from "../../api/kakaoLoginAPI";
+import { useNavigate } from "react-router-dom";
 import { useLoginState } from "../../hooks/useLoginState";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2"; // SweetAlert2 import
+import { getKakaoToken } from "../../api/kakaoLoginAPI";
 
-const KakaoCallBack = () => {
+const KakaoCallback = () => {
+  const navigate = useNavigate();
   const { login } = useLoginState();
+  const savedLocation = sessionStorage.getItem("lastLocation");
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    const authCode = url.searchParams.get("code");
-    console.log(authCode);
+    const code = url.searchParams.get("code");
 
-    if (authCode) {
-      const fetchAccessToken = async () => {
-        try {
-          const authResponseData = await getKakaoAccessToken(authCode);
-          console.log("authResponseData: ", authResponseData);
-
-          const accessToken = authResponseData.jwtAccessToken;
-          console.log("accessToken: ", accessToken);
-
-          // loginState에서 호출(jwtAccessToken header에 저장)
-          login(accessToken);
-
-          // SweetAlert2를 사용해서 1초 후에 "홈으로 돌아가기" 버튼을 보여줌
-          Swal.fire({
-            title: "로그인이 완료되었습니다!",
-            text: "홈으로 돌아갈 준비가 되었습니다.",
-            icon: "success",
-            confirmButtonText: "홈으로 돌아가기",
-            preConfirm: () => window.location.reload(), // 버튼을 클릭하면 페이지 새로고침
-          });
-        } catch (error) {
-          // console.error(error);
+    if (code) {
+      getKakaoToken(code).then(({ jwtAccessToken, refreshToken }) => {
+        login(jwtAccessToken, refreshToken);
+        if (savedLocation) {
+          navigate(savedLocation);
         }
-      };
-
-      fetchAccessToken();
+        if (!savedLocation) {
+          navigate("/");
+        }
+      });
     }
-  }, []);
+  }, [login, navigate]);
 
-  return (
-    <div>
-      <Link to="/">
-        <button type="button">홈으로 돌아가기</button>
-      </Link>
-    </div>
-  );
+  return <div>Logging in...</div>;
 };
 
-export default KakaoCallBack;
+export default KakaoCallback;
