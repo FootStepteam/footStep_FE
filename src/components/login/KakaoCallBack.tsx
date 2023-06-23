@@ -1,10 +1,9 @@
-// KakaoCallback.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLoginState } from "../../hooks/useLoginState";
 import { getKakaoToken } from "../../api/kakaoLoginAPI";
 
-const KakaoCallback: React.FC = () => {
+const KakaoCallback = () => {
   const navigate = useNavigate();
   const { login } = useLoginState();
   const savedLocation = sessionStorage.getItem("lastLocation");

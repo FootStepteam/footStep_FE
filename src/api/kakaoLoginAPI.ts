@@ -11,7 +11,7 @@ export const kakaoLogin = () => {
 export const getKakaoToken = async (authorizationCode: string) => {
   try {
     const response = await axios.post(
-      `http://43.200.76.174:8080/api/auth/kakao`, // API 문서의 인증 경로를 사용
+      `http://43.200.76.174:8080/api/auth/kakao`,
       {
         authorizationCode,
       }
