@@ -7,7 +7,9 @@ import NotExistsSchedule from "./NotExistsSchedule";
 const ScheduleLists = () => {
   const scheduleList = useRecoilValue(schedule);
   const selectedDate = useRecoilValue(selectedDay);
-  const isExists = scheduleList[selectedDate.planDay - 1] !== undefined;
+  const isExists =
+    scheduleList[selectedDate.planDay - 1] !== undefined &&
+    scheduleList[selectedDate.planDay - 1].destinationDtoList.length !== 0;
 
   return <>{isExists ? <ExistsSchedule /> : <NotExistsSchedule />}</>;
 };
