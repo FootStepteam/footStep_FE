@@ -26,6 +26,7 @@ const ScheduleDaySelect = () => {
 
   const onClickselectDay = (day: number) => {
     setSelectedDate(planDates[day - 1]);
+    setDaysOpenState(false);
   };
 
   useEffect(() => {
