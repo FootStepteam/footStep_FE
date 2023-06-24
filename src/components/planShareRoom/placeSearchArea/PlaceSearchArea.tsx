@@ -1,19 +1,18 @@
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { ReactComponent as LeftArrow } from "../../../assets/leftArrow.svg";
 import { sideBarState } from "../../../state/sidebarState";
 import { IPropsSideBar } from "../../../type/shareRoom";
 import PlaceSearchAreaContent from "./PlaceSearchAreaContent";
 import PlaceSearchAreaHeader from "./PlaceSearchAreaHeader";
-import useManageSchedule from "../../../hooks/useManageSchdule";
-import { useEffect } from "react";
 
 const PlaceSearchArea = ({
   placeSearch,
   panTo,
   placePagination,
+  addDestination,
 }: IPropsSideBar) => {
   const [sideBarOpenState, setSideBarOpenState] = useRecoilState(sideBarState);
-  const { addDestination } = useManageSchedule();
 
   const onClickHandler = () => {
     setSideBarOpenState({ ...sideBarOpenState, placeSearch: false });

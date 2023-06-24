@@ -1,14 +1,14 @@
 import { useRecoilState, useRecoilValue } from "recoil";
+import { ReactComponent as Close } from "../../../assets/close.svg";
+import useManageSchedule from "../../../hooks/useManageSchdule";
 import { sideBarState } from "../../../state/sidebarState";
 import { schedule } from "../../../store/schedule";
 import { selectedDay } from "../../../store/selectedDay";
-import { ReactComponent as Close } from "../../../assets/close.svg";
-import useManageSchedule from "../../../hooks/useManageSchdule";
 
 const ExistsSchedule = () => {
-  const [scheduleList, setScheduleList] = useRecoilState(schedule);
-  const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
+  const scheduleList = useRecoilValue(schedule);
   const selectedDate = useRecoilValue(selectedDay);
+  const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
   const { deleteDestination } = useManageSchedule();
 
   const onClickaddPlaceHandler = () => {
@@ -32,7 +32,7 @@ const ExistsSchedule = () => {
           장소추가
         </button>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center h-[31rem] overflow-y-auto">
         {scheduleList[selectedDate.planDay - 1].destinationDtoList.map(
           (destination) => (
             <div

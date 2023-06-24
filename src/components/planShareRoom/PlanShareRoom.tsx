@@ -3,11 +3,11 @@ import {
   CustomOverlayMap,
   Map,
   MapMarker,
-  MapTypeControl,
   ZoomControl,
 } from "react-kakao-maps-sdk";
 import { useSetRecoilState } from "recoil";
 import { ReactComponent as Close } from "../../assets/close.svg";
+import useManageSchedule from "../../hooks/useManageSchdule";
 import { placeSearchResult } from "../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoMap";
 import SideBar from "./SideBar";
@@ -42,6 +42,7 @@ interface IOpenOverlay {
 
 const PlanShareRoom = () => {
   const setPlaceSearchResult = useSetRecoilState(placeSearchResult);
+  const { addDestination } = useManageSchedule();
   const [map, setMap] = useState<any>();
   const [markers, setMarkers] = useState<IMarker[]>([]);
   const [placePagination, setPlacePagination] = useState<any>();
@@ -111,6 +112,10 @@ const PlanShareRoom = () => {
     }
   };
 
+  const onClickAddDestinationHandler = (place: IInfo) => {
+    addDestination(place.data);
+  };
+
   const onClickMarkerHandler = (index: number, type: string) => {
     overlayOpen(index, type);
   };
@@ -127,6 +132,7 @@ const PlanShareRoom = () => {
           const obj: IInfo = { data: data[i], open: false };
           infos.push(obj);
         }
+
         setInfo(infos);
         setPlaceSearchResult(data);
         const bounds = new kakao.maps.LatLngBounds();
@@ -168,6 +174,7 @@ const PlanShareRoom = () => {
         placeSearch={placeSearch}
         panTo={panTo}
         placePagination={placePagination}
+        addDestination={addDestination}
       />
       <Map
         center={state.center}
@@ -212,6 +219,9 @@ const PlanShareRoom = () => {
                       <button
                         type="button"
                         className="ml-2 text-sm text-gray-001 hover:text-gray-003"
+                        onClick={() =>
+                          onClickAddDestinationHandler(info[index])
+                        }
                       >
                         장소추가
                       </button>

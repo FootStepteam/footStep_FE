@@ -61,9 +61,9 @@ const ScheduleDaySelect = () => {
         </button>
       </div>
       <div
-        className={`flex flex-col justify-center items-center py-4 bg-white ${
+        className={`flex flex-col justify-center items-center absolute left-0 py-4 w-planShareRoomSideBar bg-white z-[1020] ${
           daysOpenState
-            ? "visible min-h-20 mt-4 shadow-[rgba(0, 0, 0, 0.1) 0px 4px 12px]"
+            ? "visible min-h-20 mt-4 shadow-lg"
             : "invisible h-0 text-white"
         }`}
       >

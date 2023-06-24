@@ -4,12 +4,15 @@ import { Value } from "react-calendar/dist/cjs/shared/types";
 import { INITIAL_SELECTED_DATES } from "../constants/initial";
 import { IShareRoom } from "../type/shareRoom";
 import { ISelectedDate } from "../type/shareRoomForm";
+import { useSetRecoilState } from "recoil";
+import { travelDate } from "../state/travelDate";
 
 const usePlanDate = (
   type: string,
   editStatus: boolean,
   shareRoomInfo: IShareRoom
 ) => {
+  const setTravelDate = useSetRecoilState(travelDate);
   const [night, setNight] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<ISelectedDate>(
     INITIAL_SELECTED_DATES
@@ -53,6 +56,10 @@ const usePlanDate = (
       diff = diff - 1;
     }
     setNight(diff);
+
+    if (!isNaN(diff)) {
+      setTravelDate(diff);
+    }
   };
 
   const onChangeHandler = (value: Value) => {

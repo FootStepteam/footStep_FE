@@ -37,4 +37,5 @@ export interface IPropsSideBar {
   placeSearch: (keyword: string) => void;
   panTo: (placeX: number, placeY: number, index: number) => void;
   placePagination: any;
+  addDestination: (place: IKakaoPlaceSearchResult) => void;
 }
