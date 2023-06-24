@@ -36,32 +36,35 @@ const PlaceSearchLists = ({ panTo, addDestination }: IPlaceContentDown) => {
           <ul id="placesList">
             {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
               <li
-                key={place.id}
                 className={`flex my-3 py-4 h-[8rem] bg-white hover:bg-gray-006 border-b border-b-gray-004 shadow-sm cursor-pointer ${
                   index === 0 && "border-t border-t-gray-004"
                 }`}
-                onClick={() => panTo(Number(place.y), Number(place.x), index)}
               >
-                <div className="ml-4 w-[17em]">
-                  <div className="mb-1">
-                    <p className="w-[17rem] font-medium text-lg truncate ">
-                      <span className="mr-2 text-platinum-001">
-                        {index + 1}
-                      </span>
-                      {place.place_name}
+                <div
+                  key={place.id}
+                  onClick={() => panTo(Number(place.y), Number(place.x), index)}
+                >
+                  <div className="ml-4 w-[17em]">
+                    <div className="mb-1">
+                      <p className="w-[17rem] font-medium text-lg truncate ">
+                        <span className="mr-2 text-platinum-001">
+                          {index + 1}
+                        </span>
+                        {place.place_name}
+                      </p>
+                    </div>
+                    <p className="font-normal text-sm">{place.address_name}</p>
+                    <p className="font-normal text-sm text-platinum-001">
+                      {place.phone}
                     </p>
+                    <a
+                      className="font-normal text-[0.8rem] font-light text-blue-002 hover:text-blue-004"
+                      href={`https://place.map.kakao.com/${place.id}`}
+                      target="_blank"
+                    >
+                      상세보기
+                    </a>
                   </div>
-                  <p className="font-normal text-sm">{place.address_name}</p>
-                  <p className="font-normal text-sm text-platinum-001">
-                    {place.phone}
-                  </p>
-                  <a
-                    className="font-normal text-[0.8rem] font-light text-blue-002 hover:text-blue-004"
-                    href={`https://place.map.kakao.com/${place.id}`}
-                    target="_blank"
-                  >
-                    상세보기
-                  </a>
                 </div>
                 <div>
                   <button
