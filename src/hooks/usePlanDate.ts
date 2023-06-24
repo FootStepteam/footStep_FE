@@ -1,9 +1,9 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Value } from "react-calendar/dist/cjs/shared/types";
+import { INITIAL_SELECTED_DATES } from "../constants/initial";
 import { IShareRoom } from "../type/shareRoom";
 import { ISelectedDate } from "../type/shareRoomForm";
-import { INITIAL_SELECTED_DATES } from "../constants/initial";
 
 const usePlanDate = (
   type: string,
@@ -20,14 +20,24 @@ const usePlanDate = (
     let startDate;
     let endDate;
 
-    if (type === "get") {
-      startDate = new Date(shareRoomInfo.travelStartDate);
-      endDate = new Date(shareRoomInfo.travelEndDate);
-      const printStartDate = moment(shareRoomInfo.travelStartDate).format(
-        "MM.DD"
-      );
-      const printEndDate = moment(shareRoomInfo.travelEndDate).format("MM.DD");
-      setSelectedDate({ ...selectedDate, printStartDate, printEndDate });
+    if (type === "inShareRoom") {
+      if (
+        selectedDate.submitStartDate === "" &&
+        selectedDate.submitEndDate === ""
+      ) {
+        startDate = new Date(shareRoomInfo.travelStartDate);
+        endDate = new Date(shareRoomInfo.travelEndDate);
+        const printStartDate = moment(shareRoomInfo.travelStartDate).format(
+          "MM.DD"
+        );
+        const printEndDate = moment(shareRoomInfo.travelEndDate).format(
+          "MM.DD"
+        );
+        setSelectedDate({ ...selectedDate, printStartDate, printEndDate });
+      } else {
+        startDate = new Date(selectedDate.startDate);
+        endDate = new Date(selectedDate.endDate);
+      }
     } else {
       startDate = new Date(selectedDate.startDate);
       endDate = new Date(selectedDate.endDate);
@@ -35,6 +45,10 @@ const usePlanDate = (
 
     let diff = Math.abs(endDate.getTime() - startDate.getTime());
     diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    if (openCalendar) {
+      diff = diff - 1;
+    }
     setNight(diff);
   };
 
@@ -68,27 +82,38 @@ const usePlanDate = (
   };
 
   useEffect(() => {
-    console.log(selectedDate);
-  }, [selectedDate]);
-
-  useEffect(() => {
     calculateNights();
   }, [shareRoomInfo]);
 
   useEffect(() => {
     if (!editStatus) {
+      if (type === "inShareRoom") {
+        const printStartDate = moment(shareRoomInfo.travelStartDate).format(
+          "MM.DD"
+        );
+        const printEndDate = moment(shareRoomInfo.travelEndDate).format(
+          "MM.DD"
+        );
+        const startDate = new Date(shareRoomInfo.travelStartDate);
+        const endDate = new Date(shareRoomInfo.travelEndDate);
+        let diff = Math.abs(endDate.getTime() - startDate.getTime());
+        diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+        setNight(diff);
+        setSelectedDate({ ...selectedDate, printStartDate, printEndDate });
+      }
       setOpenCalendar(false);
     }
   }, [editStatus]);
 
-  return [
+  return {
     night,
     selectedDate,
     openCalendar,
     onChangeHandler,
     onClickCompleteButtonHandler,
     onClickDateCalendar,
-  ] as const;
+  } as const;
 };
 
 export default usePlanDate;

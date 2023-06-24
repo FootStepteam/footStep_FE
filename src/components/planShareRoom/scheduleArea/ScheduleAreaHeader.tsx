@@ -5,9 +5,9 @@ import withReactContent from "sweetalert2-react-content";
 import { editShareRoomInfoAPI } from "../../../api/shareRoomAPI";
 import { ReactComponent as Exit } from "../../../assets/exit.svg";
 import useShareRoomForm from "../../../hooks/useShareRoomForm";
+import { getCookie } from "../../../utils/cookie";
 import { formValidationCheck } from "../../../utils/formValidationCheck";
 import Calendar from "../../common/calendar/Calendar";
-import { getCookie } from "../../../utils/cookie";
 
 const ScheduleAreaHeader = () => {
   const token = getCookie("accessToken");
@@ -24,7 +24,7 @@ const ScheduleAreaHeader = () => {
 
   const MySwal = withReactContent(Swal);
 
-  const type = "get";
+  const type = "inShareRoom";
 
   const onClickHandler = async (type: string) => {
     switch (type) {
@@ -80,7 +80,10 @@ const ScheduleAreaHeader = () => {
   return (
     <div className="w-planShareRoomSideBar h-planShareRoomHeader bg-gray-007">
       <div className="flex justify-between items-center">
-        <button type="button" className="mt-4 mb-6 ml-2  ">
+        <button
+          type="button"
+          className="mt-4 mb-6 ml-2  "
+        >
           <Exit
             className="w-[25px] h-[25px] fill-black-003 hover:fill-red-001"
             onClick={onClickExitHanlder}

@@ -20,14 +20,14 @@ const Calendar = ({
   onChangeDateHandler,
   shareRoomInfo,
 }: IProps) => {
-  const [
+  const {
     night,
     selectedDate,
     openCalendar,
     onChangeHandler,
     onClickCompleteButtonHandler,
     onClickDateCalendar,
-  ] = usePlanDate(type, editStatus, shareRoomInfo);
+  } = usePlanDate(type, editStatus, shareRoomInfo);
   const isSelected = selectedDate.printStartDate !== "";
 
   useEffect(() => {
