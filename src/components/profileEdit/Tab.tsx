@@ -33,7 +33,7 @@ const Tab = () => {
           key={tab.menu}
           className={`mx-2 px-2 py-4 text-md ${
             selected === tab.menu &&
-            "border-b-[0.2rem] border-blue-002 text-skyblue-1 text-lg font-bold"
+            "border-b-[0.2rem] border-blue-002 text-blue-002 text-lg font-bold"
           } hover:text-blue-002`}
           onClick={() => onClickHandler(tab.menu)}
           to={tab.path}
