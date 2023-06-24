@@ -116,7 +116,7 @@ const PlaceSearchLists = ({
             pagination.map((page) => (
               <div
                 key={page}
-                className={`px-2 text-xl hover:bg-gray-003 rounded-full ${
+                className={`px-3 py-1 text-xl hover:bg-gray-003 rounded-md ${
                   selectedPage === page &&
                   "border border-blue-003 text-blue-001 "
                 } cursor-pointer`}
