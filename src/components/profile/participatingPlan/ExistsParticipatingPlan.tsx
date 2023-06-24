@@ -7,12 +7,12 @@ const ExistsParticipatingPlan = () => {
   const { plans } = useSharedRoom();
 
   return (
-    <div className="w-[50rem] h-[22rem]">
+    <div className="px-4 w-[55rem] h-[33rem] overflow-y-scroll">
       {plans.map((plan) => (
         <Link
           key={plan.shareId}
           to={`/planShareRoom/${plan.shareId}`}
-          className="group flex mx-auto w-[47rem] h-[9rem] border border-gray-003 rounded-xl cursor-pointer"
+          className="group flex mx-auto my-8 w-[47rem] h-[9rem] border border-gray-003 rounded-xl cursor-pointer"
         >
           <div className="w-[15rem] h-[9rem] rounded-xl">
             <img
@@ -31,7 +31,11 @@ const ExistsParticipatingPlan = () => {
             </div>
           </div>
           <div className="flex justify-center items-center w-12 rounded-r-xl bg-blue-002 transition-all duration-100 ease-out group-hover:w-20">
-            <RightArrow width={20} height={20} />
+            <RightArrow
+              width={20}
+              height={20}
+              fill="#FFFFFF"
+            />
           </div>
         </Link>
       ))}

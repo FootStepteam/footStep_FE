@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "../utils/cookie";
+import { getCookie, removeCookie } from "../utils/cookie";
 import { refreshTokenAPI } from "./shareRoomAPI";
 
 export const getScheduleAPI = async (shareRoomID: string) => {
@@ -19,6 +19,7 @@ export const getScheduleAPI = async (shareRoomID: string) => {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
       if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        removeCookie("accessToken");
         refreshTokenAPI();
         getScheduleAPI(shareRoomID);
       }
@@ -51,6 +52,7 @@ export const addSchedultMemoAPI = async (shareRoomID: string) => {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
       if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        removeCookie("accessToken");
         refreshTokenAPI();
         addSchedultMemoAPI(shareRoomID);
       }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "../utils/cookie";
+import { getCookie, removeCookie } from "../utils/cookie";
 import { refreshTokenAPI } from "./shareRoomAPI";
 import Swal from "sweetalert2";
 
@@ -38,6 +38,7 @@ export const addDestinationAPI = async (
       const responseErrorCode = error.response?.data.code;
       const errorCode = error.response?.data.errorCode;
       if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        removeCookie("accessToken");
         refreshTokenAPI();
         addDestinationAPI(shareRoomID, bodyData);
       } else if (errorCode === "ALREADY_DESTINATION") {
@@ -78,6 +79,7 @@ export const deleteDestinationAPI = async (
       const responseErrorCode = error.response?.data.code;
       const errorCode = error.response?.data.errorCode;
       if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+        removeCookie("accessToken");
         refreshTokenAPI();
         deleteDestinationAPI(shareRoomID, destinationId);
       } else if (errorCode === "NOT_FIND_DESTINATION_ID") {

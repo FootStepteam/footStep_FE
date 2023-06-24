@@ -25,15 +25,19 @@ const AfterLogin: FunctionComponent = () => {
 
   return (
     <div className="flex justify-center items-center font-semibold">
-      <Link to="/user/profile" className="mr-5">
+      <Link
+        to="/user/profile"
+        className="mr-5"
+      >
         마이페이지
       </Link>
-      <Link to="/" className="mr-5" onClick={handleLogout}>
+      <Link
+        to="/"
+        className="mr-5"
+        onClick={handleLogout}
+      >
         로그아웃
       </Link>
-      <div className="w-16 h-16 bg-gray-001 rounded-[100%]">
-        <NoProfile width={64} height={64} />
-      </div>
     </div>
   );
 };
