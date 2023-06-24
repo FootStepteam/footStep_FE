@@ -1,4 +1,4 @@
-import { IPlaceContentDown, IPropsSideBar } from "../../../type/shareRoom";
+import { IPlaceContentDown } from "../../../type/shareRoom";
 import PlaceSearchLists from "./PlaceSearchLists";
 
 const PlaceSearchAreaContent = ({
