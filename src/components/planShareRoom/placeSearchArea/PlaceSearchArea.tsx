@@ -5,14 +5,23 @@ import { IPropsSideBar } from "../../../type/shareRoom";
 import PlaceSearchAreaContent from "./PlaceSearchAreaContent";
 import PlaceSearchAreaHeader from "./PlaceSearchAreaHeader";
 import useManageSchedule from "../../../hooks/useManageSchdule";
+import { useEffect } from "react";
 
-const PlaceSearchArea = ({ placeSearch, panTo }: IPropsSideBar) => {
+const PlaceSearchArea = ({
+  placeSearch,
+  panTo,
+  placePagination,
+}: IPropsSideBar) => {
   const [sideBarOpenState, setSideBarOpenState] = useRecoilState(sideBarState);
   const { addDestination } = useManageSchedule();
 
   const onClickHandler = () => {
     setSideBarOpenState({ ...sideBarOpenState, placeSearch: false });
   };
+
+  useEffect(() => {
+    setSideBarOpenState({ ...sideBarOpenState, placeSearch: false });
+  }, []);
 
   return (
     <div
@@ -24,6 +33,7 @@ const PlaceSearchArea = ({ placeSearch, panTo }: IPropsSideBar) => {
       <PlaceSearchAreaContent
         panTo={panTo}
         addDestination={addDestination}
+        placePagination={placePagination}
       />
       <div
         className={`${

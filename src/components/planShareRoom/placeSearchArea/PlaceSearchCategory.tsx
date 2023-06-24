@@ -2,6 +2,7 @@ import { IPropsPlaceSearch } from "../../../type/shareRoom";
 import { useRecoilState } from "recoil";
 import { selectedArea } from "../../../state/selectedArea";
 import { ADMINISTRATIVE_DISTRICT } from "../../../constants/area";
+import { useEffect } from "react";
 
 const PlaceSearchCategory = ({ placeSearch }: IPropsPlaceSearch) => {
   const [selected, setSelected] = useRecoilState(selectedArea);
@@ -10,6 +11,10 @@ const PlaceSearchCategory = ({ placeSearch }: IPropsPlaceSearch) => {
     setSelected(category);
     placeSearch(category);
   };
+
+  useEffect(() => {
+    setSelected("noSelected");
+  }, []);
 
   return (
     <div className="grid grid-cols-8 mt-3">

@@ -5,7 +5,7 @@ import SideBarToggle from "./SideBarToggle";
 import PlaceSearchArea from "./placeSearchArea/PlaceSearchArea";
 import ScheduleArea from "./scheduleArea/ScheduleArea";
 
-const SideBar = ({ placeSearch, panTo }: IPropsSideBar) => {
+const SideBar = ({ placeSearch, panTo, placePagination }: IPropsSideBar) => {
   const sideBarOpenState = useRecoilValue(sideBarState);
 
   return (
@@ -15,6 +15,7 @@ const SideBar = ({ placeSearch, panTo }: IPropsSideBar) => {
       <PlaceSearchArea
         placeSearch={placeSearch}
         panTo={panTo}
+        placePagination={placePagination}
       />
     </div>
   );

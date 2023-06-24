@@ -44,6 +44,7 @@ const PlanShareRoom = () => {
   const setPlaceSearchResult = useSetRecoilState(placeSearchResult);
   const [map, setMap] = useState<any>();
   const [markers, setMarkers] = useState<IMarker[]>([]);
+  const [placePagination, setPlacePagination] = useState<any>();
   const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
     data: {
       address_name: "",
@@ -56,8 +57,8 @@ const PlanShareRoom = () => {
       place_name: "",
       place_url: "",
       road_address_name: "",
-      x: "",
-      y: "",
+      x: 0,
+      y: 0,
     },
     open: false,
     index: -1,
@@ -75,8 +76,8 @@ const PlanShareRoom = () => {
         place_name: "",
         place_url: "",
         road_address_name: "",
-        x: "",
-        y: "",
+        x: 0,
+        y: 0,
       },
       open: false,
     },
@@ -117,8 +118,9 @@ const PlanShareRoom = () => {
   const placeSearch = (keyword: string) => {
     const ps = new kakao.maps.services.Places();
 
-    ps.keywordSearch(keyword, (data, status, _pagination) => {
+    ps.keywordSearch(keyword, (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
+        setPlacePagination(pagination);
         const infos: IInfo[] = [];
 
         for (let i = 0; i < data.length; i++) {
@@ -165,6 +167,7 @@ const PlanShareRoom = () => {
       <SideBar
         placeSearch={placeSearch}
         panTo={panTo}
+        placePagination={placePagination}
       />
       <Map
         center={state.center}
@@ -182,8 +185,11 @@ const PlanShareRoom = () => {
             onClick={() => onClickMarkerHandler(index, "open")}
           >
             {info[index].open && (
-              <CustomOverlayMap position={marker.position}>
-                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white rounded-sm shadow-lg z-[1005]">
+              <CustomOverlayMap
+                position={marker.position}
+                zIndex={1010}
+              >
+                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white rounded-sm shadow-lg">
                   <div className="mt-6 ml-4 w-[16rem]">
                     <p className="mb-2 text-lg font-bold">
                       {info[index].data.place_name}
@@ -224,7 +230,6 @@ const PlanShareRoom = () => {
           </MapMarker>
         ))}
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-        <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
     </>
   );

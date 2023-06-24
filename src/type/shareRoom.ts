@@ -30,9 +30,11 @@ export interface IPropsPlaceSearch {
 export interface IPlaceContentDown {
   panTo: (placeX: number, placeY: number, index: number) => void;
   addDestination: (place: IKakaoPlaceSearchResult) => void;
+  placePagination: any;
 }
 
 export interface IPropsSideBar {
   placeSearch: (keyword: string) => void;
   panTo: (placeX: number, placeY: number, index: number) => void;
+  placePagination: any;
 }

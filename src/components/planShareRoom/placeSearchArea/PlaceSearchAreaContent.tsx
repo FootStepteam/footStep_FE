@@ -1,9 +1,10 @@
-import { IPlaceContentDown } from "../../../type/shareRoom";
+import { IPlaceContentDown, IPropsSideBar } from "../../../type/shareRoom";
 import PlaceSearchLists from "./PlaceSearchLists";
 
 const PlaceSearchAreaContent = ({
   panTo,
   addDestination,
+  placePagination,
 }: IPlaceContentDown) => {
   return (
     <div className="flex flex-col w-[23rem] h-[calc(100vh-15rem)]">
@@ -23,6 +24,7 @@ const PlaceSearchAreaContent = ({
       <PlaceSearchLists
         panTo={panTo}
         addDestination={addDestination}
+        placePagination={placePagination}
       />
     </div>
   );
