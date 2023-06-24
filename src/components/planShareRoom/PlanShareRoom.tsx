@@ -44,6 +44,7 @@ const PlanShareRoom = () => {
   const setPlaceSearchResult = useSetRecoilState(placeSearchResult);
   const [map, setMap] = useState<any>();
   const [markers, setMarkers] = useState<IMarker[]>([]);
+  const [placePagination, setPlacePagination] = useState<any>();
   const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
     data: {
       address_name: "",
@@ -117,8 +118,9 @@ const PlanShareRoom = () => {
   const placeSearch = (keyword: string) => {
     const ps = new kakao.maps.services.Places();
 
-    ps.keywordSearch(keyword, (data, status, _pagination) => {
+    ps.keywordSearch(keyword, (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
+        setPlacePagination(pagination);
         const infos: IInfo[] = [];
 
         for (let i = 0; i < data.length; i++) {
@@ -165,6 +167,7 @@ const PlanShareRoom = () => {
       <SideBar
         placeSearch={placeSearch}
         panTo={panTo}
+        placePagination={placePagination}
       />
       <Map
         center={state.center}

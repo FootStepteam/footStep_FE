@@ -1,21 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { ReactComponent as Address } from "../../../assets/address.svg";
 import { placeSearchResult } from "../../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../../type/kakaoMap";
 import { IPlaceContentDown } from "../../../type/shareRoom";
 
-const PlaceSearchLists = ({ panTo, addDestination }: IPlaceContentDown) => {
+const PlaceSearchLists = ({
+  panTo,
+  addDestination,
+  placePagination,
+}: IPlaceContentDown) => {
   const [placeLists, setPlaceLists] = useRecoilState(placeSearchResult);
+  const [pagination, setPagination] = useState<number[]>([]);
+  const [selectedPage, setSelectedPage] = useState<number>(1);
   const isExist = placeLists.length !== 0;
+
+  const setPage = () => {
+    const pages = [];
+    for (let i = 1; i <= placePagination.last; i++) {
+      pages.push(i);
+    }
+    setPagination(pages);
+  };
 
   const onClickAddPlaceHandler = (place: IKakaoPlaceSearchResult) => {
     addDestination(place);
   };
 
+  const onClickPageHandler = (page: number) => {
+    placePagination.gotoPage(page);
+    setSelectedPage(page);
+  };
+
   useEffect(() => {
     setPlaceLists([]);
   }, []);
+
+  useEffect(() => {
+    if (placePagination !== undefined) {
+      setPage();
+    }
+  }, [placePagination]);
 
   return (
     <div
@@ -36,12 +61,12 @@ const PlaceSearchLists = ({ panTo, addDestination }: IPlaceContentDown) => {
           <ul id="placesList">
             {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
               <li
+                key={place.id}
                 className={`flex my-3 py-4 h-[8rem] bg-white hover:bg-gray-006 border-b border-b-gray-004 shadow-sm cursor-pointer ${
                   index === 0 && "border-t border-t-gray-004"
                 }`}
               >
                 <div
-                  key={place.id}
                   onClick={() => panTo(Number(place.y), Number(place.x), index)}
                 >
                   <div className="ml-4 w-[17em]">
@@ -86,7 +111,21 @@ const PlaceSearchLists = ({ panTo, addDestination }: IPlaceContentDown) => {
         <div
           id="pagination"
           className="flex justify-center items-center"
-        />
+        >
+          {pagination !== undefined &&
+            pagination.map((page) => (
+              <div
+                key={page}
+                className={`px-2 text-xl hover:bg-gray-003 rounded-full ${
+                  selectedPage === page &&
+                  "border border-blue-003 text-blue-001 "
+                } cursor-pointer`}
+                onClick={() => onClickPageHandler(page)}
+              >
+                {page}
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
