@@ -17,3 +17,7 @@ export const setCookie = (key: string, token: string) => {
 
   cookies.set(key, token, option);
 };
+
+export const removeCookie = (key: string) => {
+  cookies.remove(key);
+};
