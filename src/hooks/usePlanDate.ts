@@ -21,10 +21,7 @@ const usePlanDate = (
     let endDate;
 
     if (type === "inShareRoom") {
-      if (
-        selectedDate.submitStartDate === "" &&
-        selectedDate.submitEndDate === ""
-      ) {
+      if (selectedDate.init) {
         startDate = new Date(shareRoomInfo.travelStartDate);
         endDate = new Date(shareRoomInfo.travelEndDate);
         const printStartDate = moment(shareRoomInfo.travelStartDate).format(
@@ -33,19 +30,25 @@ const usePlanDate = (
         const printEndDate = moment(shareRoomInfo.travelEndDate).format(
           "MM.DD"
         );
-        setSelectedDate({ ...selectedDate, printStartDate, printEndDate });
+        setSelectedDate({
+          ...selectedDate,
+          printStartDate,
+          printEndDate,
+          startDate,
+          endDate,
+          init: false,
+        });
       } else {
-        startDate = new Date(selectedDate.startDate);
-        endDate = new Date(selectedDate.endDate);
+        startDate = selectedDate.startDate;
+        endDate = selectedDate.endDate;
       }
     } else {
-      startDate = new Date(selectedDate.startDate);
-      endDate = new Date(selectedDate.endDate);
+      startDate = selectedDate.startDate;
+      endDate = selectedDate.endDate;
     }
 
     let diff = Math.abs(endDate.getTime() - startDate.getTime());
     diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
     if (openCalendar) {
       diff = diff - 1;
     }

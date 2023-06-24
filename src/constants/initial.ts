@@ -22,4 +22,5 @@ export const INITIAL_SELECTED_DATES = {
   printEndDate: "",
   submitStartDate: "",
   submitEndDate: "",
+  init: true,
 };

@@ -9,7 +9,7 @@ interface IPlanDates {
 }
 
 const setDay = (startDay: number, index: number) => {
-  const newDay = (startDay + (index - 1)) % 6;
+  const newDay = (startDay + index) % 7;
 
   let day = "";
 
@@ -66,21 +66,20 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
 
   for (let i = 0; i < diff; i++) {
     const newDay = setDay(day, i);
-
-    if (isLeapYear) {
-      if (date + i === 30) {
-        date = 1;
-        month = month + 1;
-      } else {
-        date = date + i;
-      }
+    if (month % 2 !== 0 && month !== 7 && date === 31) {
+      date = 2;
+      month = month + 1;
+    } else if (month % 2 === 0 && month === 7 && date == 32) {
+      date = 2;
+      month = month + 1;
+    } else if (isLeapYear && month === 1 && date === 30) {
+      date = 2;
+      month = month + 1;
+    } else if (!isLeapYear && month === 1 && date === 29) {
+      date = 2;
+      month = month + 1;
     } else {
-      if (date + i === 29) {
-        date = 1;
-        month = month + 1;
-      } else {
-        date = date + i;
-      }
+      date = date + 1;
     }
 
     if (month === 12) {
@@ -92,7 +91,7 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
 
     const dateInfo: IPlanDates = {
       month: month + 1,
-      date,
+      date: date - 1,
       day: newDay,
       planDay: i + 1,
       planDate: `${year}-${newMonth}-${date}`,
