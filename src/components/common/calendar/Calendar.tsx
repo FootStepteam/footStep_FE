@@ -20,14 +20,14 @@ const Calendar = ({
   onChangeDateHandler,
   shareRoomInfo,
 }: IProps) => {
-  const [
+  const {
     night,
     selectedDate,
     openCalendar,
     onChangeHandler,
     onClickCompleteButtonHandler,
     onClickDateCalendar,
-  ] = usePlanDate(type, editStatus, shareRoomInfo);
+  } = usePlanDate(type, editStatus, shareRoomInfo);
   const isSelected = selectedDate.printStartDate !== "";
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Calendar = ({
   }, [selectedDate]);
 
   return (
-    <div className={`relative`}>
+    <div className="relative z-[1020]">
       <div
         className={`flex items-center mt-6 w-[19rem] h-[3.5rem] ${
           editStatus ? "bg-white" : "bg-gray-006"

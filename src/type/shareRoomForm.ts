@@ -11,4 +11,5 @@ export interface ISelectedDate {
   printEndDate: string;
   submitStartDate: string;
   submitEndDate: string;
+  init: boolean;
 }
