@@ -182,8 +182,11 @@ const PlanShareRoom = () => {
             onClick={() => onClickMarkerHandler(index, "open")}
           >
             {info[index].open && (
-              <CustomOverlayMap position={marker.position}>
-                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white rounded-sm shadow-lg z-[1005]">
+              <CustomOverlayMap
+                position={marker.position}
+                zIndex={1010}
+              >
+                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white rounded-sm shadow-lg">
                   <div className="mt-6 ml-4 w-[16rem]">
                     <p className="mb-2 text-lg font-bold">
                       {info[index].data.place_name}
@@ -224,7 +227,6 @@ const PlanShareRoom = () => {
           </MapMarker>
         ))}
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-        <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
     </>
   );
