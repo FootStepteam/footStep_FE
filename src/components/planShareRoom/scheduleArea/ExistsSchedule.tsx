@@ -82,7 +82,10 @@ const ExistsSchedule = () => {
       <div className="flex flex-col items-center h-[31rem] overflow-y-auto">
         {scheduleList[selectedDate.planDay - 1].destinationDtoList.map(
           (destination) => (
-            <div className="flex items-center">
+            <div
+              key={destination.destinationId}
+              className="flex items-center"
+            >
               {selectStartPoint && (
                 <button
                   className="mt-4 mr-2 text-sm text-black-003 hover:text-blue-001 cursor-pointer"

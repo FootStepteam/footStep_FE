@@ -4,6 +4,7 @@ import { ReactComponent as Address } from "../../../assets/address.svg";
 import { placeSearchResult } from "../../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../../type/kakaoMap";
 import { IPlaceContentDown } from "../../../type/shareRoom";
+import { marker } from "../../../constants/marker";
 
 const PlaceSearchLists = ({
   panTo,
@@ -71,9 +72,9 @@ const PlaceSearchLists = ({
                 >
                   <div className="ml-4 w-[17em]">
                     <div className="mb-1">
-                      <p className="w-[17rem] font-medium text-lg truncate ">
-                        <span className="mr-2 text-platinum-001">
-                          {index + 1}
+                      <p className="w-[17rem] font-medium text-lg text-black-002 truncate ">
+                        <span className="mr-2 font-bold text-black-001">
+                          {marker[index]}
                         </span>
                         {place.place_name}
                       </p>
