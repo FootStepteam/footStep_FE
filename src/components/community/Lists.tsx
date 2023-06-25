@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { ReactComponent as Like } from "../../assets/like.svg";
@@ -41,7 +41,7 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
     setSortBy("like");
   };
 
-  const handleNewPostClick = (event: React.MouseEvent) => {
+  const handleNewPostClick = (event: MouseEvent) => {
     const token = getCookie("accessToken");
     if (!token) {
       event.preventDefault();
