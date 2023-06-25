@@ -7,7 +7,7 @@ import { ICommunityPost, IListsProps } from "../../type/communityPage";
 import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 
-const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
+const Lists = ({ searchQuery }: IListsProps) => {
   const [sortBy, setSortBy] = useState<"recent" | "like">("recent");
   const [posts, setPosts] = useState<ICommunityPost[]>([]);
 
@@ -28,9 +28,8 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
     const matchSearchQuery: boolean = post.communityName
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchCategory: boolean =
-      selectedCategory === "" || post.memberNickname === selectedCategory;
-    return matchSearchQuery && matchCategory;
+
+    return matchSearchQuery;
   });
 
   const handleSortByrecent = () => {
