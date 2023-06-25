@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { deleteComment, updateComment } from "../../../api/communityAPI";
 import { IComment, ICommunityPost } from "../../../type/communityPage";
 import { getMemberByAccessToken } from "../../../api/memberAPI";
+import Swal from "sweetalert2";
 
 interface CommentProps {
   comment?: IComment;
@@ -29,23 +30,42 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
 
   const handleUpdate = async () => {
     if (comment?.commentId && memberNickname === comment.memberNickname) {
-      try {
-        await updateComment(comment.commentId, { content });
-        onCommentsChange();
-        setEditMode(false);
-      } catch (error) {
-        console.error(error);
+      const result = await Swal.fire({
+        title: "댓글을 수정하시겠습니까?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "예",
+        cancelButtonText: "아니오",
+      });
+
+      if (result.isConfirmed) {
+        try {
+          await updateComment(comment.commentId, { content });
+          onCommentsChange();
+          setEditMode(false);
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   };
-
   const handleDelete = async () => {
     if (comment?.commentId && memberNickname === comment.memberNickname) {
-      try {
-        await deleteComment(comment.commentId);
-        onCommentsChange();
-      } catch (error) {
-        console.error(error);
+      const result = await Swal.fire({
+        title: "댓글을 삭제하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "예",
+        cancelButtonText: "아니오",
+      });
+
+      if (result.isConfirmed) {
+        try {
+          await deleteComment(comment.commentId);
+          onCommentsChange();
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   };
@@ -69,21 +89,21 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
               onClick={handleUpdate}
               className="bg-blue-002 text-white-001 px-2 py-1 rounded mr-1"
             >
-              Save
+              저장
             </button>
           ) : (
             <button
               onClick={() => setEditMode(true)}
               className="bg-blue-002 text-white-001 px-2 py-1 rounded mr-1"
             >
-              Edit
+              수정
             </button>
           )}
           <button
             onClick={handleDelete}
             className="bg-red-002 text-white-001 px-2 py-1 rounded mr-1"
           >
-            Delete
+            삭제
           </button>
         </div>
       )}
