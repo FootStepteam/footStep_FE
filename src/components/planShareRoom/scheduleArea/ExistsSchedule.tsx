@@ -45,6 +45,7 @@ const ExistsSchedule = () => {
           lat: destination.lat,
           planDate: selectedDate.planDate,
         });
+        setSelecteStartPoint(false);
       }
     });
   };
