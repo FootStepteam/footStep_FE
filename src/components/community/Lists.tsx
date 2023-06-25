@@ -1,36 +1,47 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { ReactComponent as Like } from "../../assets/like.svg";
 import { getCommunityAPI } from "../../api/communityAPI";
-import { ICommunityPost, IListsProps } from "../../type/communityPage";
+import {
+  ICommunityData,
+  ICommunityPost,
+  IListsProps,
+} from "../../type/communityPage";
 import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
+import Pagination from "./Pagination";
 
-const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
+const Lists = ({ searchQuery }: IListsProps) => {
   const [sortBy, setSortBy] = useState<"recent" | "like">("recent");
   const [posts, setPosts] = useState<ICommunityPost[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [lastPage, setLastPage] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await getCommunityAPI({ page: 0, size: 10, sort: sortBy });
+        const data: ICommunityData = await getCommunityAPI({
+          page,
+          size: 5,
+          sort: sortBy,
+        });
         console.log(data);
         setPosts(data.communities);
+        setLastPage(data.lastPage);
       } catch (error) {
         console.error(error);
       }
     })();
-  }, [sortBy]);
+  }, [sortBy, page]);
 
-  // 검색어와 카테고리에 따라 필터링된 게시글 목록
+  // 검색어로 게시글 필터링
   const filteredPosts: ICommunityPost[] = posts.filter((post) => {
     const matchSearchQuery: boolean = post.communityName
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchCategory: boolean =
-      selectedCategory === "" || post.memberNickname === selectedCategory;
-    return matchSearchQuery && matchCategory;
+
+    return matchSearchQuery;
   });
 
   const handleSortByrecent = () => {
@@ -41,7 +52,7 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
     setSortBy("like");
   };
 
-  const handleNewPostClick = (event: React.MouseEvent) => {
+  const handleNewPostClick = (event: MouseEvent) => {
     const token = getCookie("accessToken");
     if (!token) {
       event.preventDefault();
@@ -127,6 +138,7 @@ const Lists = ({ searchQuery, selectedCategory }: IListsProps) => {
           ))}
         </ul>
       )}
+      <Pagination page={page} lastPage={lastPage} setPage={setPage} />
     </div>
   );
 };

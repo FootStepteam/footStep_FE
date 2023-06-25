@@ -3,12 +3,26 @@ import { likePostAPI, unlikePostAPI } from "../../../api/postAPI";
 import { ILikeProps } from "../../../type/communityPage";
 import { ReactComponent as Heart } from "../../../assets/heartNoFill.svg";
 import { ReactComponent as HeartFill } from "../../../assets/heartFill.svg";
+import Swal from "sweetalert2";
+import { getCookie } from "../../../utils/cookie";
 
 const Like = ({ communityId, initialLikeCount }: ILikeProps) => {
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = async () => {
+    const KEY = "accessToken";
+    const token = getCookie(KEY);
+    // 비로그인 좋아요시 처리
+    if (!token) {
+      Swal.fire({
+        title: "로그인 후 이용 가능합니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+    // 정상 처리
     if (isLiked) {
       await unlikePostAPI(communityId);
       setLikeCount(likeCount - 1);

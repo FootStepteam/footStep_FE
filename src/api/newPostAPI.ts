@@ -5,17 +5,20 @@ import { refreshTokenAPI } from "./shareRoomAPI";
 
 export const getPlanScheduleAPI = async (
   shareId: number
-): Promise<IPlanSchedule> => {
+): Promise<IPlanSchedule[]> => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
 
   try {
-    const response = await axios.get(`/api/room/${shareId}/schedule`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data[0];
+    const response = await axios.get(
+      `/api/api/share-room/${shareId}/schedule`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
