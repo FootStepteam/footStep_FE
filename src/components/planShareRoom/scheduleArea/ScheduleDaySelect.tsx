@@ -37,7 +37,7 @@ const ScheduleDaySelect = () => {
 
   return (
     <div>
-      <div className="flex items-center mt-12 ml-12">
+      <div className="flex items-center ml-12">
         <p className="ml-2 font-Jua font-normal text-3xl">
           {selectedDate.planDay}일차
         </p>
