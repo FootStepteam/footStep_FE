@@ -1,10 +1,8 @@
 import Swal from "sweetalert2";
-import { usePost } from "../../../hooks/usePost";
 import { deletePostAPI } from "../../../api/postAPI";
 import { useNavigate } from "react-router-dom";
 
 const PostEditDelete = ({ postId }: { postId: number }) => {
-  const { onCommentsChange } = usePost();
   const navigate = useNavigate();
 
   const handleUpdate = async () => {
@@ -29,7 +27,7 @@ const PostEditDelete = ({ postId }: { postId: number }) => {
     if (result.isConfirmed) {
       try {
         await deletePostAPI(postId);
-        onCommentsChange();
+        navigate("/community");
       } catch (error) {
         console.error(error);
       }
