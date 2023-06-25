@@ -14,6 +14,8 @@ const ScheduleAreaHeader = () => {
   const { shareRoomID } = useParams<string>();
   const {
     form,
+    backUpForm,
+    setForm,
     getData,
     onChangeTitleHandler,
     onChangeDateHandler,
@@ -30,6 +32,7 @@ const ScheduleAreaHeader = () => {
     switch (type) {
       case "cancel":
         setEditStatus(false);
+        setForm({ ...backUpForm });
         break;
       case "edit":
         setEditStatus(true);
@@ -45,6 +48,7 @@ const ScheduleAreaHeader = () => {
               icon: "success",
               text: "수정이 성공적으로 되었습니다",
             });
+            getData(shareRoomID);
             setEditStatus(false);
           } else {
             MySwal.fire({
@@ -117,7 +121,7 @@ const ScheduleAreaHeader = () => {
         <div className="flex items-center w-[17rem]">
           <input
             type="text"
-            defaultValue={form.title}
+            value={editStatus ? form.title : backUpForm.title}
             className="w-[12rem] bg-gray-007 outline-none text-black font-NanumGothic text-2xl font-[800]"
             onChange={onChangeTitleHandler}
             disabled={editStatus ? false : true}
