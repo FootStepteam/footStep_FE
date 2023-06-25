@@ -1,4 +1,4 @@
-export const marker = [
+export const markerSeq = [
   "A",
   "B",
   "C",

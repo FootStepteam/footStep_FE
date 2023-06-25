@@ -78,7 +78,7 @@ const ScheduleAreaHeader = () => {
   }, []);
 
   return (
-    <div className="w-planShareRoomSideBar h-planShareRoomHeader bg-gray-007">
+    <div className="w-planShareRoomSideBar h-[13.5rem] bg-gray-007">
       <div className="flex justify-between items-center">
         <button
           type="button"

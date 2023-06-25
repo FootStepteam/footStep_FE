@@ -62,13 +62,13 @@ const ExistsSchedule = () => {
 
   return (
     <div className="shadow-md">
-      <div className="flex justify-between my-3 ml-4">
+      <div className="flex justify-between mt-4 mb-3 ml-4">
         <button
-          className="flex  items-center px-3 py-2 bg-blue-001 hover:bg-blue-003 rounded-full font-bold text-sm text-white"
+          className="flex items-center px-3 py-2 bg-blue-001 hover:bg-blue-003 rounded-full font-bold text-[0.8rem] text-white"
           onClick={onClickSelectStartPointHandler}
           type="button"
         >
-          <Flag className="mr-1 w-[20px] h-[20px] fill-white" />
+          <Flag className="mr-1 w-[16px] h-[16px] fill-white" />
           {!selectStartPoint ? "출발지 선택" : "출발지 선택 해제"}
         </button>
         <button
