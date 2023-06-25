@@ -8,7 +8,7 @@ const initialValue = [
     content: null,
     destinationDtoList: [
       {
-        destinationId: "",
+        destinationId: 0,
         destinationCategoryCode: "",
         destinationName: "",
         destinationAddress: "",

@@ -32,7 +32,7 @@ const useManageSchedule = () => {
     }
   };
 
-  const deleteDestination = async (destinationId: string) => {
+  const deleteDestination = async (destinationId: number) => {
     if (shareRoomID) {
       const response = await deleteDestinationAPI(
         Number(shareRoomID),

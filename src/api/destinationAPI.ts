@@ -59,7 +59,7 @@ export const addDestinationAPI = async (
 
 export const deleteDestinationAPI = async (
   shareRoomID: number,
-  destinationId: string
+  destinationId: number
 ) => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
