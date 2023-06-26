@@ -17,12 +17,29 @@ export const getScheduleAPI = async (shareRoomID: string) => {
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      const errorCode = error.response?.data.errorCode;
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         getScheduleAPI(shareRoomID);
       }
+    }
+  }
+};
+
+export const getScheduleByDateAPI = async (
+  shareRoomID: number,
+  planDate: string
+) => {
+  console.log(planDate);
+  try {
+    const response = await axios.get(
+      `/api/api/share-room/${shareRoomID}/plan?date=${planDate}`
+    );
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.ErrorCode;
     }
   }
 };
@@ -50,8 +67,8 @@ export const addSchedultMemoAPI = async (shareRoomID: string) => {
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      const errorCode = error.response?.data.code;
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         addSchedultMemoAPI(shareRoomID);

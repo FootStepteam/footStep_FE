@@ -21,8 +21,8 @@ export const getShareRoomAPI = async (shareCode: string) => {
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      const errorCode = error.response?.data.errorCode;
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         getShareRoomAPI(shareCode);
@@ -53,8 +53,8 @@ export const createShareRoomAPI = async (
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      const errorCode = error.response?.data.errorCode;
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         createShareRoomAPI(formValue);
@@ -76,8 +76,8 @@ export const getIncludeShareRoomAPI = async () => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      const errorCode = error.response?.data.errorCode;
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         getIncludeShareRoomAPI();
@@ -102,8 +102,8 @@ export const getShareRoomInfoAPI = async (shareRoomID: string) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      const errorCode = error.response?.data.errorCode;
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         getIncludeShareRoomAPI();
