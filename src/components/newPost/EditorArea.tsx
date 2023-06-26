@@ -37,17 +37,6 @@ const EditorArea = () => {
   }, []);
 
   const submitPostWithConfirmation = async () => {
-    if (!selectedPlan) {
-      Swal.fire({
-        icon: "warning",
-        title: "일정 선택 필요",
-        text: "일정을 선택해야 글을 작성하실 수 있습니다.",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "확인",
-      });
-      return;
-    }
-
     const result = await Swal.fire({
       title: "게시글 작성",
       text: "작성한 내용으로 게시하시겠습니까?",
@@ -58,9 +47,12 @@ const EditorArea = () => {
       reverseButtons: true,
     });
     if (result.isConfirmed) {
-      submitPost();
-      Swal.fire("성공!", "게시글이 정상적으로 등록되었습니다", "success");
-      navigate("/community");
+      const postResult = await submitPost();
+      if (postResult) {
+        // submitPost이 true일 때만 게시글 등록 성공 알림 표시
+        Swal.fire("성공!", "게시글이 정상적으로 등록되었습니다", "success");
+        navigate("/community");
+      }
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire("취소", "게시글이 등록되지 않았습니다", "error");
     }

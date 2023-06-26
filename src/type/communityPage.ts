@@ -18,7 +18,6 @@ export interface ICommunityData {
 
 export interface IListsProps {
   searchQuery: string;
-  selectedCategory: string;
 }
 
 export interface IGetCommunityParams {

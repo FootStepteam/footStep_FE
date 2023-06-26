@@ -4,7 +4,9 @@ export interface IPlan {
 }
 
 export interface IPlanSchedule {
-  destinationRedisInfo: IDestinationInfo[];
+  content: string;
+  dayScheduleId: number;
+  destinationDtoList: IDestinationInfo[];
   planDate: string;
   shareId: number;
 }
