@@ -15,11 +15,13 @@ import { selectedDay } from "../../../store/selectedDay";
 import { shareRoomInfo } from "../../../store/shareRoomInfo";
 import ExistsSchedule from "./ExistsSchedule";
 import NotExistsSchedule from "./NotExistsSchedule";
+import { disabledState } from "../../../state/componentOpenState";
 
 const ScheduleLists = () => {
   const { shareRoomID } = useParams();
   const travelDates = useRecoilValue(travelDate);
   const [scheduleInfo, setScheduleInfo] = useRecoilState(schedule);
+  const disabledStatus = useRecoilValue(disabledState);
   const selectedPlanDay = useRecoilValue(selectedDay);
   const shareRoom = useRecoilValue(shareRoomInfo);
   const [selectedStartPoint, setSelectedStartPoint] =
@@ -40,7 +42,6 @@ const ScheduleLists = () => {
 
       if (data !== undefined) {
         if (travelDates !== data.length) {
-          console.log("asd");
           return false;
         }
 
@@ -130,9 +131,13 @@ const ScheduleLists = () => {
   }, [shareRoom]);
 
   return (
-    <>
+    <div>
       {isExists ? <ExistsSchedule /> : <NotExistsSchedule />}
-      <div className="flex flex-col justify-center items-center mt-8">
+      <div
+        className={`flex flex-col justify-center items-center relative pt-8 bg-gray-005 ${
+          !disabledStatus.buttonSection ? "z-[1005]" : "z-[1003]"
+        }`}
+      >
         <button
           type="button"
           onClick={onClickRecommendHandler}
@@ -149,7 +154,7 @@ const ScheduleLists = () => {
           일정완료
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

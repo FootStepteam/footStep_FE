@@ -19,7 +19,7 @@ const ScheduleArea = () => {
     <div
       className={`relative ${
         sideBarOpenState.schedule ? "left-0" : "left-[-25rem]"
-      } w-planShareRoomSideBar shadow-xl bg-gray-007 z-[1003] transition-[left] duration-300 ease-in-out`}
+      } w-planShareRoomSideBar h-[100vh] shadow-xl bg-gray-005 z-[1003] transition-[left] duration-300 ease-in-out`}
     >
       <ScheduleAreaHeader />
       <ScheduleDaySelect />
@@ -32,6 +32,7 @@ const ScheduleArea = () => {
       >
         <LeftArrow className="w-[20px] h-[20px] fill-[#DCDCDC]" />
       </div>
+      <div className="absolute top-0 left-0 w-planShareRoomSideBar h-screen bg-gray-005 z-[1004] opacity-50"></div>
     </div>
   );
 };

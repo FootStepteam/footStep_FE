@@ -8,10 +8,14 @@ import useShareRoomForm from "../../../hooks/useShareRoomForm";
 import { getCookie } from "../../../utils/cookie";
 import { formValidationCheck } from "../../../utils/formValidationCheck";
 import Calendar from "../../common/calendar/Calendar";
+import { disabledState } from "../../../state/componentOpenState";
+import { useRecoilState } from "recoil";
 
 const ScheduleAreaHeader = () => {
   const token = getCookie("accessToken");
+
   const { shareRoomID } = useParams<string>();
+  const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
   const {
     form,
     backUpForm,
@@ -31,10 +35,24 @@ const ScheduleAreaHeader = () => {
   const onClickHandler = async (type: string) => {
     switch (type) {
       case "cancel":
+        setDisabledStatus({
+          header: false,
+          daySelect: false,
+          scheduleList: false,
+          buttonSection: false,
+          placeSection: false,
+        });
         setEditStatus(false);
         setForm({ ...backUpForm });
         break;
       case "edit":
+        setDisabledStatus({
+          header: false,
+          daySelect: true,
+          scheduleList: true,
+          buttonSection: true,
+          placeSection: true,
+        });
         setEditStatus(true);
         break;
       case "complete":
@@ -82,7 +100,11 @@ const ScheduleAreaHeader = () => {
   }, []);
 
   return (
-    <div className="w-planShareRoomSideBar h-[13.5rem] bg-gray-007">
+    <div
+      className={`relative w-planShareRoomSideBar h-[13.5rem] bg-gray-005 ${
+        !disabledStatus.header ? "z-[1005]" : "z-[1003]"
+      }`}
+    >
       <div className="flex justify-between items-center">
         <button
           type="button"
