@@ -31,7 +31,6 @@ export const addDestinationAPI = async (
         },
       }
     );
-
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -52,7 +51,6 @@ export const addDestinationAPI = async (
         });
       }
     }
-    return error;
   }
 };
 

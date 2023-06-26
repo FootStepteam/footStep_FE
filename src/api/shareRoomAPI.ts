@@ -98,7 +98,6 @@ export const getShareRoomInfoAPI = async (shareRoomID: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
