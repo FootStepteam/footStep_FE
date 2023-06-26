@@ -1,16 +1,12 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { addDestinationAPI, deleteDestinationAPI } from "../api/destinationAPI";
-import { getScheduleAPI } from "../api/scheduleAPI";
 import { selectedDay } from "../store/selectedDay";
 import { IKakaoPlaceSearchResult } from "../type/kakaoMap";
-import { schedule } from "../store/schedule";
 
 const useManageSchedule = () => {
   const { shareRoomID } = useParams();
   const selectedDate = useRecoilValue(selectedDay);
-  const setSchedule = useSetRecoilState(schedule);
 
   const addDestination = async (place: IKakaoPlaceSearchResult) => {
     if (shareRoomID) {
@@ -24,40 +20,15 @@ const useManageSchedule = () => {
         seq: 1,
       };
 
-      const response = await addDestinationAPI(shareRoomID, bodyData);
-
-      if (response.status === 200) {
-        getSchedule();
-      }
+      addDestinationAPI(shareRoomID, bodyData);
     }
   };
 
   const deleteDestination = async (destinationId: number) => {
     if (shareRoomID) {
-      const response = await deleteDestinationAPI(
-        Number(shareRoomID),
-        destinationId
-      );
-
-      if (response?.status === 200) {
-        getSchedule();
-      }
+      deleteDestinationAPI(Number(shareRoomID), destinationId);
     }
   };
-
-  const getSchedule = async () => {
-    if (shareRoomID) {
-      const response = await getScheduleAPI(shareRoomID);
-
-      if (response?.status === 200) {
-        setSchedule(response.data);
-      }
-    }
-  };
-
-  useEffect(() => {
-    getSchedule();
-  }, []);
 
   return { addDestination, deleteDestination };
 };

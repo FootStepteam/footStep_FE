@@ -15,7 +15,6 @@ const useShareRoomForm = () => {
 
   const getData = async (shareRoomID: string) => {
     const response = await getShareRoomInfoAPI(shareRoomID);
-
     setForm({
       title: response.shareName,
       startDate: response.travelStartDate,

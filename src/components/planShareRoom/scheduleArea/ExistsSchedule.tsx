@@ -20,7 +20,7 @@ interface IDestination {
 }
 
 const ExistsSchedule = () => {
-  const scheduleList = useRecoilValue(schedule);
+  const scheduleBytDate = useRecoilValue(schedule);
   const selectedDate = useRecoilValue(selectedDay);
   const setStartPoint = useSetRecoilState(selecteStartPoint);
   const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
@@ -80,8 +80,8 @@ const ExistsSchedule = () => {
         </button>
       </div>
       <div className="flex flex-col items-center h-[31rem] overflow-y-auto">
-        {scheduleList[selectedDate.planDay - 1].destinationDtoList.map(
-          (destination) => (
+        {scheduleBytDate !== "" &&
+          scheduleBytDate.destinationDtoList.map((destination) => (
             <div
               key={destination.destinationId}
               className="flex items-center"
@@ -118,8 +118,7 @@ const ExistsSchedule = () => {
                 </div>
               </div>
             </div>
-          )
-        )}
+          ))}
       </div>
     </div>
   );
