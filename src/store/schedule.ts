@@ -1,26 +1,24 @@
 import { atom } from "recoil";
 
-const initialValue = [
-  {
-    shareId: 0,
-    dayScheduleId: 0,
-    planDate: "",
-    content: null,
-    destinationDtoList: [
-      {
-        destinationId: 0,
-        destinationCategoryCode: "",
-        destinationName: "",
-        destinationAddress: "",
-        lng: 0,
-        lat: 0,
-        seq: 0,
-      },
-    ],
-  },
-];
+export interface IDestinationDTOList {
+  destinationId: number;
+  destinationCategoryCode: string;
+  destinationName: string;
+  destinationAddress: string;
+  lng: number;
+  lat: number;
+  seq: number;
+}
 
-export const schedule = atom({
+export interface ISchedule {
+  shareId: number;
+  dayScheduleId: number;
+  planDate: string;
+  content: string;
+  destinationDtoList: IDestinationDTOList[] | [];
+}
+
+export const schedule = atom<ISchedule | "">({
   key: "schedule",
-  default: initialValue,
+  default: "",
 });

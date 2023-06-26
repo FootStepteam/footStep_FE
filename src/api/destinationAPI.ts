@@ -31,13 +31,11 @@ export const addDestinationAPI = async (
         },
       }
     );
-
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
       const errorCode = error.response?.data.errorCode;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         addDestinationAPI(shareRoomID, bodyData);
@@ -53,7 +51,6 @@ export const addDestinationAPI = async (
         });
       }
     }
-    return error;
   }
 };
 
@@ -76,9 +73,8 @@ export const deleteDestinationAPI = async (
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
       const errorCode = error.response?.data.errorCode;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
+      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
         removeCookie("accessToken");
         refreshTokenAPI();
         deleteDestinationAPI(shareRoomID, destinationId);

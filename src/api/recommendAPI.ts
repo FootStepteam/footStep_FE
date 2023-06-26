@@ -14,11 +14,11 @@ export const recommendScheduleAPI = async (
   try {
     const response = await axios.put(
       `/api/api/share-room/${shareRoomID}/schedule/recommend`,
+      startPoint,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        params: startPoint,
       }
     );
     return response;

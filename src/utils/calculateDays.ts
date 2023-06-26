@@ -58,28 +58,28 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
   let month = newStartDate.getMonth();
   let date = newStartDate.getDate();
   const day = newStartDate.getDay();
-
   const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 
   let diff = Math.abs(newStartDate.getTime() - newEndDate.getTime());
   diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-  for (let i = 0; i < diff; i++) {
+  for (let i = 0; i <= diff; i++) {
     const newDay = setDay(day, i);
-    if (month % 2 !== 0 && month !== 7 && date === 31) {
-      date = 2;
+    let newDate = date;
+    if (month % 2 !== 0 && month !== 7 && newDate === 31) {
+      newDate = 2;
       month = month + 1;
-    } else if (month % 2 === 0 && month === 7 && date == 32) {
-      date = 2;
+    } else if (month % 2 === 0 && month === 7 && newDate == 32) {
+      newDate = 2;
       month = month + 1;
-    } else if (isLeapYear && month === 1 && date === 30) {
-      date = 2;
+    } else if (isLeapYear && month === 1 && newDate === 30) {
+      newDate = 2;
       month = month + 1;
-    } else if (!isLeapYear && month === 1 && date === 29) {
-      date = 2;
+    } else if (!isLeapYear && month === 1 && newDate === 29) {
+      newDate = 2;
       month = month + 1;
     } else {
-      date = date + 1;
+      newDate = date + i;
     }
 
     if (month === 12) {
@@ -91,10 +91,10 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
 
     const dateInfo: IPlanDates = {
       month: month + 1,
-      date: date - 1,
+      date: newDate,
       day: newDay,
       planDay: i + 1,
-      planDate: `${year}-${newMonth}-${date}`,
+      planDate: `${year}-${newMonth}-${newDate}`,
     };
 
     if (i === 0) {

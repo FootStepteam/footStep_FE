@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ReactComponent as LeftArrow } from "../../../assets/leftArrow.svg";
 import { sideBarState } from "../../../state/sidebarState";
 import { IPropsSideBar } from "../../../type/shareRoom";
 import PlaceSearchAreaContent from "./PlaceSearchAreaContent";
 import PlaceSearchAreaHeader from "./PlaceSearchAreaHeader";
+import { disabledState } from "../../../state/componentOpenState";
 
 const PlaceSearchArea = ({
   placeSearch,
@@ -13,6 +14,7 @@ const PlaceSearchArea = ({
   addDestination,
 }: IPropsSideBar) => {
   const [sideBarOpenState, setSideBarOpenState] = useRecoilState(sideBarState);
+  const disabledStatus = useRecoilValue(disabledState);
 
   const onClickHandler = () => {
     setSideBarOpenState({ ...sideBarOpenState, placeSearch: false });
@@ -20,11 +22,12 @@ const PlaceSearchArea = ({
 
   useEffect(() => {
     setSideBarOpenState({ ...sideBarOpenState, placeSearch: false });
+    console.log(disabledStatus.placeSection);
   }, []);
 
   return (
     <div
-      className={`relative w-[23rem] max-h-100vh shadow-lg bg-gray-007 z-[1001] transition-[left] duration-300 ease-in-out ${
+      className={`relative w-[23rem] max-h-100vh shadow-lg bg-gray-007 z-[1002] transition-[left] duration-300 ease-in-out  ${
         sideBarOpenState.placeSearch ? "left-0" : "left-[-50rem]"
       }`}
     >
@@ -46,6 +49,11 @@ const PlaceSearchArea = ({
           height="20"
         />
       </div>
+      <div
+        className={`${
+          !disabledStatus.placeSection && "hidden"
+        } absolute top-0 left-0 w-[23rem] h-[100vh] bg-gray-005 z-[1002] opacity-50`}
+      ></div>
     </div>
   );
 };

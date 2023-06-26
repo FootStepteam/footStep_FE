@@ -58,7 +58,7 @@ const usePlanDate = (
     setNight(diff);
 
     if (!isNaN(diff)) {
-      setTravelDate(diff);
+      setTravelDate(diff + 1);
     }
   };
 

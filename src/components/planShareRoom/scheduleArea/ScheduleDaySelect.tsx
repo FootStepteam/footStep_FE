@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { ReactComponent as BottomArrow } from "../../../assets/bottomArrow.svg";
 import { shareRoomInfo } from "../../../store/shareRoomInfo";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { calculateDays } from "../../../utils/calculateDays";
 import { selectedDay } from "../../../store/selectedDay";
+import { schedule } from "../../../store/schedule";
+import { getScheduleByDateAPI } from "../../../api/scheduleAPI";
+import { useParams } from "react-router-dom";
+import { disabledState } from "../../../state/componentOpenState";
 
 interface IPlanDates {
   month: number;
@@ -15,17 +19,37 @@ interface IPlanDates {
 
 const ScheduleDaySelect = () => {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDay);
+  const setScheduleBytDate = useSetRecoilState(schedule);
   const [daysOpenState, setDaysOpenState] = useState<boolean>(false);
   const [planDates, setPlanDates] = useState<IPlanDates[]>([]);
+  const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
+  const { shareRoomID } = useParams<string>();
 
   const getShareRoomInfo = useRecoilValue(shareRoomInfo);
 
+  const onClickDisabledHandler = () => {
+    setDisabledStatus({
+      daySelect: false,
+      header: !disabledStatus.header,
+      scheduleList: !disabledStatus.scheduleList,
+      buttonSection: !disabledStatus.buttonSection,
+      placeSection: !disabledStatus.placeSection,
+    });
+  };
+
   const onClickDaysHandler = () => {
+    onClickDisabledHandler();
     setDaysOpenState(!daysOpenState);
   };
 
-  const onClickselectDay = (day: number) => {
+  const onClickselectDay = async (day: number) => {
+    onClickDisabledHandler();
     setSelectedDate(planDates[day - 1]);
+    const response = await getScheduleByDateAPI(
+      Number(shareRoomID),
+      planDates[day - 1].planDate
+    );
+    setScheduleBytDate(response?.data);
     setDaysOpenState(false);
   };
 
@@ -36,7 +60,11 @@ const ScheduleDaySelect = () => {
   }, [getShareRoomInfo]);
 
   return (
-    <div>
+    <div
+      className={`relative bg-gray-005 ${
+        !disabledStatus.daySelect ? "z-[1005]" : "z-[1003]"
+      }`}
+    >
       <div className="flex items-center ml-12">
         <p className="ml-2 font-Jua font-normal text-3xl">
           {selectedDate.planDay}일차
@@ -61,9 +89,9 @@ const ScheduleDaySelect = () => {
         </button>
       </div>
       <div
-        className={`flex flex-col justify-center items-center absolute left-0 py-4 w-planShareRoomSideBar bg-white z-[1020] ${
+        className={`flex flex-col justify-center items-center absolute left-0 py-4 w-planShareRoomSideBar bg-gray-005 z-[1010] ${
           daysOpenState
-            ? "visible min-h-20 mt-4 shadow-lg"
+            ? "visible min-h-20 shadow-lg"
             : "invisible h-0 text-white"
         }`}
       >
