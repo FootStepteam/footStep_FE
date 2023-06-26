@@ -11,6 +11,7 @@ import useManageSchedule from "../../hooks/useManageSchdule";
 import { placeSearchResult } from "../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoMap";
 import SideBar from "./SideBar";
+import Chat from "./Chat";
 
 interface IState {
   center: {
@@ -241,6 +242,7 @@ const PlanShareRoom = () => {
         ))}
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
+      <Chat />
     </>
   );
 };
