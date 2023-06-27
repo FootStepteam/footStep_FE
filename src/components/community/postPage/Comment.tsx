@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { deleteComment, updateComment } from "../../../api/communityAPI";
 import { IComment, ICommunityPost } from "../../../type/communityPage";
-import { getMemberByAccessToken } from "../../../api/memberAPI";
+import { getCurrentUserMemberId } from "../../../api/memberAPI";
 import Swal from "sweetalert2";
 
 interface CommentProps {
@@ -18,8 +18,8 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
   useEffect(() => {
     const fetchMemberId = async () => {
       try {
-        const memberData = await getMemberByAccessToken();
-        setMemberId(memberData.memberId);
+        const memberId = await getCurrentUserMemberId();
+        setMemberId(memberId);
       } catch (error) {
         // console.error(error);
       }
