@@ -1,17 +1,94 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { ReactComponent as ChatEmotion } from "../../assets/chatEmotion.svg";
 import { ReactComponent as Close } from "../../assets/close.svg";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+import { getMemberByAccessToken } from "../../api/memberAPI";
+import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
+import { useRecoilValue } from "recoil";
+import { shareRoomInfo } from "../../store/shareRoomInfo";
+
+let stompClient: any;
 
 const Chat = () => {
-  const [openChatStatus, setOpenChatStatue] = useState<boolean>(false);
+  const [openChatStatus, setOpenChatStatus] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<string[]>([]);
+  const [roomId, setRoomId] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [loadingUsername, setLoadingUsername] = useState<boolean>(true);
+  const shareRoomData = useRecoilValue(shareRoomInfo);
+  const shareId = shareRoomData.shareId;
 
   const onClickChatStatusHandler = () => {
-    setOpenChatStatue(!openChatStatus);
+    setOpenChatStatus(!openChatStatus);
   };
 
   const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
+  };
+
+  const sendMessageHandler = () => {
+    if (message.trim() !== "") {
+      const chatMessage = {
+        roomId: roomId,
+        sender: username,
+        message: message.trim(),
+      };
+      stompClient.publish(
+        "/app/chat/sendMessage",
+        {},
+        JSON.stringify(chatMessage)
+      );
+      setMessage("");
+    }
+  };
+
+  useEffect(() => {
+    getMemberByAccessToken().then((memberData) => {
+      setUsername(memberData.nickname);
+      setLoadingUsername(false);
+    });
+
+    getShareRoomInfoAPI(shareId.toString()).then((roomData) => {
+      setRoomId(roomData.shareId);
+    });
+
+    if (!loadingUsername) {
+      connect();
+    }
+
+    return () => {
+      disconnect();
+    };
+  }, [loadingUsername, shareId]);
+
+  const connect = () => {
+    const socket = new SockJS("http://43.200.76.174:8080/ws-stomp");
+
+    stompClient = new Client({
+      webSocketFactory: () => socket,
+      onConnect: () => {
+        console.log("Connected");
+        stompClient.subscribe(`/sub/chat/room/${roomId}`, onMessageReceived);
+      },
+      onStompError: (error) => {
+        console.log("Stomp error:", error);
+      },
+    });
+
+    stompClient.activate();
+  };
+
+  const onMessageReceived = (payload: any) => {
+    const msg = JSON.parse(payload.body);
+    setMessages((prevMsgs) => [...prevMsgs, msg.message]);
+  };
+
+  const disconnect = () => {
+    if (stompClient !== null) {
+      stompClient.deactivate();
+    }
   };
 
   return (
@@ -35,23 +112,25 @@ const Chat = () => {
             />
           </div>
           <div className="flex flex-col mt-3 m-center w-[18rem] h-[30rem] bg-blue-005 rounded-md">
-            <div className="grow">
-              <div>asd</div>
+            <div className="overflow-y-scroll no-scrollbar mt-3 ml-3 mr-3 mb-3 h-[25rem] bg-blue-007 rounded-md">
+              {messages.map((msg, index) => (
+                <div key={index} className="mt-3 ml-3 text-white">
+                  {msg}
+                </div>
+              ))}
             </div>
-            <div className="flex m-center w-[18rem] h-[4rem] bg-white">
-              <textarea
-                onChange={onChangeMessageHandler}
-                className="px-3 py-2 w-[14rem] rounded-md outline-none text-sm resize-none"
-                placeholder="메세지를 입력하세요."
-                maxLength={50}
-              />
-              <button
-                type="button"
-                className="ml-0.5 my-auto w-[3.5rem] h-[2.5rem] bg-yellow-001 disabled:bg-gray-003 rounded-md text-sm text-black-003"
-                disabled={message.length === 0 ? true : false}
-              >
-                전송
-              </button>
+            <textarea
+              placeholder="내용을 입력해주세요"
+              value={message}
+              onChange={onChangeMessageHandler}
+              className="mt-3 ml-3 mr-3 h-[4rem] rounded-md"
+            />
+            <div
+              role="button"
+              onClick={sendMessageHandler}
+              className="m-3 h-[2rem] rounded-md bg-blue-004 hover:bg-blue-003 cursor-pointer text-white flex justify-center items-center"
+            >
+              전송
             </div>
           </div>
         </div>

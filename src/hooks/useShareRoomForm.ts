@@ -8,14 +8,19 @@ import { shareRoomInfo } from "../store/shareRoomInfo";
 
 const useShareRoomForm = () => {
   const [form, setForm] = useState<IForm>(INITIAL_FORM);
+  const [backUpForm, setBackForm] = useState<IForm>(INITIAL_FORM);
   const [scheduleShareRoomInfo, setScheduleShareRoomInfo] =
     useState<IShareRoom>(INITIAL_SHARE_ROOM_INFO);
   const setShareRoomInfo = useSetRecoilState(shareRoomInfo);
 
   const getData = async (shareRoomID: string) => {
     const response = await getShareRoomInfoAPI(shareRoomID);
-
     setForm({
+      title: response.shareName,
+      startDate: response.travelStartDate,
+      endDate: response.travelEndDate,
+    });
+    setBackForm({
       title: response.shareName,
       startDate: response.travelStartDate,
       endDate: response.travelEndDate,
@@ -41,6 +46,8 @@ const useShareRoomForm = () => {
 
   return {
     form,
+    backUpForm,
+    setForm,
     getData,
     onChangeTitleHandler,
     onChangeDateHandler,

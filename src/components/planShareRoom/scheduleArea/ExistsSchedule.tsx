@@ -8,6 +8,7 @@ import { selecteStartPoint } from "../../../state/selectStartPoint";
 import { sideBarState } from "../../../state/sidebarState";
 import { schedule } from "../../../store/schedule";
 import { selectedDay } from "../../../store/selectedDay";
+import { disabledState } from "../../../state/componentOpenState";
 
 interface IDestination {
   destinationId: number;
@@ -20,14 +21,22 @@ interface IDestination {
 }
 
 const ExistsSchedule = () => {
-  const scheduleList = useRecoilValue(schedule);
+  const scheduleBytDate = useRecoilValue(schedule);
   const selectedDate = useRecoilValue(selectedDay);
   const setStartPoint = useSetRecoilState(selecteStartPoint);
+  const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
   const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
   const { deleteDestination } = useManageSchedule();
   const [selectStartPoint, setSelecteStartPoint] = useState(false);
 
   const onClickSelectStartPointHandler = () => {
+    setDisabledStatus({
+      scheduleList: false,
+      header: !disabledStatus.header,
+      daySelect: !disabledStatus.daySelect,
+      buttonSection: !disabledStatus.buttonSection,
+      placeSection: !disabledStatus.placeSection,
+    });
     setSelecteStartPoint(!selectStartPoint);
   };
 
@@ -61,28 +70,36 @@ const ExistsSchedule = () => {
   };
 
   return (
-    <div className="shadow-md">
-      <div className="flex justify-between my-3 ml-4">
+    <div
+      className={`relative shadow-md  bg-gray-005 ${
+        !disabledStatus.scheduleList ? "z-[1005]" : "z-[1003]"
+      }`}
+    >
+      <div className="flex justify-between pt-4 pb-3 pl-4">
         <button
-          className="flex  items-center px-3 py-2 bg-blue-001 hover:bg-blue-003 rounded-full font-bold text-sm text-white"
+          className="flex items-center px-3 py-2 bg-blue-001 hover:bg-blue-003 rounded-full font-bold text-[0.8rem] text-white"
           onClick={onClickSelectStartPointHandler}
           type="button"
         >
-          <Flag className="mr-1 w-[20px] h-[20px] fill-white" />
+          <Flag className="mr-1 w-[16px] h-[16px] fill-white" />
           {!selectStartPoint ? "출발지 선택" : "출발지 선택 해제"}
         </button>
         <button
           type="button"
-          className="mr-4 px-3 py-2 bg-orange-001 hover:bg-orange-003 rounded-full font-bold text-sm text-white"
+          className="mr-4 px-3 py-2 bg-orange-001 hover:bg-orange-003 disabled:bg-gray-002 rounded-full font-bold text-sm text-white cursor-pointer"
           onClick={onClickaddPlaceHandler}
+          disabled={selectStartPoint ? true : false}
         >
           장소추가
         </button>
       </div>
       <div className="flex flex-col items-center h-[31rem] overflow-y-auto">
-        {scheduleList[selectedDate.planDay - 1].destinationDtoList.map(
-          (destination) => (
-            <div className="flex items-center">
+        {scheduleBytDate !== "" &&
+          scheduleBytDate.destinationDtoList.map((destination) => (
+            <div
+              key={destination.destinationId}
+              className="flex items-center"
+            >
               {selectStartPoint && (
                 <button
                   className="mt-4 mr-2 text-sm text-black-003 hover:text-blue-001 cursor-pointer"
@@ -103,20 +120,21 @@ const ExistsSchedule = () => {
                   {destination.destinationAddress}
                 </p>
                 <div>
-                  <button
-                    type="button"
-                    className="absolute top-3 right-3 w-[10px] h-[10px]"
-                    onClick={() =>
-                      onClickDeletePlaceHandler(destination.destinationId)
-                    }
-                  >
-                    <Close className="w-[10px] h-[10px] fill-red-001" />
-                  </button>
+                  {!selectStartPoint && (
+                    <button
+                      type="button"
+                      className="absolute top-3 right-3 w-[10px] h-[10px]"
+                      onClick={() =>
+                        onClickDeletePlaceHandler(destination.destinationId)
+                      }
+                    >
+                      <Close className="w-[10px] h-[10px] fill-red-001" />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
-          )
-        )}
+          ))}
       </div>
     </div>
   );

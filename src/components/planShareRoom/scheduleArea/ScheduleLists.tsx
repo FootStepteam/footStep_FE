@@ -1,41 +1,56 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { schedule } from "../../../store/schedule";
-import { selectedDay } from "../../../store/selectedDay";
-import ExistsSchedule from "./ExistsSchedule";
-import NotExistsSchedule from "./NotExistsSchedule";
 import Swal from "sweetalert2";
-import { travelDate } from "../../../state/travelDate";
+import { recommendScheduleAPI } from "../../../api/recommendAPI";
+import { getScheduleAPI, getScheduleByDateAPI } from "../../../api/scheduleAPI";
+import { ReactComponent as Recommend } from "../../../assets/arrowDirection.svg";
 import {
   initialValue,
   selecteStartPoint,
 } from "../../../state/selectStartPoint";
-import { recommendScheduleAPI } from "../../../api/recommendAPI";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { ReactComponent as Recommend } from "../../../assets/arrowDirection.svg";
+import { travelDate } from "../../../state/travelDate";
+import { ISchedule, schedule } from "../../../store/schedule";
+import { selectedDay } from "../../../store/selectedDay";
+import { shareRoomInfo } from "../../../store/shareRoomInfo";
+import ExistsSchedule from "./ExistsSchedule";
+import NotExistsSchedule from "./NotExistsSchedule";
+import { disabledState } from "../../../state/componentOpenState";
 
 const ScheduleLists = () => {
   const { shareRoomID } = useParams();
   const travelDates = useRecoilValue(travelDate);
-  const scheduleList = useRecoilValue(schedule);
-  const selectedDate = useRecoilValue(selectedDay);
+  const [scheduleInfo, setScheduleInfo] = useRecoilState(schedule);
+  const disabledStatus = useRecoilValue(disabledState);
+  const selectedPlanDay = useRecoilValue(selectedDay);
+  const shareRoom = useRecoilValue(shareRoomInfo);
   const [selectedStartPoint, setSelectedStartPoint] =
     useRecoilState(selecteStartPoint);
+
   const isExists =
-    scheduleList[selectedDate.planDay - 1] !== undefined &&
-    scheduleList[selectedDate.planDay - 1].destinationDtoList.length !== 0;
+    scheduleInfo !== "" && scheduleInfo.destinationDtoList.length !== 0;
 
-  const validation = (type: string) => {
+  const validation = async (type: string) => {
     if (type === "complete") {
-      if (travelDates !== scheduleList.length) {
-        return false;
-      }
+      const response = await getScheduleAPI(
+        Number(shareRoomID),
+        shareRoom.travelStartDate,
+        shareRoom.travelEndDate
+      );
 
-      scheduleList.forEach((schedule) => {
-        if (schedule.destinationDtoList.length === 0) {
+      const data = response?.data;
+
+      if (data !== undefined) {
+        if (travelDates !== data.length) {
           return false;
         }
-      });
+
+        data.forEach((destination: ISchedule) => {
+          if (destination.destinationDtoList.length === 0) {
+            return false;
+          }
+        });
+      }
     } else if (type === "recommend") {
       if (
         selectedStartPoint.planDate === "" &&
@@ -49,26 +64,36 @@ const ScheduleLists = () => {
     return true;
   };
 
-  const onClickRecommendHandler = () => {
-    !validation("recommend")
+  const onClickRecommendHandler = async () => {
+    const result = await validation("recommend");
+
+    !result
       ? Swal.fire({
           icon: "error",
           text: "출발지를 선택해야 합니다.",
         })
       : Swal.fire({
           icon: "question",
-          text: "추천경로로 일정을 순서를 변경하시겠습니까?",
+          title: `${selectedPlanDay.planDay}일차`,
+          text: `경로를 추천경로로 일정 순서를 변경하시겠습니까?`,
           showCancelButton: true,
           confirmButtonText: "확인",
           cancelButtonText: "취소",
         }).then((result) => {
-          result.isConfirmed &&
+          if (result.isConfirmed) {
             recommendScheduleAPI(selectedStartPoint, Number(shareRoomID));
+            Swal.fire({
+              icon: "success",
+              text: "추천 경로로 일정이 설정되었습니다.",
+            });
+          }
         });
   };
 
-  const onClickCompleteHandler = () => {
-    !validation("complete")
+  const onClickCompleteHandler = async () => {
+    const result = await validation("complete");
+
+    !result
       ? Swal.fire({
           icon: "error",
           text: "모든 일차에 장소를 등록해야 일정 완료가 가능합니다.",
@@ -84,14 +109,35 @@ const ScheduleLists = () => {
         });
   };
 
+  const getScheduleByDate = async () => {
+    const initialPlanDate = shareRoom.travelStartDate;
+    const response = await getScheduleByDateAPI(
+      Number(shareRoomID),
+      initialPlanDate
+    );
+    setScheduleInfo(response?.data);
+  };
+
   useEffect(() => {
     setSelectedStartPoint(initialValue);
   }, []);
 
+  useEffect(() => {
+    const initialPlanDate = shareRoom.travelStartDate;
+
+    if (initialPlanDate !== "") {
+      getScheduleByDate();
+    }
+  }, [shareRoom]);
+
   return (
-    <>
+    <div>
       {isExists ? <ExistsSchedule /> : <NotExistsSchedule />}
-      <div className="flex flex-col justify-center items-center mt-8">
+      <div
+        className={`flex flex-col justify-center items-center relative pt-8 bg-gray-005 ${
+          !disabledStatus.buttonSection ? "z-[1005]" : "z-[1003]"
+        }`}
+      >
         <button
           type="button"
           onClick={onClickRecommendHandler}
@@ -108,7 +154,7 @@ const ScheduleLists = () => {
           일정완료
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

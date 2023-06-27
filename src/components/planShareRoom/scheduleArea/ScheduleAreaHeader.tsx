@@ -8,12 +8,18 @@ import useShareRoomForm from "../../../hooks/useShareRoomForm";
 import { getCookie } from "../../../utils/cookie";
 import { formValidationCheck } from "../../../utils/formValidationCheck";
 import Calendar from "../../common/calendar/Calendar";
+import { disabledState } from "../../../state/componentOpenState";
+import { useRecoilState } from "recoil";
 
 const ScheduleAreaHeader = () => {
   const token = getCookie("accessToken");
+
   const { shareRoomID } = useParams<string>();
+  const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
   const {
     form,
+    backUpForm,
+    setForm,
     getData,
     onChangeTitleHandler,
     onChangeDateHandler,
@@ -29,9 +35,24 @@ const ScheduleAreaHeader = () => {
   const onClickHandler = async (type: string) => {
     switch (type) {
       case "cancel":
+        setDisabledStatus({
+          header: false,
+          daySelect: false,
+          scheduleList: false,
+          buttonSection: false,
+          placeSection: false,
+        });
         setEditStatus(false);
+        setForm({ ...backUpForm });
         break;
       case "edit":
+        setDisabledStatus({
+          header: false,
+          daySelect: true,
+          scheduleList: true,
+          buttonSection: true,
+          placeSection: true,
+        });
         setEditStatus(true);
         break;
       case "complete":
@@ -45,6 +66,7 @@ const ScheduleAreaHeader = () => {
               icon: "success",
               text: "수정이 성공적으로 되었습니다",
             });
+            getData(shareRoomID);
             setEditStatus(false);
           } else {
             MySwal.fire({
@@ -78,7 +100,11 @@ const ScheduleAreaHeader = () => {
   }, []);
 
   return (
-    <div className="w-planShareRoomSideBar h-planShareRoomHeader bg-gray-007">
+    <div
+      className={`relative w-planShareRoomSideBar h-[13.5rem] bg-gray-005 ${
+        !disabledStatus.header ? "z-[1005]" : "z-[1003]"
+      }`}
+    >
       <div className="flex justify-between items-center">
         <button
           type="button"
@@ -117,7 +143,7 @@ const ScheduleAreaHeader = () => {
         <div className="flex items-center w-[17rem]">
           <input
             type="text"
-            defaultValue={form.title}
+            value={editStatus ? form.title : backUpForm.title}
             className="w-[12rem] bg-gray-007 outline-none text-black font-NanumGothic text-2xl font-[800]"
             onChange={onChangeTitleHandler}
             disabled={editStatus ? false : true}

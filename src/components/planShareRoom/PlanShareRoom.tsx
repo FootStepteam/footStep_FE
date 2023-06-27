@@ -12,6 +12,7 @@ import { placeSearchResult } from "../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../type/kakaoMap";
 import SideBar from "./SideBar";
 import Chat from "./Chat";
+import { markerSeq } from "../../constants/marker";
 
 interface IState {
   center: {
@@ -197,9 +198,10 @@ const PlanShareRoom = () => {
                 position={marker.position}
                 zIndex={1010}
               >
-                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white rounded-sm shadow-lg">
+                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white border border-gray-002 rounded-sm shadow-lg">
                   <div className="mt-6 ml-4 w-[16rem]">
                     <p className="mb-2 text-lg font-bold">
+                      <span className="text-blue-001">{markerSeq[index]}</span>{" "}
                       {info[index].data.place_name}
                     </p>
                     <p className="text-sm font-normal">
@@ -212,14 +214,14 @@ const PlanShareRoom = () => {
                       <a
                         href={`https://place.map.kakao.com/${info[index].data.id}`}
                         target="_blank"
-                        className="text-sm text-blue-001 hover:text-blue-003"
+                        className="text-sm font-light text-blue-001 hover:text-blue-003"
                         rel="noreferrer"
                       >
                         상세보기
                       </a>
                       <button
                         type="button"
-                        className="ml-2 text-sm text-gray-001 hover:text-gray-003"
+                        className="ml-2 text-sm font-light text-gray-001 hover:text-gray-003"
                         onClick={() =>
                           onClickAddDestinationHandler(info[index])
                         }

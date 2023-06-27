@@ -7,6 +7,7 @@ import { createModalOpenState } from "../../../state/createModalOpen";
 import { getShareRoomList } from "../../../store/getShareRoomList";
 import { IForm } from "../../../type/shareRoomForm";
 import { formValidationCheck } from "../../../utils/formValidationCheck";
+import { createChatRoom } from "../../../api/chatAPI";
 
 interface IProps {
   form: IForm;
@@ -27,6 +28,9 @@ const Button = ({ form }: IProps) => {
     if (response?.status === 200) {
       const shareRoomId = response.data.shareId;
       const planList = response.data;
+
+      // 채팅방 생성
+      await createChatRoom(shareRoomId);
 
       MySwal.fire({
         title: "등록이 완료되었습니다.",

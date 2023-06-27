@@ -4,6 +4,7 @@ import { ReactComponent as Address } from "../../../assets/address.svg";
 import { placeSearchResult } from "../../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../../type/kakaoMap";
 import { IPlaceContentDown } from "../../../type/shareRoom";
+import { markerSeq } from "../../../constants/marker";
 
 const PlaceSearchLists = ({
   panTo,
@@ -71,19 +72,19 @@ const PlaceSearchLists = ({
                 >
                   <div className="ml-4 w-[17em]">
                     <div className="mb-1">
-                      <p className="w-[17rem] font-medium text-lg truncate ">
-                        <span className="mr-2 text-platinum-001">
-                          {index + 1}
+                      <p className="w-[17rem] font-medium text-lg text-black-002 truncate ">
+                        <span className="mr-2 font-bold text-blue-001">
+                          {markerSeq[index]}
                         </span>
                         {place.place_name}
                       </p>
                     </div>
                     <p className="font-normal text-sm">{place.address_name}</p>
-                    <p className="font-normal text-sm text-platinum-001">
+                    <p className="font-normal text-sm text-black-003">
                       {place.phone}
                     </p>
                     <a
-                      className="font-normal text-[0.8rem] font-light text-blue-002 hover:text-blue-004"
+                      className="font-normal text-[0.8rem] font-extralight text-blue-001 hover:text-blue-005"
                       href={`https://place.map.kakao.com/${place.id}`}
                       target="_blank"
                     >
