@@ -11,29 +11,49 @@ import {
 import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 import Pagination from "./Pagination";
+import { getCurrentUserNickname } from "../../api/memberAPI";
 
 const Lists = ({ searchQuery }: IListsProps) => {
   const [sortBy, setSortBy] = useState<"recent" | "like">("recent");
   const [posts, setPosts] = useState<ICommunityPost[]>([]);
   const [page, setPage] = useState<number>(0);
   const [lastPage, setLastPage] = useState<boolean>(false);
+  const [privatePosts, setPrivatePosts] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
+      const nickname = await getCurrentUserNickname();
+      setCurrentUser(nickname);
       try {
         const data: ICommunityData = await getCommunityAPI({
           page,
           size: 5,
           sort: sortBy,
         });
-        console.log(data);
-        setPosts(data.communities);
+
+        let filteredPosts = data.communities;
+
+        // 체크박스가 체크된 상태이면, 비공개 게시글과 현재 유저가 작성한 게시글만 필터링
+        if (privatePosts) {
+          filteredPosts = filteredPosts.filter(
+            (post) =>
+              !post.communityPublicState && post.memberNickname === currentUser
+          );
+        }
+        if (!privatePosts) {
+          filteredPosts = filteredPosts.filter(
+            (post) => post.communityPublicState
+          );
+        }
+
+        setPosts(filteredPosts);
         setLastPage(data.lastPage);
       } catch (error) {
         console.error(error);
       }
     })();
-  }, [sortBy, page]);
+  }, [sortBy, page, privatePosts]);
 
   // 검색어로 게시글 필터링
   const filteredPosts: ICommunityPost[] = posts.filter((post) => {
@@ -90,6 +110,14 @@ const Lists = ({ searchQuery }: IListsProps) => {
           </button>
         </div>
         <div className="flex">
+          <input
+            type="checkbox"
+            id="private"
+            name="private"
+            onChange={() => setPrivatePosts(!privatePosts)}
+          />
+          <label htmlFor="private">내 비공개 게시글 보기</label>
+
           <Link to="/community/newpost" onClick={handleNewPostClick}>
             <button
               type="button"

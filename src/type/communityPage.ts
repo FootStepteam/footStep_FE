@@ -6,9 +6,11 @@ export interface ICommunityPost {
   content: string;
   createdDate: string;
   likeCount: number;
+  memberId: number;
   memberNickname: string;
   travelEndDate: string;
   travelStartDate: string;
+  communityPublicState: boolean;
 }
 
 export interface ICommunityData {
