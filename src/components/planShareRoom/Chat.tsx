@@ -4,9 +4,9 @@ import { ReactComponent as Close } from "../../assets/close.svg";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { getMemberByAccessToken } from "../../api/memberAPI";
-import { getShareRoomInfoAPI } from "../../api/shareRoomAPI";
 import { useRecoilValue } from "recoil";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
+import { getChatRoomDetail, getChatRooms } from "../../api/chatAPI";
 
 let stompClient: any;
 
@@ -45,27 +45,40 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    getMemberByAccessToken().then((memberData) => {
-      setUsername(memberData.nickname);
+    const fetchDetails = async () => {
+      const memberData = await getMemberByAccessToken();
+      const userName = memberData.nickname;
+      setUsername(userName);
       setLoadingUsername(false);
-    });
+      console.log("username: ", userName); // 이곳에선 최신 값을 얻을 수 있습니다.
 
-    getShareRoomInfoAPI(shareId.toString()).then((roomData) => {
-      setRoomId(roomData.shareId);
-    });
+      const roomId = shareId.toString();
+      setRoomId(roomId);
 
-    if (!loadingUsername) {
-      connect();
-    }
+      if (roomId) {
+        console.log("roomId: ", roomId);
+        const roomDetail = await getChatRoomDetail(roomId);
+      }
+
+      if (userName && roomId) {
+        console.log("roomId: ", roomId);
+        console.log("loadingUsername: ", loadingUsername);
+        connect(); // 함수에 직접 인자를 전달합니다.
+      }
+    };
+
+    fetchDetails()
+      .then(() => console.log("fetchDetails has completed"))
+      .catch((error) => console.error("Failed to fetch details:", error));
 
     return () => {
       disconnect();
     };
-  }, [loadingUsername, shareId]);
+  }, [shareId]);
 
   const connect = () => {
     const socket = new SockJS("http://43.200.76.174:8080/ws-stomp");
-
+    console.log("socket: ", socket);
     stompClient = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
@@ -75,8 +88,16 @@ const Chat = () => {
       onStompError: (error) => {
         console.log("Stomp error:", error);
       },
+      onWebSocketClose: (event) => {
+        console.log("Websocket closed", event);
+      },
+      onWebSocketError: (event) => {
+        console.log("Websocket error", event);
+      },
     });
 
+    console.log("stompClient: ", stompClient);
+    console.log("Activating stompClient");
     stompClient.activate();
   };
 
@@ -86,7 +107,7 @@ const Chat = () => {
   };
 
   const disconnect = () => {
-    if (stompClient !== null) {
+    if (stompClient && stompClient.active) {
       stompClient.deactivate();
     }
   };

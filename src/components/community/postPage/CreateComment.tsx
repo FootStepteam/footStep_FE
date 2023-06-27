@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createComment } from "../../../api/communityAPI";
 import { ICommunityPost } from "../../../type/communityPage";
-import { getMemberByAccessToken } from "../../../api/memberAPI";
+import { getCurrentUserMemberId } from "../../../api/memberAPI";
 import Swal from "sweetalert2";
 
 interface CreateCommentProps {
@@ -16,8 +16,8 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
   useEffect(() => {
     const fetchMemberId = async () => {
       try {
-        const memberData = await getMemberByAccessToken();
-        setMemberId(memberData.memberId);
+        const memberId = await getCurrentUserMemberId();
+        setMemberId(memberId);
       } catch (error) {
         // console.error(error);
       }

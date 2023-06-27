@@ -241,7 +241,7 @@ const PlanShareRoom = () => {
         ))}
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
-      {/* <Chat /> */}
+      <Chat />
     </>
   );
 };
