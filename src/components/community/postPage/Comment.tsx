@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { deleteComment, updateComment } from "../../../api/communityAPI";
 import { IComment, ICommunityPost } from "../../../type/communityPage";
-import { getMemberByAccessToken } from "../../../api/memberAPI";
+import { getCurrentUserMemberId } from "../../../api/memberAPI";
 import Swal from "sweetalert2";
 
 interface CommentProps {
@@ -13,23 +13,23 @@ interface CommentProps {
 const Comment = ({ comment, onCommentsChange }: CommentProps) => {
   const [isEditMode, setEditMode] = useState(!comment);
   const [content, setContent] = useState(comment?.content || "");
-  const [memberNickname, setMemberNickname] = useState<string | null>(null);
+  const [memberId, setMemberId] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchMemberNickname = async () => {
+    const fetchMemberId = async () => {
       try {
-        const memberData = await getMemberByAccessToken();
-        setMemberNickname(memberData.nickname);
+        const memberId = await getCurrentUserMemberId();
+        setMemberId(memberId);
       } catch (error) {
         // console.error(error);
       }
     };
 
-    fetchMemberNickname();
+    fetchMemberId();
   }, []);
 
   const handleUpdate = async () => {
-    if (comment?.commentId && memberNickname === comment.memberNickname) {
+    if (comment?.commentId && memberId === comment.memberId) {
       const result = await Swal.fire({
         title: "댓글을 수정하시겠습니까?",
         icon: "question",
@@ -50,7 +50,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
     }
   };
   const handleDelete = async () => {
-    if (comment?.commentId && memberNickname === comment.memberNickname) {
+    if (comment?.commentId && memberId === comment.memberId) {
       const result = await Swal.fire({
         title: "댓글을 삭제하시겠습니까?",
         icon: "warning",
@@ -82,7 +82,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
         <p className="text-sm">{content}</p>
       )}
       <p className="text-xs text-gray-001">{comment?.memberNickname}</p>
-      {memberNickname === comment?.memberNickname && (
+      {memberId === comment?.memberId && (
         <div className="flex space-x-2 mt-2">
           {isEditMode ? (
             <button

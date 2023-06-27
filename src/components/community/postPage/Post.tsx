@@ -3,24 +3,24 @@ import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 import Like from "./Like";
 import { useEffect, useState } from "react";
-import { getMemberByAccessToken } from "../../../api/memberAPI";
+import { getCurrentUserMemberId } from "../../../api/memberAPI";
 import PostEditDelete from "./PostEditDelete";
 
 const Post = () => {
   const { post, onCommentsChange } = usePost();
-  const [memberNickname, setMemberNickname] = useState<string | null>(null);
+  const [memberId, setMemberId] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchMemberNickname = async () => {
+    const fetchMemberId = async () => {
       try {
-        const memberData = await getMemberByAccessToken();
-        setMemberNickname(memberData.nickname);
+        const memberId = await getCurrentUserMemberId();
+        setMemberId(memberId);
       } catch (error) {
         // console.error(error);
       }
     };
 
-    fetchMemberNickname();
+    fetchMemberId();
   }, []);
 
   if (!post) {
@@ -30,6 +30,7 @@ const Post = () => {
       </div>
     );
   }
+  console.log(post);
 
   return (
     <div className="min-h-screen p-8 bg-gray-007">
@@ -52,7 +53,7 @@ const Post = () => {
         />
       ))}
       <CreateComment post={post} onCommentsChange={onCommentsChange} />
-      {post.memberNickname === memberNickname && (
+      {post.memberId === memberId && (
         <PostEditDelete postId={post.communityId} />
       )}
     </div>

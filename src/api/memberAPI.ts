@@ -28,3 +28,23 @@ export const getMemberByAccessToken = async (): Promise<any> => {
     throw error;
   }
 };
+
+export const getCurrentUserNickname = async (): Promise<string | null> => {
+  const memberData = await getMemberByAccessToken();
+
+  if (!memberData) {
+    return null;
+  }
+
+  return memberData.nickname;
+};
+
+export const getCurrentUserMemberId = async (): Promise<number | null> => {
+  const memberData = await getMemberByAccessToken();
+
+  if (!memberData) {
+    return null;
+  }
+
+  return memberData.memberId;
+};
