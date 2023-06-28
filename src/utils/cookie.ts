@@ -10,7 +10,8 @@ export const getCookie = (key: string) => {
 
 export const setCookie = (key: string, token: string) => {
   const option = {
-    maxAge: 60 * 60 * 12,
+    path: "/",
+    maxAge: 60 * 60 * 1,
     sameSite: "none" as const, // 'none', 'lax', 'strict' 중에서 선택
     secure: true, // HTTPS 연결에서만 쿠키를 전송
   };
