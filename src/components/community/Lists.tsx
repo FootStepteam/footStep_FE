@@ -12,6 +12,7 @@ import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 import Pagination from "./Pagination";
 import { getCurrentUserNickname } from "../../api/memberAPI";
+import SortButtons from "./SortButtons";
 
 const Lists = ({ searchQuery }: IListsProps) => {
   const [sortBy, setSortBy] = useState<"recent" | "like">("recent");
@@ -20,6 +21,7 @@ const Lists = ({ searchQuery }: IListsProps) => {
   const [lastPage, setLastPage] = useState<boolean>(false);
   const [privatePosts, setPrivatePosts] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [showPrivate, setShowPrivate] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -64,12 +66,9 @@ const Lists = ({ searchQuery }: IListsProps) => {
     return matchSearchQuery;
   });
 
-  const handleSortByrecent = () => {
-    setSortBy("recent");
-  };
-
-  const handleSortByPopular = () => {
-    setSortBy("like");
+  const handlePrivatePostsToggle = () => {
+    setShowPrivate(!showPrivate);
+    setPrivatePosts(!privatePosts);
   };
 
   const handleNewPostClick = (event: MouseEvent) => {
@@ -89,35 +88,13 @@ const Lists = ({ searchQuery }: IListsProps) => {
   return (
     <div className="flex flex-col mx-auto pt-[40px] w-2/3 min-h-screen">
       <div className="flex justify-between mb-4">
+        <SortButtons
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+          showPrivate={showPrivate}
+          handlePrivatePostsToggle={handlePrivatePostsToggle}
+        />
         <div className="flex">
-          <button
-            type="button"
-            className={`px-4 py-2 border-r-2 ${
-              sortBy === "recent" ? "text-blue-003 font-bold" : ""
-            }`}
-            onClick={handleSortByrecent}
-          >
-            최신순
-          </button>
-          <button
-            type="button"
-            className={`px-4 py-2 ${
-              sortBy === "like" ? "text-blue-003 font-bold" : ""
-            }`}
-            onClick={handleSortByPopular}
-          >
-            인기순
-          </button>
-        </div>
-        <div className="flex">
-          <input
-            type="checkbox"
-            id="private"
-            name="private"
-            onChange={() => setPrivatePosts(!privatePosts)}
-          />
-          <label htmlFor="private">내 비공개 게시글 보기</label>
-
           <Link to="/community/newpost" onClick={handleNewPostClick}>
             <button
               type="button"
