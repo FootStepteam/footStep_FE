@@ -86,7 +86,7 @@ const Lists = ({ searchQuery }: IListsProps) => {
   };
 
   return (
-    <div className="flex flex-col mx-auto pt-[40px] w-2/3 min-h-screen">
+    <div className="flex flex-col mx-auto pt-[40px] min-w-max w-2/3 min-h-screen">
       <div className="flex justify-between mb-4">
         <SortButtons
           sortBy={sortBy}
@@ -107,21 +107,21 @@ const Lists = ({ searchQuery }: IListsProps) => {
       </div>
       {filteredPosts.length === 0 ? (
         <div className="flex justify-center items-center mt-[60px]">
-          <p className="text-xl font-medium">검색 결과가 없습니다</p>
+          <p className="my-[5rem] text-xl font-medium">검색 결과가 없습니다</p>
         </div>
       ) : (
         <ul className="w-full">
           {filteredPosts.map((post) => (
             <li key={post.communityId}>
               <Link to={`/community/${post.communityId}`}>
-                <div className="flex justify-between w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg">
+                <div className="flex justify-between items-center w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg">
                   <div>
-                    <p className="mb-2 text-xl font-bold">
+                    <p className="mb-2 mr-[40px] text-xl font-bold">
                       {post.communityName}
                     </p>
-                    <div className="flex">
-                      <p>작성일: {post.createdDate}</p>
-                    </div>
+                    {/* <div className="flex">
+                      <p>작성일: {post.travelEndDate}</p>
+                    </div> */}
                   </div>
                   <div className="flex items-center">
                     <NoProfile width={16} height={16} />
@@ -133,7 +133,8 @@ const Lists = ({ searchQuery }: IListsProps) => {
                         <Like width={20} height={20} /> {post.likeCount}
                       </p>
                       <p className="font-thin text-sm text-gray-002">
-                        작성일: {post.createdDate}
+                        작성일:{" "}
+                        {new Date(post.createdDate).toLocaleDateString()}
                       </p>
                     </div>
                   </div>

@@ -1,3 +1,6 @@
+import { ReactComponent as LeftArrow } from "../../assets/arrow-left-circle.svg";
+import { ReactComponent as RightArrow } from "../../assets/arrow-right-circle.svg";
+
 interface PaginationProps {
   page: number;
   lastPage: boolean;
@@ -20,19 +23,19 @@ const Pagination = ({ page, lastPage, setPage }: PaginationProps) => {
   return (
     <div className="flex justify-center items-center mt-4">
       <button
-        className="mx-2 px-4 py-2 bg-gray-003 rounded-md"
+        className="px-4 py-2 rounded-md"
         onClick={handlePrevious}
         disabled={page === 0}
       >
-        이전
+        <LeftArrow width={20} height={20} />
       </button>
-      <div>{page + 1}</div>
+      <div className="mx-2">{page + 1}</div>
       <button
-        className="mx-2 px-4 py-2 bg-gray-003 rounded-md"
+        className="px-4 py-2 rounded-md"
         onClick={handleNext}
         disabled={lastPage}
       >
-        다음
+        <RightArrow width={20} height={20} />
       </button>
     </div>
   );
