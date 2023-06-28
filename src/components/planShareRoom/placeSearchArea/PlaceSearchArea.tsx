@@ -22,7 +22,6 @@ const PlaceSearchArea = ({
 
   useEffect(() => {
     setSideBarOpenState({ ...sideBarOpenState, placeSearch: false });
-    console.log(disabledStatus.placeSection);
   }, []);
 
   return (
@@ -43,11 +42,7 @@ const PlaceSearchArea = ({
         } flex items-center absolute top-[50%] right-[-6.6%] w-6 h-16 bg-white rounded-r-xl cursor-pointer`}
         onClick={onClickHandler}
       >
-        <LeftArrow
-          className={"fill-[#DCDCDC]"}
-          width="20"
-          height="20"
-        />
+        <LeftArrow className={"fill-[#DCDCDC]"} width="20" height="20" />
       </div>
       <div
         className={`${

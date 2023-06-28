@@ -29,9 +29,6 @@ const Button = ({ form }: IProps) => {
       const shareRoomId = response.data.shareId;
       const planList = response.data;
 
-      // 채팅방 생성
-      await createChatRoom(shareRoomId);
-
       MySwal.fire({
         title: "등록이 완료되었습니다.",
         text: "일정 공유방에 입장 하시겠습니까?",
