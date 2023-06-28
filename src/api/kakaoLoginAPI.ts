@@ -8,6 +8,18 @@ export const kakaoLogin = () => {
   );
 };
 
+export const sendImage = (shareRoomID: string) => {
+  sessionStorage.setItem("shareRoomID", shareRoomID);
+
+  window.location.assign(
+    `https://kauth.kakao.com/oauth/authorize?client_id=${
+      import.meta.env.VITE_KAKAO_API_KEY
+    }&redirect_uri=${
+      import.meta.env.VITE_REDIRECT_URI_SEND_IMAGE
+    }&response_type=code&scope=talk_message`
+  );
+};
+
 export const getKakaoToken = async (authorizationCode: string) => {
   try {
     const response = await axios.post(

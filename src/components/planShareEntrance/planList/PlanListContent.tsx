@@ -6,8 +6,11 @@ import ExistsPlan from "./ExistsPlan";
 import NotExistsPlan from "./NotExistsPlan";
 import SearchResult from "./SearchResult";
 import { getShareRoomList } from "../../../store/getShareRoomList";
+import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../../utils/cookie";
 
 const PlanListContent = () => {
+  const navigate = useNavigate();
   const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
   const searchResult = useRecoilValue(searchShareRoomData);
 
@@ -20,7 +23,13 @@ const PlanListContent = () => {
   };
 
   useEffect(() => {
-    getShareRooms();
+    const token = getCookie("accessToken");
+
+    if (token === undefined) {
+      navigate("/login");
+    } else {
+      getShareRooms();
+    }
   }, []);
 
   return (
