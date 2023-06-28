@@ -194,10 +194,7 @@ const PlanShareRoom = () => {
             onClick={() => onClickMarkerHandler(index, "open")}
           >
             {info[index].open && (
-              <CustomOverlayMap
-                position={marker.position}
-                zIndex={1010}
-              >
+              <CustomOverlayMap position={marker.position} zIndex={1010}>
                 <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white border border-gray-002 rounded-sm shadow-lg">
                   <div className="mt-6 ml-4 w-[16rem]">
                     <p className="mb-2 text-lg font-bold">

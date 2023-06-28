@@ -7,6 +7,7 @@ import { createModalOpenState } from "../../../state/createModalOpen";
 import { getShareRoomList } from "../../../store/getShareRoomList";
 import { IForm } from "../../../type/shareRoomForm";
 import { formValidationCheck } from "../../../utils/formValidationCheck";
+import { createChatRoom } from "../../../api/chatAPI";
 
 interface IProps {
   form: IForm;

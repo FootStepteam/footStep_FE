@@ -1,23 +1,27 @@
 import axios from "axios";
 import { IPlanSchedule } from "../type/newPost";
 import { getCookie } from "../utils/cookie";
-import { refreshTokenAPI } from "./shareRoomAPI";
+import { getShareRoomInfoAPI, refreshTokenAPI } from "./shareRoomAPI";
 
 export const getPlanScheduleAPI = async (
   shareId: number
 ): Promise<IPlanSchedule[]> => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
-
   try {
+    const roomInfo = await getShareRoomInfoAPI(String(shareId));
+    const startDate = roomInfo.travelStartDate;
+    const endDate = roomInfo.travelEndDate;
+    console.log(startDate, endDate);
     const response = await axios.get(
-      `/api/api/share-room/${shareId}/schedule`,
+      `/api/api/share-room/${shareId}/schedule?startDate=${startDate}&endDate=${endDate}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
+    console.log(response);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
