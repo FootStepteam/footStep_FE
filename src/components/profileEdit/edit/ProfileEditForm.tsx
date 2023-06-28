@@ -1,10 +1,64 @@
+import { useEffect, useState } from "react";
+import {
+  getCurrentUserMemberId,
+  getMemberByAccessToken,
+} from "../../../api/memberAPI";
+import { updateMemberProfile } from "../../../api/profileAPI";
 import { ReactComponent as ProfileImage } from "../../../assets/smile.svg";
 
 const ProfileEditForm = () => {
-  const submitHandler = () => {
-    console.log("클릭!");
-  };
+  const [memberInfo, setMemberInfo] = useState({
+    nickname: "",
+    img: "",
+    email: "",
+  });
 
+  useEffect(() => {
+    const fetchMemberInfo = async () => {
+      const data = await getMemberByAccessToken();
+      setMemberInfo({
+        nickname: data.nickname,
+        img: data.img,
+        email: data.loginEmail,
+      });
+    };
+    fetchMemberInfo();
+  }, []);
+
+  const submitHandler = async () => {
+    const nicknameInput = document.getElementById(
+      "nickname"
+    ) as HTMLInputElement;
+    const nickname = nicknameInput.value;
+
+    const profileImageInput = document.getElementById(
+      "profileImage"
+    ) as HTMLInputElement;
+    const memberId = await getCurrentUserMemberId();
+
+    let profileUrl = "";
+    if (profileImageInput.files && profileImageInput.files.length > 0) {
+      const file = profileImageInput.files[0];
+      profileUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    const formData = {
+      nickname,
+      profileUrl,
+    };
+
+    try {
+      const response = await updateMemberProfile(formData, memberId);
+      console.log("Profile updated successfully", response);
+    } catch (error) {
+      console.error("Failed to update profile", error);
+    }
+  };
   return (
     <section className="m-center w-commonSection">
       <div className="mt-16">
@@ -32,7 +86,7 @@ const ProfileEditForm = () => {
               <input
                 type="text"
                 id="nickname"
-                defaultValue="덩두"
+                defaultValue={memberInfo.nickname}
                 className="mt-2 px-4 py-2 border-gray-003 border rounded-md outline-none"
               />
             </div>
@@ -43,7 +97,7 @@ const ProfileEditForm = () => {
               <input
                 type="text"
                 id="email"
-                defaultValue="덩두"
+                defaultValue={memberInfo.email}
                 disabled
                 className="mt-2 px-4 py-2 border-gray-003 border-gray-002 border rounded-md outline-none text-gray-002"
               />
