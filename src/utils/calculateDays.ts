@@ -94,7 +94,7 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
       date: newDate,
       day: newDay,
       planDay: i + 1,
-      planDate: `${year}-${newMonth}-${newDate}`,
+      planDate: `${year}-${newMonth}-${newDate <= 9 ? "0" + newDate : newDate}`,
     };
 
     if (i === 0) {
