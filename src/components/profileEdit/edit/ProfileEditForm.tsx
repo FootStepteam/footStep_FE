@@ -53,7 +53,7 @@ const ProfileEditForm = () => {
     };
 
     try {
-      const response = await updateMemberProfile(formData, memberId);
+      const response = await updateMemberProfile(formData);
       console.log("Profile updated successfully", response);
     } catch (error) {
       console.error("Failed to update profile", error);
