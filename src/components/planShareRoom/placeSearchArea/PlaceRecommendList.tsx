@@ -1,8 +1,8 @@
 import { useRecoilValue } from "recoil";
 import { markerSeq } from "../../../constants/marker";
 import { recommendPlaceList } from "../../../store/recommendPlaceList";
-import { IRecommendPlace } from "../PlanShareRoom";
 import { placeSearchResult } from "../../../store/placeSearchResult";
+import { ReactComponent as Address } from "../../../assets/address.svg";
 
 interface IPlace {
   addressName: string;
@@ -34,7 +34,15 @@ const PlaceRecommendList = ({ addDestination, panTo }: IProps) => {
 
   return (
     <div>
-      <h3>이런 장소는 어때요?</h3>
+      <h3 className="flex mt-4 ml-4 font-DoHyeon font-normal text-2xl">
+        <span className="mr-2">
+          <Address
+            width={25}
+            height={25}
+          />
+        </span>
+        이런 장소는 어때요?
+      </h3>
       <div className="h-[17rem] overflow-y-auto">
         {isExist ? (
           <ul id="placesList">
@@ -64,13 +72,6 @@ const PlaceRecommendList = ({ addDestination, panTo }: IProps) => {
                       </p>
                     </div>
                     <p className="font-normal text-sm">{place.addressName}</p>
-                    <a
-                      className="font-normal text-[0.8rem] font-extralight text-blue-001 hover:text-blue-005"
-                      href={`https://place.map.kakao.com/${place.placeName}`}
-                      target="_blank"
-                    >
-                      상세보기
-                    </a>
                   </div>
                 </div>
                 <div>
