@@ -1,11 +1,16 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { Value } from "react-calendar/dist/cjs/shared/types";
 import { INITIAL_SELECTED_DATES } from "../constants/initial";
 import { IShareRoom } from "../type/shareRoom";
 import { ISelectedDate } from "../type/shareRoomForm";
 import { useSetRecoilState } from "recoil";
 import { travelDate } from "../state/travelDate";
+import Swal from "sweetalert2";
+
+interface IClickDate {
+  startDate: string;
+  endDate: string;
+}
 
 const usePlanDate = (
   type: string,
@@ -14,11 +19,15 @@ const usePlanDate = (
 ) => {
   const setTravelDate = useSetRecoilState(travelDate);
   const [night, setNight] = useState<number>(0);
+  const [clickCount, setClickCount] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<ISelectedDate>(
     INITIAL_SELECTED_DATES
   );
   const [openCalendar, setOpenCalendar] = useState<boolean>(false);
-
+  const [checkDate, setCheckDate] = useState<IClickDate>({
+    startDate: "",
+    endDate: "",
+  });
   const calculateNights = () => {
     let startDate;
     let endDate;
@@ -68,7 +77,35 @@ const usePlanDate = (
     setSelectedDate({ ...selectedDate, startDate, endDate });
   };
 
+  const onClickCalendarHandler = (date: Date) => {
+    if (clickCount === 0) {
+      const startDate = moment(date).format("YYYY-MM-DD");
+      setCheckDate({ startDate, endDate: "" });
+      setClickCount((prev) => prev + 1);
+    } else if (clickCount === 1) {
+      const endDate = moment(date).format("YYYY-MM-DD");
+      setCheckDate({ ...checkDate, endDate });
+      setClickCount(0);
+    }
+  };
+
   const onClickCompleteButtonHandler = () => {
+    if (checkDate.startDate === "") {
+      Swal.fire({
+        icon: "error",
+        text: "여행 시작 일자를 선택해주세요.",
+      });
+      return;
+    } else if (checkDate.endDate === "") {
+      Swal.fire({
+        icon: "error",
+        text: "여행 종료 일자를 선택해주세요.",
+      });
+      return;
+    }
+
+    setCheckDate({ startDate: "", endDate: "" });
+
     const submitStartDate = moment(selectedDate.startDate).format("YYYY-MM-DD");
     const submitEndDate = moment(selectedDate.endDate).format("YYYY-MM-DD");
     const printStartDate = moment(selectedDate.startDate).format("MM.DD");
@@ -121,6 +158,7 @@ const usePlanDate = (
     selectedDate,
     openCalendar,
     onChangeHandler,
+    onClickCalendarHandler,
     onClickCompleteButtonHandler,
     onClickDateCalendar,
   } as const;
