@@ -25,6 +25,7 @@ const Calendar = ({
     selectedDate,
     openCalendar,
     onChangeHandler,
+    onClickCalendarHandler,
     onClickCompleteButtonHandler,
     onClickDateCalendar,
   } = usePlanDate(type, editStatus, shareRoomInfo);
@@ -58,6 +59,7 @@ const Calendar = ({
         <div className="absolute top-[5.5rem]">
           <RCalendar
             onChange={onChangeHandler}
+            onClickDay={onClickCalendarHandler}
             calendarType="US"
             selectRange
             returnValue="range"
