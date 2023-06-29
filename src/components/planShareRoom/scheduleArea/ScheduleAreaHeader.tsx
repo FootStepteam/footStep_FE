@@ -57,6 +57,13 @@ const ScheduleAreaHeader = () => {
         break;
       case "complete":
         if (!formValidationCheck(form)) return;
+        setDisabledStatus({
+          header: false,
+          daySelect: false,
+          scheduleList: false,
+          buttonSection: false,
+          placeSection: false,
+        });
 
         if (shareRoomID) {
           const result = await editShareRoomInfoAPI(shareRoomID, token, form);
@@ -108,7 +115,7 @@ const ScheduleAreaHeader = () => {
       <div className="flex justify-between items-center">
         <button
           type="button"
-          className="mt-4 mb-6 ml-2  "
+          className="mt-4 mb-6 ml-2"
         >
           <Exit
             className="w-[25px] h-[25px] fill-black-003 hover:fill-red-001"
