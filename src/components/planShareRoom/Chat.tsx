@@ -1,19 +1,35 @@
 import { ChangeEvent, useState, useEffect } from "react";
 import { ReactComponent as ChatEmotion } from "../../assets/chatEmotion.svg";
 import { ReactComponent as Close } from "../../assets/close.svg";
-import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+// import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 import { getMemberByAccessToken } from "../../api/memberAPI";
 import { useRecoilValue } from "recoil";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
 import { getChatRoomDetail, getChatRooms } from "../../api/chatAPI";
 
-let stompClient: any;
+interface IChatMessage {
+  sender: string;
+  content: string;
+  type: "JOIN" | "CHAT" | "LEAVE";
+}
+
+const colors = [
+  "#2196F3",
+  "#32c787",
+  "#00BCD4",
+  "#ff5652",
+  "#ffc107",
+  "#ff85af",
+  "#FF9800",
+  "#39bbb0",
+];
 
 const Chat = () => {
+  const [stompClient, setStompClient] = useState<any | null>(null);
   const [openChatStatus, setOpenChatStatus] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [roomId, setRoomId] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [loadingUsername, setLoadingUsername] = useState<boolean>(true);
@@ -22,26 +38,11 @@ const Chat = () => {
 
   const onClickChatStatusHandler = () => {
     setOpenChatStatus(!openChatStatus);
+    connect();
   };
 
   const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
-  };
-
-  const sendMessageHandler = () => {
-    if (message.trim() !== "") {
-      const chatMessage = {
-        roomId: roomId,
-        sender: username,
-        message: message.trim(),
-      };
-      stompClient.publish(
-        "/app/chat/sendMessage",
-        {},
-        JSON.stringify(chatMessage)
-      );
-      setMessage("");
-    }
   };
 
   useEffect(() => {
@@ -50,20 +51,16 @@ const Chat = () => {
       const userName = memberData.nickname;
       setUsername(userName);
       setLoadingUsername(false);
-      console.log("username: ", userName); // 이곳에선 최신 값을 얻을 수 있습니다.
 
       const roomId = shareId.toString();
       setRoomId(roomId);
 
       if (roomId) {
-        console.log("roomId: ", roomId);
         const roomDetail = await getChatRoomDetail(roomId);
       }
 
       if (userName && roomId) {
-        console.log("roomId: ", roomId);
-        console.log("loadingUsername: ", loadingUsername);
-        connect(); // 함수에 직접 인자를 전달합니다.
+        connect();
       }
     };
 
@@ -77,39 +74,69 @@ const Chat = () => {
   }, [shareId]);
 
   const connect = () => {
-    const socket = new SockJS("http://43.200.76.174:8080/ws-stomp");
-    console.log("socket: ", socket);
-    stompClient = new Client({
-      webSocketFactory: () => socket,
-      onConnect: () => {
-        console.log("Connected");
-        stompClient.subscribe(`/sub/chat/room/${roomId}`, onMessageReceived);
-      },
-      onStompError: (error) => {
-        console.log("Stomp error:", error);
-      },
-      onWebSocketClose: (event) => {
-        console.log("Websocket closed", event);
-      },
-      onWebSocketError: (event) => {
-        console.log("Websocket error", event);
-      },
-    });
+    const socketFactory = () =>
+      new window.SockJS("http://43.200.76.174:8080/javatechie");
+    const client = Stomp.over(socketFactory);
+    setStompClient(client);
+    client.connect({}, onConnected, onError);
+  };
 
-    console.log("stompClient: ", stompClient);
-    console.log("Activating stompClient");
-    stompClient.activate();
+  const onConnected = () => {
+    stompClient?.subscribe("/topic/public", onMessageReceived);
+
+    stompClient?.send(
+      "/app/chat.send",
+      {},
+      JSON.stringify({ sender: username, type: "JOIN" })
+    );
+  };
+
+  const onError = (error: any) => {
+    console.error(
+      "Could not connect to WebSocket server. Please refresh this page to try again!",
+      error
+    );
+  };
+
+  const sendMessageHandler = () => {
+    if (message && stompClient) {
+      const chatMessage: IChatMessage = {
+        sender: username!,
+        content: message,
+        type: "CHAT",
+      };
+
+      stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+      setMessage("");
+    }
   };
 
   const onMessageReceived = (payload: any) => {
-    const msg = JSON.parse(payload.body);
-    setMessages((prevMsgs) => [...prevMsgs, msg.message]);
+    const message: IChatMessage = JSON.parse(payload.body);
+
+    if (message.type === "JOIN") {
+      message.content = message.sender + " joined!";
+    } else if (message.type === "LEAVE") {
+      message.content = message.sender + " left!";
+    }
+
+    setMessages((prevMessages) => [...prevMessages, message]);
   };
 
   const disconnect = () => {
-    if (stompClient && stompClient.active) {
-      stompClient.deactivate();
+    if (stompClient && stompClient.connected) {
+      stompClient.disconnect();
     }
+  };
+
+  const getAvatarColor = (messageSender: string) => {
+    let hash = 0;
+    for (let i = 0; i < messageSender.length; i++) {
+      hash = 31 * hash + messageSender.charCodeAt(i);
+    }
+
+    const index = Math.abs(hash % colors.length);
+    return colors[index];
   };
 
   return (
@@ -136,7 +163,11 @@ const Chat = () => {
             <div className="overflow-y-scroll no-scrollbar mt-3 ml-3 mr-3 mb-3 h-[25rem] bg-blue-007 rounded-md">
               {messages.map((msg, index) => (
                 <div key={index} className="mt-3 ml-3 text-white">
-                  {msg}
+                  <i style={{ backgroundColor: getAvatarColor(msg.sender) }}>
+                    {msg.sender[0]}
+                  </i>
+                  <span>{msg.sender}</span>
+                  <p>{msg.content}</p>
                 </div>
               ))}
             </div>
@@ -161,6 +192,139 @@ const Chat = () => {
 };
 
 export default Chat;
+
+// import { Stomp } from "@stomp/stompjs";
+// import React, { useState, useEffect, useRef } from "react";
+// import SockJS from "sockjs-client";
+
+// interface IChatMessage {
+//   sender: string;
+//   content: string;
+//   type: "JOIN" | "CHAT" | "LEAVE";
+// }
+
+// const colors = [
+//   "#2196F3",
+//   "#32c787",
+//   "#00BCD4",
+//   "#ff5652",
+//   "#ffc107",
+//   "#ff85af",
+//   "#FF9800",
+//   "#39bbb0",
+// ];
+
+// const Chat = () => {
+//   const [stompClient, setStompClient] = useState<any | null>(null);
+//   const [username, setUsername] = useState<string | null>(null);
+//   const [message, setMessage] = useState<string>("");
+//   const messageArea = useRef<HTMLUListElement>(null);
+//   const [messages, setMessages] = useState<IChatMessage[]>([]);
+
+//   const connect = (event: React.FormEvent) => {
+//     event.preventDefault();
+
+//     if (username) {
+//       const socket = new window.SockJS("http://43.200.76.174:8080/javatechie");
+//       const client = Stomp.over(socket);
+//       setStompClient(client);
+//       client.connect({}, onConnected, onError);
+//     }
+//   };
+
+//   const onConnected = () => {
+//     stompClient?.subscribe(
+//       "http://43.200.76.174:8080/topic/public",
+//       onMessageReceived
+//     );
+
+//     stompClient?.send(
+//       "http://43.200.76.174:8080/app/chat.register",
+//       {},
+//       JSON.stringify({ sender: username, type: "JOIN" })
+//     );
+//   };
+
+//   const onError = (error: any) => {
+//     console.error(
+//       "Could not connect to WebSocket server. Please refresh this page to try again!",
+//       error
+//     );
+//   };
+//   const sendMessage = (event: React.FormEvent) => {
+//     event.preventDefault();
+
+//     if (message && stompClient) {
+//       const chatMessage: IChatMessage = {
+//         sender: username!,
+//         content: message,
+//         type: "CHAT",
+//       };
+
+//       stompClient.send(
+//         "http://43.200.76.174:8080/app/chat.send",
+//         {},
+//         JSON.stringify(chatMessage)
+//       );
+//     }
+//   };
+
+//   const onMessageReceived = (payload: any) => {
+//     const message: IChatMessage = JSON.parse(payload.body);
+
+//     if (message.type === "JOIN") {
+//       message.content = message.sender + " joined!";
+//     } else if (message.type === "LEAVE") {
+//       message.content = message.sender + " left!";
+//     }
+
+//     setMessages((prevMessages) => [...prevMessages, message]);
+//   };
+
+//   const getAvatarColor = (messageSender: string) => {
+//     let hash = 0;
+//     for (let i = 0; i < messageSender.length; i++) {
+//       hash = 31 * hash + messageSender.charCodeAt(i);
+//     }
+
+//     const index = Math.abs(hash % colors.length);
+//     return colors[index];
+//   };
+
+//   return (
+//     <div>
+//       <form onSubmit={connect}>
+//         <input
+//           type="text"
+//           onChange={(e) => setUsername(e.target.value)}
+//           placeholder="Enter your name..."
+//         />
+//         <button type="submit">Connect</button>
+//       </form>
+//       <form onSubmit={sendMessage}>
+//         <input
+//           type="text"
+//           onChange={(e) => setMessage(e.target.value)}
+//           placeholder="Type a message..."
+//         />
+//         <button type="submit">Send</button>
+//       </form>
+//       <ul ref={messageArea}>
+//         {messages.map((message, i) => (
+//           <li key={i} className={message.type}>
+//             <i style={{ backgroundColor: getAvatarColor(message.sender) }}>
+//               {message.sender[0]}
+//             </i>
+//             <span>{message.sender}</span>
+//             <p>{message.content}</p>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default Chat;
 
 //websocket 버전
 // import { ChangeEvent, useState, useEffect } from "react";
