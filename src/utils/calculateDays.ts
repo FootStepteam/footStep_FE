@@ -62,27 +62,28 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
 
   let diff = Math.abs(newStartDate.getTime() - newEndDate.getTime());
   diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  let newDate = date;
 
   for (let i = 0; i <= diff; i++) {
     const newDay = setDay(day, i);
-    let newDate = date;
-    if (month % 2 !== 0 && month !== 7 && date + i === 31) {
+
+    if (month % 2 !== 0 && month !== 7 && newDate >= 31) {
       newDate = 1;
       month = month + 1;
-    } else if (month % 2 === 0 && month === 7 && date + i == 32) {
+    } else if (month % 2 !== 0 && month === 7 && newDate >= 32) {
       newDate = 1;
       month = month + 1;
-    } else if (isLeapYear && month === 1 && date + i === 30) {
+    } else if (month % 2 === 0 && newDate >= 32) {
       newDate = 1;
       month = month + 1;
-    } else if (!isLeapYear && month === 1 && date + i === 29) {
+    } else if (isLeapYear && month === 1 && newDate >= 30) {
       newDate = 1;
       month = month + 1;
-    } else {
-      newDate = date + i;
+    } else if (!isLeapYear && month === 1 && newDate >= 29) {
+      newDate = 1;
+      month = month + 1;
     }
 
-    console.log(newDate);
     if (month === 12) {
       year = year + 1;
       month = 0;
@@ -103,6 +104,7 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
     }
 
     planDates.push(dateInfo);
+    newDate++;
   }
 
   return { selectedDate, planDates };

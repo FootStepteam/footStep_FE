@@ -49,6 +49,14 @@ const ExistsSchedule = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
+        setDisabledStatus({
+          scheduleList: false,
+          header: !disabledStatus.header,
+          daySelect: !disabledStatus.daySelect,
+          buttonSection: !disabledStatus.buttonSection,
+          placeSection: !disabledStatus.placeSection,
+        });
+
         setStartPoint({
           lng: destination.lng,
           lat: destination.lat,
