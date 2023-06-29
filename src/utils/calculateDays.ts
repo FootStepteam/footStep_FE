@@ -66,22 +66,23 @@ export const calculateDays = (getShareRoomInfo: IShareRoom) => {
   for (let i = 0; i <= diff; i++) {
     const newDay = setDay(day, i);
     let newDate = date;
-    if (month % 2 !== 0 && month !== 7 && newDate === 31) {
-      newDate = 2;
+    if (month % 2 !== 0 && month !== 7 && date + i === 31) {
+      newDate = 1;
       month = month + 1;
-    } else if (month % 2 === 0 && month === 7 && newDate == 32) {
-      newDate = 2;
+    } else if (month % 2 === 0 && month === 7 && date + i == 32) {
+      newDate = 1;
       month = month + 1;
-    } else if (isLeapYear && month === 1 && newDate === 30) {
-      newDate = 2;
+    } else if (isLeapYear && month === 1 && date + i === 30) {
+      newDate = 1;
       month = month + 1;
-    } else if (!isLeapYear && month === 1 && newDate === 29) {
-      newDate = 2;
+    } else if (!isLeapYear && month === 1 && date + i === 29) {
+      newDate = 1;
       month = month + 1;
     } else {
       newDate = date + i;
     }
 
+    console.log(newDate);
     if (month === 12) {
       year = year + 1;
       month = 0;
