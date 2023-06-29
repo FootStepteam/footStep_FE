@@ -24,7 +24,7 @@ const PlanShareEntrance = () => {
   }, [openModal]);
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-[112px]">
       <SearchCodeBar />
       <PlanList />
     </div>
