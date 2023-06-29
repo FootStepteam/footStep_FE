@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { ReactComponent as Address } from "../../../assets/address.svg";
+import { markerSeq } from "../../../constants/marker";
 import { placeSearchResult } from "../../../store/placeSearchResult";
 import { IKakaoPlaceSearchResult } from "../../../type/kakaoMap";
-import { IPlaceContentDown } from "../../../type/shareRoom";
-import { markerSeq } from "../../../constants/marker";
+import { IPropsPlaceSearchLists } from "../../../type/shareRoom";
 
 const PlaceSearchLists = ({
   panTo,
   addDestination,
   placePagination,
-}: IPlaceContentDown) => {
+  recommendStatus,
+}: IPropsPlaceSearchLists) => {
   const [placeLists, setPlaceLists] = useRecoilState(placeSearchResult);
   const [pagination, setPagination] = useState<number[]>([]);
   const [selectedPage, setSelectedPage] = useState<number>(1);
@@ -25,7 +26,12 @@ const PlaceSearchLists = ({
   };
 
   const onClickAddPlaceHandler = (place: IKakaoPlaceSearchResult) => {
-    addDestination(place);
+    addDestination({
+      placeName: place.place_name,
+      addressName: place.address_name,
+      y: Number(place.y),
+      x: Number(place.x),
+    });
   };
 
   const onClickPageHandler = (page: number) => {
@@ -48,7 +54,7 @@ const PlaceSearchLists = ({
       id="menu_wrap"
       className="grow bg-gray-007"
     >
-      <h3 className="flex mt-4 mb-6 ml-4 font-DoHyeon font-normal text-2xl">
+      <h3 className="flex mt-4 ml-4 font-DoHyeon font-normal text-2xl">
         <span className="mr-2">
           <Address
             width={25}
@@ -57,7 +63,11 @@ const PlaceSearchLists = ({
         </span>
         검색결과
       </h3>
-      <div className="h-[calc(100vh-15rem-8rem)] overflow-y-auto">
+      <div
+        className={`${
+          recommendStatus ? "h-[17rem]" : "h-[calc(100vh-15rem-10rem)]"
+        } overflow-y-auto`}
+      >
         {isExist ? (
           <ul id="placesList">
             {placeLists.map((place: IKakaoPlaceSearchResult, index) => (
@@ -109,24 +119,23 @@ const PlaceSearchLists = ({
             <p>검색결과가 존재하지 않습니다.</p>
           </div>
         )}
-        <div
-          id="pagination"
-          className="flex justify-center items-center"
-        >
-          {pagination !== undefined &&
-            pagination.map((page) => (
-              <div
-                key={page}
-                className={`px-3 py-1 text-xl hover:bg-gray-003 rounded-md ${
-                  selectedPage === page &&
-                  "border border-blue-003 text-blue-001 "
-                } cursor-pointer`}
-                onClick={() => onClickPageHandler(page)}
-              >
-                {page}
-              </div>
-            ))}
-        </div>
+      </div>
+      <div
+        id="pagination"
+        className="flex justify-center items-center pt-4"
+      >
+        {pagination !== undefined &&
+          pagination.map((page) => (
+            <div
+              key={page}
+              className={`px-3 py-1 text-xl hover:bg-gray-003 rounded-md ${
+                selectedPage === page && "border border-blue-003 text-blue-001 "
+              } cursor-pointer`}
+              onClick={() => onClickPageHandler(page)}
+            >
+              {page}
+            </div>
+          ))}
       </div>
     </div>
   );
