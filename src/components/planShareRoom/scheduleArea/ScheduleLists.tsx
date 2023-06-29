@@ -192,6 +192,10 @@ const ScheduleLists = () => {
   }, []);
 
   useEffect(() => {
+    console.log(scheduleAfterComplete);
+  }, [scheduleAfterComplete]);
+
+  useEffect(() => {
     const initialPlanDate = shareRoom.travelStartDate;
 
     if (initialPlanDate !== "") {
@@ -227,14 +231,72 @@ const ScheduleLists = () => {
       </div>
       <div
         ref={imageElement}
-        style={{ position: "absolute", top: "-50rem", color: "red" }}
+        style={{
+          position: "absolute",
+          top: "-50rem",
+          padding: "1rem 2rem",
+          border: "1px solid #DCDCDC",
+          borderRadius: "1.2rem",
+        }}
       >
-        {scheduleAfterComplete.map((schedule) => (
-          <div>
-            {schedule.dayScheduleId}
-            {schedule.content}
-            {schedule.planDate}
-            {schedule.shareId}
+        {scheduleAfterComplete.map((schedule, index) => (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <h1
+              style={{
+                marginLeft: "0.5rem",
+                marginBottom: "1.2rem",
+                color: "#000000",
+                fontSize: "1.1rem",
+                fontWeight: 600,
+              }}
+            >
+              <span style={{ marginRight: "0.8rem" }}>{index + 1}일차</span>
+              {schedule.planDate}
+            </h1>
+            <div style={{ marginBottom: "1rem" }}>
+              {schedule.destinationDtoList.map((destination, index) => (
+                <div style={{ display: "flex", marginBottom: "0.3rem" }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <p
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        paddingTop: "0.1rem",
+                        width: "2.5rem",
+                        height: "2.5rem",
+                        backgroundColor: "#5FCDFF",
+                        borderRadius: "100%",
+                        color: "#FFFFFF",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {index + 1}
+                    </p>
+                    <div
+                      style={{
+                        marginLeft: "0.4rem",
+                        width: "0.5rem",
+                        height: "1.8rem",
+                        borderRight: "3px solid #5FCDFF",
+                      }}
+                    ></div>
+                  </div>
+                  <div style={{ marginLeft: "1rem" }}>
+                    <p style={{ fontSize: "1rem", fontWeight: "600" }}>
+                      {destination.destinationName}
+                    </p>
+                    <p style={{ fontSize: "0.8rem", color: "#969696" }}>
+                      {destination.destinationAddress}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
