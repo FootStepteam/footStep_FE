@@ -9,7 +9,12 @@ const PlaceSearchCategory = ({ placeSearch }: IPropsPlaceSearch) => {
 
   const onClickHandler = (category: string) => {
     setSelected(category);
-    placeSearch(category);
+
+    if (category === "광주") {
+      placeSearch("광주광역시");
+    } else {
+      placeSearch(category);
+    }
   };
 
   useEffect(() => {

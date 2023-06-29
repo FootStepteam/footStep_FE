@@ -49,3 +49,17 @@ export const recommendScheduleAPI = async (
     }
   }
 };
+
+export const getRecommendPlacesAPI = async (keyword: string) => {
+  try {
+    const response = await axios.get(
+      `/api/api/share-room/recommend?keyword=${keyword}`
+    );
+    return response.data;
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+    });
+  }
+};

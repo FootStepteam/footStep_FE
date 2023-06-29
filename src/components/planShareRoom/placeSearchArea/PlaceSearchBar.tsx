@@ -7,8 +7,8 @@ import { selectedArea } from "../../../state/selectedArea";
 import { IPropsPlaceSearch } from "../../../type/shareRoom";
 
 const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
-  const [keyword, setKeyword] = useState<string>("");
   const selected = useRecoilValue(selectedArea);
+  const [keyword, setKeyword] = useState<string>("");
   const MySwal = withReactContent(Swal);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,10 @@ const PlaceSearchBar = ({ placeSearch }: IPropsPlaceSearch) => {
         className="grow pl-4 py-3 outline-none text-sm placeholder:text-sm"
         onChange={onChangeHandler}
       />
-      <SearchIcon className="mx-4 w-[18px] h-[18px]" fill="#00CDFF" />
+      <SearchIcon
+        className="mx-4 w-[18px] h-[18px]"
+        fill="#00CDFF"
+      />
     </form>
   );
 };

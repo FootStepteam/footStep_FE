@@ -5,14 +5,16 @@ import {
   MapMarker,
   ZoomControl,
 } from "react-kakao-maps-sdk";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { getRecommendPlacesAPI } from "../../api/recommendAPI";
 import { ReactComponent as Close } from "../../assets/close.svg";
-import useManageSchedule from "../../hooks/useManageSchdule";
-import { placeSearchResult } from "../../store/placeSearchResult";
-import { IKakaoPlaceSearchResult } from "../../type/kakaoMap";
-import SideBar from "./SideBar";
-import Chat from "./Chat";
 import { markerSeq } from "../../constants/marker";
+import useManageSchedule from "../../hooks/useManageSchdule";
+import { recommendState } from "../../state/recommendState";
+import { placeSearchResult } from "../../store/placeSearchResult";
+import { recommendPlaceList } from "../../store/recommendPlaceList";
+import Chat from "./Chat";
+import SideBar from "./SideBar";
 
 interface IState {
   center: {
@@ -24,7 +26,15 @@ interface IState {
 }
 
 interface IInfo {
-  data: IKakaoPlaceSearchResult;
+  data: {
+    addressName: string;
+    id: string;
+    placeName: string;
+    placeUrl: string;
+    phone: string;
+    x: number;
+    y: number;
+  };
   open: boolean;
 }
 
@@ -34,15 +44,47 @@ interface IMarker {
     lng: number;
   };
   content: string;
+  type: string;
 }
 
 interface IOpenOverlay {
-  data: IKakaoPlaceSearchResult;
+  data: {
+    addressName: string;
+    id: string;
+    placeName: string;
+    phone: string;
+    placeUrl: string;
+    x: number;
+    y: number;
+  };
   open: boolean;
   index: number;
 }
 
+interface IRecommendOpenOverlay {
+  data: {
+    addressName: string;
+    placeName: string;
+    x: number;
+    y: number;
+  };
+  open: boolean;
+  index: number;
+}
+
+export interface IRecommendPlace {
+  firstImage: string;
+  firstImage2: string;
+  addr1: string;
+  addr2: string;
+  mapx: string;
+  mapy: string;
+  title: string;
+}
+
 const PlanShareRoom = () => {
+  const recommendStatus = useRecoilValue(recommendState);
+  const setRecommendPlaces = useSetRecoilState(recommendPlaceList);
   const setPlaceSearchResult = useSetRecoilState(placeSearchResult);
   const { addDestination } = useManageSchedule();
   const [map, setMap] = useState<any>();
@@ -50,16 +92,11 @@ const PlanShareRoom = () => {
   const [placePagination, setPlacePagination] = useState<any>();
   const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
     data: {
-      address_name: "",
-      category_group_code: "",
-      category_group_name: "",
-      category_name: "",
-      distance: "",
+      addressName: "",
       id: "initial",
       phone: "",
-      place_name: "",
-      place_url: "",
-      road_address_name: "",
+      placeName: "",
+      placeUrl: "",
       x: 0,
       y: 0,
     },
@@ -69,16 +106,11 @@ const PlanShareRoom = () => {
   const [info, setInfo] = useState<IInfo[]>([
     {
       data: {
-        address_name: "",
-        category_group_code: "",
-        category_group_name: "",
-        category_name: "",
-        distance: "",
+        addressName: "",
         id: "initial",
         phone: "",
-        place_name: "",
-        place_url: "",
-        road_address_name: "",
+        placeName: "",
+        placeUrl: "",
         x: 0,
         y: 0,
       },
@@ -122,22 +154,47 @@ const PlanShareRoom = () => {
     overlayOpen(index, type);
   };
 
-  const placeSearch = (keyword: string) => {
+  const getRecommendList = async (keyword: string) => {
+    const result = await getRecommendPlacesAPI(keyword);
+
+    const recommendPlace = result.imageList.map((place: IRecommendPlace) => {
+      return {
+        addressName: place.addr1,
+        placeName: place.title,
+        x: place.mapx,
+        y: place.mapy,
+      };
+    });
+
+    setRecommendPlaces(recommendPlace);
+    return result.imageList;
+  };
+
+  const placeSearch = async (keyword: string) => {
     const ps = new kakao.maps.services.Places();
+    const bounds = new kakao.maps.LatLngBounds();
+    const recommendPlaces = await getRecommendList(keyword);
 
     ps.keywordSearch(keyword, (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         setPlacePagination(pagination);
-        const infos: IInfo[] = [];
 
-        for (let i = 0; i < data.length; i++) {
-          const obj: IInfo = { data: data[i], open: false };
-          infos.push(obj);
-        }
+        const infos = data.map((place) => {
+          return {
+            data: {
+              addressName: place.address_name,
+              id: place.id,
+              phone: place.phone,
+              placeName: place.place_name,
+              placeUrl: place.place_url,
+              x: Number(place.x),
+              y: Number(place.y),
+            },
+            open: false,
+          };
+        });
 
-        setInfo(infos);
         setPlaceSearchResult(data);
-        const bounds = new kakao.maps.LatLngBounds();
         let markers: IMarker[] = [];
 
         for (var i = 0; i < data.length; i++) {
@@ -148,12 +205,46 @@ const PlanShareRoom = () => {
               lng: Number(data[i].x),
             },
             content: data[i].place_name,
+            type: "search",
           });
           // @ts-ignore
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
-        setMarkers(markers);
 
+        const recommendMarkers = recommendPlaces.map(
+          (place: IRecommendPlace) => {
+            bounds.extend(
+              new kakao.maps.LatLng(Number(place.mapy), Number(place.mapx))
+            );
+            return {
+              position: {
+                lat: Number(place.mapy),
+                lng: Number(place.mapx),
+              },
+              content: place.title,
+              type: "recommend",
+            };
+          }
+        );
+
+        const recommendPlaceInfo = recommendPlaces.map(
+          (place: IRecommendPlace) => {
+            return {
+              data: {
+                addressName: place.addr1,
+                id: "none",
+                phone: "",
+                placeName: place.title,
+                placeUrl: "",
+                x: place.mapx,
+                y: place.mapy,
+              },
+              open: false,
+            };
+          }
+        );
+        setInfo([...infos, ...recommendPlaceInfo]);
+        setMarkers([...markers, ...recommendMarkers]);
         map.setBounds(bounds);
       }
     });
@@ -187,58 +278,78 @@ const PlanShareRoom = () => {
         level={3}
         onCreate={setMap}
       >
-        {markers.map((marker, index) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
-            onClick={() => onClickMarkerHandler(index, "open")}
-          >
-            {info[index].open && (
-              <CustomOverlayMap position={marker.position} zIndex={1010}>
-                <div className="flex relative top-[-7.9rem] w-[20rem] h-[10rem] bg-white border border-gray-002 rounded-sm shadow-lg">
-                  <div className="mt-6 ml-4 w-[16rem]">
-                    <p className="mb-2 text-lg font-bold">
-                      <span className="text-blue-001">{markerSeq[index]}</span>{" "}
-                      {info[index].data.place_name}
-                    </p>
-                    <p className="text-sm font-normal">
-                      {info[index].data.address_name}
-                    </p>
-                    <p className="text-sm font-light">
-                      {info[index].data.phone}
-                    </p>
-                    <div className="flex mt-2">
-                      <a
-                        href={`https://place.map.kakao.com/${info[index].data.id}`}
-                        target="_blank"
-                        className="text-sm font-light text-blue-001 hover:text-blue-003"
-                        rel="noreferrer"
-                      >
-                        상세보기
-                      </a>
-                      <button
-                        type="button"
-                        className="ml-2 text-sm font-light text-gray-001 hover:text-gray-003"
-                        onClick={() =>
-                          onClickAddDestinationHandler(info[index])
-                        }
-                      >
-                        장소추가
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    className="grow pt-4 pl-4 text-black"
-                    onClick={() => onClickMarkerHandler(index, "close")}
-                    title="닫기"
+        {markers.map(
+          (marker, index) =>
+            ((marker.type === "recommend" && recommendStatus) ||
+              marker.type === "search") && (
+              <MapMarker
+                key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+                position={marker.position}
+                onClick={() => onClickMarkerHandler(index, "open")}
+                image={
+                  marker.type === "recommend" && {
+                    src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+                    size: {
+                      width: 24,
+                      height: 35,
+                    },
+                  }
+                }
+              >
+                {info[index].open && (
+                  <CustomOverlayMap
+                    position={marker.position}
+                    zIndex={1010}
                   >
-                    <Close className="w-[20px] h-[20px]" />
-                  </div>
-                </div>
-              </CustomOverlayMap>
-            )}
-          </MapMarker>
-        ))}
+                    <div className="flex relative top-[-7.7rem] w-[20rem] h-[10rem] bg-white border border-gray-002 rounded-sm shadow-lg">
+                      <div className="mt-6 ml-4 w-[16rem]">
+                        <p className="mb-2 text-lg font-bold truncate">
+                          <span className="text-blue-001">
+                            {markerSeq[index]}
+                          </span>
+                          {info[index].data.placeName}
+                        </p>
+                        <p className="text-sm font-normal truncate">
+                          {info[index].data.addressName}
+                        </p>
+                        <p className="text-sm font-light">
+                          {info[index].data.phone}
+                        </p>
+                        <div className="flex mt-2">
+                          <button
+                            type="button"
+                            className="text-sm font-light text-gray-001 hover:text-gray-003"
+                            onClick={() =>
+                              onClickAddDestinationHandler(info[index])
+                            }
+                          >
+                            장소추가
+                          </button>
+                          {info[index].data.id !== "none" && (
+                            <a
+                              href={`https://place.map.kakao.com/${info[index].data.id}`}
+                              target="_blank"
+                              className="ml-2 text-sm font-light text-blue-001 hover:text-blue-003"
+                              rel="noreferrer"
+                            >
+                              상세보기
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                      <div
+                        className="grow pt-4 pl-4 text-black"
+                        onClick={() => onClickMarkerHandler(index, "close")}
+                        title="닫기"
+                      >
+                        <Close className="w-[20px] h-[20px]" />
+                      </div>
+                    </div>
+                  </CustomOverlayMap>
+                )}
+              </MapMarker>
+            )
+        )}
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
       <Chat />
