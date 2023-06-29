@@ -39,11 +39,11 @@ export const getCurrentUserNickname = async (): Promise<string | null> => {
   return memberData.nickname;
 };
 
-export const getCurrentUserMemberId = async (): Promise<number | null> => {
+export const getCurrentUserMemberId = async (): Promise<number | undefined> => {
   const memberData = await getMemberByAccessToken();
 
   if (!memberData) {
-    return null;
+    return undefined;
   }
 
   return memberData.memberId;
