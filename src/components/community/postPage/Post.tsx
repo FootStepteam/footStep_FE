@@ -25,7 +25,7 @@ const Post = () => {
 
   if (!post) {
     return (
-      <div className="w-full h-screen flex justify-center items-center bg-gray-005">
+      <div className="flex justify-center items-center w-full h-screen bg-gray-005">
         Loading...
       </div>
     );
@@ -33,13 +33,15 @@ const Post = () => {
   console.log(post);
 
   return (
-    <div className="min-h-screen p-8 bg-gray-007">
-      <h2 className="text-2xl font-bold text-blue-003 mb-4">
-        {post.communityName}
-      </h2>
-      <p className="text-gray-001 mb-4">{post.memberNickname}</p>
+    <div className="min-h-screen p-8 bg-sky-004">
+      <div className="p-8 mb-8 rounded-lg bg-white-001">
+        <h2 className="mb-4 pb-4 border-b-2 text-2xl font-bold text-blue-003">
+          {post.communityName}
+        </h2>
+        <p className="mb-4 text-gray-001">{post.memberNickname}</p>
+      </div>
       <div
-        className="bg-white p-4 rounded-md mb-4"
+        className="mb-8 p-4 rounded-md bg-white"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />{" "}
       <Like communityId={post.communityId} initialLikeCount={post.likeCount} />
