@@ -34,9 +34,9 @@ const Like = ({ communityId, initialLikeCount }: ILikeProps) => {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center mb-2">
       <button
-        className={`focus:outline-none ${isLiked ? "animate-jump" : ""}`}
+        className={`mr-2 focus:outline-none ${isLiked ? "animate-jump" : ""}`}
         onClick={handleLike}
       >
         {isLiked ? (
@@ -45,7 +45,7 @@ const Like = ({ communityId, initialLikeCount }: ILikeProps) => {
           <Heart width={20} height={20} className="text-black-002" />
         )}
       </button>
-      <p className="text-gray-001">좋아요 {likeCount}</p>
+      <p className="text-gray-001">좋아요 {likeCount} 개</p>
     </div>
   );
 };

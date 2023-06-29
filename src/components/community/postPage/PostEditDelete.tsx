@@ -35,15 +35,15 @@ const PostEditDelete = ({ postId }: { postId: number }) => {
   };
 
   return (
-    <div>
+    <div className="flex">
       <button
-        className="bg-blue-002 text-white-001 px-2 py-1 rounded mr-1"
+        className="absolute right-[106px] px-2 py-1 min-w-max h-[35px] border-r-2 text-gray-001"
         onClick={handleUpdate}
       >
         수정
       </button>
       <button
-        className="bg-red-002 text-white-001 px-2 py-1 rounded mr-1"
+        className="absolute right-[60px] px-2 py-1 min-w-max h-[35px] text-gray-001"
         onClick={handleDelete}
       >
         삭제
