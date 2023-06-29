@@ -8,7 +8,7 @@ import PostEditDelete from "./PostEditDelete";
 
 const Post = () => {
   const { post, onCommentsChange } = usePost();
-  const [memberId, setMemberId] = useState<number | null>(null);
+  const [memberId, setMemberId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const fetchMemberId = async () => {
