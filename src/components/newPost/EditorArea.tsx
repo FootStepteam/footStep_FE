@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import HeaderContainer from "../common/header/HeaderContainer";
+import Footer from "../common/footer/Footer";
 
 const EditorArea = () => {
   const {
@@ -59,60 +61,75 @@ const EditorArea = () => {
   };
 
   return (
-    <div className="min-h-screen p-10">
-      <div>
-        <select
-          value={selectedPlan ? selectedPlan.shareName : ""}
-          onChange={(e) => {
-            const selectedPlanName = e.target.value;
-            const selectedPlan = plans.find(
-              (plan) => plan.shareName === selectedPlanName
-            );
-            if (selectedPlan) {
-              handleSelectPlan(selectedPlan);
-            }
-          }}
-        >
-          <option value="">일정을 선택해주세요</option>
-          {plans.map((plan) => (
-            <option key={plan.shareId} value={plan.shareName}>
-              {plan.shareName}
-            </option>
-          ))}
-        </select>
+    <>
+      <HeaderContainer />
+      <div className="min-h-screen pt-[142px] p-8 bg-sky-004">
+        <div className="p-8 mb-8 rounded-lg bg-white-001">
+          <h2 className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003">
+            새 게시글 작성
+          </h2>
+          <div>
+            <select
+              value={selectedPlan ? selectedPlan.shareName : ""}
+              onChange={(e) => {
+                const selectedPlanName = e.target.value;
+                const selectedPlan = plans.find(
+                  (plan) => plan.shareName === selectedPlanName
+                );
+                if (selectedPlan) {
+                  handleSelectPlan(selectedPlan);
+                }
+              }}
+              className="w-full p-2 mb-4 border-2 border-gray-002 rounded-md"
+            >
+              <option value="">일정을 선택해주세요</option>
+              {plans.map((plan) => (
+                <option key={plan.shareId} value={plan.shareName}>
+                  {plan.shareName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <input
+            type="text"
+            placeholder="Title"
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-2 mb-4 border-2 border-gray-002 rounded-md"
+          />
+          <label className="flex items-center ml-2 mb-4">
+            <input
+              type="checkbox"
+              onChange={(e) => setIsPublic(e.target.checked)}
+              className="mr-2"
+              defaultChecked
+            />
+            게시글 공개
+          </label>
+          <div className="w-full p-2 mb-4 border-2 border-gray-002 rounded-md">
+            <CKEditor
+              editor={ClassicEditor}
+              data={content}
+              onChange={(_event, editor) => {
+                const data = editor.getData();
+                setContent(data);
+              }}
+              onReady={(editor: any) => {
+                editor.ui.view.editable.element.style.height = "400px";
+              }}
+            />
+          </div>
+          <div className="flex justify-end mt-4">
+            <button
+              onClick={submitPostWithConfirmation}
+              className="p-2 rounded bg-blue-003 text-white"
+            >
+              게시하기
+            </button>
+          </div>
+        </div>
       </div>
-      <input
-        type="text"
-        placeholder="Title"
-        onChange={(e) => setTitle(e.target.value)}
-        className="w-full p-2 mb-4 border-2 border-gray-002 rounded-md"
-      />
-      <label className="flex items-center mb-4">
-        <input
-          type="checkbox"
-          onChange={(e) => setIsPublic(e.target.checked)}
-          className="mr-2"
-        />
-        Public
-      </label>
-      <div className="w-full p-2 mb-4 border-2 border-gray-002 rounded-md">
-        <CKEditor
-          editor={ClassicEditor}
-          data={content}
-          onChange={(_event, editor) => {
-            const data = editor.getData();
-            setContent(data);
-          }}
-        />
-      </div>
-
-      <button
-        onClick={submitPostWithConfirmation}
-        className="w-[150px] p-2 bg-blue-002 text-white-001 rounded-md"
-      >
-        게시하기
-      </button>
-    </div>
+      <Footer />
+    </>
   );
 };
 export default EditorArea;

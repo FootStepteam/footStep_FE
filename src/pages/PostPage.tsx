@@ -4,7 +4,7 @@ import Post from "../components/community/postPage/Post";
 
 const PostPage = () => {
   return (
-    <div>
+    <div className="pt-[112px]">
       <HeaderContainer />
       <Post />
       <Footer />

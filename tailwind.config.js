@@ -72,6 +72,14 @@ export default {
       minHeight: {
         content: "calc(100vh - 7rem - 9rem)",
       },
+      transitionDuration: {
+        "50": "50ms",
+        "100": "100ms",
+        "150": "150ms",
+        "250": "250ms",
+        "500": "500ms",
+        "1000": "1000ms",
+      },
       keyframes: {
         intro: {
           from: { color: "#FFFFFF" },

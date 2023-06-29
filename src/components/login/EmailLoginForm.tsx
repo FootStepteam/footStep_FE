@@ -47,7 +47,7 @@ const EmailLoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(handleEmailLogin)}>
-      <div className="flex flex-col my-[40px] mx-auto w-1/4">
+      <div className="flex flex-col my-[40px] mx-auto min-w-max w-[20rem]">
         <div className="my-4">
           <p>이메일</p>
           <input

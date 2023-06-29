@@ -71,7 +71,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
   };
 
   return (
-    <div className="my-2 p-2 border border-gray-002 rounded">
+    <div className="my-2 p-2 border border-gray-002 rounded-lg">
       {isEditMode ? (
         <input
           value={content}
@@ -79,29 +79,29 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
           className="border rounded px-2 py-1 w-full"
         />
       ) : (
-        <p className="text-sm">{content}</p>
+        <p className="text-md">{content}</p>
       )}
-      <p className="text-xs text-gray-001">{comment?.memberNickname}</p>
+      <p className="text-sm text-gray-001">{comment?.memberNickname}</p>
       {memberId === comment?.memberId && (
-        <div className="flex space-x-2 mt-2">
+        <div className="flex justify-end mt-2">
           {isEditMode ? (
             <button
               onClick={handleUpdate}
-              className="bg-blue-002 text-white-001 px-2 py-1 rounded mr-1"
+              className="bg-blue-003 text-white-001 px-2 py-1 rounded mr-2"
             >
               저장
             </button>
           ) : (
             <button
               onClick={() => setEditMode(true)}
-              className="bg-blue-002 text-white-001 px-2 py-1 rounded mr-1"
+              className="bg-blue-003 text-white-001 px-2 py-1 rounded mr-2"
             >
               수정
             </button>
           )}
           <button
             onClick={handleDelete}
-            className="bg-red-002 text-white-001 px-2 py-1 rounded mr-1"
+            className="bg-red-003 text-white-001 px-2 py-1 rounded"
           >
             삭제
           </button>

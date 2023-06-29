@@ -17,17 +17,17 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex justify-center w-1/2 my-4">
+    <div className="flex justify-center max-w-[800px] min-w-max w-2/3 my-4">
       <input
         type="text"
         value={query}
         onChange={handleInputChange}
         placeholder="검색어를 입력하세요"
-        className="w-2/3 pl-4 py-2 rounded-l-lg"
+        className="w-2/3 pl-4 py-2 border-y-[1px] border-l-[1px] border-gray-002 rounded-l-lg"
       />
       <button
         type="button"
-        className="px-2 bg-white-color border-l-2 rounded-r-lg"
+        className="px-2 bg-platinum-002 border-y-[1px] border-r-[1px] border-gray-002 rounded-r-lg"
         onClick={handleSearch}
       >
         검색
