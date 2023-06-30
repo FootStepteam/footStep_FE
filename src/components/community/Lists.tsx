@@ -98,7 +98,7 @@ const Lists = ({ searchQuery }: IListsProps) => {
           <Link to="/community/newpost" onClick={handleNewPostClick}>
             <button
               type="button"
-              className="px-4 py-2 rounded-lg bg-blue-003 text-white-001"
+              className="px-4 py-2 rounded-lg bg-blue-003 text-white-001 hover:scale-105 transition-all duration-250"
             >
               새 게시글
             </button>
@@ -114,7 +114,7 @@ const Lists = ({ searchQuery }: IListsProps) => {
           {filteredPosts.map((post) => (
             <li key={post.communityId}>
               <Link to={`/community/${post.communityId}`}>
-                <div className="flex justify-between items-center w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg">
+                <div className="flex justify-between items-center w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg hover:bg-platinum-003 transition-all duration-250">
                   <div>
                     <p className="mb-2 mr-[40px] text-xl font-bold">
                       {post.communityName}
