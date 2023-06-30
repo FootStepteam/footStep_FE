@@ -43,13 +43,13 @@ const PlaceRecommendList = ({ addDestination, panTo }: IProps) => {
         </span>
         이런 장소는 어때요?
       </h3>
-      <div className="h-[17rem] overflow-y-auto">
+      <div className="h-[15rem] overflow-y-auto">
         {isExist ? (
           <ul id="placesList">
             {recommendPlaces.map((place: IPlace, index) => (
               <li
                 key={place.addressName + index}
-                className={`flex my-3 py-4 h-[8rem] bg-white hover:bg-gray-006 border-b border-b-gray-004 shadow-sm cursor-pointer ${
+                className={`flex my-3 py-4 h-[6rem] bg-white hover:bg-gray-006 border-b border-b-gray-004 shadow-sm cursor-pointer ${
                   index === 0 && "border-t border-t-gray-004"
                 }`}
               >

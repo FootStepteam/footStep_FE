@@ -21,8 +21,8 @@ const useManageSchedule = () => {
         destinationCategoryCode: "t",
         destinationName: place.placeName,
         destinationAddress: place.addressName,
-        lng: place.y,
-        lat: place.x,
+        lng: place.x,
+        lat: place.y,
         seq: 1,
       };
 

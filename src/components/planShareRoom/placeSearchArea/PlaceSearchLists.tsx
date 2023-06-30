@@ -54,7 +54,7 @@ const PlaceSearchLists = ({
       id="menu_wrap"
       className="grow bg-gray-007"
     >
-      <h3 className="flex mt-4 ml-4 font-DoHyeon font-normal text-2xl">
+      <h3 className="flex mt-6 ml-4 font-DoHyeon font-normal text-2xl">
         <span className="mr-2">
           <Address
             width={25}
