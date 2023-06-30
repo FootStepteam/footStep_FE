@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { ReactComponent as Close } from "../../../assets/close.svg";
@@ -9,6 +9,7 @@ import { sideBarState } from "../../../state/sidebarState";
 import { schedule } from "../../../store/schedule";
 import { selectedDay } from "../../../store/selectedDay";
 import { disabledState } from "../../../state/componentOpenState";
+import ScheduleMemo from "./ScheduleMemo";
 
 interface IDestination {
   destinationId: number;
@@ -28,6 +29,7 @@ const ExistsSchedule = () => {
   const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
   const { deleteDestination } = useManageSchedule();
   const [selectStartPoint, setSelecteStartPoint] = useState(false);
+  const [openMemo, setOpenMemo] = useState<boolean>(false);
 
   const onClickSelectStartPointHandler = () => {
     setDisabledStatus({
@@ -36,8 +38,21 @@ const ExistsSchedule = () => {
       daySelect: !disabledStatus.daySelect,
       buttonSection: !disabledStatus.buttonSection,
       placeSection: !disabledStatus.placeSection,
+      memo: !disabledStatus.memo,
     });
     setSelecteStartPoint(!selectStartPoint);
+  };
+
+  const onClickMemoHandler = () => {
+    setOpenMemo(!openMemo);
+    setDisabledStatus({
+      memo: false,
+      header: !disabledStatus.header,
+      daySelect: !disabledStatus.daySelect,
+      scheduleList: !disabledStatus.scheduleList,
+      buttonSection: !disabledStatus.buttonSection,
+      placeSection: !disabledStatus.placeSection,
+    });
   };
 
   const onClickSelectHandler = (destination: IDestination) => {
@@ -55,6 +70,7 @@ const ExistsSchedule = () => {
           daySelect: !disabledStatus.daySelect,
           buttonSection: !disabledStatus.buttonSection,
           placeSection: !disabledStatus.placeSection,
+          memo: !disabledStatus.memo,
         });
 
         setStartPoint({
@@ -78,12 +94,12 @@ const ExistsSchedule = () => {
   };
 
   return (
-    <div
-      className={`relative shadow-md  bg-gray-005 ${
-        !disabledStatus.scheduleList ? "z-[1005]" : "z-[1003]"
-      }`}
-    >
-      <div className="flex justify-between pt-4 pb-3 pl-4">
+    <div className="relative shadow-md bg-gray-005">
+      <div
+        className={`flex justify-between relative pt-4 pb-3 pl-4 ${
+          !disabledStatus.scheduleList ? "z-[1005]" : "z-[1003]"
+        }`}
+      >
         <button
           className="flex items-center px-3 py-2 bg-blue-001 hover:bg-blue-003 rounded-full font-bold text-[0.8rem] text-white"
           onClick={onClickSelectStartPointHandler}
@@ -101,7 +117,25 @@ const ExistsSchedule = () => {
           장소추가
         </button>
       </div>
-      <div className="flex flex-col items-center h-[31rem] overflow-y-auto">
+      <div
+        className={`relative pl-4 pb-4 ${
+          !disabledStatus.memo ? "z-[1005]" : "z-[1003]"
+        }`}
+      >
+        <button
+          className="mr-4 px-3 py-2 bg-green-001 hover:bg-green-003 disabled:bg-gray-002 rounded-full font-bold text-sm text-white cursor-pointer"
+          onClick={onClickMemoHandler}
+          disabled={selectStartPoint ? true : false}
+        >
+          일정메모
+        </button>
+        {openMemo && <ScheduleMemo setOpenMemo={setOpenMemo} />}
+      </div>
+      <div
+        className={`flex flex-col items-center relative h-[27rem] overflow-y-auto ${
+          !disabledStatus.scheduleList ? "z-[1005]" : "z-[1003]"
+        }`}
+      >
         {scheduleBytDate !== "" &&
           scheduleBytDate.destinationDtoList.map((destination) => (
             <div

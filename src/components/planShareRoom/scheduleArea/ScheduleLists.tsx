@@ -188,12 +188,7 @@ const ScheduleLists = () => {
 
   useEffect(() => {
     setSelectedStartPoint(initialValue);
-    console.log(getCookie("authCode"));
   }, []);
-
-  useEffect(() => {
-    console.log(scheduleAfterComplete);
-  }, [scheduleAfterComplete]);
 
   useEffect(() => {
     const initialPlanDate = shareRoom.travelStartDate;
