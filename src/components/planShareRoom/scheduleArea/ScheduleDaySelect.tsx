@@ -34,6 +34,7 @@ const ScheduleDaySelect = () => {
       scheduleList: !disabledStatus.scheduleList,
       buttonSection: !disabledStatus.buttonSection,
       placeSection: !disabledStatus.placeSection,
+      memo: !disabledStatus.memo,
     });
   };
 
