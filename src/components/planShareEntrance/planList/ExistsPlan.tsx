@@ -3,6 +3,7 @@ import testImage from "../../../assets/temporary/nature-6517866_1920.jpg";
 import { ReactComponent as RightArrow } from "../../../assets/rightArrow.svg";
 import { getShareRoomList } from "../../../store/getShareRoomList";
 import { useRecoilValue } from "recoil";
+import { sendTokenEnteringShareRoom } from "../../../api/shareRoomAPI";
 
 const ExistsPlan = () => {
   const plans = useRecoilValue(getShareRoomList);
@@ -16,6 +17,7 @@ const ExistsPlan = () => {
             key={plan.shareId}
             to={`/planShareRoom/${plan.shareId}`}
             className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-gray-003 border rounded-xl transition-all duration-100 ease-out hover:scale-105"
+            onClick={() => sendTokenEnteringShareRoom(plan.shareId)}
           >
             <div className="w-[12rem] h-[10rem]">
               <img

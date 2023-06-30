@@ -4,6 +4,7 @@ import testImage from "../../../assets/temporary/nature-6517866_1920.jpg";
 import { ReactComponent as RightArrow } from "../../../assets/rightArrow.svg";
 import { searchShareRoomData } from "../../../store/searchShareRoom";
 import { IShareRoom } from "../../../type/shareRoom";
+import { sendTokenEnteringShareRoom } from "../../../api/shareRoomAPI";
 
 const SearchResult = () => {
   const result: IShareRoom = useRecoilValue(searchShareRoomData);
@@ -15,6 +16,7 @@ const SearchResult = () => {
         <Link
           to={`/planShareRoom/${result.shareId}`}
           className="group flex mx-auto my-4 w-[32rem] h-[10rem] border-gray-003 border rounded-xl transition-all duration-100 ease-out hover:scale-105"
+          onClick={() => sendTokenEnteringShareRoom(result.shareId)}
         >
           <div className="w-[12rem] h-[10rem]">
             <img

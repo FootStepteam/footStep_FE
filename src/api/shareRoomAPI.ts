@@ -226,3 +226,14 @@ export const sendImageKaKaoAPI = async (
     });
   }
 };
+
+export const sendTokenEnteringShareRoom = async (shareId: number) => {
+  const accessToken = getCookie("accessToken");
+  const response = await axios.post(`/api/api/share-room/${shareId}/enter`, {
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+    },
+  });
+  console.log(response);
+  return response.data;
+};
