@@ -6,6 +6,7 @@ const initialState = {
   scheduleList: false,
   buttonSection: false,
   placeSection: false,
+  memo: false,
 };
 
 export const disabledState = atom({
