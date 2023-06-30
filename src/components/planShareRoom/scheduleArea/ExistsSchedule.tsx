@@ -10,6 +10,7 @@ import { schedule } from "../../../store/schedule";
 import { selectedDay } from "../../../store/selectedDay";
 import { disabledState } from "../../../state/componentOpenState";
 import ScheduleMemo from "./ScheduleMemo";
+import { scheduleMarkerState } from "../../../state/scheduleMarkerState";
 
 interface IDestination {
   destinationId: number;
@@ -25,6 +26,8 @@ const ExistsSchedule = () => {
   const scheduleBytDate = useRecoilValue(schedule);
   const selectedDate = useRecoilValue(selectedDay);
   const setStartPoint = useSetRecoilState(selecteStartPoint);
+  const [openScheduleMarkerState, setOpenScheduleMarkerState] =
+    useRecoilState(scheduleMarkerState);
   const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
   const [sideBarOpenState, setSidebarOpenState] = useRecoilState(sideBarState);
   const { deleteDestination } = useManageSchedule();
@@ -93,6 +96,10 @@ const ExistsSchedule = () => {
     deleteDestination(destinationId);
   };
 
+  const onClickScheduleMarkerHandler = () => {
+    setOpenScheduleMarkerState(!openScheduleMarkerState);
+  };
+
   return (
     <div className="relative shadow-md bg-gray-005">
       <div
@@ -117,19 +124,38 @@ const ExistsSchedule = () => {
           장소추가
         </button>
       </div>
-      <div
-        className={`relative pl-4 pb-4 ${
-          !disabledStatus.memo ? "z-[1005]" : "z-[1003]"
-        }`}
-      >
-        <button
-          className="mr-4 px-3 py-2 bg-green-001 hover:bg-green-003 disabled:bg-gray-002 rounded-full font-bold text-sm text-white cursor-pointer"
-          onClick={onClickMemoHandler}
-          disabled={selectStartPoint ? true : false}
+      <div>
+        <div
+          className={`relative pl-4 pb-4 ${
+            !disabledStatus.memo ? "z-[1005]" : "z-[1003]"
+          }`}
         >
-          일정메모
-        </button>
-        {openMemo && <ScheduleMemo setOpenMemo={setOpenMemo} />}
+          <button
+            className="mr-4 px-3 py-2 bg-green-001 hover:bg-green-003 disabled:bg-gray-002 rounded-full font-bold text-sm text-white cursor-pointer"
+            onClick={onClickMemoHandler}
+            disabled={selectStartPoint ? true : false}
+          >
+            일정메모
+          </button>
+          {openMemo && <ScheduleMemo setOpenMemo={setOpenMemo} />}
+        </div>
+        <div className="relative flex items-center z-[1005]">
+          <input
+            id="scheduleMarker"
+            type="checkbox"
+            className="ml-4"
+            onClick={onClickScheduleMarkerHandler}
+          />
+          <label
+            htmlFor="scheduleMarker"
+            className="ml-1 text-md"
+          >
+            일정위치보기
+          </label>
+          <p className="ml-2 pt-0.5 text-[0.7rem] text-gray-001">
+            해당 선택 시 검색 장소를 볼 수 없습니다.
+          </p>
+        </div>
       </div>
       <div
         className={`flex flex-col items-center relative h-[27rem] overflow-y-auto ${

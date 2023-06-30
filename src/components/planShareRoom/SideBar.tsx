@@ -1,9 +1,16 @@
 import { useRecoilValue } from "recoil";
 import { sideBarState } from "../../state/sidebarState";
-import { IPropsSideBar } from "../../type/shareRoom";
 import SideBarToggle from "./SideBarToggle";
 import PlaceSearchArea from "./placeSearchArea/PlaceSearchArea";
 import ScheduleArea from "./scheduleArea/ScheduleArea";
+import { IPlace } from "../../hooks/useManageSchdule";
+
+interface IPropsSideBar {
+  placeSearch: (keyword: string) => void;
+  panTo: (placeX: number, placeY: number, index: number) => void;
+  placePagination: any;
+  addDestination: (place: IPlace) => void;
+}
 
 const SideBar = ({
   placeSearch,
