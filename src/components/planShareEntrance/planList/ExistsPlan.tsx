@@ -10,7 +10,7 @@ const ExistsPlan = () => {
   return (
     <>
       <h1 className="text-xl font-bold">참여중인 여행 일정 계획</h1>
-      <div className="mt-12 grid grid-cols-2 w-commonSection">
+      <div className="mt-12 h-[40rem] grid grid-cols-2 w-commonSection overflow-y-scroll">
         {plans.map((plan) => (
           <Link
             key={plan.shareId}
@@ -19,7 +19,7 @@ const ExistsPlan = () => {
           >
             <div className="w-[12rem] h-[10rem]">
               <img
-                className="rounded-xl border-black border-1 object-fill"
+                className="h-full rounded-l-xl border-black border-1 object-cover"
                 width={200}
                 height={200}
                 src={testImage}
@@ -38,7 +38,7 @@ const ExistsPlan = () => {
                 <p>입장 가능합니다.</p>
               </div>
             </div>
-            <div className="flex justify-center items-center w-12 rounded-r-xl bg-sky-001 transition-all duration-100 ease-out group-hover:w-14">
+            <div className="flex justify-center items-center w-12 rounded-r-xl bg-sky-002 transition-all duration-100 ease-out group-hover:w-14">
               <RightArrow width={20} height={20} fill="#FFFFFF" />
             </div>
           </Link>

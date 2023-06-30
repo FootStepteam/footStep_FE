@@ -16,7 +16,7 @@ const ExistsParticipatingPlan = () => {
         >
           <div className="w-[15rem] rounded-xl">
             <img
-              className="rounded-xl min-h-full object-cover"
+              className="rounded-l-xl min-h-full object-cover"
               src={plan.imageUrl || testImage}
               alt="방썸네일"
             />
