@@ -44,39 +44,6 @@ export const getScheduleByDateAPI = async (
   }
 };
 
-export const addSchedultMemoAPI = async (shareRoomID: string) => {
-  const id = Number(shareRoomID);
-
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
-
-  const data = {
-    planDate: "",
-    content: "",
-  };
-  try {
-    const response = await axios.post(
-      `/api/api/share-room/${id}/schedule`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        addSchedultMemoAPI(shareRoomID);
-      }
-    }
-  }
-};
-
 export const completeScheduleAPI = async (shareRoomID: number) => {
   const KEY = "accessToken";
   const token = getCookie(KEY);
@@ -106,5 +73,41 @@ export const completeScheduleAPI = async (shareRoomID: number) => {
         });
       }
     }
+  }
+};
+
+interface IForm {
+  content: string;
+  planDate: string;
+}
+
+export const addSchedultMemoAPI = async (
+  shareRoomID: number,
+  memberID: number,
+  form: IForm
+) => {
+  const KEY = "accessToken";
+  const token = getCookie(KEY);
+
+  try {
+    const response = await axios.post(
+      `/api/api/share-room/${shareRoomID}/schedule?memberId=${memberID}`,
+      form,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response);
+
+    if (response.status === 200) {
+      Swal.fire({
+        icon: "success",
+        text: "일정 메모 저장이 완료되었습니다.",
+      });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };

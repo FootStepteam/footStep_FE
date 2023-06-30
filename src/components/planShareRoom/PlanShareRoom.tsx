@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CustomOverlayMap,
   Map,
@@ -15,6 +15,8 @@ import { placeSearchResult } from "../../store/placeSearchResult";
 import { recommendPlaceList } from "../../store/recommendPlaceList";
 import Chat from "./Chat";
 import SideBar from "./SideBar";
+import { getMemberByAccessToken } from "../../api/memberAPI";
+import { memberInfo } from "../../state/memberInfo";
 
 interface IState {
   center: {
@@ -61,17 +63,6 @@ interface IOpenOverlay {
   index: number;
 }
 
-interface IRecommendOpenOverlay {
-  data: {
-    addressName: string;
-    placeName: string;
-    x: number;
-    y: number;
-  };
-  open: boolean;
-  index: number;
-}
-
 export interface IRecommendPlace {
   firstImage: string;
   firstImage2: string;
@@ -89,6 +80,7 @@ const PlanShareRoom = () => {
   const { addDestination } = useManageSchedule();
   const [map, setMap] = useState<any>();
   const [markers, setMarkers] = useState<IMarker[]>([]);
+  const setMemberInfo = useSetRecoilState(memberInfo);
   const [placePagination, setPlacePagination] = useState<any>();
   const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
     data: {
@@ -260,6 +252,15 @@ const PlanShareRoom = () => {
     });
     overlayOpen(index, "open");
   };
+
+  const getMemberInfo = async () => {
+    const response = await getMemberByAccessToken();
+    setMemberInfo(response);
+  };
+
+  useEffect(() => {
+    getMemberInfo();
+  }, []);
 
   return (
     <>

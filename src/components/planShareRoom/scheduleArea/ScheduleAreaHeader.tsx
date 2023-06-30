@@ -41,6 +41,7 @@ const ScheduleAreaHeader = () => {
           scheduleList: false,
           buttonSection: false,
           placeSection: false,
+          memo: false,
         });
         setEditStatus(false);
         setForm({ ...backUpForm });
@@ -52,6 +53,7 @@ const ScheduleAreaHeader = () => {
           scheduleList: true,
           buttonSection: true,
           placeSection: true,
+          memo: true,
         });
         setEditStatus(true);
         break;
@@ -63,6 +65,7 @@ const ScheduleAreaHeader = () => {
           scheduleList: false,
           buttonSection: false,
           placeSection: false,
+          memo: false,
         });
 
         if (shareRoomID) {
