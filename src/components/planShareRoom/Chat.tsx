@@ -6,12 +6,13 @@ import { Stomp } from "@stomp/stompjs";
 import { getMemberByAccessToken } from "../../api/memberAPI";
 import { useRecoilValue } from "recoil";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
-import { getChatRoomDetail, getChatRooms } from "../../api/chatAPI";
+import { getChatRoomDetail } from "../../api/chatAPI";
 
 interface IChatMessage {
-  sender: string;
-  content: string;
-  type: "JOIN" | "CHAT" | "LEAVE";
+  nickName: string;
+  shareId: number;
+  message: string;
+  type: "ENTER" | "JOIN" | "TALK";
 }
 
 const colors = [
@@ -30,9 +31,7 @@ const Chat = () => {
   const [openChatStatus, setOpenChatStatus] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<IChatMessage[]>([]);
-  const [roomId, setRoomId] = useState<string>("");
   const [username, setUsername] = useState<string>("");
-  const [loadingUsername, setLoadingUsername] = useState<boolean>(true);
   const shareRoomData = useRecoilValue(shareRoomInfo);
   const shareId = shareRoomData.shareId;
 
@@ -50,16 +49,13 @@ const Chat = () => {
       const memberData = await getMemberByAccessToken();
       const userName = memberData.nickname;
       setUsername(userName);
-      setLoadingUsername(false);
 
-      const roomId = shareId.toString();
-      setRoomId(roomId);
-
-      if (roomId) {
-        const roomDetail = await getChatRoomDetail(roomId);
+      if (shareId) {
+        const roomDetail = await getChatRoomDetail(shareId);
+        console.log(shareId);
       }
 
-      if (userName && roomId) {
+      if (userName && shareId) {
         connect();
       }
     };
@@ -75,19 +71,19 @@ const Chat = () => {
 
   const connect = () => {
     const socketFactory = () =>
-      new window.SockJS("http://43.200.76.174:8080/javatechie");
+      new window.SockJS("http://43.200.76.174:8080/ws-stomp");
     const client = Stomp.over(socketFactory);
     setStompClient(client);
     client.connect({}, onConnected, onError);
   };
 
   const onConnected = () => {
-    stompClient?.subscribe("/topic/public", onMessageReceived);
+    stompClient?.subscribe(`/sub/share-room/${shareId}`, onMessageReceived);
 
     stompClient?.send(
-      "/app/chat.send",
+      "/pub/chat/message",
       {},
-      JSON.stringify({ sender: username, type: "JOIN" })
+      JSON.stringify({ shareId: shareId, nickName: username, type: "ENTER" })
     );
   };
 
@@ -100,13 +96,14 @@ const Chat = () => {
 
   const sendMessageHandler = () => {
     if (message && stompClient) {
-      const chatMessage: IChatMessage = {
-        sender: username!,
-        content: message,
-        type: "CHAT",
+      const chatMessage = {
+        shareId: shareId,
+        nickName: username!,
+        message: message,
+        type: "TALK",
       };
 
-      stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+      stompClient.send("/pub/chat/message", {}, JSON.stringify(chatMessage));
       setMessage("");
     }
   };
@@ -115,9 +112,9 @@ const Chat = () => {
     const message: IChatMessage = JSON.parse(payload.body);
 
     if (message.type === "JOIN") {
-      message.content = message.sender + " joined!";
+      message.message = message.nickName + " joined!";
     } else if (message.type === "LEAVE") {
-      message.content = message.sender + " left!";
+      message.message = message.nickName + " left!";
     }
 
     setMessages((prevMessages) => [...prevMessages, message]);
@@ -163,11 +160,11 @@ const Chat = () => {
             <div className="overflow-y-scroll no-scrollbar mt-3 ml-3 mr-3 mb-3 h-[25rem] bg-blue-007 rounded-md">
               {messages.map((msg, index) => (
                 <div key={index} className="mt-3 ml-3 text-white">
-                  <i style={{ backgroundColor: getAvatarColor(msg.sender) }}>
-                    {msg.sender[0]}
+                  <i style={{ backgroundColor: getAvatarColor(msg.nickName) }}>
+                    {msg.nickName[0]}
                   </i>
-                  <span>{msg.sender}</span>
-                  <p>{msg.content}</p>
+                  <span>{msg.nickName}</span>
+                  <p>{msg.message}</p>
                 </div>
               ))}
             </div>
