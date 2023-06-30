@@ -11,7 +11,7 @@ interface CreateCommentProps {
 
 const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
   const [content, setContent] = useState("");
-  const [memberId, setMemberId] = useState<number | null>(null);
+  const [memberId, setMemberId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const fetchMemberId = async () => {
@@ -73,7 +73,7 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
       />
       <button
         onClick={handleCreate}
-        className="px-2 py-1 h-[40px] min-w-max rounded-r-lg bg-green-002 text-white-001 "
+        className="px-2 py-1 h-[40px] min-w-max rounded-r-lg bg-green-002 text-white-001 hover:bg-green-001 transition-all duration-250"
       >
         작성
       </button>
