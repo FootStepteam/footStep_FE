@@ -3,7 +3,7 @@ import ProfileUserInfo from "./profileUserInfo/ProfileUserInfo";
 
 const Profile = () => {
   return (
-    <div className="flex w-commonSection min-h-content m-center">
+    <div className="flex pt-[112px] w-fit min-h-screen m-center">
       <ProfileUserInfo />
       <ParticipatingPlan />
     </div>

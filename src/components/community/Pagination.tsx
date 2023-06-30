@@ -23,7 +23,7 @@ const Pagination = ({ page, lastPage, setPage }: PaginationProps) => {
   return (
     <div className="flex justify-center items-center mt-4">
       <button
-        className="px-4 py-2 rounded-md"
+        className="px-4 py-2 rounded-md hover:scale-105 transition-all duration-250"
         onClick={handlePrevious}
         disabled={page === 0}
       >
@@ -31,7 +31,7 @@ const Pagination = ({ page, lastPage, setPage }: PaginationProps) => {
       </button>
       <div className="mx-2">{page + 1}</div>
       <button
-        className="px-4 py-2 rounded-md"
+        className="px-4 py-2 rounded-md hover:scale-105 transition-all duration-250"
         onClick={handleNext}
         disabled={lastPage}
       >

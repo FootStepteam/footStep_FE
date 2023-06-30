@@ -25,7 +25,7 @@ const HeaderContainer = () => {
 
   return (
     <header
-      className={`fixed top-0 py-6 w-full ${
+      className={`fixed top-0 px-4 py-6 w-full ${
         path === "/"
           ? scrollY > 30
             ? "bg-white border-b border-gray-003 text-black"

@@ -105,6 +105,16 @@ export default {
           from: { opacity: 1 },
           to: { opacity: 0 },
         },
+        sparkle: {
+          "0%": {
+            opacity: 0.5,
+            transform: "scale(0.95)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         intro: "intro 1s ease-in-out",
@@ -113,6 +123,7 @@ export default {
         modalBgShow: "modalBgShow 0.3s",
         daysDropDown: "daysDropDown 0.4s",
         daysUp: "daysUp 0.4s",
+        sparkle: "sparkle 100ms linear",
       },
     },
   },

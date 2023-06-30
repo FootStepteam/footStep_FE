@@ -27,7 +27,7 @@ const SearchCodeBar = () => {
         <form method="GET" onSubmit={onSubmitHandler}>
           <input
             type="text"
-            placeholder="초대코드를 8자리를 입력해주세요. ex) 000000"
+            placeholder="초대코드를 8자리를 입력하고 enter키를 눌러주세요! ex) 000000"
             maxLength={8}
             className="block m-center px-8 mt-4 w-[45rem] h-[5rem] bg-white rounded-3xl outline-none"
             onChange={onChangeHandler}

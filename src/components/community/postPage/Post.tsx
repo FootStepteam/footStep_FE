@@ -8,7 +8,7 @@ import PostEditDelete from "./PostEditDelete";
 
 const Post = () => {
   const { post, onCommentsChange } = usePost();
-  const [memberId, setMemberId] = useState<number | null>(null);
+  const [memberId, setMemberId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const fetchMemberId = async () => {
@@ -33,7 +33,7 @@ const Post = () => {
   console.log(post);
 
   return (
-    <div className="min-h-screen p-8 bg-sky-004">
+    <div className="min-h-screen p-8 bg-sky-004 animate-sparkle">
       <div className="p-8 mb-8 rounded-lg bg-white-001">
         <div className="flex">
           <h2 className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003">

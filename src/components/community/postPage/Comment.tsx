@@ -13,7 +13,7 @@ interface CommentProps {
 const Comment = ({ comment, onCommentsChange }: CommentProps) => {
   const [isEditMode, setEditMode] = useState(!comment);
   const [content, setContent] = useState(comment?.content || "");
-  const [memberId, setMemberId] = useState<number | null>(null);
+  const [memberId, setMemberId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const fetchMemberId = async () => {
@@ -87,21 +87,21 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
           {isEditMode ? (
             <button
               onClick={handleUpdate}
-              className="bg-blue-003 text-white-001 px-2 py-1 rounded mr-2"
+              className="bg-blue-003 text-white-001 px-2 py-1 rounded mr-2 hover:bg-blue-002 transition-all duration-250"
             >
               저장
             </button>
           ) : (
             <button
               onClick={() => setEditMode(true)}
-              className="bg-blue-003 text-white-001 px-2 py-1 rounded mr-2"
+              className="bg-blue-003 text-white-001 px-2 py-1 rounded mr-2 hover:bg-blue-002 transition-all duration-250"
             >
               수정
             </button>
           )}
           <button
             onClick={handleDelete}
-            className="bg-red-003 text-white-001 px-2 py-1 rounded"
+            className="bg-red-003 text-white-001 px-2 py-1 rounded hover:bg-red-002 transition-all duration-250"
           >
             삭제
           </button>
