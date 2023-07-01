@@ -1,11 +1,11 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { disabledState } from "../../../state/componentOpenState";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { schedule } from "../../../store/schedule";
-import { memberInfo } from "../../../state/memberInfo";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
-import { addSchedultMemoAPI } from "../../../api/scheduleAPI";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
+import { addSchedultMemoAPI } from "../../../api/scheduleAPI";
+import { disabledState } from "../../../state/componentOpenState";
+import { memberInfo } from "../../../state/memberInfo";
+import { schedule } from "../../../store/schedule";
 
 interface IProps {
   setOpenMemo: (openState: boolean) => void;

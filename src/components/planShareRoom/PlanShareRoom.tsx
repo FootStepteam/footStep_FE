@@ -246,7 +246,19 @@ const PlanShareRoom = () => {
           };
         });
 
-        setPlaceSearchResult(data);
+        const searchResult = data.map((place) => {
+          return {
+            addressName: place.address_name,
+            id: place.id,
+            phone: place.phone,
+            placeName: place.place_name,
+            placeUrl: place.place_url,
+            x: Number(place.x),
+            y: Number(place.y),
+          };
+        });
+
+        setPlaceSearchResult(searchResult);
         let markers: IMarker[] = [];
 
         for (var i = 0; i < data.length; i++) {
@@ -369,13 +381,21 @@ const PlanShareRoom = () => {
                   position={marker.position}
                   onClick={() => onClickMarkerHandler(index, "open")}
                   image={
-                    marker.type === "recommend" && {
-                      src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-                      size: {
-                        width: 24,
-                        height: 35,
-                      },
-                    }
+                    marker.type === "recommend"
+                      ? {
+                          src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+                          size: {
+                            width: 24,
+                            height: 35,
+                          },
+                        }
+                      : {
+                          src: "http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png",
+                          size: {
+                            width: 24,
+                            height: 35,
+                          },
+                        }
                   }
                 >
                   {info[index].open && (

@@ -40,6 +40,7 @@ export const getScheduleByDateAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
+      console.log(errorCode);
     }
   }
 };

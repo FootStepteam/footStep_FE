@@ -1,11 +1,16 @@
 import { ChangeEvent, useState, useEffect, useRef } from "react";
 import { ReactComponent as ChatEmotion } from "../../assets/chatEmotion.svg";
 import { ReactComponent as Close } from "../../assets/close.svg";
-// import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { getMemberByAccessToken } from "../../api/memberAPI";
 import { useRecoilValue } from "recoil";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
+
+declare global {
+  interface Window {
+    SockJS: any;
+  }
+}
 
 interface IChatMessage {
   nickName: string;

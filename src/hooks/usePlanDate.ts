@@ -71,7 +71,7 @@ const usePlanDate = (
     }
   };
 
-  const onChangeHandler = (value: Value) => {
+  const onChangeHandler = (value: Date[]) => {
     const startDate = value[0];
     const endDate = value[1];
     setSelectedDate({ ...selectedDate, startDate, endDate });

@@ -34,7 +34,7 @@ const ProfileEditForm = () => {
     const profileImageInput = document.getElementById(
       "profileImage"
     ) as HTMLInputElement;
-    const memberId = await getCurrentUserMemberId();
+    getCurrentUserMemberId();
 
     let profileUrl = "";
     if (profileImageInput.files && profileImageInput.files.length > 0) {
@@ -68,8 +68,15 @@ const ProfileEditForm = () => {
               htmlFor="profileImage"
               className="cursor-pointer hover:opacity-25"
             >
-              <ProfileImage width={200} height={200} />
-              <input type="file" id="profileImage" className="hidden" />
+              <ProfileImage
+                width={200}
+                height={200}
+              />
+              <input
+                type="file"
+                id="profileImage"
+                className="hidden"
+              />
             </label>
             <button
               type="button"
@@ -80,7 +87,10 @@ const ProfileEditForm = () => {
           </div>
           <div className="flex flex-col mt-8 w-[18rem]">
             <div className="flex flex-col">
-              <label htmlFor="nickname" className="block font-bold text-lg">
+              <label
+                htmlFor="nickname"
+                className="block font-bold text-lg"
+              >
                 닉네임
               </label>
               <input
@@ -91,7 +101,10 @@ const ProfileEditForm = () => {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label htmlFor="email" className="font-bold text-lg">
+              <label
+                htmlFor="email"
+                className="font-bold text-lg"
+              >
                 이메일
               </label>
               <input
@@ -103,7 +116,10 @@ const ProfileEditForm = () => {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label htmlFor="introduce" className="block font-bold text-lg">
+              <label
+                htmlFor="introduce"
+                className="block font-bold text-lg"
+              >
                 내 소개
               </label>
               <textarea

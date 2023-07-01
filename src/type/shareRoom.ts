@@ -1,5 +1,4 @@
 import { IPlace } from "../hooks/useManageSchdule";
-import { IKakaoPlaceSearchResult } from "./kakaoMap";
 
 export interface IShareRoom {
   endPoint: string;

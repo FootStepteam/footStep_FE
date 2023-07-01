@@ -1,13 +1,9 @@
 export interface IKakaoPlaceSearchResult {
-  address_name: string;
-  category_group_name: string;
-  category_name: string;
-  distance: string;
+  addressName: string;
   id: string;
   phone: string;
-  place_name: string;
-  place_url: string;
-  road_address_name: string;
+  placeName: string;
+  placeUrl: string;
   x: number;
   y: number;
 }

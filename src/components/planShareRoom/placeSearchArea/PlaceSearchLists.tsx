@@ -27,8 +27,8 @@ const PlaceSearchLists = ({
 
   const onClickAddPlaceHandler = (place: IKakaoPlaceSearchResult) => {
     addDestination({
-      placeName: place.place_name,
-      addressName: place.address_name,
+      placeName: place.placeName,
+      addressName: place.addressName,
       y: Number(place.y),
       x: Number(place.x),
     });
@@ -86,10 +86,10 @@ const PlaceSearchLists = ({
                         <span className="mr-2 font-bold text-blue-001">
                           {markerSeq[index]}
                         </span>
-                        {place.place_name}
+                        {place.placeName}
                       </p>
                     </div>
-                    <p className="font-normal text-sm">{place.address_name}</p>
+                    <p className="font-normal text-sm">{place.addressName}</p>
                     <p className="font-normal text-sm text-black-003">
                       {place.phone}
                     </p>
