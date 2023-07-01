@@ -9,13 +9,13 @@ import "./input.css";
 import Spinner from "./components/common/spinner/Spinner";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <RecoilRoot>
-      <Suspense fallback={<Spinner />}>
-        <App />
-      </Suspense>
-    </RecoilRoot>
-  </BrowserRouter>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <RecoilRoot>
+        <Suspense fallback={<Spinner />}>
+          <App />
+        </Suspense>
+      </RecoilRoot>
+    </BrowserRouter>
+  </React.StrictMode>
 );
