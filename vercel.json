@@ -4,6 +4,6 @@
   "builds": [{ "src": "package.json", "use": "@vercel/node" }],
   "routes": [{ "src": "/(.*)", "dest": "/" }],
   "env": {
-    "API_URL": "http://43.200.76.174:8080"
+    "API_URL": "http://www.impath96.shop:8080"
   }
 }
