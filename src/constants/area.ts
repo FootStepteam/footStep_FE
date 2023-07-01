@@ -17,4 +17,4 @@ export const ADMINISTRATIVE_DISTRICT = [
   "제주",
 ];
 
-const asd = "";
+const asd = "asd";
