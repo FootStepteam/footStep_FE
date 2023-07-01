@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "name": "footstep",
-  "builds": [{ "src": "package.json", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/" }],
-  "env": {
-    "API_URL": "http://www.impath96.shop:8080"
-  }
-}
