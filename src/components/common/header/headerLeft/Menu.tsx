@@ -59,12 +59,10 @@ const Menu = () => {
         <div
           key={element.menu}
           onClick={() => onClickHandler(element.path)}
-          className={`flex grow justify-center items-center text-[1.3rem] font-semibold cursor-pointer hover:bg-sky-005 hover:text-white-001 transition-all duration-150 ${
-            index !== menus.length - 1 ? "border-r" : ""
-          } ${
+          className={`flex grow justify-center items-center text-[1.3rem] rounded-lg font-semibold cursor-pointer transition-all duration-150 ${
             location.pathname === "/"
               ? "hover:bg-white-001 hover:text-black-001"
-              : ""
+              : "hover:bg-sky-005 hover:text-white-001"
           }`}
         >
           {element.menu}
