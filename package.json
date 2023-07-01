@@ -26,6 +26,7 @@
     "@stomp/stompjs": "^7.0.0",
     "@toast-ui/editor": "^3.2.2",
     "@types/stompjs": "^2.3.5",
+    "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
     "html2canvas": "^1.4.1",
     "react": "^18.2.0",
