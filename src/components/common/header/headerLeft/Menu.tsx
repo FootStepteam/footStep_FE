@@ -55,7 +55,7 @@ const Menu = () => {
 
   return (
     <div className="flex grow">
-      {menus.map((element, index) => (
+      {menus.map((element) => (
         <div
           key={element.menu}
           onClick={() => onClickHandler(element.path)}
