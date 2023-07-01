@@ -1,12 +1,11 @@
 {
-  "homepage": "https://footstepteam.github.io/footstep_FE/",
   "name": "footstep-fe",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npx tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --check --ignore-path .gitignore .",
