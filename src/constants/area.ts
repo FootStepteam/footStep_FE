@@ -16,5 +16,3 @@ export const ADMINISTRATIVE_DISTRICT = [
   "경북",
   "제주",
 ];
-
-const test = "";
