@@ -1,0 +1,55 @@
+import Swal from "sweetalert2";
+import { deletePostAPI } from "../../../api/postAPI";
+import { useNavigate } from "react-router-dom";
+
+const PostEditDelete = ({ postId }: { postId: number }) => {
+  const navigate = useNavigate();
+
+  const handleUpdate = async () => {
+    Swal.fire({
+      title: "게시글 수정하기 페이지로 이동합니다",
+      icon: "info",
+      confirmButtonText: "확인",
+    }).then(() => {
+      navigate(`/community/${postId}/edit`);
+    });
+  };
+
+  const handleDelete = async () => {
+    const result = await Swal.fire({
+      title: "게시글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "예",
+      cancelButtonText: "아니오",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deletePostAPI(postId);
+        navigate("/community");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  return (
+    <div className="flex">
+      <button
+        className="absolute right-[106px] px-2 py-1 min-w-max h-[35px] border-r-2 text-gray-001"
+        onClick={handleUpdate}
+      >
+        수정
+      </button>
+      <button
+        className="absolute right-[60px] px-2 py-1 min-w-max h-[35px] text-gray-001"
+        onClick={handleDelete}
+      >
+        삭제
+      </button>
+    </div>
+  );
+};
+
+export default PostEditDelete;
