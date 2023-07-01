@@ -6,6 +6,7 @@ import { ISelectedDate } from "../type/shareRoomForm";
 import { useSetRecoilState } from "recoil";
 import { travelDate } from "../state/travelDate";
 import Swal from "sweetalert2";
+import { Value } from "react-calendar/dist/cjs/shared/types";
 
 interface IClickDate {
   startDate: string;
@@ -71,9 +72,18 @@ const usePlanDate = (
     }
   };
 
-  const onChangeHandler = (value: Date[]) => {
-    const startDate = value[0];
-    const endDate = value[1];
+  const onChangeHandler = (value: Value) => {
+    let startDate: Date;
+    let endDate: Date;
+
+    if (Array.isArray(value)) {
+      startDate = value[0] as Date;
+      endDate = value[1] as Date;
+    } else {
+      startDate = value as Date;
+      endDate = value as Date;
+    }
+
     setSelectedDate({ ...selectedDate, startDate, endDate });
   };
 
