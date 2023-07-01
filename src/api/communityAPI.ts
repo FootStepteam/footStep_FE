@@ -20,7 +20,10 @@ export const getCommunityAPI = async (
   };
 
   try {
-    const response = await axios.get("/api/api/community", config);
+    const response = await axios.get(
+      `${import.meta.env.API_URL}/api/community`,
+      config
+    );
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
