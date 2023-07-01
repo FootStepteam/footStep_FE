@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { ReactComponent as Close } from "../../../assets/close.svg";
 import { ReactComponent as Flag } from "../../../assets/flag.svg";
 import useManageSchedule from "../../../hooks/useManageSchdule";
+import { disabledState } from "../../../state/componentOpenState";
+import { scheduleMarkerState } from "../../../state/scheduleMarkerState";
 import { selecteStartPoint } from "../../../state/selectStartPoint";
 import { sideBarState } from "../../../state/sidebarState";
 import { schedule } from "../../../store/schedule";
 import { selectedDay } from "../../../store/selectedDay";
-import { disabledState } from "../../../state/componentOpenState";
 import ScheduleMemo from "./ScheduleMemo";
-import { scheduleMarkerState } from "../../../state/scheduleMarkerState";
 
 interface IDestination {
   destinationId: number;

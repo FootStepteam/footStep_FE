@@ -20,7 +20,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["kakao.maps.d.ts"]
+    "types": ["kakao.maps.d.ts"],
+
+    "baseUrl": ".",
+    "paths": {
+      "react-kakao-maps-sdk": ["node_modules/react-kakao-maps-sdk/lib/@types"]
+    }
   },
   "include": ["src", "svg.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

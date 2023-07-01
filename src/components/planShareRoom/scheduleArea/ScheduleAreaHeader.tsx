@@ -9,12 +9,14 @@ import { getCookie } from "../../../utils/cookie";
 import { formValidationCheck } from "../../../utils/formValidationCheck";
 import Calendar from "../../common/calendar/Calendar";
 import { disabledState } from "../../../state/componentOpenState";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { shareRoomInfo } from "../../../store/shareRoomInfo";
 
 const ScheduleAreaHeader = () => {
   const token = getCookie("accessToken");
 
   const { shareRoomID } = useParams<string>();
+  const shareRoom = useRecoilValue(shareRoomInfo);
   const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
   const {
     form,
@@ -103,6 +105,14 @@ const ScheduleAreaHeader = () => {
     });
   };
 
+  const onClickShareCodeHandler = () => {
+    MySwal.fire({
+      title: "공유 코드",
+      text: shareRoom.shareCode,
+      icon: "info",
+    });
+  };
+
   useEffect(() => {
     if (shareRoomID) {
       getData(shareRoomID);
@@ -124,6 +134,13 @@ const ScheduleAreaHeader = () => {
             className="w-[25px] h-[25px] fill-black-003 hover:fill-red-001"
             onClick={onClickExitHanlder}
           />
+        </button>
+        <button
+          type="button"
+          className="text-blue-001 text-sm cursor-pointer"
+          onClick={onClickShareCodeHandler}
+        >
+          공유코드보기
         </button>
         {editStatus ? (
           <div className="flex mr-4 text-sm">

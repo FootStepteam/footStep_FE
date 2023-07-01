@@ -1,5 +1,4 @@
 import { useRecoilValue } from "recoil";
-import { markerSeq } from "../../../constants/marker";
 import { recommendPlaceList } from "../../../store/recommendPlaceList";
 import { placeSearchResult } from "../../../store/placeSearchResult";
 import { ReactComponent as Address } from "../../../assets/address.svg";
@@ -65,9 +64,6 @@ const PlaceRecommendList = ({ addDestination, panTo }: IProps) => {
                   <div className="ml-4 w-[17em]">
                     <div className="mb-1">
                       <p className="w-[17rem] font-medium text-lg text-black-002 truncate ">
-                        <span className="mr-2 font-bold text-blue-001">
-                          {markerSeq[index]}
-                        </span>
                         {place.placeName}
                       </p>
                     </div>

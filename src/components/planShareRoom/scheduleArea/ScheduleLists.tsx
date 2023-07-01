@@ -22,7 +22,6 @@ import { ISchedule, schedule } from "../../../store/schedule";
 import { selectedDay } from "../../../store/selectedDay";
 import { shareRoomInfo } from "../../../store/shareRoomInfo";
 import { IPlanSchedule } from "../../../type/newPost";
-import { getCookie } from "../../../utils/cookie";
 import ExistsSchedule from "./ExistsSchedule";
 import NotExistsSchedule from "./NotExistsSchedule";
 
