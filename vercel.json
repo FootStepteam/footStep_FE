@@ -1,12 +1,9 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "http://www.impath96.shop/:path*"
+      "source": "/api/api/:path*",
+      "destination": "https://www.impath96.shop/api/:path*"
     },
-    {
-      "source": "/:path*",
-      "destination": "/"
-    }
+    { "source": "/:path*", "destination": "/" }
   ]
 }
