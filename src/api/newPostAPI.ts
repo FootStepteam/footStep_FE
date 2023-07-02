@@ -1,7 +1,8 @@
 import axios from "axios";
 import { IPlanSchedule } from "../type/newPost";
 import { getCookie } from "../utils/cookie";
-import { getShareRoomInfoAPI, refreshTokenAPI } from "./shareRoomAPI";
+import { getShareRoomDetailAPI } from "./shareRoomAPI";
+import { refreshTokenAPI } from "./tokenAPI";
 
 export const getPlanScheduleAPI = async (
   shareId: number
@@ -9,7 +10,7 @@ export const getPlanScheduleAPI = async (
   const KEY = "accessToken";
   const token = getCookie(KEY);
   try {
-    const roomInfo = await getShareRoomInfoAPI(String(shareId));
+    const roomInfo = await getShareRoomDetailAPI(String(shareId));
     const startDate = roomInfo.travelStartDate;
     const endDate = roomInfo.travelEndDate;
     console.log(startDate, endDate);

@@ -1,7 +1,6 @@
 import axios from "axios";
-import { getCookie, removeCookie } from "../utils/cookie";
-import { refreshTokenAPI } from "./shareRoomAPI";
 import Swal from "sweetalert2";
+import { getCookie } from "../utils/cookie";
 
 export const getScheduleAPI = async (shareRoomID: number) => {
   const id = Number(shareRoomID);
@@ -19,11 +18,6 @@ export const getScheduleAPI = async (shareRoomID: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        getScheduleAPI(shareRoomID);
-      }
     }
   }
 };
@@ -63,11 +57,7 @@ export const completeScheduleAPI = async (shareRoomID: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        completeScheduleAPI(shareRoomID);
-      } else if (errorCode === "NOT_MATCH_CREATE_MEMBER") {
+      if (errorCode === "NOT_MATCH_CREATE_MEMBER") {
         Swal.fire({
           icon: "error",
           text: "공유방 생성자가 아닙니다.",

@@ -3,13 +3,18 @@ import {
   ICreateShareRoomFormValue,
   ISubmitShareRoomData,
 } from "../type/shareRoom";
-import { getCookie, removeCookie, setCookie } from "../utils/cookie";
+import { getCookie, setCookie } from "../utils/cookie";
 import Swal from "sweetalert2";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
-export const getShareRoomAPI = async (shareCode: string) => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+// 공유코드로 공유방 찾기
+export const getShareRoomAPI = async (shareCode: number) => {
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
 
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
   try {
     const response = await axios.get(
       `/api/api/share-room/find?q=${shareCode}`,
@@ -23,20 +28,20 @@ export const getShareRoomAPI = async (shareCode: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        getShareRoomAPI(shareCode);
-      }
     }
   }
 };
 
+// 공유방 생성
 export const createShareRoomAPI = async (
   formValue: ICreateShareRoomFormValue
 ) => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   const data: ISubmitShareRoomData = {
     shareName: formValue.title,
@@ -55,18 +60,18 @@ export const createShareRoomAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        createShareRoomAPI(formValue);
-      }
     }
   }
 };
 
+// 참여중인 공유방 리스트 조회
 export const getIncludeShareRoomAPI = async () => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.get("/api/api/share-room?page=0&size=20", {
@@ -78,21 +83,19 @@ export const getIncludeShareRoomAPI = async () => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        getIncludeShareRoomAPI();
-      }
     }
   }
 };
 
-export const getShareRoomInfoAPI = async (shareRoomID: string) => {
+// 공유방 상세정보 조회
+export const getShareRoomDetailAPI = async (shareRoomID: string) => {
   const id = Number(shareRoomID);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
 
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
-
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
   try {
     const response = await axios.get(`/api/api/share-room/${id}`, {
       headers: {
@@ -102,29 +105,31 @@ export const getShareRoomInfoAPI = async (shareRoomID: string) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      console.log(error.response);
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        getIncludeShareRoomAPI();
-      }
+      console.log(errorCode);
     }
   }
 };
 
+// 공유방 정보 수정
 export const editShareRoomInfoAPI = async (
-  shareRoomID: string,
-  token: string,
+  shareRoomID: number,
   formValue: ICreateShareRoomFormValue
 ) => {
-  const id = Number(shareRoomID);
-
   const data: ISubmitShareRoomData = {
     shareName: formValue.title,
     travelStartDate: formValue.startDate,
     travelEndDate: formValue.endDate,
     imageUrl: "",
   };
+
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   const response = await axios.put(`/api/api/share-room/${id}`, data, {
     headers: {
@@ -133,28 +138,6 @@ export const editShareRoomInfoAPI = async (
   });
 
   return response.status;
-};
-
-export const refreshTokenAPI = async () => {
-  const COOKIE_KEY = "refresh-token";
-  const refreshToken = getCookie(COOKIE_KEY);
-
-  try {
-    const response = await axios.post("/api/api/auth/refresh", {
-      headers: {
-        Cookie: refreshToken,
-      },
-    });
-
-    if (response.status === 200) {
-      const accessToken = response.data;
-
-      setCookie("accessToken", accessToken);
-    }
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 export const recommendPlacesAPI = async (keyword: string) => {
@@ -174,11 +157,6 @@ export const recommendPlacesAPI = async (keyword: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        getIncludeShareRoomAPI();
-      }
     }
   }
 };
@@ -231,7 +209,7 @@ export const sendTokenEnteringShareRoom = async (shareId: number) => {
   const accessToken = getCookie("accessToken");
   const response = await axios.post(`/api/api/share-room/${shareId}/enter`, {
     headers: {
-      "Authorization": `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   console.log(response);

@@ -1,7 +1,6 @@
 import axios from "axios";
-import { getCookie, removeCookie } from "../utils/cookie";
-import { refreshTokenAPI } from "./shareRoomAPI";
 import Swal from "sweetalert2";
+import { getCookie } from "../utils/cookie";
 
 interface IBodyDate {
   planDate: string;
@@ -35,11 +34,7 @@ export const addDestinationAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        addDestinationAPI(shareRoomID, bodyData);
-      } else if (errorCode === "ALREADY_DESTINATION") {
+      if (errorCode === "ALREADY_DESTINATION") {
         Swal.fire({
           icon: "error",
           text: "이미 등록된 목적지 입니다.",
@@ -74,11 +69,7 @@ export const deleteDestinationAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "EXPIRED_ACCESS_TOKEN") {
-        removeCookie("accessToken");
-        refreshTokenAPI();
-        deleteDestinationAPI(shareRoomID, destinationId);
-      } else if (errorCode === "NOT_FIND_DESTINATION_ID") {
+      if (errorCode === "NOT_FIND_DESTINATION_ID") {
         Swal.fire({
           icon: "error",
           text: "이미 삭제된 목적지 입니다.",
