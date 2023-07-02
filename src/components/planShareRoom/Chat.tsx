@@ -5,6 +5,7 @@ import { Stomp } from "@stomp/stompjs";
 import { getMemberByAccessToken } from "../../api/memberAPI";
 import { useRecoilValue } from "recoil";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
+import { getShareRoomEnterMessage } from "../../api/chatAPI";
 
 declare global {
   interface Window {
@@ -16,6 +17,7 @@ interface IChatMessage {
   nickName: string;
   shareId: number;
   message: string;
+  shareRoomeEnterId: number;
   type: "ENTER" | "JOIN" | "TALK";
 }
 
@@ -25,6 +27,7 @@ const Chat = () => {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [username, setUsername] = useState<string>("");
+  const [shareRoomEnterId, setShareRoomEnterId] = useState<number>(0);
   const shareRoomData = useRecoilValue(shareRoomInfo);
   const shareId: number = shareRoomData.shareId;
   const [composing, setComposing] = useState(false);
@@ -51,6 +54,10 @@ const Chat = () => {
 
       if (shareId) {
         console.log(shareId);
+        const enterData = await getShareRoomEnterMessage(shareId);
+        if (enterData && enterData.shareRoomEnterId) {
+          setShareRoomEnterId(enterData.shareRoomeEnterId);
+        }
       }
     };
 
@@ -61,7 +68,7 @@ const Chat = () => {
 
   const connect = () => {
     const socketFactory = () =>
-      new window.SockJS("http://43.200.76.174:8080/ws-stomp");
+      new window.SockJS("http://43.200.76.174:443/ws-stomp");
     const client = Stomp.over(socketFactory);
     stompClient.current = client; // Update the stompClient reference
     client.connect({}, onConnected, onError);
@@ -91,6 +98,7 @@ const Chat = () => {
     if (message && stompClient.current) {
       const chatMessage = {
         shareId: shareId,
+        shareRoomEnterId: shareRoomEnterId,
         nickName: username!,
         message: message,
         type: "TALK",

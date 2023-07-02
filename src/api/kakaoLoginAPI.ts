@@ -23,7 +23,7 @@ export const sendImage = (shareRoomID: string) => {
 export const getKakaoToken = async (authorizationCode: string) => {
   try {
     const response = await axios.post(
-      `http://43.200.76.174:8080/api/auth/kakao`,
+      `http://43.200.76.174:443/api/auth/kakao`,
       {
         authorizationCode,
       }

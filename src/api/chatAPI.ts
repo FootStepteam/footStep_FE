@@ -61,3 +61,26 @@ export const getChatRoomDetail = async (roomId: string) => {
     console.error(`채팅방 정보를 가져오지 못했습니다 ${roomId}`, error);
   }
 };
+
+export const getShareRoomEnterMessage = async (shareId: number) => {
+  const token = getCookie(KEY);
+
+  try {
+    const response = await axios.get(`/api/api/share-room/${shareId}/enter`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      console.log(response.data);
+      return response.data;
+    } else {
+      console.error(
+        `채팅방 입장 정보를 받아오지 못했습니다 ${shareId}`,
+        response
+      );
+    }
+  } catch (error) {
+    console.error(`채팅방 입장 정보를 받아오지 못했습니다 ${shareId}`, error);
+  }
+};
