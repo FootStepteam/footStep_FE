@@ -20,7 +20,7 @@ export const getCommunityAPI = async (
   };
 
   try {
-    const response = await axios.get("/api/api/community", config);
+    const response = await axios.get("/api/community", config);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -31,7 +31,7 @@ export const getCommunityAPI = async (
         config.headers = token
           ? { Authorization: `Bearer ${token}` }
           : undefined;
-        const response = await axios.get("/api/api/community", config);
+        const response = await axios.get("/api/community", config);
         return response.data;
       }
     }
@@ -48,7 +48,7 @@ export const createComment = async (
 
   try {
     const response = await axios.post(
-      `/api/api/community/${form.communityId}/comments?memberId=${memberId}`,
+      `/api/community/${form.communityId}/comments?memberId=${memberId}`,
       form,
       {
         headers: {
@@ -76,7 +76,7 @@ export const updateComment = async (
   const token = getCookie(KEY);
 
   try {
-    const response = await axios.put(`/api/api/comments/${commentId}`, form, {
+    const response = await axios.put(`/api/comments/${commentId}`, form, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -98,7 +98,7 @@ export const deleteComment = async (commentId: number) => {
   const token = getCookie(KEY);
 
   try {
-    const response = await axios.delete(`/api/api/comments/${commentId}`, {
+    const response = await axios.delete(`/api/comments/${commentId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
