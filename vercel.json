@@ -1,9 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://www.impath96.shop/:path*"
+      "source": "/api/api/:path*",
+      "destination": "http://43.200.76.174:443/:path*"
     },
-    { "source": "/:path*", "destination": "/" }
+    {
+      "source": "/:path*",
+      "destination": "/"
+    }
   ]
 }
