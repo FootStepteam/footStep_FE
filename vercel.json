@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/api/:path*",
-      "destination": "https://www.impath96.shop/api/:path*"
+      "destination": "https://www.foot-step.site/api/:path*"
     },
     { "source": "/:path*", "destination": "/" }
   ]
