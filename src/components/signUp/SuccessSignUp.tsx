@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const SuccessSignUp = () => {
   return (
-    <div className="h-screen">
+    <div className="max-h-screen">
       <div className="flex flex-col justify-center items-center mt-[20rem] mx-auto w-[30rem]">
         <p>LOGO</p>
         <p className="mb-6 text-3xl font-bold">환영합니다 !</p>

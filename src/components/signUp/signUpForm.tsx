@@ -1,109 +1,24 @@
-import { FormEvent, useState } from "react";
-import { useSignUpForm } from "../../store/useSignUpForm";
-import { signUp, checkEmailDuplication } from "../../api/userSignUp";
 import { kakaoLogin } from "../../api/kakaoLoginAPI";
-import { useNavigate } from "react-router-dom";
 import { ReactComponent as Kakao } from "../../assets/kakao.svg";
-import Swal from "sweetalert2";
+import { useSignUpForm } from "../../hooks/useSignUpForm";
 
 const SignUpForm = () => {
-  const { formData, updateForm } = useSignUpForm();
-  const navigate = useNavigate();
-  const [emailValid, setEmailValid] = useState(false);
-
-  // 이메일 형식 확인 함수
-  const isEmailValid = (email: string) => {
-    const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    return regex.test(email);
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-
-    // 필드 확인
-    if (!formData.loginEmail || !formData.nickname || !formData.password) {
-      Swal.fire({
-        title: "모두 작성하셔야 회원가입할 수 있습니다",
-        icon: "warning",
-        confirmButtonText: "확인",
-      });
-      return;
-    }
-
-    // 이메일 중복확인
-    if (!emailValid) {
-      Swal.fire({
-        title: "이메일 중복 확인을 해야합니다",
-        icon: "warning",
-        confirmButtonText: "확인",
-      });
-      return;
-    }
-
-    try {
-      const response = await signUp(formData);
-      console.log(response);
-
-      Swal.fire({
-        title: "회원가입이 완료되었습니다",
-        icon: "success",
-        confirmButtonText: "확인",
-      });
-
-      navigate("/");
-    } catch (error) {
-      // 400 에러 발생시 알림
-      const err = error as any;
-      if (err.response && err.response.status === 400) {
-        Swal.fire({
-          title: "이미 사용중인 닉네임입니다",
-          icon: "error",
-          confirmButtonText: "확인",
-        });
-      } else {
-        console.error(error);
-      }
-    }
-  };
-
-  const handleCheckEmail = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-
-    // 이메일 형식 확인
-    if (!isEmailValid(formData.loginEmail)) {
-      Swal.fire({
-        title: "이메일 형식을 확인해주세요",
-        icon: "warning",
-        confirmButtonText: "확인",
-      });
-      return;
-    }
-
-    try {
-      const duplication = await checkEmailDuplication(formData.loginEmail);
-      if (duplication) {
-        Swal.fire({
-          title: "이미 사용중인 이메일입니다",
-          icon: "error",
-          confirmButtonText: "확인",
-        });
-      } else {
-        setEmailValid(true);
-        Swal.fire({
-          title: "가입 가능한 이메일입니다",
-          icon: "success",
-          confirmButtonText: "확인",
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    register,
+    errors,
+    isCheckEmail,
+    genderType,
+    handleSubmit,
+    onSubmitHandler,
+    onClickCheckEmailHandler,
+    onClickGenderHandler,
+    onKeyDownEmailHandler,
+    onBlurEmailHandler,
+  } = useSignUpForm();
 
   return (
     <div className="mt-[10rem] mx-auto w-[20rem]">
+      <p>LOGO</p>
       <h1 className="mb-12 text-black-002 font-bold text-xl">회원가입</h1>
       <div className="mb-8">
         <p className="flex justify-center mb-2 text-[0.85rem] text-gray-001">
@@ -123,20 +38,36 @@ const SignUpForm = () => {
         </button>
       </div>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmitHandler)}
         className="flex flex-col mx-auto w-[20rem] h-screen bg-white"
       >
         <div className="mb-6">
           <label className="block mb-3 font-bold text-black-002">이메일</label>
           <input
             type="email"
-            name="loginEmail"
-            value={formData.loginEmail}
-            onChange={updateForm}
-            disabled={emailValid}
+            id="loginEmail"
+            {...register("loginEmail")}
+            onKeyDown={onKeyDownEmailHandler}
+            onBlur={onBlurEmailHandler}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="이메일을 입력하세요"
           />
+          <p
+            className={`text-[0.75rem] ${
+              !isCheckEmail.check ? "text-red-001" : "text-blue-002"
+            }`}
+          >
+            {isCheckEmail.checkEmailMsg.length !== 0
+              ? isCheckEmail.checkEmailMsg
+              : errors.loginEmail && errors.loginEmail.message}
+          </p>
+          <button
+            type="button"
+            className="mt-4 mx-auto w-[20rem] h-[3.2rem] bg-platinum-001 hover:bg-platinum-002 rounded-md text-white font-bold"
+            onClick={onClickCheckEmailHandler}
+          >
+            중복확인
+          </button>
         </div>
         <div className="mb-6">
           <label className="block mb-3 font-bold text-black-002">
@@ -147,13 +78,17 @@ const SignUpForm = () => {
           </p>
           <input
             type="password"
-            name="password"
-            value={formData.password}
-            onChange={updateForm}
+            id="password"
+            {...register("password")}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="비밀번호"
             maxLength={16}
           />
+          {errors.password && (
+            <p className="text-[0.75rem] text-red-001">
+              {errors.password.message}
+            </p>
+          )}
         </div>
         <div className="mb-6">
           <label className="block mb-3 font-bold text-black-002">
@@ -161,12 +96,16 @@ const SignUpForm = () => {
           </label>
           <input
             type="password"
-            name="checkPassword"
-            value={formData.password}
-            onChange={updateForm}
+            id="checkPassword"
+            {...register("checkPassword")}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="비밀번호 확인"
           />
+          {errors.checkPassword && (
+            <p className="text-[0.75rem] text-red-001">
+              {errors.checkPassword.message}
+            </p>
+          )}
         </div>
         <div className="mb-6">
           <label className="block mb-3 font-bold text-black-002">닉네임</label>
@@ -174,29 +113,45 @@ const SignUpForm = () => {
             닉네임을 2자 이상 10자 이하로 입력해주세요.
           </p>
           <input
-            name="nickname"
-            value={formData.nickname}
-            onChange={updateForm}
+            type="text"
+            id="nickname"
+            {...register("nickname")}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="별명 (2~10자)"
           />
+          {errors.nickname && (
+            <p className="text-[0.75rem] text-red-001">
+              {errors.nickname.message}
+            </p>
+          )}
         </div>
         <div className="mb-12">
           <p className="mb-3 font-bold text-black-002">성별</p>
           <div className="flex w-full">
             <button
               type="button"
-              className="grow py-3 border border-gray-003 hover:border-blue-004 rounded-l-md hover:bg-blue-004 font-bold hover:text-white transition-colors duration-100"
+              className={`grow py-3 border border-gray-003 hover:border-blue-004 rounded-l-md ${
+                genderType.gender === "male" && "bg-blue-003 text-white"
+              } hover:bg-blue-004 font-bold hover:text-white transition-colors duration-100`}
+              onClick={() => onClickGenderHandler("male")}
             >
               남성
             </button>
             <button
               type="button"
-              className="grow py-3 border-t border-r border-b border-gray-003 hover:border-blue-004 font-bold hover:text-white rounded-r-md hover:bg-blue-004 transition-colors duration-100"
+              className={`grow py-3 border-t border-r border-b border-gray-003 hover:border-blue-004 font-bold hover:text-white rounded-r-md ${
+                genderType.gender === "female" && "bg-blue-003 text-white"
+              } hover:bg-blue-004 transition-colors duration-100`}
+              onClick={() => onClickGenderHandler("female")}
             >
               여성
             </button>
           </div>
+          {genderType.gender === "" && !genderType.initial && (
+            <p className="text-[0.75rem] text-red-001">
+              성별 선택은 필수입니다.
+            </p>
+          )}
         </div>
         <button
           type="submit"
