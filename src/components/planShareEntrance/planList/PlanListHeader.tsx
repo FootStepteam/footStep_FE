@@ -1,13 +1,11 @@
 import { useRecoilState } from "recoil";
 import { createModalOpenState } from "../../../state/createModalOpen";
-import { refreshTokenAPI } from "../../../api/shareRoomAPI";
 
 const PlanListHeader = () => {
   const [open, setOpen] = useRecoilState(createModalOpenState);
 
   const onClickHandler = () => {
     setOpen(!open);
-    refreshTokenAPI();
   };
 
   return (

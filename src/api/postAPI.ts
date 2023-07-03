@@ -1,14 +1,18 @@
 import axios from "axios";
 import { ICommunityPost } from "../type/communityPage";
 import { getCookie } from "../utils/cookie";
-import { refreshTokenAPI } from "./shareRoomAPI";
 import { getMemberIdAPI } from "./newPostAPI";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 export const getPostAPI = async (
   communityId: number
 ): Promise<ICommunityPost> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const config = token
     ? { headers: { Authorization: `Bearer ${token}` } }
@@ -23,18 +27,18 @@ export const getPostAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        await refreshTokenAPI();
-        return getPostAPI(communityId);
-      }
     }
     throw error;
   }
 };
 
 export const likePostAPI = async (communityId: number): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 
@@ -51,18 +55,18 @@ export const likePostAPI = async (communityId: number): Promise<void> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        await refreshTokenAPI();
-        return likePostAPI(communityId);
-      }
     }
     throw error;
   }
 };
 
 export const unlikePostAPI = async (communityId: number): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 
@@ -79,10 +83,6 @@ export const unlikePostAPI = async (communityId: number): Promise<void> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        await refreshTokenAPI();
-        return unlikePostAPI(communityId);
-      }
     }
     throw error;
   }
@@ -92,8 +92,12 @@ export const updatePostAPI = async (
   communityId: number,
   updatedContent: string
 ): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 
@@ -110,18 +114,18 @@ export const updatePostAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        await refreshTokenAPI();
-        return updatePostAPI(communityId, updatedContent);
-      }
     }
     throw error;
   }
 };
 
 export const deletePostAPI = async (communityId: number): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 
@@ -137,10 +141,6 @@ export const deletePostAPI = async (communityId: number): Promise<void> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        await refreshTokenAPI();
-        return deletePostAPI(communityId);
-      }
     }
     throw error;
   }

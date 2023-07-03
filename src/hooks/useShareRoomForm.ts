@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { getShareRoomInfoAPI } from "../api/shareRoomAPI";
+import { getShareRoomDetailAPI } from "../api/shareRoomAPI";
 import { INITIAL_FORM, INITIAL_SHARE_ROOM_INFO } from "../constants/initial";
 import { IShareRoom } from "../type/shareRoom";
 import { IForm, ISelectedDate } from "../type/shareRoomForm";
@@ -13,8 +13,8 @@ const useShareRoomForm = () => {
     useState<IShareRoom>(INITIAL_SHARE_ROOM_INFO);
   const setShareRoomInfo = useSetRecoilState(shareRoomInfo);
 
-  const getData = async (shareRoomID: string) => {
-    const response = await getShareRoomInfoAPI(shareRoomID);
+  const getData = async (shareRoomID: number) => {
+    const response = await getShareRoomDetailAPI(shareRoomID);
     setForm({
       title: response.shareName,
       startDate: response.travelStartDate,

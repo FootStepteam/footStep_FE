@@ -1,12 +1,11 @@
 import axios from "axios";
-import { getCookie } from "../utils/cookie";
 import {
   ICommentCreateForm,
   ICommentUpdateForm,
   ICommunityData,
   IGetCommunityParams,
 } from "../type/communityPage";
-import { refreshTokenAPI } from "./shareRoomAPI";
+import { getCookie } from "../utils/cookie";
 
 export const getCommunityAPI = async (
   params?: IGetCommunityParams
@@ -25,15 +24,6 @@ export const getCommunityAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        await refreshTokenAPI();
-        token = getCookie(KEY);
-        config.headers = token
-          ? { Authorization: `Bearer ${token}` }
-          : undefined;
-        const response = await axios.get("/api/api/community", config);
-        return response.data;
-      }
     }
   }
   return { communities: [], lastPage: false };
@@ -60,10 +50,6 @@ export const createComment = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        refreshTokenAPI();
-        createComment(form, memberId);
-      }
     }
   }
 };
@@ -85,10 +71,6 @@ export const updateComment = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        refreshTokenAPI();
-        updateComment(commentId, form);
-      }
     }
   }
 };
@@ -107,10 +89,6 @@ export const deleteComment = async (commentId: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
-      if (responseErrorCode === "EXPIRED_ACCESS_TOKEN") {
-        refreshTokenAPI();
-        deleteComment(commentId);
-      }
     }
   }
 };

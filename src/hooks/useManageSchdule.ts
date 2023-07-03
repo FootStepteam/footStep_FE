@@ -26,7 +26,7 @@ const useManageSchedule = () => {
         seq: 1,
       };
 
-      addDestinationAPI(shareRoomID, bodyData);
+      addDestinationAPI(Number(shareRoomID), bodyData);
     }
   };
 
