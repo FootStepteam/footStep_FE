@@ -48,14 +48,14 @@ const Menu = () => {
   };
 
   return (
-    <div className="flex grow">
+    <div className="flex">
       {menus.map((element) => (
         <div
           key={element.menu}
           onClick={() => onClickHandler(element.path)}
-          className={`flex grow justify-center items-center text-[1.3rem] rounded-lg font-semibold cursor-pointer transition-all duration-150 ${
+          className={`flex px-3 py-4 justify-center items-center text-xl rounded-sm font-semibold cursor-pointer transition-all duration-100 ${
             location.pathname === "/"
-              ? "hover:bg-white-001 hover:text-black-001"
+              ? "hover:bg-sky-005"
               : "hover:bg-sky-005 hover:text-white-001"
           }`}
         >

@@ -27,7 +27,7 @@ const Tab = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full border-y border-gray-003">
+    <div className="flex justify-center items-center w-full border-b border-gray-003">
       {tabs.map((tab) => (
         <Link
           key={tab.menu}

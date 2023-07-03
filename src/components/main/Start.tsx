@@ -17,7 +17,7 @@ const Start = () => {
   };
 
   return (
-    <section className="relative flex pt-[112px] w-full min-h-screen bg-gradient-to-r from-blue-002 from-10% via-sky-001 via-30% to-sky-005 to-90%">
+    <section className="relative flex w-full min-h-screen bg-gradient-to-r from-blue-002 from-10% via-sky-001 via-30% to-sky-005 to-90%">
       <div className="ml-[12rem] pt-[15rem] h-screen min-w-max">
         <h1 className="text-white text-[3rem] font-bold">
           여행 일정 계획 플랫폼
