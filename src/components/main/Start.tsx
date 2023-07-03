@@ -35,8 +35,8 @@ const Start = () => {
         </div>
       </div>
       <div className="flex">
-        <Map className="absolute top-[18rem] right-[14rem] w-[37rem] h-[33rem] rounded-lg shadow-xl" />
-        <MapChat className="absolute top-[10rem] right-[6rem] w-[37rem] h-[33rem] rounded-lg shadow-xl" />
+        <Map className="absolute top-[18rem] right-[14rem] w-[44rem] h-[25rem] rounded-lg shadow-md z-[5]" />
+        <MapChat className="absolute top-[10rem] right-[6rem] w-[44rem] h-[25rem] rounded-lg shadow-md z-[6]" />
       </div>
     </section>
   );
