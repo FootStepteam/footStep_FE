@@ -53,11 +53,7 @@ const Menu = () => {
         <div
           key={element.menu}
           onClick={() => onClickHandler(element.path)}
-          className={`flex px-3 py-4 justify-center items-center text-xl rounded-sm font-semibold cursor-pointer transition-all duration-100 ${
-            location.pathname === "/"
-              ? "hover:bg-sky-005"
-              : "hover:bg-sky-005 hover:text-white-001"
-          }`}
+          className="flex px-3 py-4 justify-center items-center text-xl hover:text-white hover:bg-sky-005 rounded-sm font-semibold cursor-pointer transition-all duration-100"
         >
           {element.menu}
         </div>
