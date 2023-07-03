@@ -25,11 +25,11 @@ const HeaderContainer = () => {
 
   return (
     <header
-      className={`fixed top-0 px-4 py-6 w-full ${
+      className={`sticky top-0 px-4 py-6 w-full ${
         path === "/"
           ? scrollY > 30
             ? "bg-white border-b border-gray-003 text-black"
-            : "bg-transparent text-white"
+            : "bg-gradient-to-r from-blue-002 from-10% via-sky-001 via-30% to-sky-005 to-90% text-white"
           : "bg-white border-b border-gray-003"
       } transition-colors duration-150 ease-in-out z-50`}
     >

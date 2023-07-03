@@ -12,7 +12,7 @@ const CommunityPage = () => {
   };
 
   return (
-    <div className="pt-[112px]">
+    <div>
       <HeaderContainer />
       <div className="flex flex-col justify-center items-center h-44 bg-sky-005">
         <SearchBar onSearch={handleSearch} />
