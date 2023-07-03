@@ -35,19 +35,13 @@ export const errorMsg = (errorCode: string) => {
         icon: "error",
         text: "공유방 생성자가 아닙니다.",
       });
+      `  `;
       break;
 
     case "WRONG_MEMBER_PASSWORD":
       Swal.fire({
         icon: "error",
         text: "아이디나 비밀번호가 일치하지 않습니다.",
-      });
-      break;
-
-    case "WRONG_MEMBER_PASSWORD":
-      Swal.fire({
-        icon: "error",
-        text: "비밀번호가 일치하지 않습니다.",
       });
       break;
 

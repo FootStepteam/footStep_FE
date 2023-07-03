@@ -5,7 +5,7 @@ const KakaoLoginButton = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <p className="mt-14 mb-2 text-sm text-gray-001">
-        SNS계정으로 간편 로그인/회원가입
+        카카오계정으로 간편 로그인/회원가입
       </p>
       <button
         type="button"
