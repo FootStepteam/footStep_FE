@@ -1,5 +1,5 @@
 import axios from "axios";
-import Swal from "sweetalert2";
+import { errorMsg } from "../utils/errorMsgAlert";
 import { getCookie } from "../utils/cookie";
 import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
@@ -40,17 +40,7 @@ export const addDestinationAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "ALREADY_DESTINATION") {
-        Swal.fire({
-          icon: "error",
-          text: "이미 등록된 목적지 입니다.",
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          text: "처리 중 오류가 발생하였습니다.",
-        });
-      }
+      errorMsg(errorCode);
     }
   }
 };
@@ -79,17 +69,7 @@ export const deleteDestinationAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "NOT_FIND_DESTINATION_ID") {
-        Swal.fire({
-          icon: "error",
-          text: "이미 삭제된 목적지 입니다.",
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
-        });
-      }
+      errorMsg(errorCode);
     }
   }
 };

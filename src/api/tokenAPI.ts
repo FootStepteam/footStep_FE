@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getCookie, setCookie } from "../utils/cookie";
+import { errorMsg } from "../utils/errorMsgAlert";
 
 export const checkTokenAPI = async (token: string) => {
   try {
@@ -8,10 +9,12 @@ export const checkTokenAPI = async (token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
     return response.data;
   } catch (error) {
-    console.log(error);
+    if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
+    }
   }
 };
 
@@ -34,6 +37,9 @@ export const refreshTokenAPI = async () => {
     // 재발급 token
     return response.data;
   } catch (error) {
-    console.log(error);
+    if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
+    }
   }
 };

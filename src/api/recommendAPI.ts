@@ -1,8 +1,8 @@
 import axios from "axios";
-import Swal from "sweetalert2";
 import { IStartPoint } from "../type/startPoint";
 import { getCookie } from "../utils/cookie";
 import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
+import { errorMsg } from "../utils/errorMsgAlert";
 
 export const recommendScheduleAPI = async (
   startPoint: IStartPoint,
@@ -29,22 +29,7 @@ export const recommendScheduleAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "NOT_FIND_SHARE_ID") {
-        Swal.fire({
-          icon: "error",
-          text: "존재하지 않는 공유방 입니다.",
-        });
-      } else if (errorCode === "NOT_FIND_DESTINATION_ID") {
-        Swal.fire({
-          icon: "error",
-          text: "존재하지 않는 목적지 입니다.",
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
-        });
-      }
+      errorMsg(errorCode);
     }
   }
 };
@@ -56,9 +41,9 @@ export const getRecommendPlacesAPI = async (keyword: string) => {
     );
     return response.data;
   } catch (error) {
-    Swal.fire({
-      icon: "error",
-      text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
-    });
+    if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
+    }
   }
 };

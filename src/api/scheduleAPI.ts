@@ -2,6 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { getCookie } from "../utils/cookie";
 import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
+import { errorMsg } from "../utils/errorMsgAlert";
 
 export const getScheduleAPI = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
@@ -24,6 +25,7 @@ export const getScheduleAPI = async (shareRoomID: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
     }
   }
 };
@@ -47,7 +49,7 @@ export const getScheduleByDateAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      console.log(errorCode);
+      errorMsg(errorCode);
     }
   }
 };
@@ -74,12 +76,7 @@ export const completeScheduleAPI = async (shareRoomID: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "NOT_MATCH_CREATE_MEMBER") {
-        Swal.fire({
-          icon: "error",
-          text: "공유방 생성자가 아닙니다.",
-        });
-      }
+      errorMsg(errorCode);
     }
   }
 };
@@ -120,6 +117,9 @@ export const addSchedultMemoAPI = async (
       });
     }
   } catch (error) {
-    console.log(error);
+    if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
+    }
   }
 };

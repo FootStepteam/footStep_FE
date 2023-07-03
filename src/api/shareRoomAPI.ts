@@ -6,6 +6,7 @@ import {
 } from "../type/shareRoom";
 import { getCookie } from "../utils/cookie";
 import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
+import { errorMsg } from "../utils/errorMsgAlert";
 
 // 공유코드로 공유방 찾기
 export const getShareRoomAPI = async (shareRoomID: number) => {
@@ -29,12 +30,7 @@ export const getShareRoomAPI = async (shareRoomID: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      if (errorCode === "NOT_FIND_SHARE_ID") {
-        Swal.fire({
-          icon: "error",
-          text: "공유방이 존재하지 않습니다.",
-        });
-      }
+      errorMsg(errorCode);
     }
   }
 };
@@ -67,7 +63,7 @@ export const createShareRoomAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
-      console.log(errorCode);
+      errorMsg(errorCode);
     }
   }
 };
@@ -91,6 +87,7 @@ export const getIncludeShareRoomAPI = async () => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
     }
   }
 };
@@ -114,6 +111,8 @@ export const getShareRoomDetailAPI = async (shareRoomID: number) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
     }
   }
 };
@@ -167,10 +166,8 @@ export const recommendPlacesAPI = async (keyword: string) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      Swal.fire({
-        icon: "error",
-        text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
-      });
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
     }
   }
 };
@@ -190,7 +187,10 @@ export const uploadImageAPI = async (formData: FormData) => {
       }
     );
   } catch (error) {
-    console.log(error);
+    if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
+    }
   }
 };
 
@@ -211,10 +211,10 @@ export const sendImageKaKaoAPI = async (
       });
     }
   } catch (error) {
-    Swal.fire({
-      icon: "error",
-      text: "처리 중 오류가 발생하였습니다.",
-    });
+    if (axios.isAxiosError(error)) {
+      const errorCode = error.response?.data.errorCode;
+      errorMsg(errorCode);
+    }
   }
 };
 
