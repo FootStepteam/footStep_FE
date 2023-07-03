@@ -186,6 +186,7 @@ export const uploadImageAPI = async (formData: FormData) => {
         },
       }
     );
+    console.log(response);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;

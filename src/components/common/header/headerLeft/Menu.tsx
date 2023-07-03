@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import Swal from "sweetalert2";
 import { useRequireAuth } from "../../../../hooks/useRequireAuth";
 
 const menus = [
