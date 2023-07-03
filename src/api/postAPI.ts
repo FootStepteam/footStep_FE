@@ -27,6 +27,7 @@ export const getPostAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
     throw error;
   }
@@ -55,6 +56,7 @@ export const likePostAPI = async (communityId: number): Promise<void> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
     throw error;
   }
@@ -83,6 +85,7 @@ export const unlikePostAPI = async (communityId: number): Promise<void> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
     throw error;
   }
@@ -114,6 +117,7 @@ export const updatePostAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
     throw error;
   }
@@ -141,6 +145,7 @@ export const deletePostAPI = async (communityId: number): Promise<void> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
     throw error;
   }
