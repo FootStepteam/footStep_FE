@@ -6,7 +6,7 @@ export const createChatRoom = async (name: string) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
   try {
@@ -29,7 +29,7 @@ export const getChatRooms = async () => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -54,7 +54,7 @@ export const getChatRoomDetail = async (roomId: string) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 

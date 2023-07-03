@@ -6,7 +6,7 @@ export const getUserInfo = async (accessToken: string): Promise<IMember> => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -18,7 +18,7 @@ export const updateMemberProfile = async (formData: any) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 

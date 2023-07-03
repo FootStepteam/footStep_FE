@@ -10,7 +10,7 @@ export const getPlanScheduleAPI = async (
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -46,7 +46,7 @@ export const postCommunityAPI = async (
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -77,7 +77,7 @@ export const getMemberIdAPI = async (): Promise<number> => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 

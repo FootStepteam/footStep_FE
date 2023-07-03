@@ -7,7 +7,7 @@ export const getScheduleAPI = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -35,7 +35,7 @@ export const getScheduleByDateAPI = async (
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -56,7 +56,7 @@ export const completeScheduleAPI = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -97,7 +97,7 @@ export const addSchedultMemoAPI = async (
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 

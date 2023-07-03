@@ -12,7 +12,7 @@ export const getShareRoomAPI = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -46,7 +46,7 @@ export const createShareRoomAPI = async (
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -100,10 +100,11 @@ export const getShareRoomDetailAPI = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
-
+  console.log(isAvailableToken);
+  console.log(token);
   try {
     const response = await axios.get(`/api/api/share-room/${shareRoomID}`, {
       headers: {
@@ -113,9 +114,6 @@ export const getShareRoomDetailAPI = async (shareRoomID: number) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error.response);
-      const errorCode = error.response?.data.errorCode;
-      console.log(errorCode);
     }
   }
 };
@@ -135,7 +133,7 @@ export const editShareRoomInfoAPI = async (
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -153,7 +151,7 @@ export const recommendPlacesAPI = async (keyword: string) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -224,7 +222,7 @@ export const sendTokenEnteringShareRoom = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 

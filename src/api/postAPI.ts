@@ -10,7 +10,7 @@ export const getPostAPI = async (
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -36,7 +36,7 @@ export const likePostAPI = async (communityId: number): Promise<void> => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -61,8 +61,12 @@ export const likePostAPI = async (communityId: number): Promise<void> => {
 };
 
 export const unlikePostAPI = async (communityId: number): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 
@@ -88,8 +92,12 @@ export const updatePostAPI = async (
   communityId: number,
   updatedContent: string
 ): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 
@@ -112,8 +120,12 @@ export const updatePostAPI = async (
 };
 
 export const deletePostAPI = async (communityId: number): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 
