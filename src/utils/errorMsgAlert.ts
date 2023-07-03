@@ -37,6 +37,20 @@ export const errorMsg = (errorCode: string) => {
       });
       break;
 
+    case "WRONG_MEMBER_PASSWORD":
+      Swal.fire({
+        icon: "error",
+        text: "아이디나 비밀번호가 일치하지 않습니다.",
+      });
+      break;
+
+    case "WRONG_MEMBER_PASSWORD":
+      Swal.fire({
+        icon: "error",
+        text: "비밀번호가 일치하지 않습니다.",
+      });
+      break;
+
     default:
       Swal.fire({
         icon: "error",

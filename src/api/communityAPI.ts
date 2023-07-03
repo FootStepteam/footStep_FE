@@ -24,6 +24,7 @@ export const getCommunityAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
   }
   return { communities: [], lastPage: false };
@@ -50,6 +51,7 @@ export const createComment = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
   }
 };
@@ -71,6 +73,7 @@ export const updateComment = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
   }
 };
@@ -89,6 +92,7 @@ export const deleteComment = async (commentId: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const responseErrorCode = error.response?.data.code;
+      console.log(responseErrorCode);
     }
   }
 };
