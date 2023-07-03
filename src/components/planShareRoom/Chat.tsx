@@ -5,7 +5,8 @@ import { Stomp } from "@stomp/stompjs";
 import { getMemberByAccessToken } from "../../api/memberAPI";
 import { useRecoilValue } from "recoil";
 import { shareRoomInfo } from "../../store/shareRoomInfo";
-import { getShareRoomEnterMessage } from "../../api/chatAPI";
+import { sendTokenEnteringShareRoom } from "../../api/shareRoomAPI";
+import { getChatRoomEnterMessage } from "../../api/chatAPI";
 
 declare global {
   interface Window {
@@ -17,7 +18,7 @@ interface IChatMessage {
   nickName: string;
   shareId: number;
   message: string;
-  shareRoomeEnterId: number;
+  shareRoomEnterId: number;
   type: "ENTER" | "JOIN" | "TALK";
 }
 
@@ -53,10 +54,9 @@ const Chat = () => {
       setUsername(userName);
 
       if (shareId) {
-        console.log(shareId);
-        const enterData = await getShareRoomEnterMessage(shareId);
+        const enterData = await sendTokenEnteringShareRoom(shareId);
         if (enterData && enterData.shareRoomEnterId) {
-          setShareRoomEnterId(enterData.shareRoomeEnterId);
+          setShareRoomEnterId(enterData.shareRoomEnterId);
         }
       }
     };
@@ -66,12 +66,17 @@ const Chat = () => {
       .catch((error) => console.error("Failed to fetch details:", error));
   }, [shareId]);
 
-  const connect = () => {
+  const connect = async () => {
     const socketFactory = () =>
-      new window.SockJS("http://43.200.76.174:443/ws-stomp");
+      new window.SockJS("http://43.200.76.174:8080/ws-stomp");
     const client = Stomp.over(socketFactory);
-    stompClient.current = client; // Update the stompClient reference
+    stompClient.current = client;
     client.connect({}, onConnected, onError);
+
+    const pastMessages = await getChatRoomEnterMessage(shareId);
+    if (pastMessages && Array.isArray(pastMessages)) {
+      setMessages(pastMessages);
+    }
   };
 
   const onConnected = () => {
@@ -83,7 +88,12 @@ const Chat = () => {
     stompClient.current?.send(
       "/pub/chat/message",
       {},
-      JSON.stringify({ shareId: shareId, nickName: username, type: "ENTER" })
+      JSON.stringify({
+        shareId: shareId,
+        nickName: username,
+        shareRoomEnterId: shareRoomEnterId,
+        type: "ENTER",
+      })
     );
   };
 

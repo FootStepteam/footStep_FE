@@ -75,8 +75,13 @@ export const getChatRoomDetail = async (roomId: string) => {
   }
 };
 
-export const getShareRoomEnterMessage = async (shareId: number) => {
-  const token = getCookie(KEY);
+export const getChatRoomEnterMessage = async (shareId: number) => {
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken.isValid) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.get(`/api/api/share-room/${shareId}/enter`, {
