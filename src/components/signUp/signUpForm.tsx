@@ -17,8 +17,8 @@ const SignUpForm = () => {
   } = useSignUpForm();
 
   return (
-    <div className="mt-[10rem] mx-auto w-[20rem]">
-      <p>LOGO</p>
+    <div className="mt-[8rem] mx-auto w-[20rem]">
+      <p className="flex justify-center text-5xl mb-20">LOGO 임시</p>
       <h1 className="mb-12 text-black-002 font-bold text-xl">회원가입</h1>
       <div className="mb-8">
         <p className="flex justify-center mb-2 text-[0.85rem] text-gray-001">
