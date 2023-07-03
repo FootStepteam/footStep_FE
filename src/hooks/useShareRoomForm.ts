@@ -13,7 +13,7 @@ const useShareRoomForm = () => {
     useState<IShareRoom>(INITIAL_SHARE_ROOM_INFO);
   const setShareRoomInfo = useSetRecoilState(shareRoomInfo);
 
-  const getData = async (shareRoomID: string) => {
+  const getData = async (shareRoomID: number) => {
     const response = await getShareRoomDetailAPI(shareRoomID);
     setForm({
       title: response.shareName,

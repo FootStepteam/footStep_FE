@@ -75,7 +75,7 @@ const ScheduleAreaHeader = () => {
               icon: "success",
               text: "수정이 성공적으로 되었습니다",
             });
-            getData(shareRoomID);
+            getData(Number(shareRoomID));
             setEditStatus(false);
           } else {
             MySwal.fire({
@@ -112,7 +112,7 @@ const ScheduleAreaHeader = () => {
 
   useEffect(() => {
     if (shareRoomID) {
-      getData(shareRoomID);
+      getData(Number(shareRoomID));
     }
   }, []);
 

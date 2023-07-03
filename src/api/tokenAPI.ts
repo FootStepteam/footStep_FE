@@ -3,14 +3,15 @@ import { getCookie, setCookie } from "../utils/cookie";
 
 export const checkTokenAPI = async (token: string) => {
   try {
-    const response = await axios.post(`/api/api/auth/check-token`, {
+    const response = await axios.post(`/api/api/auth/check-token`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(response);
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) console.log(error);
+    console.log(error);
   }
 };
 

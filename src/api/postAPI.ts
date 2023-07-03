@@ -2,12 +2,17 @@ import axios from "axios";
 import { ICommunityPost } from "../type/communityPage";
 import { getCookie } from "../utils/cookie";
 import { getMemberIdAPI } from "./newPostAPI";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 export const getPostAPI = async (
   communityId: number
 ): Promise<ICommunityPost> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   const config = token
     ? { headers: { Authorization: `Bearer ${token}` } }
@@ -28,8 +33,12 @@ export const getPostAPI = async (
 };
 
 export const likePostAPI = async (communityId: number): Promise<void> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   const memberId = await getMemberIdAPI();
 

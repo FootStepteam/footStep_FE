@@ -10,7 +10,7 @@ export const getPlanScheduleAPI = async (
   const KEY = "accessToken";
   const token = getCookie(KEY);
   try {
-    const roomInfo = await getShareRoomDetailAPI(String(shareId));
+    const roomInfo = await getShareRoomDetailAPI(Number(shareId));
     const startDate = roomInfo.travelStartDate;
     const endDate = roomInfo.travelEndDate;
     console.log(startDate, endDate);

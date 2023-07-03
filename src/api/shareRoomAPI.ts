@@ -1,23 +1,24 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import {
   ICreateShareRoomFormValue,
   ISubmitShareRoomData,
 } from "../type/shareRoom";
-import { getCookie, setCookie } from "../utils/cookie";
-import Swal from "sweetalert2";
+import { getCookie } from "../utils/cookie";
 import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 // 공유코드로 공유방 찾기
-export const getShareRoomAPI = async (shareCode: number) => {
+export const getShareRoomAPI = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
   if (!isAvailableToken) {
     token = await refreshTokenAPI();
   }
+
   try {
     const response = await axios.get(
-      `/api/api/share-room/find?q=${shareCode}`,
+      `/api/api/share-room/find?q=${shareRoomID}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -28,6 +29,12 @@ export const getShareRoomAPI = async (shareCode: number) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
+      if (errorCode === "NOT_FIND_SHARE_ID") {
+        Swal.fire({
+          icon: "error",
+          text: "공유방이 존재하지 않습니다.",
+        });
+      }
     }
   }
 };
@@ -60,6 +67,7 @@ export const createShareRoomAPI = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorCode = error.response?.data.errorCode;
+      console.log(errorCode);
     }
   }
 };
@@ -69,7 +77,7 @@ export const getIncludeShareRoomAPI = async () => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
-  if (!isAvailableToken) {
+  if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
 
@@ -88,16 +96,16 @@ export const getIncludeShareRoomAPI = async () => {
 };
 
 // 공유방 상세정보 조회
-export const getShareRoomDetailAPI = async (shareRoomID: string) => {
-  const id = Number(shareRoomID);
+export const getShareRoomDetailAPI = async (shareRoomID: number) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
   if (!isAvailableToken) {
     token = await refreshTokenAPI();
   }
+
   try {
-    const response = await axios.get(`/api/api/share-room/${id}`, {
+    const response = await axios.get(`/api/api/share-room/${shareRoomID}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -131,7 +139,7 @@ export const editShareRoomInfoAPI = async (
     token = await refreshTokenAPI();
   }
 
-  const response = await axios.put(`/api/api/share-room/${id}`, data, {
+  const response = await axios.put(`/api/api/share-room/${shareRoomID}`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -140,9 +148,14 @@ export const editShareRoomInfoAPI = async (
   return response.status;
 };
 
+// 추천장소 검색
 export const recommendPlacesAPI = async (keyword: string) => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.get(
@@ -156,15 +169,17 @@ export const recommendPlacesAPI = async (keyword: string) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const errorCode = error.response?.data.errorCode;
+      Swal.fire({
+        icon: "error",
+        text: "처리 중 오류가 발생하였습니다. 잠시 후에 다시 시도해주세요.",
+      });
     }
   }
 };
 
+// 이미지 업로드
 export const uploadImageAPI = async (formData: FormData) => {
   const boundary = "----WebKitFormBoundary";
-
-  console.log(formData);
 
   try {
     const response = await axios.post(
@@ -176,12 +191,12 @@ export const uploadImageAPI = async (formData: FormData) => {
         },
       }
     );
-    console.log(response);
   } catch (error) {
     console.log(error);
   }
 };
 
+// 카카오에 이미지 전송
 export const sendImageKaKaoAPI = async (
   authorizationCode: string,
   shareRoomID: number
@@ -205,13 +220,22 @@ export const sendImageKaKaoAPI = async (
   }
 };
 
-export const sendTokenEnteringShareRoom = async (shareId: number) => {
-  const accessToken = getCookie("accessToken");
-  const response = await axios.post(`/api/api/share-room/${shareId}/enter`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+export const sendTokenEnteringShareRoom = async (shareRoomID: number) => {
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
+
+  const response = await axios.post(
+    `/api/api/share-room/${shareRoomID}/enter`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   console.log(response);
   return response.data;
 };

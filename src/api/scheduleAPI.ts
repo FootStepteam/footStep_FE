@@ -1,19 +1,25 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { getCookie } from "../utils/cookie";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 export const getScheduleAPI = async (shareRoomID: number) => {
-  const id = Number(shareRoomID);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
 
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
-    const response = await axios.get(`/api/api/share-room/${id}/schedule`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `/api/api/share-room/${shareRoomID}/schedule`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -26,6 +32,13 @@ export const getScheduleByDateAPI = async (
   shareRoomID: number,
   planDate: string
 ) => {
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
+
   try {
     const response = await axios.get(
       `/api/api/share-room/${shareRoomID}/schedule/plan?date=${planDate}`
@@ -40,8 +53,12 @@ export const getScheduleByDateAPI = async (
 };
 
 export const completeScheduleAPI = async (shareRoomID: number) => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.delete(
@@ -77,8 +94,12 @@ export const addSchedultMemoAPI = async (
   memberID: number,
   form: IForm
 ) => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.post(

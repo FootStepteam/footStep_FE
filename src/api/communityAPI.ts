@@ -1,12 +1,11 @@
 import axios from "axios";
-import { getCookie } from "../utils/cookie";
 import {
   ICommentCreateForm,
   ICommentUpdateForm,
   ICommunityData,
   IGetCommunityParams,
 } from "../type/communityPage";
-import { refreshTokenAPI } from "./shareRoomAPI";
+import { getCookie } from "../utils/cookie";
 
 export const getCommunityAPI = async (
   params?: IGetCommunityParams

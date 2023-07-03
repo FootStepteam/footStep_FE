@@ -2,13 +2,18 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { IStartPoint } from "../type/startPoint";
 import { getCookie } from "../utils/cookie";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 export const recommendScheduleAPI = async (
   startPoint: IStartPoint,
   shareRoomID: number
 ) => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.put(
@@ -23,7 +28,6 @@ export const recommendScheduleAPI = async (
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
       const errorCode = error.response?.data.errorCode;
       if (errorCode === "NOT_FIND_SHARE_ID") {
         Swal.fire({

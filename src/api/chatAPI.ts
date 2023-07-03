@@ -1,11 +1,14 @@
 import axios from "axios";
 import { getCookie } from "../utils/cookie";
-
-const KEY = "accessToken";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 export const createChatRoom = async (name: string) => {
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
 
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
   try {
     const response = await axios.post("/api/chat/room", null, {
       params: {
@@ -23,7 +26,12 @@ export const createChatRoom = async (name: string) => {
 };
 
 export const getChatRooms = async () => {
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.get("/api/chat/rooms", {
@@ -43,7 +51,12 @@ export const getChatRooms = async () => {
 };
 
 export const getChatRoomDetail = async (roomId: string) => {
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.get(`/api/chat/room/${roomId}`, {

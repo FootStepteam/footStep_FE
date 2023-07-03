@@ -1,6 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { getCookie } from "../utils/cookie";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 interface IBodyDate {
   planDate: string;
@@ -13,12 +14,17 @@ interface IBodyDate {
 }
 
 export const addDestinationAPI = async (
-  shareRoomID: string,
+  shareRoomID: number,
   bodyData: IBodyDate
 ) => {
   const id = Number(shareRoomID);
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.post(
@@ -53,8 +59,12 @@ export const deleteDestinationAPI = async (
   shareRoomID: number,
   destinationId: number
 ) => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
+
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
+  }
 
   try {
     const response = await axios.delete(

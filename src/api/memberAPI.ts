@@ -1,12 +1,13 @@
 import axios from "axios";
 import { getCookie } from "../utils/cookie";
+import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 export const getMemberByAccessToken = async (): Promise<any> => {
-  const KEY = "accessToken";
-  const token = getCookie(KEY);
+  let token = getCookie("accessToken");
+  const isAvailableToken = await checkTokenAPI(token);
 
-  if (!token) {
-    return null;
+  if (!isAvailableToken) {
+    token = await refreshTokenAPI();
   }
 
   const config = token
