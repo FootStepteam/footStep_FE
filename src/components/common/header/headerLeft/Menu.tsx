@@ -42,11 +42,6 @@ const Menu = () => {
 
   const onClickHandler = (path: string) => {
     if (!auth && path === "/planShareEntrance") {
-      Swal.fire({
-        icon: "info",
-        title: "로그인 후 이용 가능합니다.",
-        showConfirmButton: true,
-      });
       navigate("/login");
     } else {
       navigate(path);
