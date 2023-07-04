@@ -1,140 +1,214 @@
-import { useEffect, useState } from "react";
-import {
-  getCurrentUserMemberId,
-  getMemberByAccessToken,
-} from "../../../api/memberAPI";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Swal from "sweetalert2";
+import { getMemberByAccessToken } from "../../../api/memberAPI";
 import {
   checkNicknameDuplication,
   getProfile,
-  updateMemberProfile,
+  updateProfileImageAPI,
+  updateProfileInfo,
 } from "../../../api/profileAPI";
 import { ReactComponent as ProfileImage } from "../../../assets/smile.svg";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+
+interface IIsAvailableNickname {
+  isAvailable: boolean;
+  init: boolean;
+}
 
 const ProfileEditForm = () => {
+  const [image, setImage] = useState<File | null>(null);
+  const [isCheckNickname, setIsCheckNickname] = useState<boolean>(true);
+  const [isAvailableNickname, setIsAvailableNickname] =
+    useState<IIsAvailableNickname>({
+      isAvailable: false,
+      init: true,
+    });
+  const [preview, setPreview] = useState<string>("");
   const [memberInfo, setMemberInfo] = useState({
     nickname: "",
     img: "",
     email: "",
     description: "",
   });
-  const [nicknameValidity, setNicknameValidity] = useState(null);
-  const navigate = useNavigate();
+  const nicknameRef = useRef<HTMLInputElement>(null);
+  const introduceRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    const fetchMemberInfo = async () => {
-      const data = await getMemberByAccessToken();
-      const userProfile = await getProfile(data.memberId);
-      setMemberInfo({
-        nickname: userProfile.nickname,
-        img: userProfile.img,
-        email: userProfile.loginEmail,
-        description: userProfile.description,
-      });
-    };
-    fetchMemberInfo();
-  }, []);
+  const isExistImage = memberInfo.img === "default" && preview === "";
 
-  const checkNickname = async () => {
-    const nicknameInput = document.getElementById(
-      "nickname"
-    ) as HTMLInputElement;
-    const isAvailable = await checkNicknameDuplication(nicknameInput.value);
-    setNicknameValidity(isAvailable);
+  const fetchMemberInfo = async () => {
+    const data = await getMemberByAccessToken();
+    const userProfile = await getProfile(data.memberId);
+    setMemberInfo({
+      nickname: userProfile.nickname,
+      img: userProfile.img,
+      email: userProfile.loginEmail,
+      description: userProfile.description,
+    });
   };
 
-  const submitHandler = async () => {
-    if (nicknameValidity === true) {
+  const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === memberInfo.nickname) {
+      setIsCheckNickname(true);
+    } else {
+      setIsCheckNickname(false);
+    }
+  };
+
+  const onChangeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files?.length !== 0) {
+      setPreview(URL.createObjectURL(e.target.files[0]));
+      setImage(e.target.files[0]);
+    }
+  };
+  
+  const onClickUpdateImgHandler = async () => {
+    if (image) {
+      const formData = new FormData();
+      formData.append("file", image);
+
+      const result = await updateProfileImageAPI(formData);
+
+      if (result?.status === 200) {
+        Swal.fire({
+          icon: "success",
+          text: "이미지 수정이 되었습니다.",
+        });
+      }
+    }
+  };
+
+  const validationCheck = (nickname: string, introduce: string) => {
+    if (!isCheckNickname) {
       Swal.fire({
         icon: "error",
-        title: "중복된 닉네임",
-        text: "다른 닉네임을 선택해주세요.",
+        text: "닉네임 중복확인은 필수입니다.",
       });
+      return false;
+    }
+
+    if (nickname?.length === 0) {
+      
+      Swal.fire({
+        icon: "error",
+        text: "닉네임을 입력은 필수입니다.",
+      });
+      return false;
+    }
+
+    if (
+      nickname === memberInfo.nickname &&
+      introduce === memberInfo.description
+    ) {
+      Swal.fire({
+        icon: "error",
+        text: "변경된 정보가 없습니다.",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const onClickCheckNicknameHandler = async () => {
+    const nickname = nicknameRef.current?.value as string;
+
+    const result = await checkNicknameDuplication(nickname);
+
+    if (!result) {
+      setIsCheckNickname(true);
+      setIsAvailableNickname({
+        isAvailable: true,
+        init: false,
+      });
+    } else {
+      setIsCheckNickname(false);
+      setIsAvailableNickname({
+        isAvailable: false,
+        init: false,
+      });
+    }
+  };
+
+  const onClickDeleteImgHandler = () => {
+    setMemberInfo({ ...memberInfo, img: "default" });
+    setImage(null);
+    setPreview("");
+  };
+
+  const onSubmitHandler = async () => {
+    const nickname = nicknameRef.current?.value as string;
+    const introduce = introduceRef.current?.value as string;
+
+    if (nickname && introduce && !validationCheck(nickname, introduce)) {
       return;
     }
 
-    Swal.fire({
-      title: "프로필을 수정하시겠습니까?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "확인",
-      cancelButtonText: "취소",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const nicknameInput = document.getElementById(
-          "nickname"
-        ) as HTMLInputElement;
-        const nickname = nicknameInput.value;
+    const result = await updateProfileInfo(nickname, introduce);
 
-        const profileImageInput = document.getElementById(
-          "profileImage"
-        ) as HTMLInputElement;
-        getCurrentUserMemberId();
-
-        let profileUrl = "";
-        if (profileImageInput.files && profileImageInput.files.length > 0) {
-          const file = profileImageInput.files[0];
-          profileUrl = await new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
-        }
-
-        const introduceInput = document.getElementById(
-          "introduce"
-        ) as HTMLTextAreaElement;
-        const description = introduceInput.value;
-
-        const formData = {
-          nickname,
-          profileUrl,
-          description,
-        };
-
-        try {
-          await updateMemberProfile(formData);
-          Swal.fire(
-            "수정 완료!",
-            "프로필이 성공적으로 수정되었습니다.",
-            "success"
-          );
-          navigate("/user/profile");
-        } catch (error) {
-          Swal.fire(
-            "오류 발생!",
-            "프로필 수정 중 문제가 발생했습니다.",
-            "error"
-          );
-          console.error("Failed to update profile", error);
-        }
-      }
-    });
+    if (result?.status === 200) {
+      Swal.fire({
+        icon: "success",
+        text: "회원정보 수정이 되었습니다.",
+      });
+      fetchMemberInfo();
+    }
   };
+
+  useEffect(() => {
+    fetchMemberInfo();
+  }, []);
+
   return (
     <section className="m-center w-commonSection">
-      <div className="mt-16">
+      <div className="my-16 ">
         <form className="flex flex-col items-center m-center w-96">
           <div className="relative m-center w-[12.5rem] h-[12.5rem]">
             <label
               htmlFor="profileImage"
               className="cursor-pointer hover:opacity-25"
             >
-              <ProfileImage width={200} height={200} />
-              <input type="file" id="profileImage" className="hidden" />
+              {isExistImage ? (
+                <ProfileImage
+                  width={200}
+                  height={200}
+                />
+              ) : (
+                <img
+                  src={preview === "" ? memberInfo.img : preview}
+                  alt="profile"
+                  className="w-[200px] h-[200px] rounded-full border object-contain border-gray-004"
+                />
+              )}
+              <input
+                type="file"
+                id="profileImage"
+                className="hidden"
+                onChange={onChangeImageHandler}
+              />
             </label>
-            <button
-              type="button"
-              className="absolute top-0 right-5 px-2 py-1 bg-red-001 hover:bg-[#F84D4D]  rounded-md text-white text-[0.7rem]"
-            >
-              삭제
-            </button>
+            {(preview !== "" || memberInfo.img !== "default") && (
+              <button
+                type="button"
+                className="absolute top-0 right-5 px-2 py-1 bg-red-001 hover:bg-[#F84D4D] rounded-md text-white text-[0.7rem]"
+                onClick={onClickDeleteImgHandler}
+              >
+                삭제
+              </button>
+            )}
           </div>
+          <button
+            type="button"
+            onClick={onClickUpdateImgHandler}
+            className="mt-4 mx-auto w-[18rem] h-[3.2rem] bg-blue-002 hover:bg-blue-001 rounded-md text-white font-bold"
+          >
+            이미지 수정
+          </button>
+
           <div className="flex flex-col mt-8 w-[18rem]">
             <div className="flex flex-col">
-              <label htmlFor="nickname" className="block font-bold text-lg">
+              <label
+                htmlFor="nickname"
+                className="block mt-12 font-bold text-lg"
+              >
                 닉네임
               </label>
               <input
@@ -142,23 +216,36 @@ const ProfileEditForm = () => {
                 id="nickname"
                 defaultValue={memberInfo.nickname}
                 className="mt-2 px-4 py-2 border-gray-003 border rounded-md outline-none"
+                onChange={onChangeNicknameHandler}
+                ref={nicknameRef}
               />
+              <p
+                className={`text-sm ${
+                  isAvailableNickname.isAvailable
+                    ? "text-blue-001"
+                    : "text-red-001"
+                }`}
+              >
+                {!isAvailableNickname.init &&
+                  isAvailableNickname.isAvailable &&
+                  "사용 가능한 닉네임 입니다."}
+                {!isAvailableNickname.init &&
+                  !isAvailableNickname.isAvailable &&
+                  "중복된 닉네임입니다."}
+              </p>
               <button
                 type="button"
                 className="mt-4 mx-auto w-[18rem] h-[3.2rem] bg-platinum-001 hover:bg-platinum-002 rounded-md text-white font-bold"
-                onClick={checkNickname}
+                onClick={onClickCheckNicknameHandler}
               >
                 중복확인
               </button>
-              {nicknameValidity === false && (
-                <p className="text-green-001">사용 가능한 닉네임입니다.</p>
-              )}
-              {nicknameValidity === true && (
-                <p className="text-red-001">중복된 닉네임입니다.</p>
-              )}
             </div>
             <div className="flex flex-col mt-6">
-              <label htmlFor="email" className="font-bold text-lg">
+              <label
+                htmlFor="email"
+                className="font-bold text-lg"
+              >
                 이메일
               </label>
               <input
@@ -170,22 +257,26 @@ const ProfileEditForm = () => {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label htmlFor="introduce" className="block font-bold text-lg">
+              <label
+                htmlFor="introduce"
+                className="block font-bold text-lg"
+              >
                 내 소개
               </label>
               <textarea
                 id="introduce"
-                defaultValue={memberInfo.description}
                 className="mt-2 px-4 py-2  h-40 border-gray-003 border-gray-002 border rounded-md outline-none resize-none"
+                defaultValue={memberInfo.description}
+                ref={introduceRef}
               />
             </div>
           </div>
           <button
             type="button"
-            onClick={submitHandler}
-            className="my-8 px-4 py-2 bg-blue-002 hover:bg-sky-005 rounded-lg text-lg text-white font-bold "
+            onClick={onSubmitHandler}
+            className="mt-4 mx-auto w-[18rem] h-[3.2rem] bg-orange-001 hover:bg-orange-002 rounded-md text-white font-bold"
           >
-            수정
+            회원정보 수정
           </button>
         </form>
       </div>
