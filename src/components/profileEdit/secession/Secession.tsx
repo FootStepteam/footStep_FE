@@ -1,15 +1,50 @@
 import { useState } from "react";
+import { deleteMember, getUserInfo } from "../../../api/profileAPI"; // Import deleteMember function
+import { getCookie } from "../../../utils/cookie";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Secession = () => {
   const [checked, setChecked] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const onClickCheckedHandler = () => {
     setChecked(!checked);
   };
 
-  const onClickSecessionHandler = () => {
+  const onClickSecessionHandler = async () => {
     if (!checked) {
-      alert("회원탈퇴 동의를 체크하셔야 탈퇴가 가능합니다.");
+      Swal.fire(
+        "회원탈퇴 동의 필요",
+        "회원탈퇴 동의를 체크하셔야 탈퇴가 가능합니다.",
+        "info"
+      );
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: "정말 탈퇴하시겠습니까?",
+      text: "탈퇴 후 데이터 복구는 불가능합니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "탈퇴하기",
+      cancelButtonText: "취소",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const token = await getCookie("accessToken");
+        const userData = await getUserInfo(token);
+        console.log(userData);
+        await deleteMember(userData.memberId);
+
+        Swal.fire("탈퇴 완료", "회원 탈퇴가 완료되었습니다", "success");
+
+        navigate("/");
+      } catch (error) {
+        console.error(error);
+        Swal.fire("오류 발생", "회원 탈퇴 중 오류가 발생하였습니다.", "error");
+      }
     }
   };
 
@@ -29,7 +64,7 @@ const Secession = () => {
             onClick={onClickCheckedHandler}
           />
           <label htmlFor="check" className="ml-2 text-sm cursor-pointer">
-            회훤탈퇴에 동의합니다.
+            회원탈퇴에 동의합니다.
           </label>
         </div>
         <div className="m-center">
