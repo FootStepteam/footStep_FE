@@ -5,6 +5,7 @@ const PlanListHeader = () => {
   const [open, setOpen] = useRecoilState(createModalOpenState);
 
   const onClickHandler = () => {
+    window.scrollTo({ top: 0, left: 0 });
     setOpen(!open);
   };
 

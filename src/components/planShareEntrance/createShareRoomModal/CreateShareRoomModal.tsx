@@ -35,7 +35,7 @@ const CreateShareRoomModal = () => {
 
   return (
     <div
-      className="absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.6)] z-[99] animate-modalBgShow"
+      className="absolute top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.6)] z-[99] animate-modalBgShow"
       role="presentation"
       ref={modalRef}
     >
