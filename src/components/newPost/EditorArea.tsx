@@ -5,8 +5,6 @@ import { useEffect } from "react";
 import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import HeaderContainer from "../common/header/HeaderContainer";
-import Footer from "../common/footer/Footer";
 
 const EditorArea = () => {
   const {
@@ -62,7 +60,6 @@ const EditorArea = () => {
 
   return (
     <>
-      <HeaderContainer />
       <div className="min-h-screen pt-[142px] p-8 bg-sky-004">
         <div className="p-8 mb-8 rounded-lg bg-white-001">
           <h2 className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003">
@@ -128,7 +125,6 @@ const EditorArea = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
