@@ -68,7 +68,7 @@ const Chat = () => {
 
   const connect = async () => {
     const socketFactory = () =>
-      new window.SockJS("http://43.200.76.174:8080/ws-stomp");
+      new window.SockJS(`${import.meta.env.VITE_CHAT_URL}`);
     const client = Stomp.over(socketFactory);
     stompClient.current = client;
     client.connect({}, onConnected, onError);
