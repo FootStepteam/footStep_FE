@@ -41,7 +41,7 @@ export const updateMemberProfile = async (formData: any) => {
     token = await refreshTokenAPI();
   }
 
-  const response = await axios.put(`/api/api/members/`, formData, {
+  const response = await axios.put(`/api/api/members`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
