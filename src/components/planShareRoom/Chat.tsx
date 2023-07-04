@@ -229,7 +229,7 @@ const Chat = () => {
                 onKeyDown={onEnterPress}
                 onCompositionStart={onCompositionStart}
                 onCompositionEnd={onCompositionEnd}
-                className="p-1 mb-2 ml-3 w-full h-[4rem] rounded-l-lg"
+                className="p-1 mb-2 ml-3 w-full h-[4rem] rounded-l-lg outline-none"
                 style={{ resize: "none" }}
               />
               <button
