@@ -9,7 +9,7 @@ import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 import { errorMsg } from "../utils/errorMsgAlert";
 
 // 공유코드로 공유방 찾기
-export const getShareRoomAPI = async (shareRoomID: number) => {
+export const getShareRoomAPI = async (shareRoomID: string) => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
 
