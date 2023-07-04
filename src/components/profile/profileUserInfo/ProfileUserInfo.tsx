@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as NoProfile } from "../../../assets/smile.svg";
-import { getUserInfo } from "../../../api/profileAPI";
+import { getProfile, getUserInfo } from "../../../api/profileAPI";
 import { getCookie } from "../../../utils/cookie";
 
 const ProfileUserInfo = () => {
@@ -11,7 +11,8 @@ const ProfileUserInfo = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const userData = await getUserInfo(accessToken);
+        const userInfo = await getUserInfo(accessToken);
+        const userData = await getProfile(userInfo.memberId);
         setUserInfo(userData);
       } catch (err) {
         console.error(err);
