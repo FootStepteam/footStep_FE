@@ -14,7 +14,10 @@ const SearchCodeBar = () => {
   const onSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
     const result = await getShareRoomAPI(Number(shareCode));
-    setSearchShareRoomData(result?.data);
+
+    if (result) {
+      setSearchShareRoomData(result?.data);
+    }
   };
 
   return (
