@@ -35,7 +35,6 @@ const Secession = () => {
       try {
         const token = await getCookie("accessToken");
         const userData = await getUserInfo(token);
-        console.log(userData);
         await deleteMember(userData.memberId);
 
         Swal.fire("탈퇴 완료", "회원 탈퇴가 완료되었습니다", "success");
