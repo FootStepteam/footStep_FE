@@ -1,4 +1,3 @@
-//ProfileUserInfo.tsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as NoProfile } from "../../../assets/smile.svg";
@@ -23,7 +22,7 @@ const ProfileUserInfo = () => {
   }, [accessToken]);
   return (
     <div className="mt-24 w-[20rem] mx-auto">
-      <div className="m-center p-7 w-[17rem] h-[28rem] border border-gray-004 rounded-xl shadow-sm">
+      <div className="m-center p-7 w-[17rem] min-h-fit border border-gray-004 rounded-xl shadow-sm">
         <div className="flex justify-center">
           {userInfo?.img ? (
             <img
@@ -44,6 +43,12 @@ const ProfileUserInfo = () => {
             <h1 className="font-bold text-md text-black-002">이메일</h1>
             <div className="h-8 tracking-[-0.5px] text-black-003">
               {userInfo?.loginEmail}
+            </div>
+          </div>
+          <div className="mb-4 w-[13rem]">
+            <h1 className="font-bold text-md text-black-002">내 소개</h1>
+            <div className="h-8 tracking-[-0.5px] text-black-003">
+              {userInfo?.description}
             </div>
           </div>
         </section>

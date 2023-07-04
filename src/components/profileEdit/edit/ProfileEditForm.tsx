@@ -11,6 +11,7 @@ const ProfileEditForm = () => {
     nickname: "",
     img: "",
     email: "",
+    description: "",
   });
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const ProfileEditForm = () => {
         nickname: data.nickname,
         img: data.img,
         email: data.loginEmail,
+        description: data.description,
       });
     };
     fetchMemberInfo();
@@ -47,9 +49,15 @@ const ProfileEditForm = () => {
       });
     }
 
+    const introduceInput = document.getElementById(
+      "introduce"
+    ) as HTMLTextAreaElement;
+    const description = introduceInput.value;
+
     const formData = {
       nickname,
       profileUrl,
+      description,
     };
 
     try {
@@ -68,15 +76,8 @@ const ProfileEditForm = () => {
               htmlFor="profileImage"
               className="cursor-pointer hover:opacity-25"
             >
-              <ProfileImage
-                width={200}
-                height={200}
-              />
-              <input
-                type="file"
-                id="profileImage"
-                className="hidden"
-              />
+              <ProfileImage width={200} height={200} />
+              <input type="file" id="profileImage" className="hidden" />
             </label>
             <button
               type="button"
@@ -87,10 +88,7 @@ const ProfileEditForm = () => {
           </div>
           <div className="flex flex-col mt-8 w-[18rem]">
             <div className="flex flex-col">
-              <label
-                htmlFor="nickname"
-                className="block font-bold text-lg"
-              >
+              <label htmlFor="nickname" className="block font-bold text-lg">
                 닉네임
               </label>
               <input
@@ -101,10 +99,7 @@ const ProfileEditForm = () => {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label
-                htmlFor="email"
-                className="font-bold text-lg"
-              >
+              <label htmlFor="email" className="font-bold text-lg">
                 이메일
               </label>
               <input
@@ -116,15 +111,12 @@ const ProfileEditForm = () => {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label
-                htmlFor="introduce"
-                className="block font-bold text-lg"
-              >
+              <label htmlFor="introduce" className="block font-bold text-lg">
                 내 소개
               </label>
               <textarea
                 id="introduce"
-                defaultValue="덩두"
+                defaultValue={memberInfo.description}
                 className="mt-2 px-4 py-2  h-40 border-gray-003 border-gray-002 border rounded-md outline-none resize-none"
               />
             </div>
