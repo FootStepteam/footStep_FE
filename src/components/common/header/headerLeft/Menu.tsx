@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useRequireAuth } from "../../../../hooks/useRequireAuth";
 
@@ -33,7 +33,6 @@ const Menu = () => {
   const [cookies] = useCookies(["accessToken"]);
   const [auth, setAuth] = useState(cookies.accessToken);
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     setAuth(cookies.accessToken);
