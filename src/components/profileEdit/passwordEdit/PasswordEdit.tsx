@@ -37,6 +37,7 @@ const PasswordEdit = () => {
     watch,
   } = useForm<IFormInputs>({
     resolver: yupResolver(formSchema),
+    mode: "onChange",
   });
 
   const { newPassword, confirmPassword } = watch();
@@ -51,8 +52,7 @@ const PasswordEdit = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await changePasswordAPI(data);
-          console.log(response);
+          await changePasswordAPI(data);
           Swal.fire(
             "변경 완료!",
             "비밀번호가 성공적으로 변경되었습니다.",
@@ -96,7 +96,9 @@ const PasswordEdit = () => {
               "비밀번호가 일치하지 않습니다.")}
         </p>
         <p className="text-green-001">
-          {newPassword == confirmPassword && "비밀번호가 일치합니다."}
+          {newPassword &&
+            newPassword == confirmPassword &&
+            "비밀번호가 일치합니다."}
         </p>
         <button
           type="submit"

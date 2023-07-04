@@ -151,10 +151,10 @@ const ProfileEditForm = () => {
                 중복확인
               </button>
               {nicknameValidity === false && (
-                <p className="text-green-500">사용 가능한 닉네임입니다.</p>
+                <p className="text-green-001">사용 가능한 닉네임입니다.</p>
               )}
               {nicknameValidity === true && (
-                <p className="text-red-500">중복된 닉네임입니다.</p>
+                <p className="text-red-001">중복된 닉네임입니다.</p>
               )}
             </div>
             <div className="flex flex-col mt-6">
