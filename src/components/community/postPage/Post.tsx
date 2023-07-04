@@ -30,7 +30,6 @@ const Post = () => {
       </div>
     );
   }
-  console.log(post);
 
   return (
     <div className="min-h-screen p-8 bg-sky-004 animate-sparkle">

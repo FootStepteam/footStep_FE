@@ -33,7 +33,7 @@ const SortButtons = ({
       </button>
       <button
         className={`px-4 py-2 ${
-          showPrivate ? "text-blue-003 font-bold" : "text-black-001"
+          showPrivate ? "text-orange-003 font-bold" : "text-black-001"
         }`}
         onClick={handlePrivatePostsToggle}
       >

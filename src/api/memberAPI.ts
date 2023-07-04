@@ -4,6 +4,9 @@ import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 
 export const getMemberByAccessToken = async (): Promise<any> => {
   let token = getCookie("accessToken");
+  if (!token) {
+    return null;
+  }
   const isAvailableToken = await checkTokenAPI(token);
 
   if (!isAvailableToken.isValid) {

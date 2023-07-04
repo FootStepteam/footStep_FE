@@ -100,8 +100,6 @@ export const getShareRoomDetailAPI = async (shareRoomID: number) => {
   if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
-  console.log(isAvailableToken);
-  console.log(token);
   try {
     const response = await axios.get(`/api/api/share-room/${shareRoomID}`, {
       headers: {
@@ -226,7 +224,6 @@ export const sendTokenEnteringShareRoom = async (shareRoomID: number) => {
   if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
-  console.log(token);
   const response = await axios.post(
     `/api/api/share-room/${shareRoomID}/enter`,
     {},
@@ -236,6 +233,5 @@ export const sendTokenEnteringShareRoom = async (shareRoomID: number) => {
       },
     }
   );
-  console.log(response);
   return response.data;
 };
