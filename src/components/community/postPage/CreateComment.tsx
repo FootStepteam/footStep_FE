@@ -47,7 +47,6 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
 
     if (result.isConfirmed && memberId && post) {
       try {
-        console.log(memberId);
         await createComment(
           { content, communityId: post.communityId },
           memberId

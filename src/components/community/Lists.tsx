@@ -37,13 +37,12 @@ const Lists = ({ searchQuery }: IListsProps) => {
         let filteredPosts = data.communities;
 
         // 체크박스가 체크된 상태이면, 비공개 게시글과 현재 유저가 작성한 게시글만 필터링
-        if (privatePosts) {
+        if (privatePosts && currentUser) {
           filteredPosts = filteredPosts.filter(
             (post) =>
               !post.communityPublicState && post.memberNickname === currentUser
           );
-        }
-        if (!privatePosts) {
+        } else {
           filteredPosts = filteredPosts.filter(
             (post) => post.communityPublicState
           );
@@ -55,7 +54,7 @@ const Lists = ({ searchQuery }: IListsProps) => {
         console.error(error);
       }
     })();
-  }, [sortBy, page, privatePosts]);
+  }, [sortBy, page, privatePosts, currentUser]);
 
   // 검색어로 게시글 필터링
   const filteredPosts: ICommunityPost[] = posts.filter((post) => {
