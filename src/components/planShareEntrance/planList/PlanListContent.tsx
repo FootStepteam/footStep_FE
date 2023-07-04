@@ -14,8 +14,7 @@ const PlanListContent = () => {
   const [shareRooms, setShareRooms] = useRecoilState(getShareRoomList);
   const searchResult = useRecoilValue(searchShareRoomData);
 
-  // const isExists = shareRooms.length !== 0;
-  const isExists = shareRooms.length !== 0;
+  const isExists = shareRooms.totalPages !== 0;
 
   const getShareRooms = async () => {
     const result = await getIncludeShareRoomAPI();

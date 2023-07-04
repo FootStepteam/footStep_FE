@@ -20,7 +20,6 @@ export const useEditor = () => {
     setSelectedPlan(plan);
     try {
       const scheduleData = await getPlanScheduleAPI(plan.shareId);
-      console.log(scheduleData);
 
       // 각 일정에 대해 반복하며 내용을 만듭니다.
       let contentString = "";

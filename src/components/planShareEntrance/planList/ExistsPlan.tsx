@@ -14,7 +14,7 @@ const ExistsPlan = () => {
         참여중인 여행 일정 계획
       </h1>
       <div className="mt-12 w-commonSection">
-        {plans.map((plan) => (
+        {plans.shareRoomDtoList.map((plan) => (
           <Link
             key={plan.shareId}
             to={`/planShareRoom/${plan.shareId}`}

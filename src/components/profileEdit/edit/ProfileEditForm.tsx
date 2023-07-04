@@ -59,7 +59,7 @@ const ProfileEditForm = () => {
       setImage(e.target.files[0]);
     }
   };
-
+  
   const onClickUpdateImgHandler = async () => {
     if (image) {
       const formData = new FormData();
@@ -86,6 +86,7 @@ const ProfileEditForm = () => {
     }
 
     if (nickname?.length === 0) {
+      
       Swal.fire({
         icon: "error",
         text: "닉네임을 입력은 필수입니다.",
