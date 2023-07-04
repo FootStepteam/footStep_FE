@@ -1,14 +1,15 @@
 import { ReactComponent as RightArrow } from "../../../assets/rightArrow.svg";
 import testImage from "../../../assets/temporary/nature-6517866_1920.jpg";
 import { Link } from "react-router-dom";
-import { useSharedRoom } from "../../../hooks/useMyShareRoom";
+import { useRecoilValue } from "recoil";
+import { getShareRoomList } from "../../../store/getShareRoomList";
 
 const ExistsParticipatingPlan = () => {
-  const { plans } = useSharedRoom();
+  const plans = useRecoilValue(getShareRoomList);
 
   return (
     <div className="w-[58rem] h-[40rem] overflow-auto">
-      {plans.map((plan) => (
+      {plans.shareRoomDtoList.map((plan) => (
         <Link
           key={plan.shareId}
           to={`/planShareRoom/${plan.shareId}`}
