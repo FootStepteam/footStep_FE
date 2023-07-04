@@ -10,6 +10,12 @@ export interface IShareRoom {
   travelEndDate: string;
   travelStartDate: string;
 }
+
+export interface IShareRoomList {
+  totalPages: number;
+  shareRoomDtoList: IShareRoom[];
+}
+
 export interface ISubmitShareRoomData {
   shareName: string;
   travelEndDate: string;
