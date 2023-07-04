@@ -18,7 +18,6 @@ export const getPlanScheduleAPI = async (
     const roomInfo = await getShareRoomDetailAPI(Number(shareId));
     const startDate = roomInfo.travelStartDate;
     const endDate = roomInfo.travelEndDate;
-    console.log(startDate, endDate);
     const response = await axios.get(
       `/api/api/share-room/${shareId}/schedule?startDate=${startDate}&endDate=${endDate}`,
       {
@@ -27,7 +26,6 @@ export const getPlanScheduleAPI = async (
         },
       }
     );
-    console.log(response);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
