@@ -61,9 +61,11 @@ const Chat = () => {
       }
     };
 
-    fetchDetails()
-      .then(() => console.log("fetchDetails has completed"))
-      .catch((error) => console.error("Failed to fetch details:", error));
+    if (shareId !== 0) {
+      fetchDetails()
+        .then(() => console.log("fetchDetails has completed"))
+        .catch((error) => console.error("Failed to fetch details:", error));
+    }
   }, [shareId]);
 
   const connect = async () => {
