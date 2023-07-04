@@ -226,9 +226,10 @@ export const sendTokenEnteringShareRoom = async (shareRoomID: number) => {
   if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
   }
-
+  console.log(token);
   const response = await axios.post(
     `/api/api/share-room/${shareRoomID}/enter`,
+    {},
     {
       headers: {
         Authorization: `Bearer ${token}`,
