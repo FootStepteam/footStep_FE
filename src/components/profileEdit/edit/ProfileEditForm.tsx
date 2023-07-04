@@ -45,7 +45,6 @@ const ProfileEditForm = () => {
   };
 
   const submitHandler = async () => {
-    console.log(nicknameValidity);
     if (nicknameValidity === true) {
       Swal.fire({
         icon: "error",
@@ -96,8 +95,7 @@ const ProfileEditForm = () => {
         };
 
         try {
-          const response = await updateMemberProfile(formData);
-          console.log("Profile updated successfully", response);
+          await updateMemberProfile(formData);
           Swal.fire(
             "수정 완료!",
             "프로필이 성공적으로 수정되었습니다.",

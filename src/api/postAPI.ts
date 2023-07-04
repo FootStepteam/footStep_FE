@@ -84,8 +84,7 @@ export const unlikePostAPI = async (communityId: number): Promise<void> => {
     );
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const responseErrorCode = error.response?.data.code;
-      console.log(responseErrorCode);
+      console.log(error);
     }
     throw error;
   }
