@@ -1,48 +1,47 @@
-//PasswordEdit.tsx
-import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import {
-  ChangePasswordForm,
-  changePasswordAPI,
-} from "../../../api/passwordAPI";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { changePasswordAPI } from "../../../api/passwordAPI";
 import { useNavigate } from "react-router-dom";
 
+interface IFormInputs {
+  newPassword: string;
+  confirmPassword: string;
+}
+
+const formSchema = yup.object().shape({
+  newPassword: yup
+    .string()
+    .required("비밀번호는 필수 입력입니다.")
+    .min(8, "최소 8자 필수 입력입니다.")
+    .max(16, "최대 16자 까지만 가능합니다.")
+    .matches(
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
+      "영문, 숫자, 특수문자를 포함한 8~16자 비밀번호를 입력해주세요."
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf(
+      [yup.ref("newPassword"), undefined],
+      "비밀번호가 일치하지 않습니다."
+    ),
+});
+
 const PasswordEdit = () => {
-  const [form, setForm] = useState<ChangePasswordForm>({
-    newPassword: "",
-    confirmPassword: "",
-  });
-  const [passwordValidationMsg, setPasswordValidationMsg] =
-    useState<string>("");
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<IFormInputs>({
+    resolver: yupResolver(formSchema),
+  });
 
-  useEffect(() => {
-    if (form.newPassword && form.confirmPassword) {
-      if (form.newPassword !== form.confirmPassword) {
-        setPasswordValidationMsg("비밀번호가 일치하지 않습니다");
-      } else {
-        setPasswordValidationMsg("비밀번호가 일치합니다");
-      }
-    }
-  }, [form.newPassword, form.confirmPassword]);
+  const { newPassword, confirmPassword } = watch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleClick = async () => {
-    if (passwordValidationMsg !== "비밀번호가 일치합니다") {
-      Swal.fire({
-        icon: "error",
-        title: "비밀번호 불일치",
-        text: "비밀번호가 일치하지 않습니다.",
-      });
-      return;
-    }
-
+  const onSubmit = async (data: IFormInputs) => {
     Swal.fire({
       title: "비밀번호를 변경하시겠습니까?",
       icon: "warning",
@@ -52,7 +51,7 @@ const PasswordEdit = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await changePasswordAPI(form);
+          const response = await changePasswordAPI(data);
           console.log(response);
           Swal.fire(
             "변경 완료!",
@@ -74,38 +73,34 @@ const PasswordEdit = () => {
 
   return (
     <div className="h-tabInSection">
-      <form className="flex flex-col m-center pt-20 w-[20rem]">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col m-center pt-20 w-[20rem]"
+      >
         <input
           type="password"
-          name="newPassword"
+          {...register("newPassword")}
           placeholder="새로운 비밀번호"
           className="p-4 border border-gray-002 rounded-sm outline-none placeholder:text-sm"
-          value={form.newPassword}
-          onChange={handleChange}
         />
+        <p className="text-red-002">{errors.newPassword?.message}</p>
         <input
           type="password"
-          name="confirmPassword"
+          {...register("confirmPassword")}
           placeholder="비밀번호 재확인"
           className="mt-2 p-4 border border-gray-002 rounded-sm outline-none placeholder:text-sm"
-          value={form.confirmPassword}
-          onChange={handleChange}
         />
-        {form.newPassword && form.confirmPassword && (
-          <div
-            className={
-              passwordValidationMsg === "비밀번호가 일치합니다"
-                ? "text-green-500"
-                : "text-red-500"
-            }
-          >
-            {passwordValidationMsg}
-          </div>
-        )}
+        <p className="text-red-002">
+          {errors.confirmPassword?.message ||
+            (newPassword !== confirmPassword &&
+              "비밀번호가 일치하지 않습니다.")}
+        </p>
+        <p className="text-green-001">
+          {newPassword == confirmPassword && "비밀번호가 일치합니다."}
+        </p>
         <button
-          type="button"
+          type="submit"
           className="mt-8 h-16 bg-sky-001 hover:bg-sky-002 rounded-sm text-white text-lg font-bold"
-          onClick={handleClick}
         >
           비밀번호 변경
         </button>
