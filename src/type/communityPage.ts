@@ -25,6 +25,7 @@ export interface ICommunityData {
 }
 
 export interface IGetCommunityParams {
+  keyword: string;
   page: number;
   size: number;
   type: string;

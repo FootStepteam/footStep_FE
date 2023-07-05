@@ -23,6 +23,7 @@ const SortButtons = () => {
       type: selectedSortCondition.type,
       sort,
       size: 10,
+      page: 1,
     };
 
     const response = await getCommunityAPI(resendData);

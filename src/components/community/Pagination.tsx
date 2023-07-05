@@ -52,6 +52,7 @@ const Pagination = ({ totalPage, currentPage, setPage }: PaginationProps) => {
       <div className="flex mx-2">
         {pages.map((page) => (
           <p
+            key={page}
             className={`px-2 cursor-pointer ${
               currentPage === page && "text-blue-001"
             }`}
