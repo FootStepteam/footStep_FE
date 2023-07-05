@@ -6,7 +6,7 @@ import {
   MapMarker,
   ZoomControl,
 } from "react-kakao-maps-sdk";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { getRecommendPlacesAPI } from "../../api/recommendAPI";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { markerSeq } from "../../constants/marker";
@@ -114,7 +114,8 @@ const PlanShareRoom = () => {
   const [placePagination, setPlacePagination] = useState<any>();
   const [linePosition, setLinePosition] = useState<ILine[]>([]);
   const [scheduleMarker, setScheduleMarker] = useState<IScheduleMarker[]>([]);
-  const openScheduleMarkerState = useRecoilValue(scheduleMarkerState);
+  const [openScheduleMarkerState, setOpenScheduleMarkerState] =
+    useRecoilState(scheduleMarkerState);
   const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
     data: {
       addressName: "",
@@ -336,7 +337,7 @@ const PlanShareRoom = () => {
 
   useEffect(() => {
     if (scheduleMarker.length !== 0) {
-      console.log("asd");
+      setOpenScheduleMarkerState(true);
       setState({
         center: {
           lat: scheduleMarker[0].position.lat,
@@ -344,6 +345,8 @@ const PlanShareRoom = () => {
         },
         isPanto: true,
       });
+    } else {
+      setOpenScheduleMarkerState(false);
     }
   }, [scheduleMarker]);
 
@@ -358,7 +361,6 @@ const PlanShareRoom = () => {
   useEffect(() => {
     if (openScheduleMarkerState) {
       if (scheduleMarker.length !== 0) {
-        console.log("asd");
         setState({
           center: {
             lat: scheduleMarker[0].position.lat,

@@ -8,6 +8,7 @@ import { schedule } from "../../../store/schedule";
 import { getScheduleByDateAPI } from "../../../api/scheduleAPI";
 import { useParams } from "react-router-dom";
 import { disabledState } from "../../../state/componentOpenState";
+import { scheduleMarkerState } from "../../../state/scheduleMarkerState";
 
 interface IPlanDates {
   month: number;
@@ -20,6 +21,7 @@ interface IPlanDates {
 const ScheduleDaySelect = () => {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDay);
   const setScheduleBytDate = useSetRecoilState(schedule);
+  const setOpenScheduleMarkerState = useSetRecoilState(scheduleMarkerState);
   const [daysOpenState, setDaysOpenState] = useState<boolean>(false);
   const [planDates, setPlanDates] = useState<IPlanDates[]>([]);
   const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
@@ -53,6 +55,11 @@ const ScheduleDaySelect = () => {
     );
     setScheduleBytDate(response?.data);
     setDaysOpenState(false);
+    if (!response?.data) {
+      setOpenScheduleMarkerState(false);
+    } else {
+      setOpenScheduleMarkerState(true);
+    }
   };
 
   useEffect(() => {
