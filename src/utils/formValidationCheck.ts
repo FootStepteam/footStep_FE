@@ -8,7 +8,6 @@ const MySwal = withReactContent(Swal);
 export const formValidationCheck = (form: ICreateShareRoomFormValue) => {
   let checkResult = false;
   let msg = "";
-
   const today = moment(new Date()).format("YYYY-MM-DD");
 
   if (form.title.length === 0) {
