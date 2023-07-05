@@ -25,9 +25,10 @@ export interface ICommunityData {
 }
 
 export interface IGetCommunityParams {
-  page?: number;
-  size?: number;
-  sort?: string;
+  page: number;
+  size: number;
+  type: string;
+  sort: string;
 }
 
 export interface ICommentCreateForm {
