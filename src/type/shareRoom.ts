@@ -2,7 +2,6 @@ import { IPlace } from "../hooks/useManageSchdule";
 
 export interface IShareRoom {
   endPoint: string;
-  hostFlag: boolean;
   imageUrl: string;
   shareCode: string;
   shareId: number;
@@ -10,6 +9,7 @@ export interface IShareRoom {
   startPoint: string;
   travelEndDate: string;
   travelStartDate: string;
+  hostFlag?: boolean;
 }
 
 export interface IShareRoomList {
