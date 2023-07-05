@@ -27,6 +27,7 @@ const EditPost = () => {
 
   const handleSubmit = async () => {
     const result = await Swal.fire({
+      icon: "question",
       title: "글을 수정하시겠습니까?",
       showDenyButton: true,
       confirmButtonText: "수정하기",
@@ -46,7 +47,7 @@ const EditPost = () => {
   return (
     <>
       <HeaderContainer />
-      <div className="min-h-screen pt-[142px] p-8 bg-sky-004">
+      <div className="mx-auto w-[55rem] min-h-[30rem] pt-[3rem] p-8">
         <div className="p-8 mb-8 rounded-lg bg-white-001">
           <h2 className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003">
             글 수정하기
@@ -62,7 +63,7 @@ const EditPost = () => {
               editor.ui.view.editable.element.style.height = "500px";
             }}
           />
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end mt-20">
             <button
               onClick={handleSubmit}
               className="p-2 rounded bg-blue-003 text-white"
