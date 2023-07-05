@@ -2,14 +2,11 @@ import axios from "axios";
 import {
   ICommentCreateForm,
   ICommentUpdateForm,
-  ICommunityData,
   IGetCommunityParams,
 } from "../type/communityPage";
 import { getCookie } from "../utils/cookie";
 
-export const getCommunityAPI = async (
-  params?: IGetCommunityParams
-): Promise<ICommunityData> => {
+export const getCommunityAPI = async (params?: IGetCommunityParams) => {
   const KEY = "accessToken";
   let token = getCookie(KEY);
 

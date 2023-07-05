@@ -13,13 +13,14 @@ export interface ICommunityPost {
   communityPublicState: boolean;
 }
 
+export interface ICommunity {
+  communities: ICommunityPost[];
+  totalPages: number;
+}
+
 export interface ICommunityData {
   communities: ICommunityPost[];
   lastPage: boolean;
-}
-
-export interface IListsProps {
-  searchQuery: string;
 }
 
 export interface IGetCommunityParams {
