@@ -32,6 +32,7 @@ const SearchBar = () => {
       keyword,
       type: selectedCondition.type,
       sort: selectedCondition.sort,
+      page: 1,
       size: 10,
     };
 

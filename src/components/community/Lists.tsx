@@ -22,6 +22,7 @@ const Lists = () => {
       size: 10,
       type: "title",
       sort: "recent",
+      keyword: "",
     });
     setPosts(response);
     setTotalPage(response.totalPages);
