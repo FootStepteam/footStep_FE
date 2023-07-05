@@ -45,6 +45,13 @@ export const errorMsg = (errorCode: string) => {
       });
       break;
 
+    case "ALREADY_DELETED_MEMBER":
+      Swal.fire({
+        icon: "error",
+        text: "존재하지 않은 회원입니다.",
+      });
+      break;
+
     default:
       Swal.fire({
         icon: "error",
