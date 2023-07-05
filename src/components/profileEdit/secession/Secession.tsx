@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { deleteMember, getUserInfo } from "../../../api/profileAPI"; // Import deleteMember function
-import { getCookie, removeCookie } from "../../../utils/cookie";
+import { getCookie } from "../../../utils/cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useLoginState } from "../../../hooks/useLoginState";
 
 const Secession = () => {
   const [checked, setChecked] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { logout } = useLoginState();
 
   const onClickCheckedHandler = () => {
     setChecked(!checked);
@@ -37,7 +39,7 @@ const Secession = () => {
         const userData = await getUserInfo(token);
         await deleteMember(userData.memberId);
 
-        removeCookie("accessToken");
+        logout();
 
         Swal.fire("탈퇴 완료", "회원 탈퇴가 완료되었습니다", "success");
 
