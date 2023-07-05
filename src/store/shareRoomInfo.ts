@@ -10,7 +10,7 @@ const initialValue: IShareRoom = {
   startPoint: "",
   travelEndDate: "",
   travelStartDate: "",
-  hostFlag: false,
+  hostFlag: true,
 };
 
 export const shareRoomInfo = atom({

@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 export const useEditor = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState<IPlan | null>(null);
 
   const { shareRooms, plans } = useSharedRoom();
