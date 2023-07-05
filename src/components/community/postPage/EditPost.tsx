@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getPostAPI, updatePostAPI } from "../../../api/postAPI";
@@ -9,14 +9,21 @@ import Footer from "../../common/footer/Footer";
 
 const EditPost = () => {
   const { communityId } = useParams();
+  const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const navigate = useNavigate();
+  const inputTitleRef = useRef<HTMLInputElement>(null);
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setPostTitle(e.target.value);
+  };
 
   useEffect(() => {
     const fetchPostContent = async () => {
       try {
         const postData = await getPostAPI(Number(communityId));
         setPostContent(postData.content);
+        setPostTitle(postData.communityName);
       } catch (error) {
         // error handling
       }
@@ -26,6 +33,22 @@ const EditPost = () => {
   }, [communityId]);
 
   const handleSubmit = async () => {
+    if (inputTitleRef.current?.value.length === 0) {
+      Swal.fire({
+        icon: "error",
+        text: "제목 입력은 필수입니다.",
+      });
+      return;
+    }
+
+    if (postContent.length === 0) {
+      Swal.fire({
+        icon: "error",
+        text: "내용 입력은 필수입니다.",
+      });
+      return;
+    }
+
     const result = await Swal.fire({
       icon: "question",
       title: "글을 수정하시겠습니까?",
@@ -34,9 +57,13 @@ const EditPost = () => {
       denyButtonText: "취소",
     });
 
-    if (result.isConfirmed) {
+    if (result.isConfirmed && inputTitleRef.current) {
       try {
-        await updatePostAPI(Number(communityId), postContent);
+        await updatePostAPI(
+          Number(communityId),
+          inputTitleRef.current?.value,
+          postContent
+        );
         navigate(`/community/${communityId}`);
       } catch (error) {
         // error handling
@@ -49,9 +76,14 @@ const EditPost = () => {
       <HeaderContainer />
       <div className="mx-auto w-[55rem] min-h-[30rem] pt-[3rem] p-8">
         <div className="p-8 mb-8 rounded-lg bg-white-001">
-          <h2 className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003">
-            글 수정하기
-          </h2>
+          <input
+            type="text"
+            className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003 outline-none"
+            defaultValue={postTitle}
+            onChange={onChangeHandler}
+            ref={inputTitleRef}
+            maxLength={25}
+          />
           <CKEditor
             editor={ClassicEditor}
             data={postContent}
