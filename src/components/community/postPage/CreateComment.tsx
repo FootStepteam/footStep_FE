@@ -63,18 +63,18 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
   if (!memberId) return null;
 
   return (
-    <div className="flex items-center my-2">
+    <div className="flex items-center mt-2 mb-20 border border-gray-003 rounded-lg">
       <input
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="border border-gray-002 rounded-l-lg px-4 py-1 h-[40px] w-full"
-        placeholder="댓글을 입력해주세요"
+        className="px-4 py-3 w-full rounded-l-lg outline-none placeholder:text-sm"
+        placeholder="댓글을 입력해주세요   :)"
       />
       <button
         onClick={handleCreate}
-        className="px-2 py-1 h-[40px] min-w-max rounded-r-lg bg-green-002 text-white-001 hover:bg-green-001 transition-all duration-250"
+        className="px-2 py-3 min-w-max rounded-r-lg text-gray-001 transition-all duration-250"
       >
-        작성
+        입력
       </button>
     </div>
   );

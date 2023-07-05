@@ -60,7 +60,7 @@ const EditorArea = () => {
 
   return (
     <>
-      <div className="min-h-screen pt-[142px] p-8 bg-sky-004">
+      <div className="mx-auto w-[55rem] min-h-screen pt-[3rem] p-8">
         <div className="p-8 mb-8 rounded-lg bg-white-001">
           <h2 className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003">
             새 게시글 작성
@@ -92,9 +92,9 @@ const EditorArea = () => {
           </div>
           <input
             type="text"
-            placeholder="Title"
+            placeholder="제목을 입력하세요."
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 mb-4 border-2 border-gray-002 rounded-md"
+            className="w-full pl-4 py-3 mb-4 border-2 border-gray-002 rounded-md placeholder:text-sm"
           />
           <label className="flex items-center ml-2 mb-4">
             <input
@@ -118,7 +118,7 @@ const EditorArea = () => {
               }}
             />
           </div>
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end mt-40">
             <button
               onClick={submitPostWithConfirmation}
               className="p-2 rounded bg-blue-003 text-white"
