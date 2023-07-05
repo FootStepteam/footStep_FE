@@ -66,7 +66,7 @@ export const updateProfileInfo = async (
 
   try {
     const response = await axios.put(
-      "/api/api/members/",
+      "/api/api/members",
       {
         nickname,
         description,
