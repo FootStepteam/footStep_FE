@@ -335,6 +335,19 @@ const PlanShareRoom = () => {
   }, []);
 
   useEffect(() => {
+    if (scheduleMarker.length !== 0) {
+      console.log("asd");
+      setState({
+        center: {
+          lat: scheduleMarker[0].position.lat,
+          lng: scheduleMarker[0].position.lng,
+        },
+        isPanto: true,
+      });
+    }
+  }, [scheduleMarker]);
+
+  useEffect(() => {
     if (scheduleBytDate !== "") {
       scheduleMarkerHandler();
     } else {
@@ -344,13 +357,16 @@ const PlanShareRoom = () => {
 
   useEffect(() => {
     if (openScheduleMarkerState) {
-      setState({
-        center: {
-          lat: scheduleMarker[0].position.lat,
-          lng: scheduleMarker[0].position.lng,
-        },
-        isPanto: true,
-      });
+      if (scheduleMarker.length !== 0) {
+        console.log("asd");
+        setState({
+          center: {
+            lat: scheduleMarker[0].position.lat,
+            lng: scheduleMarker[0].position.lng,
+          },
+          isPanto: true,
+        });
+      }
     }
   }, [openScheduleMarkerState]);
 
@@ -454,6 +470,7 @@ const PlanShareRoom = () => {
               )
           )}
         {openScheduleMarkerState &&
+          scheduleMarker.length !== 0 &&
           scheduleMarker.map(
             (marker, index) =>
               marker.type === "schedule" && (
@@ -473,7 +490,7 @@ const PlanShareRoom = () => {
                 </>
               )
           )}
-        {openScheduleMarkerState && (
+        {openScheduleMarkerState && scheduleMarker.length !== 0 && (
           <Polyline
             path={[linePosition]}
             strokeWeight={8}

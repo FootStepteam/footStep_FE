@@ -35,6 +35,7 @@ const ScheduleDaySelect = () => {
       buttonSection: !disabledStatus.buttonSection,
       placeSection: !disabledStatus.placeSection,
       memo: !disabledStatus.memo,
+      showScheduleRoute: !disabledStatus.showScheduleRoute,
     });
   };
 
