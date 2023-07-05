@@ -20,6 +20,8 @@ const Lists = () => {
     const response = await getCommunityAPI({
       page: 1,
       size: 10,
+      type: "title",
+      sort: "recent",
     });
     setPosts(response);
     setTotalPage(response.totalPages);
