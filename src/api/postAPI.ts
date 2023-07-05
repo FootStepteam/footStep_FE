@@ -95,10 +95,12 @@ export const unlikePostAPI = async (communityId: number): Promise<void> => {
 
 export const updatePostAPI = async (
   communityId: number,
-  updatedContent: string
+  communityName: string,
+  content: string
 ): Promise<void> => {
   let token = getCookie("accessToken");
   const isAvailableToken = await checkTokenAPI(token);
+  console.log(communityName);
 
   if (!isAvailableToken.isValid) {
     token = await refreshTokenAPI();
@@ -109,7 +111,7 @@ export const updatePostAPI = async (
   try {
     await axios.put(
       `/api/api/community/${communityId}?memberId=${memberId}`,
-      { content: updatedContent },
+      { communityName, content },
       {
         headers: {
           Authorization: `Bearer ${token}`,
