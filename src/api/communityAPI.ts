@@ -10,10 +10,20 @@ export const getCommunityAPI = async (params?: IGetCommunityParams) => {
   const KEY = "accessToken";
   let token = getCookie(KEY);
 
-  const config = {
-    params,
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-  };
+  let config = {};
+
+  if (token) {
+    config = {
+      params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  } else {
+    config = {
+      params,
+    };
+  }
 
   try {
     const response = await axios.get("/api/api/community", config);
