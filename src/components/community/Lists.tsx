@@ -37,12 +37,15 @@ const Lists = () => {
     const response = await getCommunityAPI(resendObj);
     setPosts(response);
     setTotalPage(response.totalPages);
-    setPage(1);
   };
 
   useEffect(() => {
     getCommunityList();
   }, [page]);
+
+  useEffect(() => {
+    setTotalPage(posts.totalPages);
+  }, [posts]);
 
   useEffect(() => {
     init();
