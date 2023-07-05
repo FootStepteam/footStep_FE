@@ -2,7 +2,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getCommunityAPI } from "../../api/communityAPI";
-import { ReactComponent as Like } from "../../assets/like.svg";
+import { ReactComponent as Like } from "../../assets/heartFill.svg";
 import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { condition } from "../../state/condition";
 import { postList } from "../../store/postList";
@@ -88,7 +88,7 @@ const Lists = () => {
           {posts.communities.map((post) => (
             <li key={post.communityId}>
               <Link to={`/community/${post.communityId}`}>
-                <div className="flex justify-between items-center w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg hover:bg-platinum-003 transition-all duration-250">
+                <div className="flex justify-between items-center w-full mb-4 px-8 py-2 border-2 border-blue-003 rounded-lg hover:scale-105 transition-all duration-250">
                   <p className="grow text-xl font-bold truncate">
                     {post.communityName}
                   </p>
@@ -103,10 +103,12 @@ const Lists = () => {
                       </p>
                     </div>
                     <p className="flex items-center text-sm">
-                      <Like
-                        width={20}
-                        height={20}
-                      />
+                      <span className="mr-1">
+                        <Like
+                          width={15}
+                          height={15}
+                        />
+                      </span>
                       좋아요 : {post.likeCount}
                     </p>
                     <p className="py-1 text-sm">
