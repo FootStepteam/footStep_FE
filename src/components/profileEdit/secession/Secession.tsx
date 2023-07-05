@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { deleteMember, getUserInfo } from "../../../api/profileAPI"; // Import deleteMember function
-import { getCookie } from "../../../utils/cookie";
+import { getCookie, removeCookie } from "../../../utils/cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -36,6 +36,8 @@ const Secession = () => {
         const token = await getCookie("accessToken");
         const userData = await getUserInfo(token);
         await deleteMember(userData.memberId);
+
+        removeCookie("accessToken");
 
         Swal.fire("탈퇴 완료", "회원 탈퇴가 완료되었습니다", "success");
 
