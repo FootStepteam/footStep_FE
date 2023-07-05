@@ -36,6 +36,8 @@ const Lists = () => {
 
     const response = await getCommunityAPI(resendObj);
     setPosts(response);
+    setTotalPage(response.totalPages);
+    setPage(1);
   };
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const Lists = () => {
                   <p className="grow text-xl font-bold truncate">
                     {post.communityName}
                   </p>
-                  <div className="flex flex-col items-center py-1">
+                  <div className="flex flex-col items-center w-[15rem] py-1">
                     <div className="flex items-center">
                       <NoProfile
                         width={16}

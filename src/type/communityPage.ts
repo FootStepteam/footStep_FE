@@ -5,6 +5,7 @@ export interface ICommunityPost {
   communityName: string;
   content: string;
   createdDate: string;
+  liked: boolean;
   likeCount: number;
   memberId: number;
   memberNickname: string;
@@ -46,6 +47,7 @@ export interface ICommentUpdateForm {
 }
 
 export interface ILikeProps {
+  isLiked: boolean;
   communityId: number;
   initialLikeCount: number;
 }

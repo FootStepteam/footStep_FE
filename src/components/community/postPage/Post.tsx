@@ -50,6 +50,7 @@ const Post = () => {
       />{" "}
       <div className="p-6 mb-8 rounded-lg bg-white-001">
         <Like
+          isLiked={post.liked}
           communityId={post.communityId}
           initialLikeCount={post.likeCount}
         />
@@ -63,7 +64,10 @@ const Post = () => {
             onCommentsChange={onCommentsChange}
           />
         ))}
-        <CreateComment post={post} onCommentsChange={onCommentsChange} />
+        <CreateComment
+          post={post}
+          onCommentsChange={onCommentsChange}
+        />
       </div>
     </div>
   );
