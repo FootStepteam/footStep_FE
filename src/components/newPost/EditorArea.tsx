@@ -70,7 +70,7 @@ const EditorArea = () => {
               value={selectedPlan ? selectedPlan.shareName : ""}
               onChange={(e) => {
                 const selectedPlanName = e.target.value;
-                const selectedPlan = plans.find(
+                const selectedPlan = plans.shareRoomDtoList.find(
                   (plan) => plan.shareName === selectedPlanName
                 );
                 if (selectedPlan) {
@@ -80,8 +80,11 @@ const EditorArea = () => {
               className="w-full p-2 mb-4 border-2 border-gray-002 rounded-md"
             >
               <option value="">일정을 선택해주세요</option>
-              {plans.map((plan) => (
-                <option key={plan.shareId} value={plan.shareName}>
+              {plans.shareRoomDtoList.map((plan) => (
+                <option
+                  key={plan.shareId}
+                  value={plan.shareName}
+                >
                   {plan.shareName}
                 </option>
               ))}
