@@ -8,21 +8,24 @@ export const getPostAPI = async (
   communityId: number
 ): Promise<ICommunityPost> => {
   let token = getCookie("accessToken");
-  const isAvailableToken = await checkTokenAPI(token);
+  let config = {};
 
-  if (!isAvailableToken.isValid) {
-    token = await refreshTokenAPI();
+  if (token) {
+    const isAvailableToken = await checkTokenAPI(token);
+
+    if (!isAvailableToken.isValid) {
+      token = await refreshTokenAPI();
+    }
+
+    config = { headers: { Authorization: `Bearer ${token}` } };
   }
-
-  const config = token
-    ? { headers: { Authorization: `Bearer ${token}` } }
-    : undefined;
 
   try {
     const response = await axios.get(
       `/api/api/community/${communityId}`,
       config
     );
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
