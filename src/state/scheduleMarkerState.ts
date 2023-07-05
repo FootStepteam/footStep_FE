@@ -2,5 +2,5 @@ import { atom } from "recoil";
 
 export const scheduleMarkerState = atom({
   key: "scheduleMarkerState",
-  default: true,
+  default: false,
 });
