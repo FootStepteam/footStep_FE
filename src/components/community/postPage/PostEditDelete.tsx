@@ -6,13 +6,7 @@ const PostEditDelete = ({ postId }: { postId: number }) => {
   const navigate = useNavigate();
 
   const handleUpdate = async () => {
-    Swal.fire({
-      title: "게시글 수정하기 페이지로 이동합니다",
-      icon: "info",
-      confirmButtonText: "확인",
-    }).then(() => {
-      navigate(`/community/${postId}/edit`);
-    });
+    navigate(`/community/${postId}/edit`);
   };
 
   const handleDelete = async () => {
