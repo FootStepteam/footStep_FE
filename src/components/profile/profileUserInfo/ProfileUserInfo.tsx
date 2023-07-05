@@ -25,7 +25,7 @@ const ProfileUserInfo = () => {
     <div className="mt-24 w-[20rem] mx-auto">
       <div className="m-center p-7 w-[17rem] min-h-fit border border-gray-004 rounded-xl shadow-sm">
         <div className="flex justify-center">
-          {userInfo?.img ? (
+          {userInfo?.img !== "default" && userInfo?.img ? (
             <img
               src={userInfo.img}
               alt="User"
