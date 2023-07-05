@@ -14,7 +14,7 @@ interface IProps {
 const ScheduleMemo = ({ setOpenMemo }: IProps) => {
   const [textValue, setTextValue] = useState<string>("");
   const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
-  const scheduleBytDate = useRecoilValue(schedule);
+  const [scheduleBytDate, setScheduleByDate] = useRecoilState(schedule);
   const member = useRecoilValue(memberInfo);
   const { shareRoomID } = useParams();
 
@@ -47,6 +47,10 @@ const ScheduleMemo = ({ setOpenMemo }: IProps) => {
         }).then((result) => {
           if (result.isConfirmed) {
             addSchedultMemoAPI(Number(shareRoomID), member.memberId, form);
+            setScheduleByDate({
+              ...scheduleBytDate,
+              content: textValue,
+            });
             setOpenMemo(false);
             setDisabledStatus({
               scheduleList: false,
