@@ -42,6 +42,7 @@ const ExistsSchedule = () => {
       buttonSection: !disabledStatus.buttonSection,
       placeSection: !disabledStatus.placeSection,
       memo: !disabledStatus.memo,
+      showScheduleRoute: !disabledStatus.showScheduleRoute,
     });
     setSelecteStartPoint(!selectStartPoint);
   };
@@ -55,6 +56,7 @@ const ExistsSchedule = () => {
       scheduleList: !disabledStatus.scheduleList,
       buttonSection: !disabledStatus.buttonSection,
       placeSection: !disabledStatus.placeSection,
+      showScheduleRoute: !disabledStatus.showScheduleRoute,
     });
   };
 
@@ -74,6 +76,7 @@ const ExistsSchedule = () => {
           buttonSection: !disabledStatus.buttonSection,
           placeSection: !disabledStatus.placeSection,
           memo: !disabledStatus.memo,
+          showScheduleRoute: !disabledStatus.showScheduleRoute,
         });
 
         setStartPoint({
@@ -139,12 +142,17 @@ const ExistsSchedule = () => {
           </button>
           {openMemo && <ScheduleMemo setOpenMemo={setOpenMemo} />}
         </div>
-        <div className="relative flex items-center z-[1005]">
+        <div
+          className={`relative flex items-center ${
+            disabledStatus.showScheduleRoute ? "z-[1003]" : "z-[1005]"
+          }`}
+        >
           <input
             id="scheduleMarker"
             type="checkbox"
             className="ml-4"
             onClick={onClickScheduleMarkerHandler}
+            defaultChecked
           />
           <label
             htmlFor="scheduleMarker"

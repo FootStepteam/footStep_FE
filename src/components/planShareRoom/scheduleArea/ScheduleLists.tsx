@@ -32,6 +32,7 @@ const ScheduleLists = () => {
   const disabledStatus = useRecoilValue(disabledState);
   const selectedPlanDay = useRecoilValue(selectedDay);
   const shareRoom = useRecoilValue(shareRoomInfo);
+  const selectedDate = useRecoilValue(selectedDay);
   const [scheduleAfterComplete, setScheduleAfterComplete] = useState<
     IPlanSchedule[]
   >([]);
@@ -72,6 +73,14 @@ const ScheduleLists = () => {
     return true;
   };
 
+  const lookUpAgain = async () => {
+    const result = await getScheduleByDateAPI(
+      Number(shareRoomID),
+      selectedDate.planDate
+    );
+    setScheduleInfo(result?.data);
+  };
+
   const onClickRecommendHandler = async () => {
     const result = await validation("recommend");
 
@@ -94,6 +103,7 @@ const ScheduleLists = () => {
               icon: "success",
               text: "추천 경로로 일정이 설정되었습니다.",
             });
+            lookUpAgain();
           }
         });
   };

@@ -54,6 +54,7 @@ const ScheduleMemo = ({ setOpenMemo }: IProps) => {
               daySelect: !disabledStatus.daySelect,
               buttonSection: !disabledStatus.buttonSection,
               placeSection: !disabledStatus.placeSection,
+              showScheduleRoute: !disabledStatus.showScheduleRoute,
               memo: false,
             });
           }
@@ -70,6 +71,7 @@ const ScheduleMemo = ({ setOpenMemo }: IProps) => {
       daySelect: !disabledStatus.daySelect,
       buttonSection: !disabledStatus.buttonSection,
       placeSection: !disabledStatus.placeSection,
+      showScheduleRoute: !disabledStatus.showScheduleRoute,
       memo: false,
     });
   };

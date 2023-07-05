@@ -49,6 +49,8 @@ const useShareRoomForm = () => {
     backUpForm,
     setForm,
     getData,
+    setBackForm,
+    setScheduleShareRoomInfo,
     onChangeTitleHandler,
     onChangeDateHandler,
     scheduleShareRoomInfo,

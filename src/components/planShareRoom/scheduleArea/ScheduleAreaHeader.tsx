@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { editShareRoomInfoAPI } from "../../../api/shareRoomAPI";
+import {
+  editShareRoomInfoAPI,
+  getShareRoomDetailAPI,
+} from "../../../api/shareRoomAPI";
 import { ReactComponent as Exit } from "../../../assets/exit.svg";
 import useShareRoomForm from "../../../hooks/useShareRoomForm";
 import { disabledState } from "../../../state/componentOpenState";
@@ -14,12 +17,15 @@ import Calendar from "../../common/calendar/Calendar";
 const ScheduleAreaHeader = () => {
   const { shareRoomID } = useParams<string>();
   const shareRoom = useRecoilValue(shareRoomInfo);
+  const setShareRoomInfo = useSetRecoilState(shareRoomInfo);
   const [disabledStatus, setDisabledStatus] = useRecoilState(disabledState);
   const {
     form,
     backUpForm,
     setForm,
     getData,
+    setBackForm,
+    setScheduleShareRoomInfo,
     onChangeTitleHandler,
     onChangeDateHandler,
     scheduleShareRoomInfo,
@@ -31,6 +37,24 @@ const ScheduleAreaHeader = () => {
 
   const type = "inShareRoom";
 
+  //
+  const lookUpAgain = async () => {
+    const response = await getShareRoomDetailAPI(Number(shareRoomID));
+    setShareRoomInfo(response);
+    setForm({
+      title: response.shareName,
+      startDate: response.travelStartDate,
+      endDate: response.travelEndDate,
+    });
+    setBackForm({
+      title: response.shareName,
+      startDate: response.travelStartDate,
+      endDate: response.travelEndDate,
+    });
+    setScheduleShareRoomInfo(response);
+    setShareRoomInfo(response);
+  };
+
   const onClickHandler = async (type: string) => {
     switch (type) {
       case "cancel":
@@ -41,6 +65,7 @@ const ScheduleAreaHeader = () => {
           buttonSection: false,
           placeSection: false,
           memo: false,
+          showScheduleRoute: false,
         });
         setEditStatus(false);
         setForm({ ...backUpForm });
@@ -53,6 +78,7 @@ const ScheduleAreaHeader = () => {
           buttonSection: true,
           placeSection: true,
           memo: true,
+          showScheduleRoute: true,
         });
         setEditStatus(true);
         break;
@@ -65,12 +91,14 @@ const ScheduleAreaHeader = () => {
           buttonSection: false,
           placeSection: false,
           memo: false,
+          showScheduleRoute: false,
         });
 
         if (shareRoomID) {
           const result = await editShareRoomInfoAPI(Number(shareRoomID), form);
 
           if (result === 200) {
+            lookUpAgain();
             MySwal.fire({
               icon: "success",
               text: "수정이 성공적으로 되었습니다",

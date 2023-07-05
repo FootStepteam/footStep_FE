@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { addDestinationAPI, deleteDestinationAPI } from "../api/destinationAPI";
+import { getScheduleByDateAPI } from "../api/scheduleAPI";
+import { schedule } from "../store/schedule";
 import { selectedDay } from "../store/selectedDay";
 
 export interface IPlace {
@@ -13,6 +15,7 @@ export interface IPlace {
 const useManageSchedule = () => {
   const { shareRoomID } = useParams();
   const selectedDate = useRecoilValue(selectedDay);
+  const setScheduleInfo = useSetRecoilState(schedule);
 
   const addDestination = async (place: IPlace) => {
     if (shareRoomID) {
@@ -23,16 +26,34 @@ const useManageSchedule = () => {
         destinationAddress: place.addressName,
         lng: place.x,
         lat: place.y,
-        seq: 1,
+        seq: 999,
       };
 
-      addDestinationAPI(Number(shareRoomID), bodyData);
+      const response = await addDestinationAPI(Number(shareRoomID), bodyData);
+      if (response?.status === 200) {
+        const result = await getScheduleByDateAPI(
+          Number(shareRoomID),
+          selectedDate.planDate
+        );
+        setScheduleInfo(result?.data);
+      }
     }
   };
 
   const deleteDestination = async (destinationId: number) => {
     if (shareRoomID) {
-      deleteDestinationAPI(Number(shareRoomID), destinationId);
+      const response = await deleteDestinationAPI(
+        Number(shareRoomID),
+        destinationId
+      );
+
+      if (response?.status === 200) {
+        const result = await getScheduleByDateAPI(
+          Number(shareRoomID),
+          selectedDate.planDate
+        );
+        setScheduleInfo(result?.data);
+      }
     }
   };
 
