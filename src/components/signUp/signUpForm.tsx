@@ -1,6 +1,8 @@
 import { kakaoLogin } from "../../api/kakaoLoginAPI";
 import { ReactComponent as Kakao } from "../../assets/kakao.svg";
 import { useSignUpForm } from "../../hooks/useSignUpForm";
+import { ReactComponent as LogoIcon } from "../../assets/footStepLogo.svg";
+import { Link } from "react-router-dom";
 
 const SignUpForm = () => {
   const {
@@ -18,7 +20,16 @@ const SignUpForm = () => {
 
   return (
     <div className="mt-[8rem] mx-auto w-[20rem]">
-      <p className="flex justify-center text-5xl mb-20">LOGO 임시</p>
+      <Link
+        to="/"
+        className="flex justify-center mb-20"
+      >
+        <LogoIcon
+          width={200}
+          height={100}
+          className="fill-[#995d5d]"
+        />
+      </Link>
       <h1 className="mb-12 text-black-002 font-bold text-xl">회원가입</h1>
       <div className="mb-8">
         <p className="flex justify-center mb-2 text-[0.85rem] text-gray-001">
