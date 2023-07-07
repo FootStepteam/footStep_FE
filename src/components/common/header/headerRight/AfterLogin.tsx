@@ -10,7 +10,8 @@ const AfterLogin: FunctionComponent = () => {
     event.preventDefault();
 
     Swal.fire({
-      title: "로그아웃 하시겠습니까?",
+      icon: "question",
+      text: "로그아웃 하시겠습니까?",
       showCancelButton: true,
       confirmButtonText: "확인",
       cancelButtonText: "취소",

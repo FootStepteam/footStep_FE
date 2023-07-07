@@ -5,9 +5,11 @@ import Tab from "../components/profileEdit/Tab";
 import ProfileEdit from "../components/profileEdit/edit/ProfileEdit";
 import PasswordEdit from "../components/profileEdit/passwordEdit/PasswordEdit";
 import Secession from "../components/profileEdit/secession/Secession";
+import { useRequireAuth } from "../hooks/useRequireAuth";
 
 const ProfileEditPage = () => {
   const { path } = useParams();
+  useRequireAuth();
 
   return (
     <>
