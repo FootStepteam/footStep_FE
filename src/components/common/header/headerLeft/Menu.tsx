@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import { useRequireAuth } from "../../../../hooks/useRequireAuth";
+import { Link } from "react-router-dom";
 
 const menus = [
   {
@@ -16,46 +13,19 @@ const menus = [
     menu: "커뮤니티",
     path: "/community",
   },
-  {
-    menu: "FAQ",
-    path: "/",
-  },
 ];
 
 const Menu = () => {
-  const restrictedPages = [
-    "/planShareEntrance",
-    "/user/profile",
-    "/user/profile/edit",
-  ];
-  useRequireAuth(restrictedPages);
-
-  const [cookies] = useCookies(["accessToken"]);
-  const [auth, setAuth] = useState(cookies.accessToken);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setAuth(cookies.accessToken);
-  });
-
-  const onClickHandler = (path: string) => {
-    if (!auth && path === "/planShareEntrance") {
-      navigate("/login");
-    } else {
-      navigate(path);
-    }
-  };
-
   return (
     <div className="flex">
       {menus.map((element) => (
-        <div
+        <Link
+          to={element.path}
           key={element.menu}
-          onClick={() => onClickHandler(element.path)}
           className="flex px-3 py-4 justify-center items-center text-xl hover:text-white hover:bg-sky-005 rounded-sm font-semibold cursor-pointer transition-all duration-100"
         >
           {element.menu}
-        </div>
+        </Link>
       ))}
     </div>
   );

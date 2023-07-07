@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useCookies } from "react-cookie";
 
 export const useLoginState = () => {
@@ -8,7 +7,6 @@ export const useLoginState = () => {
   ]);
 
   const login = (token: string, refreshToken: string) => {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     setCookie("accessToken", token, {
       path: "/",
       secure: import.meta.env.NODE_ENV === "production",
@@ -24,9 +22,6 @@ export const useLoginState = () => {
   };
 
   const logout = () => {
-    delete axios.defaults.headers.common.Authorization;
-
-    // Logout 시 쿠키에서 accessToken 삭제
     removeCookie("accessToken", {
       path: "/",
       secure: import.meta.env.NODE_ENV === "production",
