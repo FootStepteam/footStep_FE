@@ -143,10 +143,6 @@ const Chat = () => {
   const onMessageReceived = (payload: any) => {
     const message: IChatMessage = JSON.parse(payload.body);
 
-    if (message.type === "JOIN") {
-      message.message = message.nickName + " joined!";
-    }
-
     setMessages((prevMessages) => [...prevMessages, message]);
   };
 
