@@ -11,7 +11,7 @@ import { ReactComponent as ProfileImage } from "../../../assets/smile.svg";
 
 interface IIsAvailableNickname {
   isAvailable: boolean;
-  init: boolean;
+  message: string;
 }
 
 const ProfileEditForm = () => {
@@ -20,7 +20,7 @@ const ProfileEditForm = () => {
   const [isAvailableNickname, setIsAvailableNickname] =
     useState<IIsAvailableNickname>({
       isAvailable: false,
-      init: true,
+      message: "",
     });
   const [preview, setPreview] = useState<string>("");
   const [memberInfo, setMemberInfo] = useState({
@@ -59,7 +59,7 @@ const ProfileEditForm = () => {
       setImage(e.target.files[0]);
     }
   };
-  
+
   const onClickUpdateImgHandler = async () => {
     if (image) {
       const formData = new FormData();
@@ -86,7 +86,6 @@ const ProfileEditForm = () => {
     }
 
     if (nickname?.length === 0) {
-      
       Swal.fire({
         icon: "error",
         text: "닉네임을 입력은 필수입니다.",
@@ -111,19 +110,27 @@ const ProfileEditForm = () => {
   const onClickCheckNicknameHandler = async () => {
     const nickname = nicknameRef.current?.value as string;
 
+    if (nickname.length < 2 || nickname.length > 10) {
+      setIsAvailableNickname({
+        isAvailable: false,
+        message: "닉네임은 2자 이상 10자 이하로 작성해주세요.",
+      });
+      return;
+    }
+
     const result = await checkNicknameDuplication(nickname);
 
     if (!result) {
       setIsCheckNickname(true);
       setIsAvailableNickname({
         isAvailable: true,
-        init: false,
+        message: "사용 가능한 닉네임 입니다.",
       });
     } else {
       setIsCheckNickname(false);
       setIsAvailableNickname({
         isAvailable: false,
-        init: false,
+        message: "중복된 닉네임입니다.",
       });
     }
   };
@@ -167,10 +174,7 @@ const ProfileEditForm = () => {
               className="cursor-pointer hover:opacity-25"
             >
               {isExistImage ? (
-                <ProfileImage
-                  width={200}
-                  height={200}
-                />
+                <ProfileImage width={200} height={200} />
               ) : (
                 <img
                   src={preview === "" ? memberInfo.img : preview}
@@ -226,12 +230,7 @@ const ProfileEditForm = () => {
                     : "text-red-001"
                 }`}
               >
-                {!isAvailableNickname.init &&
-                  isAvailableNickname.isAvailable &&
-                  "사용 가능한 닉네임 입니다."}
-                {!isAvailableNickname.init &&
-                  !isAvailableNickname.isAvailable &&
-                  "중복된 닉네임입니다."}
+                {isAvailableNickname.message}
               </p>
               <button
                 type="button"
@@ -242,10 +241,7 @@ const ProfileEditForm = () => {
               </button>
             </div>
             <div className="flex flex-col mt-6">
-              <label
-                htmlFor="email"
-                className="font-bold text-lg"
-              >
+              <label htmlFor="email" className="font-bold text-lg">
                 이메일
               </label>
               <input
@@ -257,10 +253,7 @@ const ProfileEditForm = () => {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label
-                htmlFor="introduce"
-                className="block font-bold text-lg"
-              >
+              <label htmlFor="introduce" className="block font-bold text-lg">
                 내 소개
               </label>
               <textarea
