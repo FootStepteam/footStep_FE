@@ -1,19 +1,17 @@
-import { MouseEvent, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getCommunityAPI } from "../../api/communityAPI";
 import { ReactComponent as Like } from "../../assets/heartFill.svg";
 import { ReactComponent as NoProfile } from "../../assets/smile.svg";
 import { condition } from "../../state/condition";
 import { postList } from "../../store/postList";
-import { getCookie } from "../../utils/cookie";
 import Pagination from "./Pagination";
 
 const Lists = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [posts, setPosts] = useRecoilState(postList);
-  const navigate = useNavigate();
   const selectedSortCondition = useRecoilValue(condition);
 
   const init = async () => {
@@ -54,22 +52,11 @@ const Lists = () => {
     init();
   }, []);
 
-  const handleNewPostClick = (event: MouseEvent) => {
-    const token = getCookie("accessToken");
-    if (!token) {
-      event.preventDefault();
-      navigate("/login");
-    }
-  };
-
   return (
     <div className="flex flex-col mx-auto pt-[40px] min-w-max w-[50rem] min-h-screen">
       <div className="flex flex-row-reverse justify-between mt-8 mb-12">
         <div className="flex">
-          <Link
-            to="/community/newpost"
-            onClick={handleNewPostClick}
-          >
+          <Link to="/community/newpost">
             <button
               type="button"
               className="px-4 py-3 rounded-lg bg-blue-003 text-white-001 hover:scale-105 transition-all duration-250"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
 
@@ -6,6 +6,7 @@ const restrictedPages = [
   "/planShareEntrance",
   "/user/profile",
   "/user/profile/edit",
+  "/community/newpost",
 ];
 
 export const useRequireAuth = () => {
