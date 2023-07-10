@@ -5,8 +5,10 @@ import { useEffect } from "react";
 import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useRequireAuth } from "../../hooks/useRequireAuth";
 
 const EditorArea = () => {
+  useRequireAuth();
   const {
     // title,
     setTitle,
@@ -115,6 +117,29 @@ const EditorArea = () => {
               }}
               onReady={(editor: any) => {
                 editor.ui.view.editable.element.style.height = "400px";
+              }}
+              config={{
+                removePlugins: [
+                  "Image",
+                  "Table",
+                  "MediaEmbed",
+                  "CKFinder",
+                  "ImageCaption",
+                  "ImageStyle",
+                  "ImageToolbar",
+                  "ImageUpload",
+                  "Link",
+                  "Autoformat",
+                  "BlockQuote",
+                  "Heading",
+                  "List",
+                  "Indent",
+                  "PasteFromOffice",
+                  "TextTransformation",
+                  "CKBox",
+                  "EasyImage",
+                  "UploadAdapter",
+                ],
               }}
             />
           </div>
