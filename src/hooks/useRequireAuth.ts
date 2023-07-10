@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
 
@@ -15,11 +15,11 @@ export const useRequireAuth = () => {
   const token = getCookie("accessToken");
   const isIncludePath =
     location.pathname.includes(`/planShareRoom/${shareRoomID}`) ||
-    (restrictedPages.includes(location.pathname) && !token);
+    (restrictedPages.includes(location.pathname) && token !== undefined);
 
   useEffect(() => {
-    if (isIncludePath) {
+    if (!isIncludePath) {
       navigate("/login");
     }
-  }, [token, navigate, restrictedPages, location]);
+  }, []);
 };
