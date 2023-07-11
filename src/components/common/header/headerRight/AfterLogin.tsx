@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { MouseEvent, FunctionComponent } from "react";
 import { useLoginState } from "../../../../hooks/useLoginState";
 import Swal from "sweetalert2";
+import { useLastLocation } from "../../../../hooks/useLastLocation";
 
 const AfterLogin: FunctionComponent = () => {
+  const saveLastLocation = useLastLocation();
   const { logout } = useLoginState();
 
   const handleLogout = (event: MouseEvent<HTMLButtonElement>) => {
@@ -17,6 +19,7 @@ const AfterLogin: FunctionComponent = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
+        saveLastLocation();
         logout();
       }
     });
