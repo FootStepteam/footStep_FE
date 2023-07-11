@@ -38,7 +38,9 @@ const ProfileUserInfo = () => {
         <section className="w-[13rem] mt-8 mx-auto">
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">닉네임</h1>
-            <div className="h-8 text-black-003">{userInfo?.nickname}</div>
+            <div className="h-8 text-black-003 truncate">
+              {userInfo?.nickname}
+            </div>
           </div>
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">이메일</h1>
@@ -48,7 +50,7 @@ const ProfileUserInfo = () => {
           </div>
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">내 소개</h1>
-            <div className="h-8 tracking-[-0.5px] text-black-003">
+            <div className="h-[8rem] tracking-[-0.5px] text-black-003 whitespace-pre-wrap text-ellipsis overflow-y-scroll overflow-x-hidden scrollbar-hide">
               {userInfo?.description}
             </div>
           </div>

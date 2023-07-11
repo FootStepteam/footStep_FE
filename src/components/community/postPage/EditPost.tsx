@@ -94,6 +94,29 @@ const EditPost = () => {
             onReady={(editor: any) => {
               editor.ui.view.editable.element.style.height = "500px";
             }}
+            config={{
+              removePlugins: [
+                "Image",
+                "Table",
+                "MediaEmbed",
+                "CKFinder",
+                "ImageCaption",
+                "ImageStyle",
+                "ImageToolbar",
+                "ImageUpload",
+                "Link",
+                "Autoformat",
+                "BlockQuote",
+                "Heading",
+                "List",
+                "Indent",
+                "PasteFromOffice",
+                "TextTransformation",
+                "CKBox",
+                "EasyImage",
+                "UploadAdapter",
+              ],
+            }}
           />
           <div className="flex justify-end mt-20">
             <button

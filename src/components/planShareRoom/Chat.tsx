@@ -74,29 +74,33 @@ const Chat = () => {
     const client = Stomp.over(socketFactory);
     stompClient.current = client;
     client.connect({}, onConnected, onError);
+  };
+
+  const onConnected = async () => {
+    const previousShareId = sessionStorage.getItem("lastEnteredChatRoom");
+    if (previousShareId !== String(shareId)) {
+      stompClient.current?.send(
+        "/pub/chat/message",
+        {},
+        JSON.stringify({
+          shareId: shareId,
+          nickName: username,
+          shareRoomEnterId: shareRoomEnterId,
+          type: "ENTER",
+        })
+      );
+      sessionStorage.setItem("lastEnteredChatRoom", String(shareId));
+    }
+
+    await stompClient.current?.subscribe(
+      `/sub/share-room/${shareId}`,
+      onMessageReceived
+    );
 
     const pastMessages = await getChatRoomEnterMessage(shareId);
     if (pastMessages && Array.isArray(pastMessages)) {
       setMessages(pastMessages);
     }
-  };
-
-  const onConnected = () => {
-    stompClient.current?.subscribe(
-      `/sub/share-room/${shareId}`,
-      onMessageReceived
-    );
-
-    stompClient.current?.send(
-      "/pub/chat/message",
-      {},
-      JSON.stringify({
-        shareId: shareId,
-        nickName: username,
-        shareRoomEnterId: shareRoomEnterId,
-        type: "ENTER",
-      })
-    );
   };
 
   const onError = (error: any) => {
@@ -142,10 +146,6 @@ const Chat = () => {
 
   const onMessageReceived = (payload: any) => {
     const message: IChatMessage = JSON.parse(payload.body);
-
-    if (message.type === "JOIN") {
-      message.message = message.nickName + " joined!";
-    }
 
     setMessages((prevMessages) => [...prevMessages, message]);
   };
