@@ -20,15 +20,8 @@ const SignUpForm = () => {
 
   return (
     <div className="mt-[8rem] mx-auto w-[20rem]">
-      <Link
-        to="/"
-        className="flex justify-center mb-20"
-      >
-        <LogoIcon
-          width={200}
-          height={100}
-          className="fill-[#995d5d]"
-        />
+      <Link to="/" className="flex justify-center mb-20">
+        <LogoIcon width={200} height={100} className="fill-[#995d5d]" />
       </Link>
       <h1 className="mb-12 text-black-002 font-bold text-xl">회원가입</h1>
       <div className="mb-8">
@@ -40,11 +33,7 @@ const SignUpForm = () => {
           onClick={kakaoLogin}
           type="button"
         >
-          <Kakao
-            width={25}
-            height={25}
-            className="mr-2"
-          />
+          <Kakao width={25} height={25} className="mr-2" />
           카카오계정으로 회원가입
         </button>
       </div>
@@ -121,7 +110,7 @@ const SignUpForm = () => {
         <div className="mb-6">
           <label className="block mb-3 font-bold text-black-002">닉네임</label>
           <p className="mb-2 text-[0.8rem] text-gray-001">
-            닉네임을 2자 이상 10자 이하로 입력해주세요.
+            닉네임은 2자 이상 10자 이하로 입력해주세요.
           </p>
           <input
             type="text"
@@ -158,9 +147,9 @@ const SignUpForm = () => {
               여성
             </button>
           </div>
-          {genderType.gender === "" && !genderType.initial && (
+          {errors.gender && (
             <p className="text-[0.75rem] text-red-001">
-              성별 선택은 필수입니다.
+              {errors.gender.message}
             </p>
           )}
         </div>
