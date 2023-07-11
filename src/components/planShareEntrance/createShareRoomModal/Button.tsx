@@ -20,6 +20,7 @@ const Button = ({ form }: IProps) => {
   const MySwal = withReactContent(Swal);
 
   const onClickCreateHandler = async () => {
+    console.log(form);
     if (!formValidationCheck(form)) return;
 
     const response = await createShareRoomAPI(form);
