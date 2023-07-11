@@ -48,23 +48,12 @@ const ProfileEditForm = () => {
     setDescriptionLength(userProfile.description.length);
   };
 
-  const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === memberInfo.nickname) {
-      setIsCheckNickname(true);
-    } else {
-      setIsCheckNickname(false);
-    }
-  };
-
+  // 이미지 수정 부분
   const onChangeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files?.length !== 0) {
       setPreview(URL.createObjectURL(e.target.files[0]));
       setImage(e.target.files[0]);
     }
-  };
-
-  const onChangeIntroduceHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescriptionLength(e.target.value.length);
   };
 
   const onClickUpdateImgHandler = async () => {
@@ -79,7 +68,69 @@ const ProfileEditForm = () => {
           icon: "success",
           text: "이미지가 수정되었습니다.",
         });
+        fetchMemberInfo();
       }
+    } else {
+      // 이미지가 선택되지 않았을 경우, 기본 이미지로 설정
+      const result = await updateProfileImageAPI(new FormData());
+
+      if (result?.status === 200) {
+        Swal.fire({
+          icon: "success",
+          text: "기본 이미지로 설정되었습니다.",
+        });
+        fetchMemberInfo();
+      }
+    }
+  };
+
+  const onClickDeleteImgHandler = () => {
+    const input = document.getElementById("profileImage") as HTMLInputElement;
+    if (input) {
+      input.value = "";
+    }
+
+    setMemberInfo({ ...memberInfo, img: "default" });
+    setImage(null);
+    setPreview("");
+  };
+
+  // 이미지 수정 부분 끝
+
+  // 닉네임 수정 부분
+  const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === memberInfo.nickname) {
+      setIsCheckNickname(true);
+    } else {
+      setIsCheckNickname(false);
+    }
+  };
+
+  const onClickCheckNicknameHandler = async () => {
+    const nickname = nicknameRef.current?.value as string;
+
+    if (nickname.length < 2 || nickname.length > 10) {
+      setIsAvailableNickname({
+        isAvailable: false,
+        message: "닉네임은 2자 이상 10자 이하로 작성해주세요.",
+      });
+      return;
+    }
+
+    const result = await checkNicknameDuplication(nickname);
+
+    if (!result) {
+      setIsCheckNickname(true);
+      setIsAvailableNickname({
+        isAvailable: true,
+        message: "사용 가능한 닉네임 입니다.",
+      });
+    } else {
+      setIsCheckNickname(false);
+      setIsAvailableNickname({
+        isAvailable: false,
+        message: "중복된 닉네임입니다.",
+      });
     }
   };
 
@@ -113,40 +164,13 @@ const ProfileEditForm = () => {
 
     return true;
   };
+  // 닉네임 수정 부분 끝
 
-  const onClickCheckNicknameHandler = async () => {
-    const nickname = nicknameRef.current?.value as string;
-
-    if (nickname.length < 2 || nickname.length > 10) {
-      setIsAvailableNickname({
-        isAvailable: false,
-        message: "닉네임은 2자 이상 10자 이하로 작성해주세요.",
-      });
-      return;
-    }
-
-    const result = await checkNicknameDuplication(nickname);
-
-    if (!result) {
-      setIsCheckNickname(true);
-      setIsAvailableNickname({
-        isAvailable: true,
-        message: "사용 가능한 닉네임 입니다.",
-      });
-    } else {
-      setIsCheckNickname(false);
-      setIsAvailableNickname({
-        isAvailable: false,
-        message: "중복된 닉네임입니다.",
-      });
-    }
+  // 내 소개 수정 부분
+  const onChangeIntroduceHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setDescriptionLength(e.target.value.length);
   };
-
-  const onClickDeleteImgHandler = () => {
-    setMemberInfo({ ...memberInfo, img: "default" });
-    setImage(null);
-    setPreview("");
-  };
+  // 내 소개 수정 부분
 
   const onSubmitHandler = async () => {
     const nickname = nicknameRef.current?.value as string;
