@@ -45,7 +45,9 @@ const ProfileEditForm = () => {
       email: userProfile.loginEmail,
       description: userProfile.description,
     });
-    setDescriptionLength(userProfile.description.length);
+    if (userProfile.description) {
+      setDescriptionLength(userProfile.description.length);
+    }
   };
 
   // 이미지 수정 부분
