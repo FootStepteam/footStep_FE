@@ -15,6 +15,8 @@ interface IIsAvailableNickname {
 }
 
 const ProfileEditForm = () => {
+  const MAX_DESCRIPTION_LENGTH = 200;
+  const [descriptionLength, setDescriptionLength] = useState(0);
   const [image, setImage] = useState<File | null>(null);
   const [isCheckNickname, setIsCheckNickname] = useState<boolean>(true);
   const [isAvailableNickname, setIsAvailableNickname] =
@@ -43,6 +45,7 @@ const ProfileEditForm = () => {
       email: userProfile.loginEmail,
       description: userProfile.description,
     });
+    setDescriptionLength(userProfile.description.length);
   };
 
   const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +61,10 @@ const ProfileEditForm = () => {
       setPreview(URL.createObjectURL(e.target.files[0]));
       setImage(e.target.files[0]);
     }
+  };
+
+  const onChangeIntroduceHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setDescriptionLength(e.target.value.length);
   };
 
   const onClickUpdateImgHandler = async () => {
@@ -260,8 +267,13 @@ const ProfileEditForm = () => {
                 id="introduce"
                 className="mt-2 px-4 py-2  h-40 border-gray-003 border-gray-002 border rounded-md outline-none resize-none"
                 defaultValue={memberInfo.description}
+                onChange={onChangeIntroduceHandler}
                 ref={introduceRef}
+                maxLength={MAX_DESCRIPTION_LENGTH}
               />
+              <div className="place-self-end text-gray-002">
+                {descriptionLength}/{MAX_DESCRIPTION_LENGTH}
+              </div>
             </div>
           </div>
           <button
