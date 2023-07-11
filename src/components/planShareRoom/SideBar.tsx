@@ -3,7 +3,7 @@ import { sideBarState } from "../../state/sidebarState";
 import SideBarToggle from "./SideBarToggle";
 import PlaceSearchArea from "./placeSearchArea/PlaceSearchArea";
 import ScheduleArea from "./scheduleArea/ScheduleArea";
-import { IPlace } from "../../hooks/useManageSchdule";
+import { IPlace } from "../../hooks/useSchdule";
 
 interface IPropsSideBar {
   placeSearch: (keyword: string) => void;

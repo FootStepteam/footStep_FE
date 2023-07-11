@@ -1,4 +1,4 @@
-import { IPlace } from "../hooks/useManageSchdule";
+import { IPlace } from "../hooks/useSchdule";
 
 export interface IShareRoom {
   endPoint: string;
