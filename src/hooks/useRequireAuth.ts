@@ -6,6 +6,8 @@ const restrictedPages = [
   "/planShareEntrance",
   "/user/profile",
   "/user/profile/edit",
+  "/user/profile/passwordEdit",
+  "/user/profile/secession",
   "/community/newpost",
 ];
 

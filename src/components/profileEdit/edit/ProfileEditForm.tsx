@@ -77,7 +77,7 @@ const ProfileEditForm = () => {
       if (result?.status === 200) {
         Swal.fire({
           icon: "success",
-          text: "이미지 수정이 되었습니다.",
+          text: "이미지가 수정되었습니다.",
         });
       }
     }
@@ -161,7 +161,7 @@ const ProfileEditForm = () => {
     if (result?.status === 200) {
       Swal.fire({
         icon: "success",
-        text: "회원정보 수정이 되었습니다.",
+        text: "회원정보가 수정되었습니다.",
       });
       fetchMemberInfo();
     }
