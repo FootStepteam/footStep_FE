@@ -16,6 +16,10 @@ const SignUpForm = () => {
     onClickGenderHandler,
     onKeyDownEmailHandler,
     onBlurEmailHandler,
+    onClickCheckNicknameHandler,
+    onKeyDownNicknameHandler,
+    onBlurNicknameHandler,
+    isCheckNickname,
   } = useSignUpForm();
 
   return (
@@ -116,14 +120,27 @@ const SignUpForm = () => {
             type="text"
             id="nickname"
             {...register("nickname")}
+            onKeyDown={onKeyDownNicknameHandler}
+            onBlur={onBlurNicknameHandler}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="별명 (2~10자)"
           />
-          {errors.nickname && (
-            <p className="text-[0.75rem] text-red-001">
-              {errors.nickname.message}
-            </p>
-          )}
+          <p
+            className={`text-[0.75rem] ${
+              !isCheckNickname.check ? "text-red-001" : "text-blue-002"
+            }`}
+          >
+            {isCheckNickname.checkNicknameMsg.length !== 0
+              ? isCheckNickname.checkNicknameMsg
+              : errors.nickname && errors.nickname.message}
+          </p>
+          <button
+            type="button"
+            className="mt-4 mx-auto w-[20rem] h-[3.2rem] bg-platinum-001 hover:bg-platinum-002 rounded-md text-white font-bold"
+            onClick={onClickCheckNicknameHandler}
+          >
+            중복확인
+          </button>
         </div>
         <div className="mb-12">
           <p className="mb-3 font-bold text-black-002">성별</p>

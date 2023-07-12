@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { checkEmailDuplication, signUp } from "../api/userSignUp";
+import { checkNicknameDuplication } from "../api/profileAPI";
 
 interface IFormData {
   loginEmail: string;
@@ -15,6 +16,11 @@ interface IFormData {
 
 interface ICheckEmail {
   checkEmailMsg: string;
+  check: boolean;
+}
+
+interface ICheckNickname {
+  checkNicknameMsg: string;
   check: boolean;
 }
 
@@ -30,6 +36,10 @@ export const useSignUpForm = () => {
   });
   const [isCheckEmail, setIsCheckEmail] = useState<ICheckEmail>({
     checkEmailMsg: "",
+    check: false,
+  });
+  const [isCheckNickname, setIsCheckNickname] = useState<ICheckNickname>({
+    checkNicknameMsg: "",
     check: false,
   });
   const navigate = useNavigate();
@@ -57,7 +67,7 @@ export const useSignUpForm = () => {
       .string()
       .required("닉네임 입력은 필수입니다.")
       .min(2, "닉네임은 최소 2자 이상으로 작성해주세요.")
-      .max(8, "닉네임은 최대 8자 이하로 작성해주세요."),
+      .max(10, "닉네임은 최대 10자 이하로 작성해주세요."),
     gender: yup
       .string()
       .required("성별 선택은 필수입니다.")
@@ -96,6 +106,42 @@ export const useSignUpForm = () => {
     }
   };
 
+  const onClickCheckNicknameHandler = async () => {
+    const nickname = getValues().nickname;
+
+    if (nickname.length < 2 || nickname.length > 10 || errors.nickname) {
+      setIsCheckNickname({
+        checkNicknameMsg: "닉네임은 2자 이상 10자 이내로 작성해주세요.",
+        check: false,
+      });
+      return;
+    }
+
+    try {
+      const response = await checkNicknameDuplication(nickname);
+
+      if (response) {
+        setIsCheckNickname({
+          checkNicknameMsg: "이미 사용중인 닉네임입니다.",
+          check: false,
+        });
+      } else {
+        setIsCheckNickname({
+          checkNicknameMsg: "사용 가능한 닉네임입니다.",
+          check: true,
+        });
+      }
+    } catch (error: any) {
+      if (error.response.status === 500) {
+        setIsCheckNickname({
+          checkNicknameMsg:
+            "서버 에러가 발생했습니다. 잠시 후 다시 시도해주세요.",
+          check: false,
+        });
+      }
+    }
+  };
+
   const onClickGenderHandler = (gender: string) => {
     setGenderType({
       gender,
@@ -103,6 +149,35 @@ export const useSignUpForm = () => {
     });
 
     setValue("gender", gender);
+  };
+
+  const onKeyDownNicknameHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Tab") {
+      setIsCheckNickname({
+        checkNicknameMsg: "",
+        check: false,
+      });
+    }
+  };
+
+  const onBlurNicknameHandler = (e: FocusEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (value.length === 0) {
+      setIsCheckNickname({
+        ...isCheckNickname,
+        checkNicknameMsg: "닉네임 입력은 필수입니다.",
+      });
+      return;
+    }
+
+    if (!isCheckNickname.check) {
+      setIsCheckNickname({
+        ...isCheckNickname,
+        checkNicknameMsg: "닉네임 중복확인은 필수입니다.",
+      });
+      return;
+    }
   };
 
   const onKeyDownEmailHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -168,6 +243,10 @@ export const useSignUpForm = () => {
     onClickCheckEmailHandler,
     onKeyDownEmailHandler,
     onBlurEmailHandler,
+    onClickCheckNicknameHandler,
+    onKeyDownNicknameHandler,
+    onBlurNicknameHandler,
+    isCheckNickname,
     setValue,
   };
 };
