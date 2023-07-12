@@ -1,33 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FocusEvent, KeyboardEvent, useState } from "react";
+import { FocusEvent, KeyboardEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { checkEmailDuplication, signUp } from "../api/userSignUp";
 import { checkNicknameDuplication } from "../api/profileAPI";
-
-interface IFormData {
-  loginEmail: string;
-  password: string;
-  checkPassword: string;
-  nickname: string;
-  gender: string;
-}
-
-interface ICheckEmail {
-  checkEmailMsg: string;
-  check: boolean;
-}
-
-interface ICheckNickname {
-  checkNicknameMsg: string;
-  check: boolean;
-}
-
-interface IGenderType {
-  gender: string;
-  initial: boolean;
-}
+import {
+  ICheckEmail,
+  ICheckNickname,
+  IFormData,
+  IGenderType,
+} from "../type/signUp";
 
 export const useSignUpForm = () => {
   const [genderType, setGenderType] = useState<IGenderType>({
@@ -45,11 +28,14 @@ export const useSignUpForm = () => {
   const navigate = useNavigate();
 
   const formSchema = yup.object({
-    loginEmail: yup
+    loginEmailId: yup
       .string()
-      .required("이메일 입력은 필수입니다.")
-      .email("이메일 형식이 아닙니다.")
-      .matches(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/, "이메일 형식이 아닙니다."),
+      .required("이메일 아이디를 입력해주세요.")
+      .matches(/[a-z0-9]+/, "이메일 아이디는 영어 소문자와 숫자만 가능합니다."),
+    loginEmailDomain: yup
+      .string()
+      .required("이메일 주소를 선택/입력해주세요.")
+      .matches(/^[a-z]+\.[a-z]{2,}$/, "이메일 도메인 형식이 아닙니다."),
     password: yup
       .string()
       .required("비밀번호 입력은 필수입니다.")
@@ -86,10 +72,18 @@ export const useSignUpForm = () => {
     resolver: yupResolver(formSchema),
   });
 
-  const onClickCheckEmailHandler = async () => {
-    const loginEmail = getValues().loginEmail;
+  // 이메일 부분
 
-    if (loginEmail.length === 0 || errors.loginEmail) {
+  const onClickCheckEmailHandler = async () => {
+    const loginEmail = `${getValues().loginEmailId}@${
+      getValues().loginEmailDomain
+    }`;
+
+    if (
+      loginEmail.length === 0 ||
+      errors.loginEmailId ||
+      errors.loginEmailDomain
+    ) {
       return;
     }
 
@@ -107,6 +101,47 @@ export const useSignUpForm = () => {
     }
   };
 
+  const onKeyDownEmailHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Tab") {
+      setIsCheckEmail({
+        checkEmailMsg: "",
+        check: false,
+      });
+    }
+  };
+
+  const onBlurEmailHandler = (e: FocusEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (value.length === 0) {
+      setIsCheckEmail({
+        ...isCheckEmail,
+        checkEmailMsg: "이메일을 입력해주세요.",
+      });
+      return;
+    }
+
+    if (!isCheckEmail.check) {
+      setIsCheckEmail({
+        ...isCheckEmail,
+        checkEmailMsg: "이메일 중복확인은 필수입니다.",
+      });
+      return;
+    }
+  };
+  useEffect(() => {
+    resetEmailDomainHandler();
+  }, [watch("loginEmailDomain")]);
+
+  const resetEmailDomainHandler = () => {
+    const currentDomain = getValues("loginEmailDomain");
+    if (currentDomain === "직접입력") {
+      setValue("loginEmailDomain", "");
+    }
+  };
+  // 이메일 부분 끝
+
+  // 닉네임 부분
   const onClickCheckNicknameHandler = async () => {
     const nickname = getValues().nickname;
 
@@ -143,15 +178,6 @@ export const useSignUpForm = () => {
     }
   };
 
-  const onClickGenderHandler = (gender: string) => {
-    setGenderType({
-      gender,
-      initial: false,
-    });
-
-    setValue("gender", gender);
-  };
-
   const onKeyDownNicknameHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Tab") {
       setIsCheckNickname({
@@ -180,36 +206,20 @@ export const useSignUpForm = () => {
       return;
     }
   };
+  // 닉네임 부분 끝
 
-  const onKeyDownEmailHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Tab") {
-      setIsCheckEmail({
-        checkEmailMsg: "",
-        check: false,
-      });
-    }
+  // 성별 선택 부분
+  const onClickGenderHandler = (gender: string) => {
+    setGenderType({
+      gender,
+      initial: false,
+    });
+
+    setValue("gender", gender);
   };
+  // 성별 선택 부분 끝
 
-  const onBlurEmailHandler = (e: FocusEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    if (value.length === 0) {
-      setIsCheckEmail({
-        ...isCheckEmail,
-        checkEmailMsg: "이메일 입력은 필수입니다.",
-      });
-      return;
-    }
-
-    if (!isCheckEmail.check) {
-      setIsCheckEmail({
-        ...isCheckEmail,
-        checkEmailMsg: "이메일 중복확인은 필수입니다.",
-      });
-      return;
-    }
-  };
-
+  // submit handler
   const onSubmitHandler = async () => {
     if (!isCheckEmail.check) {
       setIsCheckEmail({
@@ -220,7 +230,7 @@ export const useSignUpForm = () => {
     }
 
     const signUpForm = {
-      loginEmail: getValues().loginEmail,
+      loginEmail: `${getValues().loginEmailId}@${getValues().loginEmailDomain}`,
       password: getValues().password,
       nickname: getValues().nickname,
       gender: getValues().gender,
@@ -250,5 +260,6 @@ export const useSignUpForm = () => {
     isCheckNickname,
     setValue,
     watch,
+    resetEmailDomainHandler,
   };
 };

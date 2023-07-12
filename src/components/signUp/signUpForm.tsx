@@ -21,6 +21,7 @@ const SignUpForm = () => {
     onBlurNicknameHandler,
     isCheckNickname,
     watch,
+    resetEmailDomainHandler,
   } = useSignUpForm();
   const { password, checkPassword } = watch();
 
@@ -49,15 +50,40 @@ const SignUpForm = () => {
       >
         <div className="mb-6">
           <label className="block mb-3 font-bold text-black-002">이메일</label>
+
           <input
-            type="email"
-            id="loginEmail"
-            {...register("loginEmail")}
+            type="text"
+            id="loginEmailId"
+            {...register("loginEmailId")}
             onKeyDown={onKeyDownEmailHandler}
             onBlur={onBlurEmailHandler}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
-            placeholder="이메일을 입력하세요"
+            placeholder="이메일 아이디를 입력하세요"
           />
+          <div className="flex mt-2">
+            <div className="flex items-center h-[3.2rem] mr-2 place-self-end">
+              @
+            </div>
+            <input
+              list="emailDomains"
+              type="text"
+              id="loginEmailDomain"
+              {...register("loginEmailDomain")}
+              onKeyDown={onKeyDownEmailHandler}
+              onBlur={onBlurEmailHandler}
+              onFocus={resetEmailDomainHandler}
+              className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
+              placeholder="이메일 주소를 선택해주세요"
+            />
+
+            <datalist id="emailDomains">
+              <option value="naver.com" />
+              <option value="daum.net" />
+              <option value="gmail.com" />
+              <option value="yahoo.com" />
+              <option value="직접입력" />
+            </datalist>
+          </div>
           <p
             className={`text-[0.75rem] ${
               !isCheckEmail.check ? "text-red-001" : "text-blue-002"
@@ -65,7 +91,8 @@ const SignUpForm = () => {
           >
             {isCheckEmail.checkEmailMsg.length !== 0
               ? isCheckEmail.checkEmailMsg
-              : errors.loginEmail && errors.loginEmail.message}
+              : (errors.loginEmailId && errors.loginEmailId.message) ||
+                (errors.loginEmailDomain && errors.loginEmailDomain.message)}
           </p>
           <button
             type="button"
@@ -105,11 +132,11 @@ const SignUpForm = () => {
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="비밀번호 확인"
           />
-          <p className="text-[0.75rem] text-red-002">
+          <p className="text-[0.75rem] text-red-001">
             {errors.checkPassword?.message ||
               (password !== checkPassword && "비밀번호가 일치하지 않습니다.")}
           </p>
-          <p className="text-[0.75rem] text-green-001">
+          <p className="text-[0.75rem] text-blue-002">
             {password && password == checkPassword && "비밀번호가 일치합니다."}
           </p>
         </div>
