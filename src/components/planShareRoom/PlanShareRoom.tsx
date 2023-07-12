@@ -356,7 +356,7 @@ const PlanShareRoom = () => {
     } else {
       setLinePosition([]);
     }
-  }, [selectedDate]);
+  }, [selectedDate, schedules]);
 
   return (
     <>
