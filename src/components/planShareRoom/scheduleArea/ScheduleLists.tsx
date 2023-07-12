@@ -49,7 +49,6 @@ const ScheduleLists = () => {
   const validation = async (type: string) => {
     if (type === "complete") {
       const response = await getScheduleAPI(Number(shareRoomID));
-
       const data = response?.data;
 
       if (data !== undefined) {

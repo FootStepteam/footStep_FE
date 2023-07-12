@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 import {
   CustomOverlayMap,
-  Polyline,
   Map,
   MapMarker,
+  Polyline,
   ZoomControl,
 } from "react-kakao-maps-sdk";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { getMemberByAccessToken } from "../../api/memberAPI";
 import { getRecommendPlacesAPI } from "../../api/recommendAPI";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { markerSeq } from "../../constants/marker";
-import useManageSchedule from "../../hooks/useManageSchdule";
+import useSchedule from "../../hooks/useSchdule";
+import { memberInfo } from "../../state/memberInfo";
 import { recommendState } from "../../state/recommendState";
+import { scheduleMarkerState } from "../../state/scheduleMarkerState";
 import { placeSearchResult } from "../../store/placeSearchResult";
 import { recommendPlaceList } from "../../store/recommendPlaceList";
+import { scheduleList } from "../../store/scheduleList";
+import { selectedDay } from "../../store/selectedDay";
 import Chat from "./Chat";
 import SideBar from "./SideBar";
-import { getMemberByAccessToken } from "../../api/memberAPI";
-import { memberInfo } from "../../state/memberInfo";
-import { schedule } from "../../store/schedule";
-import { scheduleMarkerState } from "../../state/scheduleMarkerState";
 
 interface IState {
   center: {
@@ -104,18 +105,18 @@ interface IScheduleInfo {
 
 const PlanShareRoom = () => {
   const recommendStatus = useRecoilValue(recommendState);
-  const scheduleBytDate = useRecoilValue(schedule);
+  const schedules = useRecoilValue(scheduleList);
   const setRecommendPlaces = useSetRecoilState(recommendPlaceList);
   const setPlaceSearchResult = useSetRecoilState(placeSearchResult);
   const setMemberInfo = useSetRecoilState(memberInfo);
-  const { addDestination } = useManageSchedule();
+  const { addDestination } = useSchedule();
+  const selectedDate = useRecoilValue(selectedDay);
   const [map, setMap] = useState<any>();
   const [markers, setMarkers] = useState<IMarker[]>([]);
   const [placePagination, setPlacePagination] = useState<any>();
   const [linePosition, setLinePosition] = useState<ILine[]>([]);
   const [scheduleMarker, setScheduleMarker] = useState<IScheduleMarker[]>([]);
-  const [openScheduleMarkerState, setOpenScheduleMarkerState] =
-    useRecoilState(scheduleMarkerState);
+  const openScheduleMarkerState = useRecoilValue(scheduleMarkerState);
   const [openOverlay, setOpenOverlay] = useState<IOpenOverlay>({
     data: {
       addressName: "",
@@ -148,6 +149,10 @@ const PlanShareRoom = () => {
     isPanto: false,
   });
 
+  useEffect(() => {
+    getMemberInfo();
+  }, []);
+
   const overlayOpen = (index: number, type: string) => {
     const deepCopyInfo = info.map((element: any, i: number) => {
       if (i === index) {
@@ -172,36 +177,30 @@ const PlanShareRoom = () => {
     }
   };
 
-  const onClickAddDestinationHandler = (place: IInfo | IScheduleInfo) => {
-    addDestination(place.data);
-  };
-
-  const onClickMarkerHandler = (index: number, type: string) => {
-    overlayOpen(index, type);
-  };
-
   const scheduleMarkerHandler = () => {
-    if (scheduleBytDate !== "") {
+    if (schedules[selectedDate.planDay - 1] !== undefined) {
       const markers: IScheduleMarker[] = [];
       const linePath: ILine[] = [];
-      scheduleBytDate.destinationDtoList.forEach((destination) => {
-        const marker = {
-          addressName: destination.destinationAddress,
-          placeName: destination.destinationName,
-          position: {
+      schedules[selectedDate.planDay - 1].destinationDtoList.forEach(
+        (destination) => {
+          const marker = {
+            addressName: destination.destinationAddress,
+            placeName: destination.destinationName,
+            position: {
+              lat: Number(destination.lat),
+              lng: Number(destination.lng),
+            },
+            address: destination.destinationAddress,
+            type: "schedule",
+          };
+          markers.push(marker);
+
+          linePath.push({
             lat: Number(destination.lat),
             lng: Number(destination.lng),
-          },
-          address: destination.destinationAddress,
-          type: "schedule",
-        };
-        markers.push(marker);
-
-        linePath.push({
-          lat: Number(destination.lat),
-          lng: Number(destination.lng),
-        });
-      });
+          });
+        }
+      );
       setLinePosition(linePath);
       setScheduleMarker(markers);
     }
@@ -331,13 +330,16 @@ const PlanShareRoom = () => {
     setMemberInfo(response);
   };
 
-  useEffect(() => {
-    getMemberInfo();
-  }, []);
+  const onClickAddDestinationHandler = (place: IInfo | IScheduleInfo) => {
+    addDestination(place.data);
+  };
+
+  const onClickMarkerHandler = (index: number, type: string) => {
+    overlayOpen(index, type);
+  };
 
   useEffect(() => {
     if (scheduleMarker.length !== 0) {
-      setOpenScheduleMarkerState(true);
       setState({
         center: {
           lat: scheduleMarker[0].position.lat,
@@ -345,18 +347,16 @@ const PlanShareRoom = () => {
         },
         isPanto: true,
       });
-    } else {
-      setOpenScheduleMarkerState(false);
     }
   }, [scheduleMarker]);
 
   useEffect(() => {
-    if (scheduleBytDate !== "") {
+    if (selectedDate.date !== 0) {
       scheduleMarkerHandler();
     } else {
       setLinePosition([]);
     }
-  }, [scheduleBytDate]);
+  }, [selectedDate]);
 
   useEffect(() => {
     if (openScheduleMarkerState) {
@@ -378,7 +378,6 @@ const PlanShareRoom = () => {
         placeSearch={placeSearch}
         panTo={panTo}
         placePagination={placePagination}
-        addDestination={addDestination}
       />
       <Map
         center={state.center}

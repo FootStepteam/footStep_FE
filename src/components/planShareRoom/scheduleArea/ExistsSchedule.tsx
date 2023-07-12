@@ -152,7 +152,7 @@ const ExistsSchedule = () => {
             type="checkbox"
             className="ml-4"
             onClick={onClickScheduleMarkerHandler}
-            defaultChecked
+            defaultChecked={openScheduleMarkerState}
           />
           <label
             htmlFor="scheduleMarker"
