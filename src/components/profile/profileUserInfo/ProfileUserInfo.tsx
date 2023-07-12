@@ -38,21 +38,19 @@ const ProfileUserInfo = () => {
         <section className="w-[13rem] mt-8 mx-auto">
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">닉네임</h1>
-            <div className="h-8 text-black-003 truncate">
-              {userInfo?.nickname}
-            </div>
+            <p className="h-8 text-black-003 truncate">{userInfo?.nickname}</p>
           </div>
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">이메일</h1>
-            <div className="h-8 tracking-[-0.5px] text-black-003">
+            <p className="h-8 tracking-[-0.5px] text-black-003">
               {userInfo?.loginEmail}
-            </div>
+            </p>
           </div>
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">내 소개</h1>
-            <div className="h-[8rem] tracking-[-0.5px] text-black-003 whitespace-pre-wrap text-ellipsis overflow-y-scroll overflow-x-hidden scrollbar-hide">
+            <p className="w-[13rem] h-[8rem] outline-none tracking-[-0.5px] text-black-003 whitespace-pre-wrap overflow-y-auto resize-none">
               {userInfo?.description}
-            </div>
+            </p>
           </div>
         </section>
         <div className="flex justify-center mt-4 ">
