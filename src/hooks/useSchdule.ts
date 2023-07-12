@@ -2,8 +2,11 @@ import { Stomp } from "@stomp/stompjs";
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import Swal from "sweetalert2";
 import { addDestinationAPI, deleteDestinationAPI } from "../api/destinationAPI";
+import { recommendScheduleAPI } from "../api/recommendAPI";
 import { getScheduleAPI } from "../api/scheduleAPI";
+import { selecteStartPoint } from "../state/selectStartPoint";
 import { scheduleList } from "../store/scheduleList";
 import { selectedDay } from "../store/selectedDay";
 
@@ -18,6 +21,7 @@ const useSchedule = () => {
   const { shareRoomID } = useParams();
   const selectedDate = useRecoilValue(selectedDay);
   const setSchedules = useSetRecoilState(scheduleList);
+  const selectedStartPoint = useRecoilValue(selecteStartPoint);
   const stompClient = useRef<any | null>(null);
 
   const onConnected = () => {
@@ -87,11 +91,30 @@ const useSchedule = () => {
     }
   };
 
+  const recommendRoute = async () => {
+    const result = await recommendScheduleAPI(
+      selectedStartPoint,
+      Number(shareRoomID)
+    );
+
+    if (result?.status === 200) {
+      Swal.fire({
+        icon: "success",
+        text: "추천 경로로 일정이 설정되었습니다.",
+      });
+      stompClient.current?.send(`/pub/share-room/${shareRoomID}/destination`);
+    }
+  };
+
+  const completeRoute = async () => {
+    stompClient.current?.send(`/pub/share-room/${shareRoomID}/destination`);
+  };
+
   useEffect(() => {
     connect();
   }, []);
 
-  return { addDestination, deleteDestination };
+  return { addDestination, deleteDestination, recommendRoute, completeRoute };
 };
 
 export default useSchedule;
