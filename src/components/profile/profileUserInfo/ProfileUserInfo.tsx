@@ -48,7 +48,7 @@ const ProfileUserInfo = () => {
           </div>
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">내 소개</h1>
-            <p className="w-[13rem] h-[8rem] outline-none tracking-[-0.5px] text-black-003 whitespace-pre-wrap overflow-y-auto resize-none">
+            <p className="w-[13rem] h-[8rem] outline-none tracking-[-0.5px] text-black-003 whitespace-pre-wrap overflow-y-auto resize-none scrollbar-hide">
               {userInfo?.description}
             </p>
           </div>
