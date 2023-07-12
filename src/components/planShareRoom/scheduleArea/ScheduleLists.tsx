@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { sendImage } from "../../../api/kakaoLoginAPI";
 import { recommendScheduleAPI } from "../../../api/recommendAPI";
@@ -24,15 +24,17 @@ import { shareRoomInfo } from "../../../store/shareRoomInfo";
 import { IPlanSchedule } from "../../../type/newPost";
 import ExistsSchedule from "./ExistsSchedule";
 import NotExistsSchedule from "./NotExistsSchedule";
+import { scheduleList } from "../../../store/scheduleList";
 
 const ScheduleLists = () => {
   const { shareRoomID } = useParams();
   const travelDates = useRecoilValue(travelDate);
-  const [scheduleInfo, setScheduleInfo] = useRecoilState(schedule);
+  const setScheduleInfo = useSetRecoilState(schedule);
   const disabledStatus = useRecoilValue(disabledState);
   const selectedPlanDay = useRecoilValue(selectedDay);
   const shareRoom = useRecoilValue(shareRoomInfo);
   const selectedDate = useRecoilValue(selectedDay);
+  const schedules = useRecoilValue(scheduleList);
   const [scheduleAfterComplete, setScheduleAfterComplete] = useState<
     IPlanSchedule[]
   >([]);
@@ -41,12 +43,12 @@ const ScheduleLists = () => {
   const imageElement = useRef<HTMLDivElement>(null);
 
   const isExists =
-    scheduleInfo !== "" && scheduleInfo.destinationDtoList.length !== 0;
+    schedules[selectedPlanDay.planDay - 1] !== undefined &&
+    schedules[selectedPlanDay.planDay - 1].destinationDtoList.length !== 0;
 
   const validation = async (type: string) => {
     if (type === "complete") {
       const response = await getScheduleAPI(Number(shareRoomID));
-
       const data = response?.data;
 
       if (data !== undefined) {
@@ -201,7 +203,6 @@ const ScheduleLists = () => {
 
   useEffect(() => {
     const initialPlanDate = shareRoom.travelStartDate;
-
     if (initialPlanDate !== "") {
       getScheduleByDate();
     }

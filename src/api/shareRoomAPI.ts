@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import {
   ICreateShareRoomFormValue,
   ISubmitShareRoomData,
-} from "../type/shareRoom";
+} from "../type/planShareRoom";
 import { getCookie } from "../utils/cookie";
 import { checkTokenAPI, refreshTokenAPI } from "./tokenAPI";
 import { errorMsg } from "../utils/errorMsgAlert";

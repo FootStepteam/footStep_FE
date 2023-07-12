@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import testImage from "../../../assets/temporary/nature-6517866_1920.jpg";
 import { ReactComponent as RightArrow } from "../../../assets/rightArrow.svg";
 import { searchShareRoomData } from "../../../store/searchShareRoom";
-import { IShareRoom } from "../../../type/shareRoom";
+import { IShareRoom } from "../../../type/planShareRoom";
 import { sendTokenEnteringShareRoom } from "../../../api/shareRoomAPI";
 
 const SearchResult = () => {
