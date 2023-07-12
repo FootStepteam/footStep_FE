@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Tab = () => {
-  const [selected, setSelected] = useState("profileEdit");
+  const location = useLocation();
+  const [selected, setSelected] = useState("");
 
   const tabs = [
     {
@@ -21,6 +22,13 @@ const Tab = () => {
       path: "/user/profile/secession",
     },
   ];
+
+  useEffect(() => {
+    const currentTab = tabs.find((tab) => tab.path === location.pathname);
+    if (currentTab) {
+      setSelected(currentTab.menu);
+    }
+  }, [location.pathname]);
 
   const onClickHandler = (menu: string) => {
     setSelected(menu);
