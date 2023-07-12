@@ -8,8 +8,8 @@ interface IBodyDate {
   destinationCategoryCode: string;
   destinationName: string;
   destinationAddress: string;
-  lng: number;
-  lat: number;
+  lng: string;
+  lat: string;
   seq: number;
 }
 
