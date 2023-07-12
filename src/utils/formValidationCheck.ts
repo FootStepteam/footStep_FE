@@ -1,5 +1,5 @@
 import moment from "moment";
-import { ICreateShareRoomFormValue } from "../type/shareRoom";
+import { ICreateShareRoomFormValue } from "../type/planShareRoom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 

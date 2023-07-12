@@ -5,7 +5,7 @@ import { ReactComponent as BottomArrow } from "../../../assets/bottomArrow.svg";
 import usePlanDate from "../../../hooks/usePlanDate";
 import { useEffect } from "react";
 import { ISelectedDate } from "../../../type/shareRoomForm";
-import { IShareRoom } from "../../../type/shareRoom";
+import { IShareRoom } from "../../../type/planShareRoom";
 
 interface IProps {
   type: string;

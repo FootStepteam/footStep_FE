@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { IShareRoom } from "../type/shareRoom";
+import { IShareRoom } from "../type/planShareRoom";
 
 const initialValue: IShareRoom = {
   endPoint: "",

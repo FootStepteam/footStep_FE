@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { getShareRoomDetailAPI } from "../api/shareRoomAPI";
 import { INITIAL_FORM, INITIAL_SHARE_ROOM_INFO } from "../constants/initial";
-import { IShareRoom } from "../type/shareRoom";
+import { IShareRoom } from "../type/planShareRoom";
 import { IForm, ISelectedDate } from "../type/shareRoomForm";
 import { useSetRecoilState } from "recoil";
 import { shareRoomInfo } from "../store/shareRoomInfo";

@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { IShareRoom } from "../type/shareRoom";
+import { IShareRoom } from "../type/planShareRoom";
 import { ISelectedDate } from "../type/shareRoomForm";
 import { useSetRecoilState } from "recoil";
 import { travelDate } from "../state/travelDate";
