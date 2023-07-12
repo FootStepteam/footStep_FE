@@ -148,7 +148,7 @@ const ProfileEditForm = () => {
     if (nickname?.length === 0) {
       Swal.fire({
         icon: "error",
-        text: "닉네임을 입력은 필수입니다.",
+        text: "닉네임 입력은 필수입니다.",
       });
       return false;
     }

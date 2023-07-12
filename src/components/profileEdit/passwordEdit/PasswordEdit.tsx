@@ -13,9 +13,9 @@ interface IFormInputs {
 const formSchema = yup.object().shape({
   newPassword: yup
     .string()
-    .required("비밀번호는 필수 입력입니다.")
-    .min(8, "최소 8자 필수 입력입니다.")
-    .max(16, "최대 16자 까지만 가능합니다.")
+    .required("비밀번호 입력은 필수입니다.")
+    .min(8, "비밀번호는 최소 8자 이상 입력해주세요.")
+    .max(16, "비밀번호는 최대 16자까지만 입력해주세요.")
     .matches(
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
       "영문, 숫자, 특수문자를 포함한 8~16자 비밀번호를 입력해주세요."
@@ -87,7 +87,7 @@ const PasswordEdit = () => {
         <input
           type="password"
           {...register("confirmPassword")}
-          placeholder="비밀번호 재확인"
+          placeholder="비밀번호 확인"
           className="mt-2 p-4 border border-gray-002 rounded-sm outline-none placeholder:text-sm"
         />
         <p className="text-red-002">
