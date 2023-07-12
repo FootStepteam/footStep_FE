@@ -53,8 +53,8 @@ export const useSignUpForm = () => {
     password: yup
       .string()
       .required("비밀번호 입력은 필수입니다.")
-      .min(8, "비밀번호는 최소 8자 이상이어야 합니다.")
-      .max(16, "비밀번호는 최대 16자까지 가능합니다.")
+      .min(8, "비밀번호는 최소 8자 이상 입력해주세요.")
+      .max(16, "비밀번호는 최대 16자까지만 입력해주세요.")
       .matches(
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
         "영문, 숫자, 특수문자를 포함한 8~16자 비밀번호를 입력해주세요."
@@ -80,8 +80,9 @@ export const useSignUpForm = () => {
     formState: { errors },
     setValue,
     getValues,
+    watch,
   } = useForm<IFormData>({
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(formSchema),
   });
 
@@ -248,5 +249,6 @@ export const useSignUpForm = () => {
     onBlurNicknameHandler,
     isCheckNickname,
     setValue,
+    watch,
   };
 };

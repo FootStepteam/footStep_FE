@@ -20,7 +20,9 @@ const SignUpForm = () => {
     onKeyDownNicknameHandler,
     onBlurNicknameHandler,
     isCheckNickname,
+    watch,
   } = useSignUpForm();
+  const { password, checkPassword } = watch();
 
   return (
     <div className="mt-[8rem] mx-auto w-[20rem]">
@@ -82,7 +84,6 @@ const SignUpForm = () => {
           </p>
           <input
             type="password"
-            id="password"
             {...register("password")}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="비밀번호"
@@ -100,16 +101,17 @@ const SignUpForm = () => {
           </label>
           <input
             type="password"
-            id="checkPassword"
             {...register("checkPassword")}
             className="w-full px-4 py-3 border border-gray-003 outline-none rounded-md placeholder:text-gray-002 placeholder:text-sm"
             placeholder="비밀번호 확인"
           />
-          {errors.checkPassword && (
-            <p className="text-[0.75rem] text-red-001">
-              {errors.checkPassword.message}
-            </p>
-          )}
+          <p className="text-[0.75rem] text-red-002">
+            {errors.checkPassword?.message ||
+              (password !== checkPassword && "비밀번호가 일치하지 않습니다.")}
+          </p>
+          <p className="text-[0.75rem] text-green-001">
+            {password && password == checkPassword && "비밀번호가 일치합니다."}
+          </p>
         </div>
         <div className="mb-6">
           <label className="block mb-3 font-bold text-black-002">닉네임</label>

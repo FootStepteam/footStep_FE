@@ -13,7 +13,7 @@ interface IFormInputs {
 const formSchema = yup.object().shape({
   newPassword: yup
     .string()
-    .required("비밀번호입력은 필수입니다.")
+    .required("비밀번호 입력은 필수입니다.")
     .min(8, "비밀번호는 최소 8자 이상 입력해주세요.")
     .max(16, "비밀번호는 최대 16자까지만 입력해주세요.")
     .matches(
