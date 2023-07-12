@@ -50,9 +50,11 @@ const ProfileUserInfo = () => {
           </div>
           <div className="mb-4 w-[13rem]">
             <h1 className="font-bold text-md text-black-002">내 소개</h1>
-            <div className="h-[8rem] tracking-[-0.5px] text-black-003 whitespace-pre-wrap text-ellipsis overflow-y-scroll overflow-x-hidden scrollbar-hide">
-              {userInfo?.description}
-            </div>
+            <textarea
+              className="w-[13rem] h-[8rem] outline-none tracking-[-0.5px] text-black-003 whitespace-normal overflow-y-auto resize-none"
+              defaultValue={userInfo?.description}
+              readOnly
+            />
           </div>
         </section>
         <div className="flex justify-center mt-4 ">
