@@ -42,7 +42,9 @@ const ScheduleLists = () => {
     useRecoilState(selecteStartPoint);
   const imageElement = useRef<HTMLDivElement>(null);
 
-  const isExists = schedules[selectedPlanDay.planDay - 1] !== undefined;
+  const isExists =
+    schedules[selectedPlanDay.planDay - 1] !== undefined &&
+    schedules[selectedPlanDay.planDay - 1].destinationDtoList.length !== 0;
 
   const validation = async (type: string) => {
     if (type === "complete") {
