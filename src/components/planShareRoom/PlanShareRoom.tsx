@@ -339,7 +339,7 @@ const PlanShareRoom = () => {
   };
 
   useEffect(() => {
-    if (scheduleMarker.length !== 0) {
+    if (scheduleMarker.length !== 0 && openScheduleMarkerState) {
       setState({
         center: {
           lat: scheduleMarker[0].position.lat,
@@ -348,7 +348,7 @@ const PlanShareRoom = () => {
         isPanto: true,
       });
     }
-  }, [scheduleMarker]);
+  }, [scheduleMarker, openScheduleMarkerState]);
 
   useEffect(() => {
     if (selectedDate.date !== 0) {
@@ -357,20 +357,6 @@ const PlanShareRoom = () => {
       setLinePosition([]);
     }
   }, [selectedDate]);
-
-  useEffect(() => {
-    if (openScheduleMarkerState) {
-      if (scheduleMarker.length !== 0) {
-        setState({
-          center: {
-            lat: scheduleMarker[0].position.lat,
-            lng: scheduleMarker[0].position.lng,
-          },
-          isPanto: true,
-        });
-      }
-    }
-  }, [openScheduleMarkerState]);
 
   return (
     <>
