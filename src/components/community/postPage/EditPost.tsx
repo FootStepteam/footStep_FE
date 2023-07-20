@@ -74,8 +74,8 @@ const EditPost = () => {
   return (
     <>
       <HeaderContainer />
-      <div className="mx-auto w-[55rem] min-h-[30rem] pt-[3rem] p-8">
-        <div className="p-8 mb-8 rounded-lg bg-white-001">
+      <div className="mx-auto md:w-[50rem] lg:w-[55rem] min-h-[30rem] pt-[3rem] p-4 md:p-8">
+        <div className="md:p-8 mb-8 rounded-lg bg-white-001">
           <input
             type="text"
             className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003 outline-none"
