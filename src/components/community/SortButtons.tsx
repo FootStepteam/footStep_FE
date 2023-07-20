@@ -31,7 +31,7 @@ const SortButtons = () => {
   };
 
   return (
-    <div className="relative ml-12 rounded-md">
+    <div className="relative sm:ml-12 sm:mr-12 md:ml-12 rounded-md">
       <div
         className="flex rounded-md bg-white hover:bg-sky-001  hover:text-white cursor-pointer"
         onClick={onClickOpenSortHandler}
@@ -40,10 +40,7 @@ const SortButtons = () => {
           {selectedSortCondition.sort === "recent" ? "최신순" : "인기순"}
         </p>
         <div className="flex items-center border-r border-gray-003 rounded-r-md">
-          <BottomArrow
-            width={30}
-            height={30}
-          />
+          <BottomArrow width={30} height={30} />
         </div>
       </div>
       <ul
