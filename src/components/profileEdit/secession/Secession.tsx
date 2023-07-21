@@ -54,9 +54,13 @@ const Secession = () => {
   return (
     <div className="h-tabInSection">
       <div className="flex flex-col">
-        <div className="flex flex-col items-center m-center pt-32 w-[30rem] text-xl">
-          <p>탈퇴 시 이용중인 서비스 사용이 불가능하며,</p>
-          <p>등록된 데이터는 모두 삭제가 되며 복구가 불가능합니다.</p>
+        <div className="flex flex-col items-center m-center pt-32 w-full md:w-[30rem] text-xl">
+          <p className="text-center mx-2 md:mx-0 break-keep">
+            탈퇴 시 이용중인 서비스 사용이 불가능하며,
+          </p>
+          <p className="text-center mx-2 md:mx-0 break-keep">
+            등록된 데이터는 모두 삭제가 되며 복구가 불가능합니다.
+          </p>
           <p className="mt-8 text-2xl font-bold">그래도 탈퇴하시겠습니까?</p>
         </div>
         <div className="flex items-center m-center mt-6">

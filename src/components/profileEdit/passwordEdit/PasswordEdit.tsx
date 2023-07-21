@@ -72,7 +72,7 @@ const PasswordEdit = () => {
   };
 
   return (
-    <div className="h-tabInSection">
+    <div className="h-tabInSection w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col m-center pt-20 w-[20rem]"
