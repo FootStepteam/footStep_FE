@@ -198,7 +198,7 @@ const ProfileEditForm = () => {
   }, []);
 
   return (
-    <section className="m-center w-commonSection">
+    <section className="m-center w-full">
       <div className="my-16 ">
         <form className="flex flex-col items-center m-center w-96">
           <div className="relative m-center w-[12.5rem] h-[12.5rem]">

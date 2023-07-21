@@ -62,8 +62,8 @@ const EditorArea = () => {
 
   return (
     <>
-      <div className="mx-auto w-[55rem] min-h-screen pt-[3rem] p-8">
-        <div className="p-8 mb-8 rounded-lg bg-white-001">
+      <div className="mx-auto md:w-[50rem] lg:w-[55rem] min-h-screen pt-[3rem] md:p-8">
+        <div className="p-4 md:p-8 mb-8 rounded-lg bg-white-001">
           <h2 className="mb-4 pb-4 w-full border-b-2 text-2xl font-bold text-blue-003">
             새 게시글 작성
           </h2>
@@ -83,10 +83,7 @@ const EditorArea = () => {
             >
               <option value="">일정을 선택해주세요</option>
               {plans.shareRoomDtoList.map((plan) => (
-                <option
-                  key={plan.shareId}
-                  value={plan.shareName}
-                >
+                <option key={plan.shareId} value={plan.shareName}>
                   {plan.shareName}
                 </option>
               ))}

@@ -53,7 +53,7 @@ const Lists = () => {
   }, []);
 
   return (
-    <div className="flex flex-col mx-auto pt-[40px] min-w-max w-[50rem] min-h-screen">
+    <div className="flex flex-col mx-auto pt-[40px] w-full min-h-screen max-w-[50rem] px-4 sm:px-0">
       <div className="flex flex-row-reverse justify-between mt-8 mb-12">
         <div className="flex">
           <Link to="/community/newpost">
@@ -79,22 +79,16 @@ const Lists = () => {
                   <p className="grow text-xl font-bold truncate">
                     {post.communityName}
                   </p>
-                  <div className="flex flex-col items-center w-[15rem] py-1">
+                  <div className="flex flex-col items-center md:w-[15rem] sm:w-[10rem] py-1">
                     <div className="flex items-center">
-                      <NoProfile
-                        width={16}
-                        height={16}
-                      />
+                      <NoProfile width={16} height={16} />
                       <p className="ml-1 mr-4 py-1 font-medium">
                         {post.memberNickname}
                       </p>
                     </div>
                     <p className="flex items-center text-sm">
                       <span className="mr-1">
-                        <Like
-                          width={15}
-                          height={15}
-                        />
+                        <Like width={15} height={15} />
                       </span>
                       좋아요 : {post.likeCount}
                     </p>
@@ -108,11 +102,7 @@ const Lists = () => {
           ))}
         </ul>
       )}
-      <Pagination
-        currentPage={page}
-        totalPage={totalPage}
-        setPage={setPage}
-      />
+      <Pagination currentPage={page} totalPage={totalPage} setPage={setPage} />
     </div>
   );
 };
