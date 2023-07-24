@@ -32,7 +32,7 @@ const PlanListContent = () => {
   }, []);
 
   return (
-    <div className="mt-8 w-commonSection">
+    <div className="mt-8 w-full md:w-commonSection">
       <div>{searchResult.shareId !== 0 && <SearchResult />}</div>
       <div>{isExists ? <ExistsPlan /> : <NotExistsPlan />}</div>
     </div>

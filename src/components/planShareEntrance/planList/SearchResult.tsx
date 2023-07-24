@@ -11,16 +11,18 @@ const SearchResult = () => {
 
   return (
     <>
-      <h1 className="ml-16 w-[20rem] text-2xl font-bold">검색결과</h1>
-      <div className="mt-8 mb-20 w-commonSection">
+      <h1 className="md:ml-16 w-full md:w-[20rem] text-center md:text-left text-2xl font-bold">
+        검색결과
+      </h1>
+      <div className="mt-8 mb-20 px-2 md:px-0 w-full md:w-commonSection">
         <Link
           to={`/planShareRoom/${result.shareId}`}
-          className="group flex mx-auto my-4 w-[60rem] h-[15rem] border-gray-003 border rounded-xl transition-all duration-100 ease-out hover:scale-105"
+          className="group flex flex-col md:flex-row mx-auto my-4 w-full md:w-[60rem] h-[20rem] md:h-[15rem] border-gray-003 border rounded-xl transition-all duration-100 ease-out hover:scale-105"
           onClick={() => sendTokenEnteringShareRoom(result.shareId)}
         >
-          <div className="w-[20rem] h-[14.9rem]">
+          <div className="w-full md:w-[20rem] h-full md:h-[14.9rem] rounded-t-xl md:rounded-tr-none md:rounded-l-xl overflow-hidden">
             <img
-              className="h-full rounded-xl object-fill"
+              className="h-full w-full md:rounded-l-xl object-cover"
               width={320}
               height={240}
               src={testImage}
@@ -32,16 +34,12 @@ const SearchResult = () => {
             <div className="mt-4 text-2xl">
               {result.travelStartDate} ~ {result.travelEndDate}
             </div>
-            <div className="mt-12 text-sm text-gray-002">
+            <div className="mt-12 mb-4 md:mb-0 text-sm text-gray-002">
               <p>여행 일정은 입장코드를 공유 받은 인원만 입장 가능합니다.</p>
             </div>
           </div>
-          <div className="flex justify-center items-center w-20 rounded-r-xl bg-sky-001 transition-all duration-100 ease-out group-hover:w-24">
-            <RightArrow
-              width={20}
-              height={20}
-              fill="#FFFFFF"
-            />
+          <div className="flex justify-center items-center w-full h-[15rem] md:h-full md:w-20 rounded-b-xl md:rounded-bl-none md:rounded-r-xl bg-sky-002 transition-all duration-100 ease-out md:group-hover:w-24">
+            <RightArrow width={20} height={20} fill="#FFFFFF" />
           </div>
         </Link>
       </div>

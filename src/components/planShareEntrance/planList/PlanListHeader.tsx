@@ -10,7 +10,7 @@ const PlanListHeader = () => {
   };
 
   return (
-    <div className="m-center w-commonSection">
+    <div className="m-center w-full pr-2 md:pr-0">
       <div className="flex flex-row-reverse">
         <button
           id="createBtn"
