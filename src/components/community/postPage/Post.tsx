@@ -42,7 +42,7 @@ const Post = () => {
   }
 
   return (
-    <div className="relative mx-auto w-[55rem] min-h-screen p-8 animate-sparkle">
+    <div className="relative mx-auto md:w-[55rem] min-h-screen p-2 md:p-8 animate-sparkle">
       {post.memberId === memberId && (
         <div className="mx-auto w-[55rem]">
           <PostEditDelete postId={post.communityId} />
@@ -86,10 +86,7 @@ const Post = () => {
         ))}
       </div>
       <div className="px-4">
-        <CreateComment
-          post={post}
-          onCommentsChange={onCommentsChange}
-        />
+        <CreateComment post={post} onCommentsChange={onCommentsChange} />
       </div>
     </div>
   );

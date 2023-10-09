@@ -30,8 +30,8 @@ const ParticipatingPlan = () => {
 
   return (
     <div>
-      <section className="mt-24 ml-32">
-        <h1 className="mb-4 text-xl font-bold tracking-tight">
+      <section className="mt-24 ml-0 md:ml-32">
+        <h1 className="text-center md:text-left mb-4 text-xl font-bold tracking-tight">
           참여중인 여행 일정{" "}
           <span className="ml-2 text-blue-003">
             {shareRooms.shareRoomDtoList.length}
