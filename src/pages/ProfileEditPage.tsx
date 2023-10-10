@@ -6,6 +6,7 @@ import ProfileEdit from "../components/profileEdit/edit/ProfileEdit";
 import PasswordEdit from "../components/profileEdit/passwordEdit/PasswordEdit";
 import Secession from "../components/profileEdit/secession/Secession";
 import { useRequireAuth } from "../hooks/useRequireAuth";
+import Toggle from "../components/common/header/toggle/Toggle";
 
 const ProfileEditPage = () => {
   const { path } = useParams();
@@ -13,6 +14,7 @@ const ProfileEditPage = () => {
 
   return (
     <>
+      <Toggle />
       <HeaderContainer />
       <Tab />
       {path === "edit" && <ProfileEdit />}

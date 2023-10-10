@@ -5,6 +5,7 @@ import PlanShareEntrance from "../components/planShareEntrance/PlanShareEntrance
 import CreateShareRoomModal from "../components/planShareEntrance/createShareRoomModal/CreateShareRoomModal";
 import { createModalOpenState } from "../state/createModalOpen";
 import { useRequireAuth } from "../hooks/useRequireAuth";
+import Toggle from "../components/common/header/toggle/Toggle";
 
 const PlanShareEntrancePage = () => {
   const open = useRecoilValue(createModalOpenState);
@@ -12,6 +13,7 @@ const PlanShareEntrancePage = () => {
 
   return (
     <>
+      <Toggle />
       <HeaderContainer />
       <PlanShareEntrance />
       <Footer />

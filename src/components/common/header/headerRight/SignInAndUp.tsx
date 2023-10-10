@@ -11,7 +11,7 @@ const SignInAndUp = () => {
     >
       <Link
         to="/login"
-        className="font-bold text-lg cursor-pointer"
+        className="font-bold 2xl:text-xl xl:text-xl lg:text-[1.5rem] md:text-[1.5rem] sm:text-[1.5rem] cursor-pointer"
       >
         로그인 / 회원가입
       </Link>
