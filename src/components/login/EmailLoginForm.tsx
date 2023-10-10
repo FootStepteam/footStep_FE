@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmail } from "../../api/emailLoginAPI";
 import { useLoginState } from "../../hooks/useLoginState";
 import { TLoginFormData } from "../../type/emailLogin";
+import { useRecoilState } from "recoil";
+import { openToggleState } from "../../../src/state/openToggleState";
 
 const EmailLoginForm = () => {
   const savedLocation = sessionStorage.getItem("lastLocation");
   const { register, handleSubmit } = useForm<TLoginFormData>();
+  const [isOpenToggle, setIsOpenToggle] = useRecoilState(openToggleState);
   const { login } = useLoginState();
   const navigate = useNavigate();
 
@@ -20,6 +23,8 @@ const EmailLoginForm = () => {
 
       // loginState에서 호출(jwtAccessToken header에 저장)
       login(accessToken, refreshToken);
+
+      if (isOpenToggle) setIsOpenToggle(false);
 
       // 로그인 전 페이지로 이동
       if (savedLocation) {
