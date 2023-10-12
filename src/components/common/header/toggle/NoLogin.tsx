@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const NoLogin = () => {
   return (
     <>
-      <p className="mt-2 mb-4 text-black font-bold text-2xl">
+      <p className="mt-2 mb-4 text-black-002 font-bold sm:text-2xl text-lg">
         로그인 이후 이용 가능합니다.
       </p>
       <div className="flex justify-end text-white text-xl rounded-md">

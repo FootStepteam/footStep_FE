@@ -20,7 +20,7 @@ const Toggle = () => {
     if (isOpenToggle) {
       bodyDOM.style.overflow = "hidden";
     } else {
-      bodyDOM.style.overflow = "scroll";
+      bodyDOM.style.overflow = "auto";
     }
   }, [isOpenToggle]);
 
@@ -28,9 +28,9 @@ const Toggle = () => {
     <div
       className={`${
         isOpenToggle ? "flex justify-between right-0" : "hidden right-[-5rem]"
-      } fixed top-0 z-[52] pt-6 w-full min-h-screen bg-[rgba(0,205,255,0.7)] transition duration-[2ms] ease-in-out`}
+      } fixed top-0 left-0 z-[52] pt-6 min-w-screen min-h-screen bg-[rgba(0,205,255,0.7)] transition duration-[2ms] ease-in-out`}
     >
-      <div className="ml-4">
+      <div className="mx-4">
         <button onClick={closeToggleHandler}>
           <Exit
             width={40}
