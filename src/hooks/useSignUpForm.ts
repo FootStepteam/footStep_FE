@@ -72,8 +72,6 @@ export const useSignUpForm = () => {
     resolver: yupResolver(formSchema),
   });
 
-  // 이메일 부분
-
   const onClickCheckEmailHandler = async () => {
     const loginEmail = `${getValues().loginEmailId}@${
       getValues().loginEmailDomain
@@ -139,9 +137,7 @@ export const useSignUpForm = () => {
       setValue("loginEmailDomain", "");
     }
   };
-  // 이메일 부분 끝
 
-  // 닉네임 부분
   const onClickCheckNicknameHandler = async () => {
     const nickname = getValues().nickname;
 
@@ -206,9 +202,7 @@ export const useSignUpForm = () => {
       return;
     }
   };
-  // 닉네임 부분 끝
 
-  // 성별 선택 부분
   const onClickGenderHandler = (gender: string) => {
     setGenderType({
       gender,
@@ -217,9 +211,7 @@ export const useSignUpForm = () => {
 
     setValue("gender", gender);
   };
-  // 성별 선택 부분 끝
 
-  // submit handler
   const onSubmitHandler = async () => {
     if (!isCheckEmail.check) {
       setIsCheckEmail({

@@ -11,7 +11,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-[55rem] m-center">
+    <div className="flex flex-col md:flex-row justify-center m-center min-h-[55rem]">
       <ProfileUserInfo />
       <ParticipatingPlan />
     </div>
