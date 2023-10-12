@@ -51,7 +51,10 @@ const SearchBar = () => {
           {selectedCondition.type === "title" ? "제목" : "닉네임"}
         </p>
         <div className="flex items-center border-r border-gray-003">
-          <BottomArrow width={30} height={30} />
+          <BottomArrow
+            width={30}
+            height={30}
+          />
         </div>
       </div>
       <ul
@@ -78,7 +81,7 @@ const SearchBar = () => {
             type="text"
             onChange={handleInputChange}
             placeholder="검색어를 입력하세요"
-            className="pl-4 py-2 md:w-[20rem] h-[3rem] outline-none placeholder:text-sm sm:w-auto"
+            className="pl-4 py-2 md:w-[20rem] sm:w-[13rem] w-[9rem] h-[3rem] outline-none placeholder:text-sm sm:w-auto"
           />
           <button
             type="submit"
