@@ -192,22 +192,19 @@ const ProfileEditForm = () => {
   return (
     <section className="m-center w-full">
       <div className="my-16 ">
-        <form className="flex flex-col items-center m-center w-96">
-          <div className="relative m-center w-[12.5rem] h-[12.5rem]">
+        <form className="flex flex-col items-center m-center sm:w-96">
+          <div className="relative m-center sm:w-[12.5rem] sm:h-[12.5rem] w-[9rem] h-[9rem]">
             <label
               htmlFor="profileImage"
-              className="cursor-pointer hover:opacity-25"
+              className="flex justify-center cursor-pointer hover:opacity-25"
             >
               {isExistImage ? (
-                <ProfileImage
-                  width={200}
-                  height={200}
-                />
+                <ProfileImage className="sm:w-[200px] sm:h-[200px] w-[130px] h-[130px]" />
               ) : (
                 <img
                   src={preview === "" ? memberInfo.img : preview}
                   alt="profile"
-                  className="w-[200px] h-[200px] rounded-full border object-contain border-gray-004"
+                  className="sm:w-[200px] sm:h-[200px] w-[130px] h-[130px] rounded-full border object-contain border-gray-004"
                 />
               )}
               <input
@@ -230,16 +227,16 @@ const ProfileEditForm = () => {
           <button
             type="button"
             onClick={onClickUpdateImgHandler}
-            className="mt-4 mx-auto w-[18rem] h-[3.2rem] bg-blue-002 hover:bg-blue-001 rounded-md text-white font-bold"
+            className="mt-4 mx-auto sm:w-[18rem] sm:h-[3.2rem] w-[14rem] h-[2.8rem] bg-blue-002 hover:bg-blue-001 rounded-md sm:text-base text-sm text-white font-bold"
           >
             이미지 수정
           </button>
 
-          <div className="flex flex-col mt-8 w-[18rem]">
+          <div className="flex flex-col mt-8 sm:w-[18rem] w-[14rem]">
             <div className="flex flex-col">
               <label
                 htmlFor="nickname"
-                className="block mt-12 font-bold text-lg"
+                className="block mt-12 font-bold sm:text-lg text-base"
               >
                 닉네임
               </label>
@@ -262,7 +259,7 @@ const ProfileEditForm = () => {
               </p>
               <button
                 type="button"
-                className="mt-4 mx-auto w-[18rem] h-[3.2rem] bg-platinum-001 hover:bg-platinum-002 rounded-md text-white font-bold"
+                className="mt-4 mx-auto w-[14rem] h-[2.8rem] sm:w-[18rem] sm:h-[3.2rem] bg-platinum-001 hover:bg-platinum-002 rounded-md text-white font-bold"
                 onClick={onClickCheckNicknameHandler}
               >
                 중복확인
@@ -271,7 +268,7 @@ const ProfileEditForm = () => {
             <div className="flex flex-col mt-6">
               <label
                 htmlFor="email"
-                className="font-bold text-lg"
+                className="font-bold sm:text-lg text-base"
               >
                 이메일
               </label>
@@ -286,13 +283,13 @@ const ProfileEditForm = () => {
             <div className="flex flex-col mt-6">
               <label
                 htmlFor="introduce"
-                className="block font-bold text-lg"
+                className="block font-bold sm:text-lg text-base"
               >
                 내 소개
               </label>
               <textarea
                 id="introduce"
-                className="mt-2 px-4 py-2  h-40 border-gray-003 border-gray-002 border rounded-md outline-none resize-none"
+                className="mt-2 px-4 py-2 h-40 border-gray-003 border-gray-002 border rounded-md outline-none resize-none"
                 defaultValue={memberInfo.description}
                 onChange={onChangeIntroduceHandler}
                 ref={introduceRef}
@@ -306,7 +303,7 @@ const ProfileEditForm = () => {
           <button
             type="button"
             onClick={onSubmitHandler}
-            className="mt-4 mx-auto w-[18rem] h-[3.2rem] bg-orange-001 hover:bg-orange-002 rounded-md text-white font-bold"
+            className="mt-4 mx-auto w-[14rem] h-[2.8rem] sm:w-[18rem] sm:h-[3.2rem] bg-orange-001 hover:bg-orange-002 rounded-md text-white font-bold"
           >
             회원정보 수정
           </button>
