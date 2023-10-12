@@ -19,7 +19,7 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
         const memberId = await getCurrentUserMemberId();
         setMemberId(memberId);
       } catch (error) {
-        // console.error(error);
+        alert(error);
       }
     };
 
@@ -27,7 +27,6 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
   }, []);
 
   const handleCreate = async () => {
-    // 내용 없을 때 작성 불가 처리
     if (!content.trim()) {
       Swal.fire({
         title: "댓글 내용을 입력해주세요",
@@ -36,7 +35,7 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
       });
       return;
     }
-    // 사용자에게 댓글 작성 확인 메시지
+
     const result = await Swal.fire({
       title: "댓글을 작성하시겠습니까?",
       icon: "question",
@@ -59,7 +58,6 @@ const CreateComment = ({ onCommentsChange, post }: CreateCommentProps) => {
     }
   };
 
-  // 비로그인 시 댓글작성 불가
   if (!memberId) return null;
 
   return (

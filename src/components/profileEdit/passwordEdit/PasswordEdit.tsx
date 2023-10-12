@@ -72,23 +72,23 @@ const PasswordEdit = () => {
   };
 
   return (
-    <div className="h-tabInSection w-full">
+    <div className="w-full sm:h-[34rem] h-[30rem]">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col m-center pt-20 w-[20rem]"
+        className="flex flex-col m-center pt-20 sm:w-[20rem] w-[13rem]"
       >
         <input
           type="password"
           {...register("newPassword")}
           placeholder="새로운 비밀번호"
-          className="p-4 border border-gray-002 rounded-sm outline-none placeholder:text-sm"
+          className="sm:p-4 p-3 border border-gray-002 rounded-sm outline-none placeholder:text-[0.8rem] md:placeholder:text-sm"
         />
         <p className="text-red-002">{errors.newPassword?.message}</p>
         <input
           type="password"
           {...register("confirmPassword")}
           placeholder="비밀번호 확인"
-          className="mt-2 p-4 border border-gray-002 rounded-sm outline-none placeholder:text-sm"
+          className="mt-2 sm:p-4 p-3 border border-gray-002 rounded-sm outline-none placeholder:text-[0.8rem] md:placeholder:text-sm"
         />
         <p className="text-red-002">
           {errors.confirmPassword?.message ||
@@ -102,7 +102,7 @@ const PasswordEdit = () => {
         </p>
         <button
           type="submit"
-          className="mt-8 h-16 bg-sky-001 hover:bg-sky-002 rounded-sm text-white text-lg font-bold"
+          className="mt-8 sm:h-16 h-12 bg-sky-001 hover:bg-sky-002 rounded-sm text-white sm:text-lg text-sm font-bold"
         >
           비밀번호 변경
         </button>

@@ -39,7 +39,7 @@ const Tab = () => {
       {tabs.map((tab) => (
         <Link
           key={tab.menu}
-          className={`mx-2 px-2 py-4 text-md ${
+          className={`mx-2 px-2 py-4 md:text-base text-sm ${
             selected === tab.menu &&
             "border-b-[0.2rem] border-blue-002 text-blue-002 text-lg font-bold"
           } hover:text-blue-002`}

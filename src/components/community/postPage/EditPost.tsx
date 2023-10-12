@@ -25,7 +25,7 @@ const EditPost = () => {
         setPostContent(postData.content);
         setPostTitle(postData.communityName);
       } catch (error) {
-        // error handling
+        alert("error");
       }
     };
 
@@ -66,7 +66,7 @@ const EditPost = () => {
         );
         navigate(`/community/${communityId}`);
       } catch (error) {
-        // error handling
+        alert("에러");
       }
     }
   };

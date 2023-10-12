@@ -21,7 +21,7 @@ const Comment = ({ comment, onCommentsChange }: CommentProps) => {
         const memberId = await getCurrentUserMemberId();
         setMemberId(memberId);
       } catch (error) {
-        // console.error(error);
+        alert(error);
       }
     };
 
