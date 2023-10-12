@@ -22,8 +22,8 @@ const ProfileUserInfo = () => {
     fetchUserInfo();
   }, [accessToken]);
   return (
-    <div className="mt-24 px-2 md:px-0 mx-auto w-full md:w-[20rem]">
-      <div className="m-center p-7 w-full md:w-[17rem] min-h-fit border border-gray-004 rounded-xl shadow-sm">
+    <div className="mt-24 mx-auto md:mx-0 px-2 md:px-0 w-[15rem] md:w-[20rem]">
+      <div className="m-center p-7 w-full lg:w-[17rem] md:w-[14rem] min-h-fit border border-gray-004 rounded-xl shadow-sm">
         <div className="flex justify-center">
           {userInfo?.img !== "default" && userInfo?.img ? (
             <img
