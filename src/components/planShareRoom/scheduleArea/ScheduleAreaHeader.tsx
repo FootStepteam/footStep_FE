@@ -37,7 +37,6 @@ const ScheduleAreaHeader = () => {
 
   const type = "inShareRoom";
 
-  //
   const lookUpAgain = async () => {
     const response = await getShareRoomDetailAPI(Number(shareRoomID));
     setShareRoomInfo(response);

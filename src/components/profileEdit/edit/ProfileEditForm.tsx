@@ -50,7 +50,6 @@ const ProfileEditForm = () => {
     }
   };
 
-  // 이미지 수정 부분
   const onChangeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files?.length !== 0) {
       setPreview(URL.createObjectURL(e.target.files[0]));
@@ -73,7 +72,6 @@ const ProfileEditForm = () => {
         fetchMemberInfo();
       }
     } else {
-      // 이미지가 선택되지 않았을 경우, 기본 이미지로 설정
       const result = await updateProfileImageAPI(new FormData());
 
       if (result?.status === 200) {
@@ -97,9 +95,6 @@ const ProfileEditForm = () => {
     setPreview("");
   };
 
-  // 이미지 수정 부분 끝
-
-  // 닉네임 수정 부분
   const onChangeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === memberInfo.nickname) {
       setIsCheckNickname(true);
@@ -166,13 +161,10 @@ const ProfileEditForm = () => {
 
     return true;
   };
-  // 닉네임 수정 부분 끝
 
-  // 내 소개 수정 부분
   const onChangeIntroduceHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setDescriptionLength(e.target.value.length);
   };
-  // 내 소개 수정 부분
 
   const onSubmitHandler = async () => {
     const nickname = nicknameRef.current?.value as string;
@@ -207,7 +199,10 @@ const ProfileEditForm = () => {
               className="cursor-pointer hover:opacity-25"
             >
               {isExistImage ? (
-                <ProfileImage width={200} height={200} />
+                <ProfileImage
+                  width={200}
+                  height={200}
+                />
               ) : (
                 <img
                   src={preview === "" ? memberInfo.img : preview}
@@ -274,7 +269,10 @@ const ProfileEditForm = () => {
               </button>
             </div>
             <div className="flex flex-col mt-6">
-              <label htmlFor="email" className="font-bold text-lg">
+              <label
+                htmlFor="email"
+                className="font-bold text-lg"
+              >
                 이메일
               </label>
               <input
@@ -286,7 +284,10 @@ const ProfileEditForm = () => {
               />
             </div>
             <div className="flex flex-col mt-6">
-              <label htmlFor="introduce" className="block font-bold text-lg">
+              <label
+                htmlFor="introduce"
+                className="block font-bold text-lg"
+              >
                 내 소개
               </label>
               <textarea

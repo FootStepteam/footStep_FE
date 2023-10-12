@@ -10,14 +10,11 @@ import { useRequireAuth } from "../../hooks/useRequireAuth";
 const EditorArea = () => {
   useRequireAuth();
   const {
-    // title,
     setTitle,
     content,
     setContent,
-    // isPublic,
     setIsPublic,
     selectedPlan,
-    // setSelectedPlan,
     plans,
     handleSelectPlan,
     submitPost,
@@ -51,7 +48,6 @@ const EditorArea = () => {
     if (result.isConfirmed) {
       const postResult = await submitPost();
       if (postResult) {
-        // submitPost이 true일 때만 게시글 등록 성공 알림 표시
         Swal.fire("성공!", "게시글이 정상적으로 등록되었습니다", "success");
         navigate("/community");
       }
@@ -83,7 +79,10 @@ const EditorArea = () => {
             >
               <option value="">일정을 선택해주세요</option>
               {plans.shareRoomDtoList.map((plan) => (
-                <option key={plan.shareId} value={plan.shareName}>
+                <option
+                  key={plan.shareId}
+                  value={plan.shareName}
+                >
                   {plan.shareName}
                 </option>
               ))}

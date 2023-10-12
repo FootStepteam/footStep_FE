@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteMember, getUserInfo } from "../../../api/profileAPI"; // Import deleteMember function
+import { deleteMember, getUserInfo } from "../../../api/profileAPI";
 import { getCookie } from "../../../utils/cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -70,7 +70,10 @@ const Secession = () => {
             className="w-4 h-4 cursor-pointer"
             onClick={onClickCheckedHandler}
           />
-          <label htmlFor="check" className="ml-2 text-sm cursor-pointer">
+          <label
+            htmlFor="check"
+            className="ml-2 text-sm cursor-pointer"
+          >
             회원탈퇴에 동의합니다.
           </label>
         </div>
