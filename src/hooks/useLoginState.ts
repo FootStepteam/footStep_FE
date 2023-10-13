@@ -40,7 +40,7 @@ export const useLoginState = () => {
       secure: import.meta.env.NODE_ENV === "production",
       sameSite: "strict",
     });
-    navigate("/login");
+    navigate("/");
   };
 
   return { login, logout };

@@ -7,10 +7,17 @@ import PasswordEdit from "../components/profileEdit/passwordEdit/PasswordEdit";
 import Secession from "../components/profileEdit/secession/Secession";
 import { useRequireAuth } from "../hooks/useRequireAuth";
 import Toggle from "../components/common/header/toggle/Toggle";
+import { useEffect } from "react";
+import { redefineCookie } from "../utils/cookie";
 
 const ProfileEditPage = () => {
   const { path } = useParams();
-  useRequireAuth();
+  const { checkLocationPath } = useRequireAuth();
+
+  useEffect(() => {
+    redefineCookie();
+    checkLocationPath();
+  }, []);
 
   return (
     <>

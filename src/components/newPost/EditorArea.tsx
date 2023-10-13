@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useRequireAuth } from "../../hooks/useRequireAuth";
 
 const EditorArea = () => {
-  useRequireAuth();
+  const { checkLocationPath } = useRequireAuth();
+
   const {
     setTitle,
     content,
@@ -33,6 +34,8 @@ const EditorArea = () => {
       });
       navigate("/community");
     }
+
+    checkLocationPath();
   }, []);
 
   const submitPostWithConfirmation = async () => {
