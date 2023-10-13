@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
 
@@ -16,13 +15,16 @@ export const useRequireAuth = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const token = getCookie("accessToken");
-  const isIncludePath =
-    location.pathname.includes(`/planShareRoom/${shareRoomID}`) ||
-    (restrictedPages.includes(location.pathname) && token !== undefined);
 
-  useEffect(() => {
+  const checkLocationPath = () => {
+    const isIncludePath =
+      location.pathname.includes(`/planShareRoom/${shareRoomID}`) ||
+      (restrictedPages.includes(location.pathname) && token !== undefined);
+
     if (!isIncludePath) {
       navigate("/login");
     }
-  }, []);
+  };
+
+  return { checkLocationPath };
 };
